@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Compra</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link active">Cadastro</a>
+                    <ul class="submenu active">
+                        <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                        <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
+                        <li><a href="#" class="submenu-link">Atualização</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <span>matehus</span>
+        </header>
+
+        <div class="cadastroFlex_wrapper">
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+                    <div class="welcome-text">
+                        <h1>Cadastre sua carta</h1>
+                        <p>Preencha os dados técnicos e financeiros.</p>
+                    </div>
+
+                    <form>
+                        <label for="ipt_nome">Nome da Carta</label>
+                        <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+
+                        <label>SELECIONE O TIPO</label>
+                        <div class="tipoSelector">
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Grass"><img src="../assets/imgs/types/grass.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fire"><img src="../assets/imgs/types/fire.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Water"><img src="../assets/imgs/types/water.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Lightning"><img src="../assets/imgs/types/lightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Psychic"><img src="../assets/imgs/types/psychic.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fighting"><img src="../assets/imgs/types/fightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Darkness"><img src="../assets/imgs/types/darkness.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Metal"><img src="../assets/imgs/types/metal.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Dragon"><img src="../assets/imgs/types/dragon.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Colorless"><img src="../assets/imgs/types/colorless.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fairy"><img src="../assets/imgs/types/fairy.png"></label>
+                        </div>
+
+                        <label>SELECIONE A RARIDADE</label>
+                        <div class="raridadeSelector">
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Common"><img src="../assets/imgs/raritys/common.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Uncommon"><img src="../assets/imgs/raritys/uncommon.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Rare"><img src="../assets/imgs/raritys/rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Double Rare"><img src="../assets/imgs/raritys/double-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ultra Rare"><img src="../assets/imgs/raritys/ultra-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Illustration Rare"><img src="../assets/imgs/raritys/illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="S.I.R."><img src="../assets/imgs/raritys/special-illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ace Spec"><img src="../assets/imgs/raritys/ace-spec-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Hyper Rare"><img src="../assets/imgs/raritys/hyper-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img src="../assets/imgs/raritys/promo.png"></label>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_set">Expansão (Set)</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_numero">Número</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                            </div>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_preco">PREÇO DE COMPRA (R$)</label>
+                                <input type="number" id="ipt_preco" min="1" step="1.00" placeholder="0.00">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_preco_liga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_preco_liga" min="1" step="1.00" placeholder="0.00">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_url">URL IMAGEM</label>
+                                <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Finalizar Cadastro</button>
+                    </form>
+                </section>
+
+                <section class="direitaContainer_gyarados"></section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+
+    <script>
+        let numeroImagem = Math.floor(Math.random() * 6) + 1;
+        header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+        function cadastrarCarta() {
+            alert("Carta enviada com sucesso!");
+        }
+
+        // LÓGICA DA BANDEJA (SIDEBAR)
+        document.addEventListener('DOMContentLoaded', function () {
+            const cadastroMenu = document.getElementById('cadastroMenu');
+            const linkCadastro = cadastroMenu.querySelector('.nav-link');
+
+            linkCadastro.addEventListener('click', function (e) {
+                e.preventDefault();
+                cadastroMenu.classList.toggle('open');
+            });
+        });
+    </script>

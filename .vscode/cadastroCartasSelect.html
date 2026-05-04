@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bodyCadastro2">
+    <main class="cadastroContainer">
+        <section class="formularioCadastro">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./assets/imgs/logo.png">
+                    pkmnHub
+                </a>
+            </div>
+
+            <div class="welcome-text">
+                <h1>Cadastre sua carta</h1>
+                <p>Cuidado! As informações devem ser precisas</p>
+            </div>
+
+            <form>
+                <!-- NOME -->
+                <label for="ipt_nome">NOME</label>
+                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+
+                <div class="inputsJuntos">
+                    <!-- TIPO -->
+                    <div class="espaco">
+                        <label for="sct_tipo">Tipo</label>
+                        <select name="tipo" id="sct_tipo">
+                            <option value="none" selected disabled>-- SELECIONE --</option>
+                            <option value="grass">Grass</option>
+                            <option value="fire">Fire</option>
+                            <option value="water">Water</option>
+                            <option value="lightning">Lightning</option>
+                            <option value="psychic">Psychic</option>
+                            <option value="fighting">Fighting</option>
+                            <option value="darkness">Darkness</option>
+                            <option value="metal">Metal</option>
+                            <option value="dragon">Dragon</option>
+                            <option value="colorless">Colorless</option>
+                            <option value="fairy">Fairy</option>
+                        </select>
+                    </div>
+
+                    <!-- RARIDADE -->
+                    <div class="espaco">
+                        <label for="sct_raridade">Raridade</label>
+                        <select name="raridade" id="sct_raridade">
+                            <option value="none" selected disabled>-- SELECIONE --</option>
+                            <option value="Common">Common</option>
+                            <option value="Uncommon">Uncommon</option>
+                            <option value="Rare">Rare</option>
+                            <option value="Double Rare">Double Rare</option>
+                            <option value="Ultra Rare">Ultra Rare</option>
+                            <option value="Illustration Rare">Illustration Rare</option>
+                            <option value="Special Illustration Rare">Special Illustration Rare</option>
+                            <option value="ACE SPEC rare">ACE SPEC rare</option>
+                            <option value="Hyper Rare">Hyper Rare</option>
+                            <option value="Promo">Promo</option>
+                        </select>
+                    </div>
+
+                    <!-- NÚMERO -->
+                    <div class="espaco">
+                        <label for="ipt_numero">NÚMERO</label>
+                        <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                    </div>
+                </div>
+
+                <!-- SET -->
+                <label for="ipt_set">SET</label>
+                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos">
+
+                <!-- NOVOS CAMPOS FINANCEIROS (Essencial para o seu Dashboard) -->
+                <div class="inputsJuntos">
+                    <div class="espaco">
+                        <label for="ipt_qtd">QUANTIDADE</label>
+                        <input type="number" id="ipt_qtd" min="1" value="1">
+                    </div>
+                    <div class="espaco">
+                        <label for="ipt_preco">PREÇO DE COMPRA (R$)</label>
+                        <input type="number" id="ipt_preco" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="espaco">
+                        <label for="ipt_preco">MENOR DA LIGA (R$)</label>
+                        <input type="number" id="ipt_preco_liga" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- URL IMAGEM (Corrigido para type="url") -->
+                <label for="ipt_url">URL IMAGEM</label>
+                <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
+
+                <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Cadastrar</button>
+            </form>
+
+            <p class="linkCadastro">Já possui uma conta? <a href="login.html">Entrar</a></p>
+        </section>
+
+        <section class="direitaContainer">
+            <div class="direitaConteudo">
+                <div class="detalheCadastro">
+                    <span class="detalheCadastro01">ACESSO ILIMITADO</span>
+                    <span class="detalheCadastro02">GESTÃO PREMIUM</span>
+                </div>
+                <h2>Domine o jogo, <span class="destaqueTexto">Colecione</span> lendas!</h2>
+
+                <div class="footerDireita">
+                    <div class="footerDireita_item">
+                        <strong>1k+</strong>
+                        <p>POKÉMONS</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="footerDireita_item">
+                        <strong>TODAS</strong>
+                        <p>AS SUAS CARTAS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

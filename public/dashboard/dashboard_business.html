@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Dashboard</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Coleção</a></li>
+                <li class="nav-item active"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link">Cadastro</a>
+                    <ul class="submenu">
+                        <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                        <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
+                        <li><a href="#" class="submenu-link">Atualização</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <div class="main-container">
+        <header id="header">
+            <span>matehus</span>
+
+        </header>
+
+        <div class="dashboard-flex-wrapper">
+            <div class="col-left">
+                <div class="card chart-main-card">
+                    <div class="label">Valor estimado da coleção</div>
+                    <div class="main-value">R$3.243,21</div>
+
+                    <div class="chart-filters">
+                        <button class="btn-filter active">30 Dias</button>
+                        <button class="btn-filter">3 Meses</button>
+                        <button class="btn-filter">6 Meses</button>
+                        <button class="btn-filter">1 Ano</button>
+                    </div>
+
+                    <div class="chart-wrapper">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card" style="height: 160px;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <div class="col-right">
+                <div class="card total-cards">
+                    <div class="label">Total de cartas</div>
+                    <div class="total-group-right">
+                        <span class="total-number">1001</span>
+                        <span class="label">Total</span>
+                    </div>
+                </div>
+
+                <div class="card most-expensive">
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="label">Carta mais cara</div>
+                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;">Psyduck - Heróis
+                                Excelsos</div>
+                        </div>
+                        <div style="font-size: 30px; font-weight: 700;">R$ 1.505</div>
+                    </div>
+                    <img src="./assets/imgs/psyduck.jpg" class="card-img">
+                </div>
+
+                <div class="row-inner">
+                    <div class="card gasto-card">
+                        <div class="label">Gasto</div>
+                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;">R$ 1.505</div>
+                    </div>
+                    <div class="card retorno-card">
+                        <div class="label">Retorno</div>
+                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;">R$ 1.505</div>
+                    </div>
+                </div>
+
+                <div class="row-inner">
+                    <div class="card" style="flex:1;">
+                        <div class="label">ROI</div>
+                        <div class="roi-value">75%</div>
+                    </div>
+                    <div class="card" style="flex:1; opacity: 0.3;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // LÓGICA DA BANDEJA (SIDEBAR)
+        document.addEventListener('DOMContentLoaded', function () {
+            const cadastroMenu = document.getElementById('cadastroMenu');
+            const linkCadastro = cadastroMenu.querySelector('.nav-link');
+
+            linkCadastro.addEventListener('click', function (e) {
+                e.preventDefault();
+                cadastroMenu.classList.toggle('open');
+            });
+        });
+
+        // GRÁFICO DE LINHA
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '5', '10', '15', '20', '25', '30'],
+                datasets: [{
+                    data: [2800, 2900, 2850, 3100, 3050, 3200, 3243],
+                    borderColor: '#f5da55',
+                    tension: 0.4,
+                    pointRadius: 0,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: '#555' }, grid: { display: false } },
+                    y: { ticks: { color: '#555' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        // GRÁFICO DE BARRAS
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['VALOR REAL', 'VALOR DE COMPRA'],
+                datasets: [{
+                    data: [100, 45],
+                    backgroundColor: '#f5da55',
+                    barThickness: 20
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { display: false },
+                    y: { ticks: { color: '#fff' }, grid: { display: false } }
+                }
+            }
+        });
+
+        let numeroImagem = Math.floor(Math.random() * 6) + 1;
+        header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+    </script>

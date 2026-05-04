@@ -1,0 +1,509 @@
+/* ==========================================================================
+   1. VARIÁVEIS E RESET GLOBAL
+   ========================================================================== */
+:root {
+    --bg-body: #121417;
+    --bg-sidebar: #1a1c1f;
+    --bg-card: #1a1c1f;
+    --accent-yellow: #F9CF30;
+    --text-gray: #94a3b8;
+    --border-blue: #31A7D7;   /* usado no dashboard (retorno-card) */
+    --border-dark: #202226;
+    --danger: #EE3D2D;        /* usado no dashboard (gasto-card, roi-value) */
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url(../assets/fonts/Manrope/Manrope-VariableFont_wght.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: normal;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: white;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   2. SIDEBAR E NAVEGAÇÃO (global)
+   ========================================================================== */
+.sidebar {
+    width: 250px;
+    background-color: #121417b0;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-dark);
+    flex-shrink: 0;
+}
+
+.logo-area {
+    margin-bottom: 50px;
+    font-size: 24px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--accent-yellow);
+    margin-bottom: 50px;
+}
+
+.logo a {
+    color: var(--accent-yellow);
+}
+
+.logo img {
+    width: 25px;
+}
+
+.logo span {
+    color: white;
+}
+
+.nav-menu ul {
+    list-style: none;
+}
+
+.nav-item {
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    color: white;
+}
+
+.nav-item.active > .nav-link {
+    color: var(--accent-yellow);
+    font-weight: 700;
+}
+
+.nav-item-has-submenu .nav-link::after {
+    content: '›';
+    font-size: 1.4rem;
+    transition: transform 0.3s;
+}
+
+.nav-item-has-submenu.open .nav-link::after {
+    transform: rotate(90deg);
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.nav-item-has-submenu.open .submenu {
+    max-height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.submenu-link {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    display: block;
+    padding: 8px 0;
+    transition: color 0.2s;
+}
+
+.submenu-link:hover {
+    color: white;
+}
+
+/* exclusivo do cadastro — link de submenu ativo */
+.submenu-link.active {
+    color: var(--accent-yellow);
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   3. HEADER E ESTRUTURA PRINCIPAL (global)
+   ========================================================================== */
+.main-container {
+    flex: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+header span {
+    font-weight: 900;
+}
+
+.user-avatar {
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-dark);
+}
+
+/* ==========================================================================
+   4. CARDS (global)
+   ========================================================================== */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 18px;
+    padding: 22px;
+    border: 1px solid var(--border-dark);
+}
+
+/* ==========================================================================
+   5. DASHBOARD — tela de análise financeira
+   ========================================================================== */
+
+/* Layout principal do dashboard */
+.dashboard-flex-wrapper {
+    display: flex;
+    gap: 20px;        /* gap presente apenas no dashboard */
+    height: 85%;
+}
+
+.col-left {
+    flex: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.col-right {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Gráfico principal */
+.chart-main-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.chart-wrapper {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+/* Totais */
+.total-cards {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.total-group-right {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.total-number {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.label {
+    color: var(--text-gray);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.main-value {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 5px 0 15px 0;
+}
+
+/* Filtros do gráfico */
+.chart-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-filter {
+    background: #2a2a2a;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-filter.active {
+    background: var(--accent-yellow);
+    color: black;
+}
+
+/* Linha interna de cards */
+.row-inner {
+    display: flex;
+    gap: 20px;
+}
+
+/* Card "mais caro" */
+.most-expensive {
+    display: flex;
+    justify-content: space-between;
+    height: 180px;
+}
+
+.card-img {
+    height: 100%;
+    max-width: 120px;
+    object-fit: contain;
+    border-radius: 9px;
+}
+
+/* Cards de gasto e retorno */
+.gasto-card {
+    border: 2px solid var(--danger);
+    flex: 1;
+}
+
+.retorno-card {
+    border: 2px solid var(--border-blue);
+    flex: 1;
+}
+
+.roi-value {
+    color: var(--danger);
+    font-size: 38px;
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   6. CADASTRO — layout base
+   ========================================================================== */
+.cadastroFlex_wrapper{
+    flex: 1;
+    display: flex;
+    height: 85%;
+}
+
+.cadastroTroca_wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 45%;
+    gap: 25px;
+}
+
+.cadastroContainer {
+    flex: 1;
+    display: flex;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   7. CADASTRO — formulário
+   ========================================================================== */
+.formularioCadastro {
+    flex: 1.3;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.welcome-text h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.welcome-text p {
+    color: var(--text-gray);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-gray);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+form input {
+    width: 100%;
+    background: #121417;
+    border: 1px solid #2a2d32;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+form input:focus {
+    border-color: var(--accent-yellow);
+}
+
+input[type="url"] {
+    color: var(--accent-yellow);
+}
+
+.inputsJuntos {
+    display: flex;
+    gap: 15px;
+}
+
+.espaco {
+    flex: 1;
+}
+
+.btnPrincipal_sign {
+    width: 100%;
+    background-color: var(--accent-yellow);
+    color: #000;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   8. CADASTRO — seletores de tipo e raridade
+   ========================================================================== */
+.tipoSelector,
+.raridadeSelector {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.tipoItem,
+.raridadeItem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tipoItem input,
+.raridadeItem input {
+    display: none;
+}
+
+.tipoItem img,
+.raridadeItem img {
+    width: 100%;
+    max-width: 45px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    border: 2px solid transparent;
+    filter: grayscale(100%);
+    transition: 0.2s;
+}
+
+.tipoItem img {
+    border-radius: 50%;
+}
+
+.raridadeItem img {
+    border-radius: 5px;
+}
+
+.tipoItem input:checked + img,
+.raridadeItem input:checked + img {
+    filter: grayscale(0%);
+    border-color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   9. CADASTRO — banners laterais (personagens)
+   ========================================================================== */
+.direitaContainer_gyarados {
+    flex: 1;
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/gyaradosPocket.png') no-repeat center center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border-dark);
+}
+
+.direitaContainer_nidoking {
+    flex: 1;
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/nidokingPocket.png') no-repeat center center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border-dark);
+}
+
+.direitaContainer_squirtle {
+    flex: 1;
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/squirtlePocket.png') no-repeat center center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border-dark);
+}
+
+.direitaContainer_bulbassaur {
+    flex: 1;
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/bulbaPocketB.png') no-repeat center center;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border-dark);
+}

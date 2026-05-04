@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+    :root {
+        --cinzaPrimario: #121417;
+        --cinzaSecundario: #1A1C1F;
+        --cinzaDetalhes: #2A2D32;
+        --accent-color: #31A7D7;
+        --text-primary: #ffffff;
+    }
+
+
+    /* CONFIGURAÇÃO DOS SELETORES FLUIDOS */
+    .tipoSelector {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 5px;
+        margin-bottom: 25px;
+        width: 100%;
+    }
+
+    .tipoItem {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tipoItem input {
+        display: none;
+    }
+
+    .tipoItem img {
+        width: 100%;
+        max-width: 45px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        filter: grayscale(100%);
+        transition: 0.2s;
+    }
+
+    .tipoItem input:checked+img {
+        filter: grayscale(0%);
+        border-color: var(--accent-color);
+        transform: scale(1.1);
+    }
+
+    /* ===== RADIOS PARA A RARIDADE ===== */
+    .raridadeSelector {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 5px;
+        margin-bottom: 25px;
+        width: 100%;
+    }
+
+    .raridadeItem {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .raridadeItem input {
+        display: none;
+    }
+
+    .raridadeItem img {
+        width: 100%;
+        max-width: 45px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        filter: grayscale(100%);
+        transition: 0.2s;
+    }
+
+    .raridadeItem input:checked+img {
+        filter: grayscale(0%);
+        border-color: var(--accent-color);
+        transform: scale(1.1);
+    }
+
+
+    .btnPrincipal_sign:hover {
+        opacity: 0.9;
+    }
+</style>
+
+<body class="bodyCadastro2">
+    <main class="cadastroContainer">
+        <section class="formularioCadastro">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./assets/imgs/logo.png">
+                    pkmnHub
+                </a>
+            </div>
+
+            <div class="welcome-text">
+                <h1>Cadastre sua carta</h1>
+                <p>Cuidado! As informações devem ser precisas</p>
+            </div>
+
+            <form>
+                <!-- NOME -->
+                <label for="ipt_nome">NOME</label>
+                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+
+                <label>SELECIONE O TIPO</label>
+                <div class="tipoSelector">
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Grass"><img src="./assets/imgs/types/grass.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Fire"><img src="./assets/imgs/types/fire.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Water"><img src="./assets/imgs/types/water.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Lightning"><img src="./assets/imgs/types/lightning.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Psychic"><img src="./assets/imgs/types/psychic.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Fighting"><img src="./assets/imgs/types/fightning.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Darkness"><img src="./assets/imgs/types/darkness.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Metal"><img src="./assets/imgs/types/metal.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Dragon"><img src="./assets/imgs/types/dragon.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Colorless"><img src="./assets/imgs/types/colorless.png"></label>
+                    <label class="tipoItem"><input type="radio" name="n_tipo" value="Fairy"><img src="./assets/imgs/types/fairy.png"></label>
+                </div>
+
+                <label>SELECIONE A RARIDADE</label>
+                <div class="raridadeSelector">
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Common"><img src="./assets/imgs/raritys/common.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Uncommon"><img src="./assets/imgs/raritys/uncommon.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Rare"><img src="./assets/imgs/raritys/rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Double Rare"><img src="./assets/imgs/raritys/double-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ultra Rare"><img src="./assets/imgs/raritys/ultra-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Illustration Rare"><img src="./assets/imgs/raritys/illustration-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="S.I.R."><img src="./assets/imgs/raritys/special-illustration-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ace Spec"><img src="./assets/imgs/raritys/ace-spec-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Hyper Rare"><img src="./assets/imgs/raritys/hyper-rare.png"></label>
+                    <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img src="./assets/imgs/raritys/promo.png"></label>
+                </div>
+
+                <div class="inputsJuntos">
+                    <div class="espaco">
+                        <label for="ipt_set">SET</label>
+                        <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos">
+                    </div>
+
+                    <div class="espaco">
+                        <label for="ipt_numero">NÚMERO</label>
+                        <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                    </div>
+                </div>
+
+                <!-- SET -->
+
+                <!-- NOVOS CAMPOS FINANCEIROS (Essencial para o seu Dashboard) -->
+                <div class="inputsJuntos">
+                    <div class="espaco">
+                        <label for="ipt_qtd">QUANTIDADE</label>
+                        <input type="number" id="ipt_qtd" min="1" value="1">
+                    </div>
+                    <div class="espaco">
+                        <label for="ipt_preco">PREÇO DE COMPRA (R$)</label>
+                        <input type="number" id="ipt_preco" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                    <div class="espaco">
+                        <label for="ipt_preco">MENOR DA LIGA (R$)</label>
+                        <input type="number" id="ipt_preco_liga" step="0.01" min="0" placeholder="0.00">
+                    </div>
+                </div>
+
+                <!-- URL IMAGEM (Corrigido para type="url") -->
+                <label for="ipt_url">URL IMAGEM</label>
+                <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
+
+                <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Cadastrar</button>
+            </form>
+        </section>
+
+        <section class="direitaContainer">
+            <div class="direitaConteudo">
+                <div class="detalheCadastro">
+                    <span class="detalheCadastro01">ACESSO ILIMITADO</span>
+                    <span class="detalheCadastro02">GESTÃO PREMIUM</span>
+                </div>
+                <h2>Domine o jogo, <span class="destaqueTexto">Colecione</span> lendas!</h2>
+
+                <div class="footerDireita">
+                    <div class="footerDireita_item">
+                        <strong>1k+</strong>
+                        <p>POKÉMONS</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="footerDireita_item">
+                        <strong>TODAS</strong>
+                        <p>AS SUAS CARTAS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

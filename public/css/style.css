@@ -1,0 +1,732 @@
+@font-face {
+    font-family: 'Ballet';
+    src: url(../assets/fonts/Ballet/Ballet-Regular-VariableFont_opsz.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Manrope';
+    src: url(../assets/fonts/Manrope/Manrope-VariableFont_wght.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+} 
+
+@font-face {
+    font-family: 'NotoSerif';
+    src: url(../assets/fonts/Noto_Serif/NotoSerif-VariableFont_wdth\,wght.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+/* var(--cinzaDetalhes); */
+:root { 
+    --cinzaPrimario: #121417;
+    --cinzaSecundario: #1a1c1f;
+    --cinzaTerciario: #16191d;
+    --cinzaDetalhes: #202226;
+    --tituloBranco: #ffffff;
+    --subtituloCinza: #94a3b8;
+    --amarelo: #F9CF30;
+    --azul: #31A7D7;
+    --vermelho: #EE3D2D;
+}
+
+* {
+    font-family: 'Manrope';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: normal;
+    text-decoration: none;
+}
+
+button {
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 50px;
+    padding: 0 25px;
+    box-shadow: 0px 4px 10px #00000040;
+
+}
+
+.ballet {
+    font-family: 'Ballet';
+}
+
+
+
+/* HEADER */
+
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1px 5%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background-color: #121417b0;
+    backdrop-filter: blur(10px);
+
+    border-bottom: 1px solid #ffffff0e;
+    box-sizing: border-box;
+
+}
+
+.header nav ul {
+    display: flex;
+    list-style: none;
+    gap: 60px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.header nav a {
+    text-decoration: none;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 100%;
+    transition: color 0.3s ease;
+}
+
+.header nav a.active {
+    color: #F9CF30;
+    border-bottom: 2px solid #F9CF30;
+    padding-bottom: 3px;
+}
+
+.logoHeader {
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoHeader img {
+    height: 80%;
+    width: 100%;
+}
+
+.btnPrincipal_header {
+    background: #F9CF30;
+    color: var(--cinzaTerciario);
+    height: 40px;
+}
+
+.btnSecundario_header {
+    background: var(--cinzaTerciario);
+    color: #F9CF30;
+    height: 40px;
+}
+
+
+
+/* HOME */
+
+
+
+.principal {
+    display: flex;
+    align-items: center;
+    padding: 230px 3%;
+    width: 100%;
+    gap: 0px;
+    background-image: linear-gradient(#12141774, #2f30347e),
+        url(../assets/imgs/main/background_home.png);
+    background-size: cover;
+
+}
+
+.principalConteudo {
+    flex: 1;
+}
+
+.principalConteudo h1 {
+    font-family: 'Manrope';
+    font-size: 75px;
+    font-weight: 900;
+    margin: 20px 0 10px 0;
+    line-height: 1.1;
+    max-width: 900px;
+    color: #ffffff;
+}
+
+.principalConteudo p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    color: #94a3b8;
+    margin-bottom: 30px;
+    max-width: 1000px;
+    text-shadow: 0px 4px 10px #00000040;
+    ;
+}
+
+.destaqueTexto {
+    font-family: 'Ballet', sans-serif;
+    color: #F9CF30;
+    font-weight: 900;
+
+}
+
+.detalhe {
+    background: #69000280;
+    color: #EE3D2D;
+    padding: 5px 25px;
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.principalBotoes {
+    display: flex;
+    gap: 15px;
+}
+
+.btnPrincipal_home {
+    background: #EE3D2D;
+    color: var(--cinzaTerciario);
+
+}
+
+.btnSecundario_home {
+    background: var(--cinzaTerciario);
+    color: #EE3D2D;
+    ;
+}
+
+
+
+
+/* SESSÃO 2 */
+
+
+
+
+.cardContainer {
+    background-color: var(--cinzaSecundario);
+    padding: 80px 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.cardContainer h2 {
+    font-size: 3rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.cardContainer p {
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.detalheLinha {
+    width: 80px;
+    height: 4px;
+    background-color: #EE3D2D;
+    margin-bottom: 60px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--cinzaTerciario);
+    border-radius: 24px;
+    overflow: hidden;
+    flex: 1 1 300px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.cardsQuebra {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    width: 100%;
+    justify-content: center;
+}
+
+.cardImagem {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-position: center;
+}
+
+.cardConteudo {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.cardConteudo p {
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.cardConteudo h3 {
+    color: #ffffff;
+    font-size: 20px;
+    margin: 0 0 12px 0;
+}
+
+.cardConteudo a {
+    color: #F9CF30;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.categoria {
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Ballet';
+}
+
+
+
+/* SESÃO 3 - TENDÊNCIAS (CARTAS EM ALTA) */
+
+
+
+.tendencias {
+    padding: 80px 5%;
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: var(--cinzaPrimario);
+    color: white;
+}
+
+.cartasTendencias {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.cartasTendencias h2 {
+    font-size: 3rem;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: -25px;
+}
+
+.cartasTendencias a {
+    color: #F9CF30;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.subtitulo {
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.cartaemAlta_container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    width: 100%;
+}
+
+.cartaemAlta {
+    background-color: var(--cinzaSecundario);
+    border-radius: 20px;
+    padding: 15px;
+    width: 210px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.cartaemALtaImagem {
+    position: relative;
+    background-color: #050505;
+    border-radius: 15px;
+    height: 250px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.cartaemALtaImagem:hover {
+    scale: 1.03;
+}
+
+.cartaemALtaImagem img {
+    width: 100%;
+    height: 100%;
+}
+
+.raridade {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #F9CF30;
+    border: 1px solid #F9CF30;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    z-index: 2;
+    font-weight: bold;
+}
+
+.cartaemAltaInfos h3 {
+    font-size: 16px;
+    margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.colecao {
+    color: #666;
+    font-size: 12px;
+    margin: 0;
+}
+
+.precoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.preco {
+    font-weight: bold;
+    color: #F9CF30;
+    font-size: 17px;
+}
+
+.stonks {
+    font-size: 12px;
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+.stinks {
+    font-size: 12px;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+
+
+/* TELA DE CADASTRO */
+
+
+
+:root {
+
+    --accent-color: #EE3D2D;
+    --azulzinho: #31A7D7;
+    --text-primary: #ffffff;
+    --text-secondary: #828282;
+    --border-color: #1A1C1F;
+}
+
+.bodyCadastro {
+    background-color: var(--cinzaPrimario);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.bodyCadastro2 {
+    background-color: var(--cinzaPrimario);
+    color: var(--text-primary);
+    overflow: hidden;
+    --accent-color: #31A7D7;
+}
+
+.cadastroContainer {
+    display: flex;
+    height: 100vh;
+}
+
+/* LADO ESQUERDO */
+.logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--accent-color);
+    margin-bottom: 40px;
+}
+.logo a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.logo img {
+    width: 25px;
+}
+
+.logo span {
+    color: white;
+}
+
+.welcome-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.welcome-text p {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    background: var(--cinzaSecundario);
+    border: 1px solid var(--cinzaDetalhes);
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+/* Quando o usuário clica ou tabula para o input */
+input:focus {
+    border-color: var(--accent-color);
+    /* A borda fica amarela */
+    background: var(--cinzaDetalhes);
+    /* O fundo pode ficar levemente mais claro */
+    box-shadow: 0 0 8px #31a8d73b;
+    /* Um brilho suave em volta */
+    outline: none;
+    /* Mantém o padrão do navegador escondido */
+    transition: 0.1s;
+}
+
+/* Flexbox para inputs de senha lado a lado */
+.inputsJuntos {
+    display: flex;
+    gap: 20px;
+}
+
+.inputsJuntos .espaco {
+    flex: 1;
+    /* Faz as duas metades ocuparem o mesmo espaço */
+}
+
+.btnPrincipal_sign {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: #000;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.linkCadastro {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.linkCadastro a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* LADO DIREITO */
+.direitaContainer {
+    flex: 1.2;
+    background: linear-gradient(to right, var(--cinzaPrimario), rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/venuPocket.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    padding: 80px;
+    --accent-color: #31A7D7;
+}
+
+.esquerdaContainer {
+    flex: 1.2;
+    background: linear-gradient(to left, var(--cinzaPrimario), rgba(0, 0, 0, 0.2)),
+        url('../assets/imgs/pkmnOficial/pocket/pikachuPocket.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    padding: 80px;
+}
+
+.formularioCadastro {
+    flex: 1;
+    padding: 60px 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.direitaConteudo h2 {
+    font-size: 3rem;
+    max-width: 500px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.destaqueTexto {
+    color: var(--accent-color);
+}
+
+.detalheCadastro {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.detalheCadastro01,
+.detalheCadastro02 {
+    font-size: 10px;
+    font-weight: bold;
+    padding: 6px 16px;
+    border-radius: 20px;
+}
+
+.detalheCadastro01 {
+    background: #31a8d730;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.detalheCadastro02 {
+    border: 1px solid #444;
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.footerDireita {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.footerDireita_item strong {
+    font-size: 28px;
+    display: block;
+}
+
+.footerDireita_item p {
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.divider {
+    width: 1px;
+    height: 40px;
+    background-color: #333;
+}
+
+/* Estilo para todos os selects do formulário */
+select {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--cinzaSecundario);
+    border: 1px solid var(--cinzaDetalhes);
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 20px;
+    outline: none;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    transition: 0.2s ease;
+
+    /* Remove a seta padrão do navegador */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Adiciona uma nova setinha customizada (SVG branco) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+/* Efeito de Focus (mesmo que você usou no input) */
+select:focus {
+    border-color: var(--accent-color);
+    background-color: var(--cinzaDetalhes);
+    box-shadow: 0 0 8px #31a8d73b;
+}
+
+/* Estilização das opções dentro do select */
+select option {
+    background-color: #1A1C1F; /* Fundo escuro para a lista */
+    color: white;
+    padding: 10px;
+}
+
+/* Caso queira tirar o estilo de "email" que ficou no campo de URL */
+input[type="url"] {
+    /* Ele já vai herdar seu estilo de 'input' geral */
+    color: var(--azulzinho); /* Opcional: deixar o link em azul */
+}
+
+
+
+/*  */
+
+.fotoContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--cinzaPrimario);
+    color: #ffffff;
+
+}
+
+.foto-perfil {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.foto-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
