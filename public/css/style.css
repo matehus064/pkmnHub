@@ -503,7 +503,7 @@ label {
     font-weight: 700;
     letter-spacing: 1px;
     color: #94a3b8;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 input {
@@ -729,4 +729,59 @@ input[type="url"] {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+
+/* 
+===================================================================
+    SESSÃO DE ESCOLHA SUA FOTO DE PERFIL NA TELA CADASTRO
+===================================================================
+*/
+
+.fotoPerfil-selector {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-bottom: 3px;
+    width: 100%;
+}
+
+.fotoPerfil-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fotoPerfil-item input {
+    display: none;
+}
+
+.fotoPerfil-item img {
+    width: 100%;
+    max-width: 75px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    border: 2px solid transparent;
+    filter: grayscale(100%);
+    transition: 0.2s;
+}
+
+.fotoPerfil-item img:hover {
+    filter: grayscale(0%);
+}
+
+.fotoPerfil-item img {
+    border-radius: 50%;
+}
+
+.fotoPerfil-item input:checked + img {
+    filter: grayscale(0%);
+    border-color: var(--azul);
+    transform: scale(1.1);
+}
+
+.labelRadio {
+    margin-bottom: 10px;
 }
