@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Troca</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link active">Cadastro</a>
+                    <ul class="submenu active">
+                        <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                        <li><a href="dashboard_troca.html" class="submenu-link active">Troca</a></li>
+                        <li><a href="#" class="submenu-link">Atualização</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <span>matehus</span>
+        </header>
+
+        <div class="cadastroTroca_wrapper">
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+                    <div class="welcome-text">
+                        <h1>Cadastre sua troca</h1>
+                        <p>REMETENTE (VOCÊ)</p>
+                    </div>
+
+                    <form>
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_nome">Nome da Carta</label>
+                                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_numero">NÚMERO</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                            </div>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_preco_liga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_preco_liga" min="1" step="1.00" placeholder="0.00">
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="direitaContainer_bulbassaur"></section>
+            </main>
+
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+
+                    <div class="welcome-text">
+                        <p>DESTINATÁRIO:</p>
+                    </div>
+
+                    <form>
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_nome">Nome da Carta</label>
+                                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_numero">NÚMERO</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                            </div>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_preco_liga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_preco_liga" min="1" step="1.00" placeholder="0.00">
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Finalizar Cadastro</button>
+                    </form>
+                </section>
+
+                <section class="direitaContainer_squirtle"></section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+
+    <script>
+        let numeroImagem = Math.floor(Math.random() * 6) + 1;
+        header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+        function cadastrarCarta() {
+            alert("Carta enviada com sucesso!");
+        }
+
+        // LÓGICA DA BANDEJA (SIDEBAR)
+        document.addEventListener('DOMContentLoaded', function () {
+            const cadastroMenu = document.getElementById('cadastroMenu');
+            const linkCadastro = cadastroMenu.querySelector('.nav-link');
+
+            linkCadastro.addEventListener('click', function (e) {
+                e.preventDefault();
+                cadastroMenu.classList.toggle('open');
+            });
+        });
+    </script>

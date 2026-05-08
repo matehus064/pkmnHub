@@ -1,0 +1,77 @@
+
+
+create database if not exists pkmnhub;
+
+use pkmnhub;
+
+-- 1. Tabela de Fotos (Deve vir primeiro para ser referenciada)
+CREATE TABLE foto_perfil (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45) NOT NULL -- Ex: 'Pikachu', 'Bulbasaur'
+);
+
+-- 2. Tabela de Usuários
+CREATE TABLE usuario (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(45) NOT NULL UNIQUE,
+    email VARCHAR(65) NOT NULL UNIQUE,
+    senha VARCHAR(255), -- Aumentado para hashes seguros (bcrypt/argon2)
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Chave Estrangeira para a foto
+    fk_fotoPerfil INT,
+    CONSTRAINT fk_usuario_foto FOREIGN KEY (fk_fotoPerfil) 
+        REFERENCES foto_perfil(id)
+);
+
+
+-- 2. Dicionário de Cartas (Referência Global)
+-- Aqui ficam os dados fixos da carta. Evita repetição de texto.
+CREATE TABLE base_cards (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_pokemon VARCHAR(45) NOT NULL,
+    tipo VARCHAR(20),      -- Ex: Fogo, Água, Teratipo
+    set_nome VARCHAR(45),  -- Ex: Heróis Excelsos
+    raridade VARCHAR(35),  -- Aumentei um pouco o tamanho por segurança
+    numero_set VARCHAR(10), -- Ex: 054/191
+    url_imagem VARCHAR(255), -- O novo campo entra aqui!
+    
+    -- Correção da Constraint: especifique a coluna 'raridade' antes do IN
+    CONSTRAINT chk_raridade CHECK (raridade IN (
+        'Common', 
+        'Uncommon', 
+        'Rare', 
+        'Double Rare', 
+        'Ultra Rare', 
+        'Illustration Rare', 
+        'Special Illustration Rare', 
+        'ACE SPEC rare', 
+        'Hyper Rare', 
+        'Promo'
+    ))
+);
+
+-- 3. A Coleção do Usuário (O Inventário)
+-- Relaciona o Usuário com a Carta e guarda os dados da "posse"
+CREATE TABLE colecao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_usuario INT,
+    fk_carta INT,
+    quantidade INT DEFAULT 1,
+    preco_compra DECIMAL(10, 2),
+    preco_ligaPkmn DECIMAL(10, 2),-- Essencial para calcular o ROI
+    data_adicao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
+    FOREIGN KEY (fk_carta) REFERENCES base_cards(id)
+);
+
+-- 4. Histórico de Transações (Para o Gráfico do Dashboard)
+-- Para alimentar aquele gráfico de "30 dias" que você tem no layout
+CREATE TABLE transacoes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_usuario INT,
+    tipo_movimentacao ENUM('compra', 'venda', 'troca'),
+    valor_transacao DECIMAL(10, 2),
+    data_movimento DATE,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+);

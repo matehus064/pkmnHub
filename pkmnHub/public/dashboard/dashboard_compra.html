@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Compra</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link active">Cadastro</a>
+                    <ul class="submenu active">
+                        <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                        <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
+                        <li><a href="#" class="submenu-link">Atualização</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <span>matehus</span>
+        </header>
+
+        <div class="cadastroFlex_wrapper">
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+                    <div class="welcome-text">
+                        <h1>Cadastre sua carta</h1>
+                        <p>Preencha os dados técnicos e financeiros.</p>
+                    </div>
+
+                    <form>
+                        <label for="ipt_nome">Nome da Carta</label>
+                        <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+
+                        <label>SELECIONE O TIPO</label>
+                        <div class="tipoSelector">
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Grass"><img
+                                    src="../assets/imgs/types/grass.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fire"><img
+                                    src="../assets/imgs/types/fire.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Water"><img
+                                    src="../assets/imgs/types/water.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Lightning"><img
+                                    src="../assets/imgs/types/lightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Psychic"><img
+                                    src="../assets/imgs/types/psychic.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fighting"><img
+                                    src="../assets/imgs/types/fightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Darkness"><img
+                                    src="../assets/imgs/types/darkness.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Metal"><img
+                                    src="../assets/imgs/types/metal.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Dragon"><img
+                                    src="../assets/imgs/types/dragon.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Colorless"><img
+                                    src="../assets/imgs/types/colorless.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fairy"><img
+                                    src="../assets/imgs/types/fairy.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="None"><img
+                                    src="../assets/imgs/types/none.png"></label>
+                        </div>
+
+                        <label>SELECIONE A RARIDADE</label>
+                        <div class="raridadeSelector">
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Common"><img
+                                    src="../assets/imgs/raritys/common.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Uncommon"><img
+                                    src="../assets/imgs/raritys/uncommon.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Rare"><img
+                                    src="../assets/imgs/raritys/rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Double Rare"><img
+                                    src="../assets/imgs/raritys/double-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ultra Rare"><img
+                                    src="../assets/imgs/raritys/ultra-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade"
+                                    value="Illustration Rare"><img
+                                    src="../assets/imgs/raritys/illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="S.I.R."><img
+                                    src="../assets/imgs/raritys/special-illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ace Spec"><img
+                                    src="../assets/imgs/raritys/ace-spec-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Hyper Rare"><img
+                                    src="../assets/imgs/raritys/hyper-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img
+                                    src="../assets/imgs/raritys/promo.png"></label>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_set">Expansão (Set)</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_numero">Número</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                            </div>
+                        </div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_preco">PREÇO DE COMPRA (R$)</label>
+                                <input type="number" id="ipt_preco" value="0" min="1" step="1.00" placeholder="0.00">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_precoLiga" value="0" min="1" step="1.00"
+                                    placeholder="0.00">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_url">URL IMAGEM</label>
+                                <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
+                            </div>
+                        </div>
+
+                        <label id="div_validacao"></label>
+
+                        <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Finalizar
+                            Cadastro</button>
+
+
+                    </form>
+                </section>
+
+                <section class="direitaContainer_gyarados"></section>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    // ----- DADOS: -----
+    let todosPokemons = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate", "spearow", "fearow", "ekans", "arbok", "pikachu", "raichu", "sandshrew", "sandslash", "nidoran-f", "nidorina", "nidoqueen", "nidoran-m", "nidorino", "nidoking", "clefairy", "clefable", "vulpix", "ninetales", "jigglypuff", "wigglytuff", "zubat", "golbat", "oddish", "gloom", "vileplume", "paras", "parasect", "venonat", "venomoth", "diglett", "dugtrio", "meowth", "persian", "psyduck", "golduck", "mankey", "primeape", "growlithe", "arcanine", "poliwag", "poliwhirl", "poliwrath", "abra", "kadabra", "alakazam", "machop", "machoke", "machamp", "bellsprout", "weepinbell", "victreebel", "tentacool", "tentacruel", "geodude", "graveler", "golem", "ponyta", "rapidash", "slowpoke", "slowbro", "magnemite", "magneton", "farfetchd", "doduo", "dodrio", "seel", "dewgong", "grimer", "muk", "shellder", "cloyster", "gastly", "haunter", "gengar", "onix", "drowzee", "hypno", "krabby", "kingler", "voltorb", "electrode", "exeggcute", "exeggutor", "cubone", "marowak", "hitmonlee", "hitmonchan", "lickitung", "koffing", "weezing", "rhyhorn", "rhydon", "chansey", "tangela", "kangaskhan", "horsea", "seadra", "goldeen", "seaking", "staryu", "starmie", "mr-mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew", "chikorita", "bayleef", "meganium", "cyndaquil", "quilava", "typhlosion", "totodile", "croconaw", "feraligatr", "sentret", "furret", "hoothoot", "noctowl", "ledyba", "ledian", "spinarak", "ariados", "crobat", "chinchou", "lanturn", "pichu", "cleffa", "igglybuff", "togepi", "togetic", "natu", "xatu", "mareep", "flaaffy", "ampharos", "bellossom", "marill", "azumarill", "sudowoodo", "politoed", "hoppip", "skiploom", "jumpluff", "aipom", "sunkern", "sunflora", "yanma", "wooper", "quagsire", "espeon", "umbreon", "murkrow", "slowking", "misdreavus", "unown", "wobbuffet", "girafarig", "pineco", "forretress", "dunsparce", "gligar", "steelix", "snubbull", "granbull", "qwilfish", "scizor", "shuckle", "heracross", "sneasel", "teddiursa", "ursaring", "slugma", "magcargo", "swinub", "piloswine", "corsola", "remoraid", "octillery", "delibird", "mantine", "skarmory", "houndour", "houndoom", "kingdra", "phanpy", "donphan", "porygon2", "stantler", "smeargle", "tyrogue", "hitmontop", "smoochum", "elekid", "magby", "miltank", "blissey", "raikou", "entei", "suicune", "larvitar", "pupitar", "tyranitar", "lugia", "ho-oh", "celebi", "treecko", "grovyle", "sceptile", "torchic", "combusken", "blaziken", "mudkip", "marshtomp", "swampert", "poochyena", "mightyena", "zigzagoon", "linoone", "wurmple", "silcoon", "beautifly", "cascoon", "dustox", "lotad", "lombre", "ludicolo", "seedot", "nuzleaf", "shiftry", "taillow", "swellow", "wingull", "pelipper", "ralts", "kirlia", "gardevoir", "surskit", "masquerain", "shroomish", "breloom", "slakoth", "vigoroth", "slaking", "nincada", "ninjask", "shedinja", "whismur", "loudred", "exploud", "makuhita", "hariyama", "azurill", "nosepass", "skitty", "delcatty", "sableye", "mawile", "aron", "lairon", "aggron", "meditite", "medicham", "electrike", "manectric", "plusle", "minun", "volbeat", "illumise", "roselia", "gulpin", "swalot", "carvanha", "sharpedo", "wailmer", "wailord", "numel", "camerupt", "torkoal", "spoink", "grumpig", "spinda", "trapinch", "vibrava", "flygon", "cacnea", "cacturne", "swablu", "altaria", "zangoose", "seviper", "lunatone", "solrock", "barboach", "whiscash", "corphish", "crawdaunt", "baltoy", "claydol", "lileep", "cradily", "anorith", "armaldo", "feebas", "milotic", "castform", "kecleon", "shuppet", "banette", "duskull", "dusclops", "tropius", "chimecho", "absol", "wynaut", "snorunt", "glalie", "spheal", "sealeo", "walrein", "clamperl", "huntail", "gorebyss", "relicanth", "luvdisc", "bagon", "shelgon", "salamence", "beldum", "metang", "metagross", "regirock", "regice", "registeel", "latias", "latios", "kyogre", "groudon", "rayquaza", "jirachi", "deoxys-normal", "turtwig", "grotle", "torterra", "chimchar", "monferno", "infernape", "piplup", "prinplup", "empoleon", "starly", "staravia", "staraptor", "bidoof", "bibarel", "kricketot", "kricketune", "shinx", "luxio", "luxray", "budew", "roserade", "cranidos", "rampardos", "shieldon", "bastiodon", "burmy", "wormadam-plant", "mothim", "combee", "vespiquen", "pachirisu", "buizel", "floatzel", "cherubi", "cherrim", "shellos", "gastrodon", "ambipom", "drifloon", "drifblim", "buneary", "lopunny", "mismagius", "honchkrow", "glameow", "purugly", "chingling", "stunky", "skuntank", "bronzor", "bronzong", "bonsly", "mime-jr", "happiny", "chatot", "spiritomb", "gible", "gabite", "garchomp", "munchlax", "riolu", "lucario", "hippopotas", "hippowdon", "skorupi", "drapion", "croagunk", "toxicroak", "carnivine", "finneon", "lumineon", "mantyke", "snover", "abomasnow", "weavile", "magnezone", "lickilicky", "rhyperior", "tangrowth", "electivire", "magmortar", "togekiss", "yanmega", "leafeon", "glaceon", "gliscor", "mamoswine", "porygon-z", "gallade", "probopass", "dusknoir", "froslass", "rotom", "uxie", "mesprit", "azelf", "dialga", "palkia", "heatran", "regigigas", "giratina-altered", "cresselia", "phione", "manaphy", "darkrai", "shaymin-land", "arceus", "victini", "snivy", "servine", "serperior", "tepig", "pignite", "emboar", "oshawott", "dewott", "samurott", "patrat", "watchog", "lillipup", "herdier", "stoutland", "purrloin", "liepard", "pansage", "simisage", "pansear", "simisear", "panpour", "simipour", "munna", "musharna", "pidove", "tranquill", "unfezant", "blitzle", "zebstrika", "roggenrola", "boldore", "gigalith", "woobat", "swoobat", "drilbur", "excadrill", "audino", "timburr", "gurdurr", "conkeldurr", "tympole", "palpitoad", "seismitoad", "throh", "sawk", "sewaddle", "swadloon", "leavanny", "venipede", "whirlipede", "scolipede", "cottonee", "whimsicott", "petilil", "lilligant", "basculin-red-striped", "sandile", "krokorok", "krookodile", "darumaka", "darmanitan-standard", "maractus", "dwebble", "crustle", "scraggy", "scrafty", "sigilyph", "yamask", "cofagrigus", "tirtouga", "carracosta", "archen", "archeops", "trubbish", "garbodor", "zorua", "zoroark", "minccino", "cinccino", "gothita", "gothorita", "gothitelle", "solosis", "duosion", "reuniclus", "ducklett", "swanna", "vanillite", "vanillish", "vanilluxe", "deerling", "sawsbuck", "emolga", "karrablast", "escavalier", "foongus", "amoonguss", "frillish-male", "jellicent-male", "alomomola", "joltik", "galvantula", "ferroseed", "ferrothorn", "klink", "klang", "klinklang", "tynamo", "eelektrik", "eelektross", "elgyem", "beheeyem", "litwick", "lampent", "chandelure", "axew", "fraxure", "haxorus", "cubchoo", "beartic", "cryogonal", "shelmet", "accelgor", "stunfisk", "mienfoo", "mienshao", "druddigon", "golett", "golurk", "pawniard", "bisharp", "bouffalant", "rufflet", "braviary", "vullaby", "mandibuzz", "heatmor", "durant", "deino", "zweilous", "hydreigon", "larvesta", "volcarona", "cobalion", "terrakion", "virizion", "tornadus-incarnate", "thundurus-incarnate", "reshiram", "zekrom", "landorus-incarnate", "kyurem", "keldeo-ordinary", "meloetta-aria", "genesect", "chespin", "quilladin", "chesnaught", "fennekin", "braixen", "delphox", "froakie", "frogadier", "greninja", "bunnelby", "diggersby", "fletchling", "fletchinder", "talonflame", "scatterbug", "spewpa", "vivillon", "litleo", "pyroar-male", "flabebe", "floette", "florges", "skiddo", "gogoat", "pancham", "pangoro", "furfrou", "espurr", "meowstic-male", "honedge", "doublade", "aegislash-shield", "spritzee", "aromatisse", "swirlix", "slurpuff", "inkay", "malamar", "binacle", "barbaracle", "skrelp", "dragalge", "clauncher", "clawitzer", "helioptile", "heliolisk", "tyrunt", "tyrantrum", "amaura", "aurorus", "sylveon", "hawlucha", "dedenne", "carbink", "goomy", "sliggoo", "goodra", "klefki", "phantump", "trevenant", "pumpkaboo-average", "gourgeist-average", "bergmite", "avalugg", "noibat", "noivern", "xerneas", "yveltal", "zygarde-50", "diancie", "hoopa", "volcanion", "rowlet", "dartrix", "decidueye", "litten", "torracat", "incineroar", "popplio", "brionne", "primarina", "pikipek", "trumbeak", "toucannon", "yungoos", "gumshoos", "grubbin", "charjabug", "vikavolt", "crabrawler", "crabominable", "oricorio-baile", "cutiefly", "ribombee", "rockruff", "lycanroc-midday", "wishiwashi-solo", "mareanie", "toxapex", "mudbray", "mudsdale", "dewpider", "araquanid", "fomantis", "lurantis", "morelull", "shiinotic", "salandit", "salazzle", "stufful", "bewear", "bounsweet", "steenee", "tsareena", "comfey", "oranguru", "passimian", "wimpod", "golisopod", "sandygast", "palossand", "pyukumuku", "type-null", "silvally", "minior-red-meteor", "komala", "turtonator", "togedemaru", "mimikyu-disguised", "bruxish", "drampa", "dhelmise", "jangmo-o", "hakamo-o", "kommo-o", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "cosmoem", "solgaleo", "lunala", "nihilego", "buzzwole", "pheromosa", "xurkitree", "celesteela", "kartana", "guzzlord", "necrozma", "magearna", "marshadow", "poipole", "naganadel", "stakataka", "blacephalon", "zeraora", "meltan", "melmetal", "grookey", "thwackey", "rillaboom", "scorbunny", "raboot", "cinderace", "sobble", "drizzile", "inteleon", "skwovet", "greedent", "rookidee", "corvisquire", "corviknight", "blipbug", "dottler", "orbeetle", "nickit", "thievul", "gossifleur", "eldegoss", "wooloo", "dubwool", "chewtle", "drednaw", "yamper", "boltund", "rolycoly", "carkol", "coalossal", "applin", "flapple", "appletun", "silicobra", "sandaconda", "cramorant", "arrokuda", "barraskewda", "toxel", "toxtricity-amped", "sizzlipede", "centiskorch", "clobbopus", "grapploct", "sinistea", "polteageist", "hatenna", "hattrem", "hatterene", "impidimp", "morgrem", "grimmsnarl", "obstagoon", "perrserker", "cursola", "sirfetchd", "mr-rime", "runerigus", "milcery", "alcremie", "falinks", "pincurchin", "snom", "frosmoth", "stonjourner", "eiscue-ice", "indeedee-male", "morpeko-full-belly", "cufant", "copperajah", "dracozolt", "arctozolt", "dracovish", "arctovish", "duraludon", "dreepy", "drakloak", "dragapult", "zacian", "zamazenta", "eternatus", "kubfu", "urshifu-single-strike", "zarude", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex", "wyrdeer", "kleavor", "ursaluna", "basculegion-male", "sneasler", "overqwil", "enamorus-incarnate", "sprigatito", "floragato", "meowscarada", "fuecoco", "crocalor", "skeledirge", "quaxly", "quaxwell", "quaquaval", "lechonk", "oinkologne-male", "tarountula", "spidops", "nymble", "lokix", "pawmi", "pawmo", "pawmot", "tandemaus", "maushold-family-of-four", "fidough", "dachsbun", "smoliv", "dolliv", "arboliva", "squawkabilly-green-plumage", "nacli", "naclstack", "garganacl", "charcadet", "armarouge", "ceruledge", "tadbulb", "bellibolt", "wattrel", "kilowattrel", "maschiff", "mabosstiff", "shroodle", "grafaiai", "bramblin", "brambleghast", "toedscool", "toedscruel", "klawf", "capsakid", "scovillain", "rellor", "rabsca", "flittle", "espathra", "tinkatink", "tinkatuff", "tinkaton", "wiglett", "wugtrio", "bombirdier", "finizen", "palafin-zero", "varoom", "revavroom", "cyclizar", "orthworm", "glimmet", "glimmora", "greavard", "houndstone", "flamigo", "cetoddle", "cetitan", "veluza", "dondozo", "tatsugiri-curly", "annihilape", "clodsire", "farigiraf", "dudunsparce-two-segment", "kingambit", "great-tusk", "scream-tail", "brute-bonnet", "flutter-mane", "slither-wing", "sandy-shocks", "iron-treads", "iron-bundle", "iron-hands", "iron-jugulis", "iron-moth", "iron-thorns", "frigibax", "arctibax", "baxcalibur", "gimmighoul", "gholdengo", "wo-chien", "chien-pao", "ting-lu", "chi-yu", "roaring-moon", "iron-valiant", "koraidon", "miraidon", "walking-wake", "iron-leaves", "dipplin", "poltchageist", "sinistcha", "okidogi", "munkidori", "fezandipiti", "ogerpon", "archaludon", "hydrapple", "gouging-fire", "raging-bolt", "iron-boulder", "iron-crown", "terapagos"];
+
+    // ----- PROFILE PIC ALEATÓRIA (PLACEHOLDER)
+    let numeroImagem = Math.floor(Math.random() * 6) + 1;
+    header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+    // ----- VARIAVEIS INPUTS: -----
+    function cadastrarCarta() {
+        let nomeCarta = ipt_nome.value;
+        let setCarta = ipt_set.value;
+        let numeroCarta = ipt_numero.value;
+        let qntCarta = Number(ipt_qtd.value);
+        let precoCompra = Number(ipt_preco.value);
+        let menorLiga = Number(ipt_precoLiga.value);
+        let imagemCarta = ipt_url.value;
+
+        let tipoCarta = document.querySelector('input[name="n_tipo"]:checked')?.value;
+        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
+
+        let nomeValidado = true;
+
+    // ----- VALIDAÇÕES: -----
+        if (tipoCarta != "None") {
+            nomeValidado = false;
+            console.log("situação 1: " + nomeValidado);
+            for (let i = 0; i < todosPokemons.length; i++) {
+                if ((nomeCarta.toLowerCase()).includes(todosPokemons[i])) {
+                    nomeValidado = true;
+                    console.log("situação 2 entrou no if: " + nomeValidado);
+                    break;
+                }
+            }
+        }
+
+        let condicoesErro = [
+            nomeCarta == "" || setCarta == "" || numeroCarta == "" || qntCarta == "" || imagemCarta == "",
+            nomeCarta.length < 3 || !nomeValidado,
+            numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7,
+            tipoCarta == undefined,
+            raridadeCarta == undefined
+        ];
+
+        let mensagensErro = [
+            "Preencha todos os campos",
+            "Nome inválido",
+            "Observe a parte inferior da sua carta e preencha corretamente a númeração",
+            "Selecione o tipo da carta",
+            "Selecione a raridade da carta"
+        ];
+
+        for (let i = 0; i < condicoesErro.length; i++) {
+            if (condicoesErro[i]) {
+                div_validacao.innerHTML = "<span style='color: #EE3D2D'>" + mensagensErro[i] + "</span>";
+                return false;
+            }
+        }
+        div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>";
+    }
+
+    // LÓGICA DA BANDEJA (SIDEBAR)
+    document.addEventListener('DOMContentLoaded', function () {
+        const cadastroMenu = document.getElementById('cadastroMenu');
+        const linkCadastro = cadastroMenu.querySelector('.nav-link');
+
+        linkCadastro.addEventListener('click', function (e) {
+            e.preventDefault();
+            cadastroMenu.classList.toggle('open');
+
+
+        });
+    });
+
+</script>
