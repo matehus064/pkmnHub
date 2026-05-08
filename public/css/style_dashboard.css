@@ -19,6 +19,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Ballet';
+    src: url(../assets/fonts/Ballet/Ballet-Regular-VariableFont_opsz.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -35,6 +42,11 @@ body {
     height: 100vh;
     overflow: hidden;
 }
+
+.ballet {
+    font-family: 'Ballet';
+}
+
 
 /* ==========================================================================
    2. SIDEBAR E NAVEGAÇÃO (global)

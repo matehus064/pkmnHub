@@ -42,7 +42,7 @@
             <main class="cadastroContainer">
                 <section class="formularioCadastro">
                     <div class="welcome-text">
-                        <h1>Cadastre sua carta</h1>
+                        <h1>Cadastre sua <span class="ballet" style="color: #F9CF30;">Aquisição</span class="ballet"></h1>
                         <p>Preencha os dados técnicos e financeiros.</p>
                     </div>
 
@@ -122,8 +122,8 @@
                             </div>
 
                             <div class="espaco">
-                                <label for="ipt_preco">PREÇO DE COMPRA (R$)</label>
-                                <input type="number" id="ipt_preco" value="0" min="1" step="1.00" placeholder="0.00">
+                                <label for="ipt_preco">VALOR DE COMPRA (R$)</label>
+                                <input type="number" id="ipt_valorCompra" value="0" min="1" step="1.00" placeholder="0.00">
                             </div>
 
                             <div class="espaco">
@@ -169,7 +169,7 @@
         let setCarta = ipt_set.value;
         let numeroCarta = ipt_numero.value;
         let qntCarta = Number(ipt_qtd.value);
-        let precoCompra = Number(ipt_preco.value);
+        let valorCompra = Number(ipt_valorCompra.value);
         let menorLiga = Number(ipt_precoLiga.value);
         let imagemCarta = ipt_url.value;
 
