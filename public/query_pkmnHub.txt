@@ -51,18 +51,24 @@ CREATE TABLE base_cards (
     ))
 );
 
--- 3. A Coleção do Usuário (O Inventário)
--- Relaciona o Usuário com a Carta e guarda os dados da "posse"
+-- 3. A Coleção do Usuário (Relacionamento N:N puro)
+-- Agora a identificação única da linha é o par (fk_usuario, fk_carta)
 CREATE TABLE colecao (
-    id INT PRIMARY KEY AUTO_INCREMENT,
     fk_usuario INT,
     fk_carta INT,
     quantidade INT DEFAULT 1,
     preco_compra DECIMAL(10, 2),
-    preco_ligaPkmn DECIMAL(10, 2),-- Essencial para calcular o ROI
+    preco_ligaPkmn DECIMAL(10, 2),
     data_adicao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
-    FOREIGN KEY (fk_carta) REFERENCES base_cards(id)
+    
+    -- Definindo a Chave Primária Composta
+    PRIMARY KEY (fk_usuario, fk_carta),
+    
+    -- Chaves Estrangeiras
+    CONSTRAINT fk_colecao_usuario FOREIGN KEY (fk_usuario) 
+        REFERENCES usuario(id) ON DELETE CASCADE,
+    CONSTRAINT fk_colecao_carta FOREIGN KEY (fk_carta) 
+        REFERENCES base_cards(id)
 );
 
 -- 4. Histórico de Transações (Para o Gráfico do Dashboard)
