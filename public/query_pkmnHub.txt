@@ -10,6 +10,8 @@ CREATE TABLE foto_perfil (
     nome VARCHAR(45) NOT NULL -- Ex: 'Pikachu', 'Bulbasaur'
 );
 
+INSERT INTO foto_perfil (nome) VALUES ('May'), ('Dawn'), ('Lyra'), ('Hilda'), ('Rosa'), ('Selene');
+
 -- 2. Tabela de Usuários
 CREATE TABLE usuario (
     id INT PRIMARY KEY AUTO_INCREMENT,

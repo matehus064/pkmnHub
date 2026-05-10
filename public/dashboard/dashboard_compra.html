@@ -123,7 +123,8 @@
 
                             <div class="espaco">
                                 <label for="ipt_preco">VALOR DE COMPRA (R$)</label>
-                                <input type="number" id="ipt_valorCompra" value="0" min="1" step="1.00" placeholder="0.00">
+                                <input type="number" id="ipt_valorCompra" value="0" min="1" step="1.00"
+                                    placeholder="0.00">
                             </div>
 
                             <div class="espaco">
@@ -176,9 +177,11 @@
         let tipoCarta = document.querySelector('input[name="n_tipo"]:checked')?.value;
         let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
 
+        let usuario = sessionStorage.getItem("id");
+
         let nomeValidado = true;
 
-    // ----- VALIDAÇÕES: -----
+        // ----- VALIDAÇÕES: -----
         if (tipoCarta != "None") {
             nomeValidado = false;
             console.log("situação 1: " + nomeValidado);
@@ -213,8 +216,41 @@
                 return false;
             }
         }
-        div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>";
+        
+        // ----- IMPLEMENTAÇÃO API: -----
+        fetch("/cards/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeCartaServer: nomeCarta,
+                setCartaServer: setCarta,
+                numeroCartaServer: numeroCarta,
+                qntCartaServer: qntCarta,
+                valorCompraServer: valorCompra,
+                menorLigaServer: menorLiga,
+                imagemCartaServer: imagemCarta,
+                tipoCartaServer: tipoCarta,
+                raridadeCartaServer: raridadeCarta,
+                usuarioServer: usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>";
+                } else {
+                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>";;
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
+
 
     // LÓGICA DA BANDEJA (SIDEBAR)
     document.addEventListener('DOMContentLoaded', function () {
