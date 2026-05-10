@@ -19,6 +19,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var cardsRouter = require("./src/routes/cards");
 var transacoesRouter = require("./src/routes/transacoes");
+var kpisRouter = require("./src/routes/kpis");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +31,8 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/cards", cardsRouter);
 app.use("/transacoes", transacoesRouter);
+app.use("/kpis", kpisRouter);
+
 
 app.listen(PORTA_APP, function () {
     console.log(`
@@ -40,6 +43,11 @@ app.listen(PORTA_APP, function () {
     #######  ##       ##  ##            ##  ##   ##  ##     ##     ##  ##            ##  ##     ##      ##     
     ### ###  ##       ##  ##            ## ##    ##  ##     ##     ##  ##             ####      ##     ##      
     ##   ##  ######   #####             ####     ##  ##     ##     ##  ##              ##      ####    ######  
+
+    ###  # #  ## ##  ## #    #  #  #  #  ####
+    # #  ##   # # #  # ##    ####  #  #  ###
+    #    # #  # # #  #  #    #  #  ####  # ##
+
     \n\n\n                                                                                                 
     Servidor do seu site já está rodando! Acesse o caminho a seguir para visualizar .: http://${HOST_APP}:${PORTA_APP} :. \n\n
     Você está rodando sua aplicação em ambiente de .:${process.env.AMBIENTE_PROCESSO}:. \n\n

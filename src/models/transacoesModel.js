@@ -36,9 +36,30 @@ function registrarTransacao(usuario, carta, tipoMovimentacao, valorVenda, precoL
     return database.executar(instrucaoSql);
 }
 
+// ----- IMPLEMENTAÇÕES KPS: -----
+function buscarTotalGasto (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+        SELECT SUM(valor_transacao) AS total_investido FROM transacoes WHERE fk_usuario = '${usuario}' AND tipo_movimentacao = 'compra';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarTotalRetorno (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+        SELECT SUM(valor_transacao) AS total_retorno FROM transacoes WHERE fk_usuario = '${usuario}' AND tipo_movimentacao = 'venda';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarCartaNaColecao,
     atualizarQuantidade,
     removerDaColecao,
-    registrarTransacao
+    registrarTransacao,
+    buscarTotalGasto,
+    buscarTotalRetorno
 };

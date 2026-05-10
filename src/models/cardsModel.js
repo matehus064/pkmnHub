@@ -27,8 +27,41 @@ function adicionarNaColecao(usuario, carta, quantidade, precoCompra, precoLigaPk
     return database.executar(instrucaoSql);
 }
 
+// ----- IMPLEMENTAÇÕES KPS: -----
+function buscarValorTotalColecao (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+        SELECT SUM(c.preco_ligaPkmn * c.quantidade) AS valor_total_colecao FROM colecao c JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = '${usuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarTotalCartas (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+    SELECT SUM(quantidade) AS total_cartas_fisicas FROM colecao WHERE fk_usuario = '${usuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarCartaMaisCara (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+    SELECT b.nome_pokemon, b.set_nome, b.url_imagem, c.preco_ligaPkmn FROM colecao AS c JOIN base_cards AS b ON c.fk_carta = b.id WHERE c.fk_usuario = '${usuario}' ORDER BY c.preco_ligaPkmn DESC LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+
 module.exports = {
     existeCarta,
     cadastrar,
-    adicionarNaColecao
+    adicionarNaColecao,
+    buscarValorTotalColecao,
+    buscarTotalCartas,
+    buscarCartaMaisCara
 };
