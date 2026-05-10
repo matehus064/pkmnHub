@@ -1,5 +1,3 @@
-
-
 create database if not exists pkmnhub;
 
 use pkmnhub;
@@ -78,8 +76,11 @@ CREATE TABLE colecao (
 CREATE TABLE transacoes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     fk_usuario INT,
+    fk_carta INT,
     tipo_movimentacao ENUM('compra', 'venda', 'troca'),
     valor_transacao DECIMAL(10, 2),
-    data_movimento DATE,
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+    preco_ligaPkmn DECIMAL(10, 2),
+    data_movimento DATE DEFAULT (CURRENT_DATE), 
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (fk_carta) REFERENCES base_cards(id)
 );

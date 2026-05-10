@@ -104,6 +104,8 @@
         let valorVenda = Number(ipt_valorVenda.value);
         let menorLiga = Number(ipt_precoLiga.value);
 
+        let usuario = sessionStorage.getItem("ID_USER");
+
         let nomeValidado = true;
 
     // ----- VALIDAÇÕES: -----
@@ -127,6 +129,35 @@
             }
         }
         div_validacao.innerHTML = "<span style='color: #2ecc71'>Venda concluída! Carta retirada da coleção</span>";
+
+        // ----- IMPLEMENTAÇÃO API: -----
+        fetch("/transacoes/venda", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeCartaServer: nomeCarta,
+                numeroCartaServer: numeroCarta,
+                qntCartaServer: qntCarta,
+                valorVendaServer: valorVenda,
+                menorLigaServer: menorLiga,
+                usuarioServer: usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta vendida com sucesso!</span>";
+                } else {
+                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar a venda...</span>";;
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
 
     // LÓGICA DA BANDEJA (SIDEBAR)
