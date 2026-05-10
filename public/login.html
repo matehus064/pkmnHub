@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="icon" href="./assets/imgs/main/logo.png">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body class="bodyCadastro">
     <main class="cadastroContainer">
         <section class="esquerdaContainer">
@@ -42,15 +44,16 @@
                 <p>Seus Pokémons estão a espera!</p>
             </div>
 
-            <form>
+            <form onsubmit="return false;">
                 <label>E-MAIL</label>
-                <input type="email" placeholder="nome@exemplo.com">
+                <input type="text" id="ipt_email" placeholder="nome@exemplo.com">
 
-                <div class="espaco"> <label>SENHA</label>
-                    <input type="password" placeholder="********">
-                </div>
+                <label>SENHA</label>
+                <input type="password" id="ipt_senha" placeholder="********">
 
-                <button type="submit" class="btnPrincipal_sign" onclick="window.location.href = './dashboard/dashboard_business'">Entrar</button>
+                <label id="div_validacao"></label>
+
+                <button type="submit" class="btnPrincipal_sign" onclick="login()">Entrar</button>
             </form>
 
             <p class="linkCadastro">Não possui uma conta? <a href="cadastro.html">Cadastre-se</a></p>
@@ -59,3 +62,60 @@
 </body>
 
 </html>
+
+<script>
+    function login() {
+        // ----- VARIAVEIS INPUTS: -----
+        let email = ipt_email.value;
+        let senha = ipt_senha.value;
+
+        // ----- VALIDAÇÃO: -----
+        if (email == "" || senha == "") {
+            div_validacao.innerHTML = '<span style="color: #EE3D2D">Preencha todos os campos para começar sua jornada!</span>';
+            return false;
+        }
+
+        // ----- IMPLEMENTAÇÃO API: -----
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USER = json.email;
+                    sessionStorage.USERNAME = json.username;
+                    sessionStorage.ID_USER = json.id;
+                    sessionStorage.PROFILE_PIC = json.fk_fotoPerfil;
+
+                    setTimeout(function () {
+                        window.location = "./dashboard/dashboard_business.html";
+                    }, 1000);
+
+                });
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o login...</span>";;
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+</script>

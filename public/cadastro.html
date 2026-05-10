@@ -130,5 +130,37 @@
         }
 
         // ----- IMPLEMENTAÇÃO API: -----
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                usernameServer: username,
+                emailServer: email,
+                senhaServer: senha,
+                confirmacaoServer: confirmacao,
+                numFotoPerfilServer: numFotoPerfil
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+
+                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Usuário cadastrado com sucesso!</span>";
+
+                    setTimeout(() => {
+                        window.location = "login.html";
+                    }, "2000");
+
+                } else {
+                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>";;
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
     }
 </script>
