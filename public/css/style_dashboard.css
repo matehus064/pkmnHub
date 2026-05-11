@@ -298,12 +298,6 @@ header span {
     height: 180px;
 }
 
-.card-img {
-    height: 100%;
-    max-width: 120px;
-    object-fit: contain;
-    border-radius: 9px;
-}
 
 /* Cards de gasto e retorno */
 .gasto-card {
@@ -660,4 +654,55 @@ input[type="url"] {
     width: 100%;
     height: 100%;
     background: linear-gradient(to right, rgba(26, 28, 31, 0.15), rgb(26, 28, 31));
+}
+
+
+
+
+.card-img-wrapper {
+    position: relative;
+    height: 100%;
+    max-width: 140px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 0 9px 9px 0;
+}
+
+
+
+
+
+
+.most-expensive {
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+}
+
+.most-expensive-content {
+    flex: 0.8;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-img-wrapper {
+    flex: 2;
+    background-size: cover;
+    background-position: -10px 25px ;
+    background-repeat: no-repeat;
+    transform: scale(2.2);
+    
+}
+
+.card-img-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(to right, #1a1c1f, transparent);
 }

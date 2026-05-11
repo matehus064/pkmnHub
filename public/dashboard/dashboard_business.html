@@ -37,7 +37,7 @@
     <!-- CONTEÚDO -->
     <div class="main-container">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
         </header>
 
         <div class="dashboard-flex-wrapper">
@@ -72,16 +72,16 @@
                     </div>
                 </div>
 
-                <div class="card most-expensive">
-                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div class="label">Carta mais cara</div>
-                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara"></div>
-                        </div>
-                        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor"></div>
-                    </div>
-                    <img src="" class="card-img" id="cartaMaisCaraImg">
-                </div>
+<div class="card most-expensive">
+    <div class="most-expensive-content">
+        <div>
+            <div class="label">Carta mais cara</div>
+            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara">Psyduck - Heróis Excelsos</div>
+        </div>
+        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor">R$ 1.505</div>
+    </div>
+    <div class="card-img-wrapper" id="cartaMaisCaraImg"></div>
+</div>
 
                 <div class="row-inner">
                     <div class="card gasto-card">
@@ -167,7 +167,7 @@
                 valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
-                    cartaMaisCaraImg.src = json.cartaMaisCara[0].url_imagem,
+                    document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
                     cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
                     totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
@@ -279,3 +279,19 @@
             })
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
