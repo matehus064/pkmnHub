@@ -18,7 +18,7 @@
         <nav class="nav-menu">
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
                 <li class="nav-item active"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
                     <a class="nav-link">Cadastro</a>
@@ -26,6 +26,7 @@
                         <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
                         <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
                         <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
+                        <li><a href="colecao.html" class="submenu-link">Colecao</a></li>
                         <li><a href="#" class="submenu-link">Atualização</a></li>
                     </ul>
                 </li>
@@ -127,7 +128,24 @@
     let numeroImagem = Math.floor(Math.random() * 6) + 1;
     header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
 
+    // ----- ALGORITIMO SÓ PRA FORMATAR OS NÚMEROS: -----
+    function formatarBrl(valor) {
+        if (valor == null) return "R$ 0,00";
 
+        let v = Number(valor).toFixed(2);
+
+        if (v.length >= 7) {
+            let parte1 = v.substring(0, 1);
+            let parte2 = v.substring(1, v.indexOf('.'));
+            let centavos = v.substring(v.indexOf('.') + 1);
+
+            v = parte1 + "." + parte2 + "," + centavos;
+        } else {
+            v = v.replace(".", ",");
+        }
+
+        return "R$ " + v;
+    }
 
     // ----- IMPLEMENTAÇÃO API (KPIS): -----
     let meuGraficoLinhas = null; // ← declara fora da função
@@ -146,13 +164,14 @@
                 return resposta.json();
             })
             .then(function (json) {
-                valorTotalColecao.innerHTML = json.valorTotalColecao[0].valor_total_colecao,
+
+                valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
                     cartaMaisCaraImg.src = json.cartaMaisCara[0].url_imagem,
-                    cartaMaisCaraValor.innerHTML = json.cartaMaisCara[0].preco_ligaPkmn,
-                    totalGasto.innerHTML = json.totalGasto[0].total_investido,
-                    totalRetorno.innerHTML = json.totalRetorno[0].total_retorno,
+                    cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
+                    totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
+                    totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
 
                 // ----- GRÁFICO DE LINHA: -----

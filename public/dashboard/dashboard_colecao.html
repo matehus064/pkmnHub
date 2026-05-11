@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Coleção</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+
+<body onload="colecao()">
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item active"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>                
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link">Cadastro</a>
+                    <ul class="submenu">
+                        <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                        <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
+                        <li><a href="#" class="submenu-link">Atualização</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <span>matehus</span>
+        </header>
+
+        <div class="cadastroFlex_wrapper">
+
+            <main class="colecao-container">
+                <section class="colecao-formulario">
+                    <div class="colecao-wrapper">
+                        <table class="colecao-table">
+                            <thead>
+                                <tr>
+                                    <th>Carta</th>
+                                    <th>Set</th>
+                                    <th>Número</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor Pago</th>
+                                    <th>Valor Real</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista_colecao">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <div class="colecao-gyarados"></div>
+            </main>
+        </div>
+</body>
+
+</html>
+
+<script>
+    let numeroImagem = Math.floor(Math.random() * 6) + 1;
+    header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+    function colecao() {
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        fetch(`/cards/buscarColecao?usuarioServer=${usuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                json.forEach(function (carta) {
+                    lista_colecao.innerHTML += `
+                    <tr>
+                        <td>
+                            <div class="carta-cell">
+                                <div class="carta-thumbnail-wrapper">
+                                    <img src="${carta.url_imagem}" class="carta-thumbnail">
+                                </div>
+                                ${carta.nome_pokemon}
+                            </div>
+                        </td>
+                        <td>${carta.set_nome}</td>
+                        <td>${carta.numero_set}</td>
+                        <td>${carta.quantidade}</td>
+                        <td>R$ ${carta.preco_compra}</td>
+                        <td>R$ ${carta.preco_ligaPkmn}</td>
+                    </tr>
+                    `;
+                });
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            })
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const cadastroMenu = document.getElementById('cadastroMenu');
+        const linkCadastro = cadastroMenu.querySelector('.nav-link');
+
+        linkCadastro.addEventListener('click', function (e) {
+            e.preventDefault();
+            cadastroMenu.classList.toggle('open');
+        });
+    });
+</script>

@@ -519,3 +519,144 @@ input[type="url"] {
     justify-content: center;
     border-left: 1px solid var(--border-dark);
 }
+
+
+/* ==========================================================================
+   10. COLEÇÃO — tabela de cartas
+   ========================================================================== */
+.colecao-container {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-dark);
+}
+
+.colecao-formulario {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1;
+    position: relative;
+}
+
+.colecao-gyarados {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, #1a1c1f, rgba(0,0,0,0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/rapidashPocket.png') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.colecao-wrapper {
+    width: 100%;
+    backdrop-filter: blur(12px);
+    background-color: rgba(26, 28, 31, 0);
+    border-radius: 18px;
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+}
+
+.colecao-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.colecao-table th {
+    text-align: left;
+    padding: 14px 20px;
+    color: var(--text-gray);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.colecao-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-dark);
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.colecao-table tr:last-child td {
+    border-bottom: none;
+}
+
+.colecao-table tr:hover td {
+    background-color: rgba(255,255,255,0.03);
+}
+
+.colecao-table tr {
+    height: 60px;
+}
+
+/* Larguras das colunas */
+.colecao-table th:nth-child(1),
+.colecao-table td:nth-child(1) { width: 30%; }
+
+.colecao-table th:nth-child(2),
+.colecao-table td:nth-child(2) { width: 20%; }
+
+.colecao-table th:nth-child(3),
+.colecao-table td:nth-child(3) { width: 12%; }
+
+.colecao-table th:nth-child(4),
+.colecao-table td:nth-child(4) { width: 12%; }
+
+.colecao-table th:nth-child(5),
+.colecao-table td:nth-child(5) { width: 13%; }
+
+.colecao-table th:nth-child(6),
+.colecao-table td:nth-child(6) { width: 13%; }
+
+.colecao-table td:first-child {
+    padding-left: 0;
+}
+
+.carta-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.carta-thumbnail {
+    width: 120px;
+    height: 65px;
+    object-fit: cover;
+    object-position: 60% 15%;
+    transform: scale(1.2);
+    flex-shrink: 0;
+    display: block;
+}
+
+.carta-thumbnail-wrapper {
+    position: relative;
+    width: 120px;
+    height: 65px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 6%;
+    background-color: #1a1c1f;
+}
+
+.carta-thumbnail-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgb(26, 28, 31));
+}

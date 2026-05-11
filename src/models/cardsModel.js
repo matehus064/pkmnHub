@@ -81,6 +81,15 @@ function buscarSnapshots(usuario, intervalo) {
     return database.executar(instrucaoSql);
 }
 
+function buscarColecao(usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+    select b.url_imagem, b.nome_pokemon, b.set_nome, b.numero_set, c.quantidade, c.preco_compra, c.preco_ligaPkmn from base_cards b inner join colecao c on c.fk_carta = b.id inner join usuario u on c.fk_usuario = u.id where u.id = '${usuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     existeCarta,
     cadastrar,
@@ -90,5 +99,6 @@ module.exports = {
     buscarTotalCartas,
     buscarCartaMaisCara,
     salvarSnapshot,
-    buscarSnapshots
+    buscarSnapshots,
+    buscarColecao
 };

@@ -3,9 +3,12 @@ var router = express.Router();
 
 var cardsController = require("../controllers/cardsController");
 
-//Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
 router.post("/cadastrar", function (req, res) {
     cardsController.cadastrar(req, res);
+})
+
+router.get("/buscarColecao", function (req, res) {
+    cardsController.buscarColecao(req, res);
 })
 
 module.exports = router;

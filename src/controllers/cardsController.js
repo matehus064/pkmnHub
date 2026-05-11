@@ -74,6 +74,19 @@ function cadastrar(req, res) {
     }
 }
 
+function buscarColecao(req, res) {
+    var usuarioServer = req.query.usuarioServer;
+
+    cardsModel.buscarColecao(usuarioServer)
+        .then(function(resultado) {
+            res.json(resultado);
+        }).catch(function(erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    buscarColecao
 };
