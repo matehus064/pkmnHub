@@ -37,6 +37,15 @@ function buscarValorTotalColecao (usuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarValorTotalCompra (usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+        SELECT SUM(c.preco_compra * c.quantidade) AS valor_total_compra FROM colecao c JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = '${usuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarTotalCartas (usuario) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
@@ -55,13 +64,31 @@ function buscarCartaMaisCara (usuario) {
     return database.executar(instrucaoSql);
 }
 
+function salvarSnapshot (usuario, valorTotal) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario, valorTotal);
+    var instrucaoSql = `
+    INSERT INTO snapshots_colecao (fk_usuario, valor_total) VALUES ('${usuario}', '${valorTotal}');
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
+function buscarSnapshots(usuario, intervalo) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+    SELECT data_snapshot, valor_total FROM snapshots_colecao WHERE fk_usuario = '${usuario}' AND data_snapshot >= DATE_SUB(NOW(), INTERVAL ${intervalo}) AND id IN (     SELECT MAX(id)      FROM snapshots_colecao      WHERE fk_usuario = '${usuario}'     GROUP BY data_snapshot ) ORDER BY data_snapshot ASC     `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     existeCarta,
     cadastrar,
     adicionarNaColecao,
     buscarValorTotalColecao,
+    buscarValorTotalCompra,
     buscarTotalCartas,
-    buscarCartaMaisCara
+    buscarCartaMaisCara,
+    salvarSnapshot,
+    buscarSnapshots
 };

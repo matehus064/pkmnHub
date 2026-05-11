@@ -1,4 +1,5 @@
 var transacoesModel = require("../models/transacoesModel");
+var cardsModel = require("../models/cardsModel");
 
 function venda(req, res) {
     var nomeCartaServer = req.body.nomeCartaServer;
@@ -27,6 +28,11 @@ function venda(req, res) {
                     if (resultado[0].quantidade - qntCartaServer > 0) {
                         transacoesModel.atualizarQuantidade(usuarioServer, resultado[0].fk_carta, qntCartaServer)
                             .then(function (resultado) {
+                                cardsModel.buscarValorTotalColecao(usuarioServer)
+                                    .then(function (resultadoValor) {
+                                        let valorTotal = resultadoValor[0].valor_total_colecao;
+                                        cardsModel.salvarSnapshot(usuarioServer, valorTotal);
+                                    });
                                 res.json(resultado);
                                 transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
                             }).catch(function (erro) {
@@ -34,8 +40,13 @@ function venda(req, res) {
                                 res.status(500).json(erro.sqlMessage);
                             });
                     } else {
-                        transacoesModel.removerDaColecao (usuarioServer, carta)
-                        .then(function (resultado) {
+                        transacoesModel.removerDaColecao(usuarioServer, carta)
+                            .then(function (resultado) {
+                                cardsModel.buscarValorTotalColecao(usuarioServer)
+                                    .then(function (resultadoValor) {
+                                        let valorTotal = resultadoValor[0].valor_total_colecao;
+                                        cardsModel.salvarSnapshot(usuarioServer, valorTotal);
+                                    });
                                 res.json(resultado);
                                 transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
                             }).catch(function (erro) {

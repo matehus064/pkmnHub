@@ -3,19 +3,25 @@ var transacoesModel = require("../models/transacoesModel");
 
 function buscarKpis(req, res) {
     var usuarioServer = req.query.usuarioServer;
+    var intervaloServer = req.query.intervaloServer;
+
     Promise.all([
         cardsModel.buscarValorTotalColecao(usuarioServer),
         cardsModel.buscarTotalCartas(usuarioServer),
         cardsModel.buscarCartaMaisCara(usuarioServer),
         transacoesModel.buscarTotalRetorno(usuarioServer),
-        transacoesModel.buscarTotalGasto(usuarioServer)
+        transacoesModel.buscarTotalGasto(usuarioServer),
+        cardsModel.buscarSnapshots(usuarioServer, intervaloServer),
+        cardsModel.buscarValorTotalCompra(usuarioServer)
     ]).then(function (resultados) {
         res.json({
             valorTotalColecao: resultados[0],
             totalCartas: resultados[1],
             cartaMaisCara: resultados[2],
             totalRetorno: resultados[3],
-            totalGasto: resultados[4]
+            totalGasto: resultados[4],
+            evolucaoColecao: resultados[5],
+            valorTotalCompra: resultados[6]
         })
     }).catch(
         function (erro) {

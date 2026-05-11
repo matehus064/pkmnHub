@@ -59,11 +59,11 @@ CREATE TABLE colecao (
     quantidade INT DEFAULT 1,
     preco_compra DECIMAL(10, 2),
     preco_ligaPkmn DECIMAL(10, 2),
-    data_adicao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_adicao DATE DEFAULT (CURRENT_DATE),
     
     -- Definindo a Chave Primária Composta
     PRIMARY KEY (fk_usuario, fk_carta),
-    
+
     -- Chaves Estrangeiras
     CONSTRAINT fk_colecao_usuario FOREIGN KEY (fk_usuario) 
         REFERENCES usuario(id) ON DELETE CASCADE,
@@ -71,8 +71,6 @@ CREATE TABLE colecao (
         REFERENCES base_cards(id)
 );
 
--- 4. Histórico de Transações (Para o Gráfico do Dashboard)
--- Para alimentar aquele gráfico de "30 dias" que você tem no layout
 CREATE TABLE transacoes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     fk_usuario INT,
@@ -81,6 +79,14 @@ CREATE TABLE transacoes (
     valor_transacao DECIMAL(10, 2),
     preco_ligaPkmn DECIMAL(10, 2),
     data_movimento DATE DEFAULT (CURRENT_DATE), 
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id),	
     FOREIGN KEY (fk_carta) REFERENCES base_cards(id)
+);
+
+CREATE TABLE snapshots_colecao (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_usuario INT,
+    valor_total DECIMAL(10, 2),
+    data_snapshot DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
 );

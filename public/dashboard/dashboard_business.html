@@ -47,10 +47,10 @@
                     <div class="main-value" id="valorTotalColecao">R$3.243,21</div>
 
                     <div class="chart-filters">
-                        <button class="btn-filter active">30 Dias</button>
-                        <button class="btn-filter">3 Meses</button>
-                        <button class="btn-filter">6 Meses</button>
-                        <button class="btn-filter">1 Ano</button>
+                        <button class="btn-filter active" onclick="buscarKpis('30 DAY', this)">30 Dias</button>
+                        <button class="btn-filter active" onclick="buscarKpis('3 MONTH', this)">3 Meses</button>
+                        <button class="btn-filter active" onclick="buscarKpis('6 MONTH', this)">6 Meses</button>
+                        <button class="btn-filter active" onclick="buscarKpis('1 YEAR', this)">1 Ano</button>
                     </div>
 
                     <div class="chart-wrapper">
@@ -124,63 +124,24 @@
         });
     });
 
-    // GRÁFICO DE LINHA
-    const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['1', '5', '10', '15', '20', '25', '30'],
-            datasets: [{
-                data: [2800, 2900, 2850, 3100, 3050, 3200, 3243],
-                borderColor: '#f5da55',
-                tension: 0.4,
-                pointRadius: 0,
-                borderWidth: 3
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { ticks: { color: '#555' }, grid: { display: false } },
-                y: { ticks: { color: '#555' }, grid: { color: 'rgba(255,255,255,0.05)' } }
-            }
-        }
-    });
-
-    // GRÁFICO DE BARRAS
-    const ctxBar = document.getElementById('barChart').getContext('2d');
-    new Chart(ctxBar, {
-        type: 'bar',
-        data: {
-            labels: ['VALOR REAL', 'VALOR DE COMPRA'],
-            datasets: [{
-                data: [100, 45],
-                backgroundColor: '#f5da55',
-                barThickness: 20
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { display: false },
-                y: { ticks: { color: '#fff' }, grid: { display: false } }
-            }
-        }
-    });
-
     let numeroImagem = Math.floor(Math.random() * 6) + 1;
     header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
 
-    function buscarKpis() {
+
+
+    // ----- IMPLEMENTAÇÃO API (KPIS): -----
+    let meuGraficoLinhas = null; // ← declara fora da função
+    let meuGraficoBarras = null;
+
+    function buscarKpis(intervalo = '30 DAY', botao) {
+        // remove active de todos
+        document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+        // adiciona active no botão clicado
+        if (botao) botao.classList.add('active');
+
         let usuario = sessionStorage.getItem("ID_USER");
 
-        // ----- IMPLEMENTAÇÃO API (KPIS): -----
-        fetch(`/kpis/buscarKpis?usuarioServer=${usuario}`)
+        fetch(`/kpis/buscarKpis?usuarioServer=${usuario}&intervaloServer=${intervalo}`)
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -193,7 +154,108 @@
                     totalGasto.innerHTML = json.totalGasto[0].total_investido,
                     totalRetorno.innerHTML = json.totalRetorno[0].total_retorno,
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
+
+                // ----- GRÁFICO DE LINHA: -----
+                let labelsLinha = json.evolucaoColecao.map(item =>
+                    new Date(item.data_snapshot).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+                );
+                let dadoslinha = json.evolucaoColecao.map(item => item.valor_total);
+
+                if (meuGraficoLinhas) {
+                    meuGraficoLinhas.destroy();
+                }
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                meuGraficoLinhas = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labelsLinha,
+                        datasets: [{
+                            label: 'Valor da Coleção',
+                            data: dadoslinha,
+                            borderColor: '#f5da55',
+                            tension: 0.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                align: 'end',
+                                labels: {
+                                    color: '#888',
+                                    usePointStyle: false,
+                                    boxWidth: 4,
+                                    boxHeight: 4
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: '#888' },
+                                grid: { color: 'rgba(255,255,255,0.08)' }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#888',
+                                    callback: function (value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.08)' }
+                            }
+                        }
+                    }
+                });
+
+                // ----- GRÁFICO DE BARRAS: -----
+                let valorLiga = json.valorTotalColecao[0].valor_total_colecao;
+                let valorCompra = json.valorTotalCompra[0].valor_total_compra;
+
+                if (meuGraficoBarras) {
+                    meuGraficoBarras.destroy();
+                }
+
+                const ctxBar = document.getElementById('barChart').getContext('2d');
+                meuGraficoBarras = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['VALOR REAL', 'VALOR DE COMPRA'],
+                        datasets: [{
+                            data: [valorLiga, valorCompra],
+                            backgroundColor: '#f5da55',
+                            barThickness: 20
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: {
+                                ticks: { color: '#555' },
+                                grid: { color: 'rgba(255,255,255,0.08)' }  // ← muda display:false para cor
+                            },
+                            y: {
+                                ticks: { color: '#555' },
+                                grid: { color: 'rgba(255,255,255,0.08)' }
+                            }
+                        }
+                    }
+                })
             })
+
             .catch(function (erro) {
                 console.log(erro);
             })

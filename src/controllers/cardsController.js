@@ -38,6 +38,11 @@ function cadastrar(req, res) {
                     let idCarta = resultado[0].id;
                     cardsModel.adicionarNaColecao(usuarioServer, resultado[0].id, qntCartaServer, valorCompraServer, menorLigaServer)
                         .then(function (resultado) {
+                            cardsModel.buscarValorTotalColecao(usuarioServer)
+                                .then(function (resultadoValor) {
+                                    let valorTotal = resultadoValor[0].valor_total_colecao;
+                                    cardsModel.salvarSnapshot(usuarioServer, valorTotal);
+                                });
                             res.json(resultado);
                             transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer)
                         }).catch(function (erro) {
@@ -49,6 +54,11 @@ function cadastrar(req, res) {
                         .then(function (resultadoCadastro) {
                             cardsModel.adicionarNaColecao(usuarioServer, resultadoCadastro.insertId, qntCartaServer, valorCompraServer, menorLigaServer)
                                 .then(function (resultado) {
+                                    cardsModel.buscarValorTotalColecao(usuarioServer)
+                                        .then(function (resultadoValor) {
+                                            let valorTotal = resultadoValor[0].valor_total_colecao;
+                                            cardsModel.salvarSnapshot(usuarioServer, valorTotal);
+                                        });
                                     res.json(resultado);
                                     transacoesModel.registrarTransacao(usuarioServer, resultadoCadastro.insertId, 'compra', valorCompraServer, menorLigaServer)
                                 }).catch(function (erro) {
