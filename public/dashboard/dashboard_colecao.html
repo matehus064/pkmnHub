@@ -18,7 +18,7 @@
         <nav class="nav-menu">
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-                <li class="nav-item active"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>                
+                <li class="nav-item active"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
                 <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
                     <a class="nav-link">Cadastro</a>
@@ -35,7 +35,7 @@
 
     <div class="main-container">
         <header id="header">
-            <span>matehus</span>
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
         </header>
 
         <div class="cadastroFlex_wrapper">
@@ -50,8 +50,8 @@
                                     <th>Set</th>
                                     <th>Número</th>
                                     <th>Quantidade</th>
-                                    <th>Valor Pago</th>
-                                    <th>Valor Real</th>
+                                    <th>Valor Pago (UN)</th>
+                                    <th>Valor Real (UN)</th>
                                 </tr>
                             </thead>
                             <tbody id="lista_colecao">
@@ -67,8 +67,31 @@
 </html>
 
 <script>
-    let numeroImagem = Math.floor(Math.random() * 6) + 1;
+    // ----- INFORMAÇÕES DO USER: -----
+    let username = sessionStorage.getItem("USERNAME");
+    document.getElementById("username").innerHTML = username;
+    let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
     header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
+
+    // ----- ALGORITIMO SÓ PRA FORMATAR OS NÚMEROS: -----
+    function formatarBrl(valor) {
+        if (valor == null) return "R$ 0,00";
+
+        let v = Number(valor).toFixed(2);
+
+        if (v.length >= 7) {
+            let parte1 = v.substring(0, 1);
+            let parte2 = v.substring(1, v.indexOf('.'));
+            let centavos = v.substring(v.indexOf('.') + 1);
+
+            v = parte1 + "." + parte2 + "," + centavos;
+        } else {
+            v = v.replace(".", ",");
+        }
+
+        return "R$ " + v;
+    }
 
     function colecao() {
         let usuario = sessionStorage.getItem("ID_USER");
@@ -92,8 +115,8 @@
                         <td>${carta.set_nome}</td>
                         <td>${carta.numero_set}</td>
                         <td>${carta.quantidade}</td>
-                        <td>R$ ${carta.preco_compra}</td>
-                        <td>R$ ${carta.preco_ligaPkmn}</td>
+                        <td>${formatarBrl(carta.preco_compra)}</td>
+                        <td>${formatarBrl(carta.preco_ligaPkmn)}</td>
                     </tr>
                     `;
                 });

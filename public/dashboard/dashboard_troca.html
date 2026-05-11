@@ -33,7 +33,7 @@
 
     <div class="main-container">
         <header id="header">
-            <span>matehus</span>
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
         </header>
 
         <div class="cadastroTroca_wrapper">
@@ -118,8 +118,12 @@
 </html>
 
     <script>
-        let numeroImagem = Math.floor(Math.random() * 6) + 1;
-        header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+    // ----- INFORMAÇÕES DO USER: -----
+    let username = sessionStorage.getItem("USERNAME");
+    document.getElementById("username").innerHTML = username;
+    let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
+    header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+
 
         function cadastrarCarta() {
             alert("Carta enviada com sucesso!");

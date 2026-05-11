@@ -37,15 +37,14 @@
     <!-- CONTEÚDO -->
     <div class="main-container">
         <header id="header">
-            <span>matehus</span>
-
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
         </header>
 
         <div class="dashboard-flex-wrapper">
             <div class="col-left">
                 <div class="card chart-main-card">
                     <div class="label">Valor estimado da coleção</div>
-                    <div class="main-value" id="valorTotalColecao">R$3.243,21</div>
+                    <div class="main-value" id="valorTotalColecao"></div>
 
                     <div class="chart-filters">
                         <button class="btn-filter active" onclick="buscarKpis('30 DAY', this)">30 Dias</button>
@@ -68,7 +67,7 @@
                 <div class="card total-cards">
                     <div class="label">Total de cartas</div>
                     <div class="total-group-right">
-                        <span class="total-number" id="totalCartas">1001</span>
+                        <span class="total-number" id="totalCartas"></span>
                         <span class="label">Total</span>
                     </div>
                 </div>
@@ -77,31 +76,28 @@
                     <div style="display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <div class="label">Carta mais cara</div>
-                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara">
-                                Psyduck - Heróis
-                                Excelsos</div>
+                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara"></div>
                         </div>
-                        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor">R$ 1.505</div>
+                        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor"></div>
                     </div>
-                    <img src="../assets/imgs/cards/psyduck.jpg" class="card-img" id="cartaMaisCaraImg">
+                    <img src="" class="card-img" id="cartaMaisCaraImg">
                 </div>
 
                 <div class="row-inner">
                     <div class="card gasto-card">
                         <div class="label">Gasto</div>
-                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalGasto">R$ 1.505</div>
+                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalGasto"></div>
                     </div>
                     <div class="card retorno-card">
                         <div class="label">Retorno</div>
-                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalRetorno">R$ 1.505
-                        </div>
+                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalRetorno"></div>
                     </div>
                 </div>
 
                 <div class="row-inner">
                     <div class="card" style="flex:1;">
                         <div class="label">ROI</div>
-                        <div class="roi-value" id="roi">75%</div>
+                        <div class="roi-value" id="roi"></div>
                     </div>
                     <div class="card" style="flex:1; opacity: 0.3;"></div>
                 </div>
@@ -125,7 +121,10 @@
         });
     });
 
-    let numeroImagem = Math.floor(Math.random() * 6) + 1;
+    // ----- INFORMAÇÕES DO USER: -----
+    let username = sessionStorage.getItem("USERNAME");
+    document.getElementById("username").innerHTML = username;
+    let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
     header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
 
     // ----- ALGORITIMO SÓ PRA FORMATAR OS NÚMEROS: -----

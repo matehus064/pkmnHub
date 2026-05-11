@@ -94,10 +94,10 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USER = json.email;
-                    sessionStorage.USERNAME = json.username;
+                    sessionStorage.EMAIL_USER = json.usernameServer;
+                    sessionStorage.USERNAME = json.usernameServer;
                     sessionStorage.ID_USER = json.id;
-                    sessionStorage.PROFILE_PIC = json.fk_fotoPerfil;
+                    sessionStorage.PROFILE_PIC = json.numFotoPerfilServer;
 
                     setTimeout(function () {
                         window.location = "./dashboard/dashboard_business.html";
