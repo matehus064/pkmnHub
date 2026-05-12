@@ -28,7 +28,7 @@ function adicionarNaColecao(usuario, carta, quantidade, precoCompra, precoLigaPk
 }
 
 // ----- IMPLEMENTAÇÕES KPS: -----
-function buscarValorTotalColecao (usuario) {
+function buscarValorTotalColecao(usuario) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
         SELECT SUM(c.preco_ligaPkmn * c.quantidade) AS valor_total_colecao FROM colecao c JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = '${usuario}';
@@ -37,7 +37,7 @@ function buscarValorTotalColecao (usuario) {
     return database.executar(instrucaoSql);
 }
 
-function buscarValorTotalCompra (usuario) {
+function buscarValorTotalCompra(usuario) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
         SELECT SUM(c.preco_compra * c.quantidade) AS valor_total_compra FROM colecao c JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = '${usuario}';
@@ -46,7 +46,7 @@ function buscarValorTotalCompra (usuario) {
     return database.executar(instrucaoSql);
 }
 
-function buscarTotalCartas (usuario) {
+function buscarTotalCartas(usuario) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
     SELECT SUM(quantidade) AS total_cartas_fisicas FROM colecao WHERE fk_usuario = '${usuario}';
@@ -55,7 +55,7 @@ function buscarTotalCartas (usuario) {
     return database.executar(instrucaoSql);
 }
 
-function buscarCartaMaisCara (usuario) {
+function buscarCartaMaisCara(usuario) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
     SELECT b.nome_pokemon, b.set_nome, b.url_imagem, c.preco_ligaPkmn FROM colecao AS c JOIN base_cards AS b ON c.fk_carta = b.id WHERE c.fk_usuario = '${usuario}' ORDER BY c.preco_ligaPkmn DESC LIMIT 1;
@@ -64,7 +64,7 @@ function buscarCartaMaisCara (usuario) {
     return database.executar(instrucaoSql);
 }
 
-function salvarSnapshot (usuario, valorTotal) {
+function salvarSnapshot(usuario, valorTotal) {
     console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario, valorTotal);
     var instrucaoSql = `
     INSERT INTO snapshots_colecao (fk_usuario, valor_total) VALUES ('${usuario}', '${valorTotal}');
@@ -90,6 +90,23 @@ function buscarColecao(usuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarValorPorSet(usuario) {
+    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    var instrucaoSql = `
+    SELECT 
+    bc.set_nome, 
+    SUM(c.preco_ligaPkmn * c.quantidade) AS total_valor
+FROM base_cards AS bc
+INNER JOIN colecao AS c 
+    ON c.fk_carta = bc.id
+WHERE c.fk_usuario = '${usuario}'
+GROUP BY bc.set_nome;
+`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     existeCarta,
     cadastrar,
@@ -100,5 +117,6 @@ module.exports = {
     buscarCartaMaisCara,
     salvarSnapshot,
     buscarSnapshots,
-    buscarColecao
+    buscarColecao,
+    buscarValorPorSet
 };

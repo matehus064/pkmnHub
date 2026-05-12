@@ -12,7 +12,8 @@ function buscarKpis(req, res) {
         transacoesModel.buscarTotalRetorno(usuarioServer),
         transacoesModel.buscarTotalGasto(usuarioServer),
         cardsModel.buscarSnapshots(usuarioServer, intervaloServer),
-        cardsModel.buscarValorTotalCompra(usuarioServer)
+        cardsModel.buscarValorTotalCompra(usuarioServer),
+        cardsModel.buscarValorPorSet(usuarioServer)
     ]).then(function (resultados) {
         res.json({
             valorTotalColecao: resultados[0],
@@ -21,7 +22,8 @@ function buscarKpis(req, res) {
             totalRetorno: resultados[3],
             totalGasto: resultados[4],
             evolucaoColecao: resultados[5],
-            valorTotalCompra: resultados[6]
+            valorTotalCompra: resultados[6],
+            valorPorSet: resultados[7]
         })
     }).catch(
         function (erro) {
