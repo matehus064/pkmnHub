@@ -7,9 +7,11 @@
     --bg-card: #1a1c1f;
     --accent-yellow: #F9CF30;
     --text-gray: #94a3b8;
-    --border-blue: #31A7D7;   /* usado no dashboard (retorno-card) */
+    --border-blue: #31A7D7;
+    /* usado no dashboard (retorno-card) */
     --border-dark: #202226;
-    --danger: #EE3D2D;        /* usado no dashboard (gasto-card, roi-value) */
+    --danger: #EE3D2D;
+    /* usado no dashboard (gasto-card, roi-value) */
 }
 
 @font-face {
@@ -109,7 +111,7 @@ body {
     color: white;
 }
 
-.nav-item.active > .nav-link {
+.nav-item.active>.nav-link {
     color: var(--accent-yellow);
     font-weight: 700;
 }
@@ -200,7 +202,8 @@ header span {
 /* Layout principal do dashboard */
 .dashboard-flex-wrapper {
     display: flex;
-    gap: 20px;        /* gap presente apenas no dashboard */
+    gap: 20px;
+    /* gap presente apenas no dashboard */
     height: 85%;
 }
 
@@ -295,7 +298,7 @@ header span {
 .most-expensive {
     display: flex;
     justify-content: space-between;
-    height: 180px;
+    min-height: 180px;
 }
 
 
@@ -319,7 +322,7 @@ header span {
 /* ==========================================================================
    6. CADASTRO — layout base
    ========================================================================== */
-.cadastroFlex_wrapper{
+.cadastroFlex_wrapper {
     flex: 1;
     display: flex;
     height: 85%;
@@ -460,8 +463,8 @@ input[type="url"] {
     border-radius: 5px;
 }
 
-.tipoItem input:checked + img,
-.raridadeItem input:checked + img {
+.tipoItem input:checked+img,
+.raridadeItem input:checked+img {
     filter: grayscale(0%);
     border-color: var(--accent-yellow);
     transform: scale(1.1);
@@ -542,7 +545,7 @@ input[type="url"] {
     top: 0;
     width: 60%;
     height: 100%;
-    background: linear-gradient(to right, #1a1c1f, rgba(0,0,0,0.011)),
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
         url('../assets/imgs/pkmnOficial/pocket/rapidashPocket.png') no-repeat center center;
     background-size: cover;
     z-index: 0;
@@ -598,22 +601,34 @@ input[type="url"] {
 
 /* Larguras das colunas */
 .colecao-table th:nth-child(1),
-.colecao-table td:nth-child(1) { width: 30%; }
+.colecao-table td:nth-child(1) {
+    width: 30%;
+}
 
 .colecao-table th:nth-child(2),
-.colecao-table td:nth-child(2) { width: 20%; }
+.colecao-table td:nth-child(2) {
+    width: 20%;
+}
 
 .colecao-table th:nth-child(3),
-.colecao-table td:nth-child(3) { width: 12%; }
+.colecao-table td:nth-child(3) {
+    width: 12%;
+}
 
 .colecao-table th:nth-child(4),
-.colecao-table td:nth-child(4) { width: 12%; }
+.colecao-table td:nth-child(4) {
+    width: 12%;
+}
 
 .colecao-table th:nth-child(5),
-.colecao-table td:nth-child(5) { width: 13%; }
+.colecao-table td:nth-child(5) {
+    width: 13%;
+}
 
 .colecao-table th:nth-child(6),
-.colecao-table td:nth-child(6) { width: 13%; }
+.colecao-table td:nth-child(6) {
+    width: 13%;
+}
 
 .colecao-table td:first-child {
     padding-left: 0;
@@ -648,7 +663,7 @@ input[type="url"] {
 
 .carta-thumbnail-wrapper::after {
     content: '';
-    position: absolute; 
+    position: absolute;
     right: 0;
     top: 0;
     width: 100%;
@@ -690,10 +705,10 @@ input[type="url"] {
 .card-img-wrapper {
     flex: 2;
     background-size: cover;
-    background-position: -10px 25px ;
+    background-position: -10px 25px;
     background-repeat: no-repeat;
     transform: scale(2.2);
-    
+
 }
 
 .card-img-wrapper::before {
@@ -710,4 +725,22 @@ input[type="url"] {
 #ipt_set,
 #label_set {
     display: none;
+}
+
+.btn-legend {
+    background-color: #2a2a2a00;
+    color: #F9CF30;
+    border: 1px solid #F9CF30;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    
+}
+
+.btn-legend:hover {
+    background-color: #F9CF30;
+    color: #000;
 }

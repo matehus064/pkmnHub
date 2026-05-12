@@ -58,8 +58,11 @@
                     </div>
                 </div>
 
-                <div class="card" style="height: 160px;">
-                    <canvas id="barChart"></canvas>
+                <div class="card chart-main-card" style="min-height: fit-content; height: fit-content">
+                    <div class="label">COMPARATIVO (TOTAL)</div>
+                    <div class="card" style="height: 160px; padding: 0px 0px 0px 0px;">
+                        <canvas id="barChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -72,16 +75,17 @@
                     </div>
                 </div>
 
-<div class="card most-expensive">
-    <div class="most-expensive-content">
-        <div>
-            <div class="label">Carta mais cara</div>
-            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara">Psyduck - Heróis Excelsos</div>
-        </div>
-        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor">R$ 1.505</div>
-    </div>
-    <div class="card-img-wrapper" id="cartaMaisCaraImg"></div>
-</div>
+                <div class="card most-expensive">
+                    <div class="most-expensive-content">
+                        <div>
+                            <div class="label">Carta mais cara</div>
+                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara">
+                            </div>
+                        </div>
+                        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor"></div>
+                    </div>
+                    <div class="card-img-wrapper" id="cartaMaisCaraImg"></div>
+                </div>
 
                 <div class="row-inner">
                     <div class="card gasto-card">
@@ -95,21 +99,93 @@
                 </div>
 
                 <div class="row-inner">
-                    <div class="card" style="flex:1;">
-                        <div class="label">ROI</div>
-                        <div class="roi-value" id="roi"></div>
+                    <div class="card chart-main-card" style="min-height: fit-content; min-width: 350px">
+                        <div class="label">COMPARATIVO (COLEÇÕES)</div>
+                        <div class="card" style="height: 160px; padding: 0px">
+                            <canvas id="meuGraficoRosca"></canvas>
+                        </div>
                     </div>
-                    <div class="card" style="flex:1; opacity: 0.3;"></div>
+
+                    <div class="row-inner" style="flex-direction: column;">
+                        <div class="card" style="flex: 0; min-height: fit-content">
+                            <div class="label">ROI</div>
+                            <div class="roi-value" id="roi"></div>
+                        </div>
+
+                        <div class="card"
+                            style="flex: 0; min-height: 85px; display: flex; align-items: center; justify-content: center;">
+                            <button class="btn-legend" onclick="toggleLegenda()">EXIBIR LEGENDA</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // ----- FUNÇÃO PRA HABILITAR E DESABILITAR A LEGENDA: -----
+    function toggleLegenda() {
+        const isVisible = meuGraficoRosca.options.plugins.legend.display;
+
+        meuGraficoRosca.options.plugins.legend.display = !isVisible;
+        meuGraficoRosca.update({
+            duration: 200,
+            easing: 'easeOutQuad'
+        });
+    }
+
+    const ctx = document.getElementById('meuGraficoRosca').getContext('2d');
+    const meuGraficoRosca = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW', 'MEW'], // Legendas
+            datasets: [{
+                label: 'Investimento por Setor',
+                data: [300, 50, 100, 80, 300, 50, 100, 80, 300, 50, 100, 80, 300, 50, 100, 80], // Valores de cada fatia
+                backgroundColor: [
+                    '#F9CF30',
+                    '#31A7D7',
+                    '#EE3D2D',
+                ],
+                borderColor: [
+                ],
+                borderWidth: 0,
+                hoverOffset: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: 5
+            },
+            plugins: {
+                legend: {
+                    position: 'right',
+                    display: false,
+                    labels: {
+                        color: '#808fa5', 
+                        font: {
+                            size: 9 
+                        },
+                        boxWidth: 9,
+                        padding: 10 
+                    }
+                },
+                datalabels: {
+                    display: true
+                }
+            },
+            cutout: '65%'
+        }
+    });
+
+
+
+
     // LÓGICA DA BANDEJA (SIDEBAR)
     document.addEventListener('DOMContentLoaded', function () {
         const cadastroMenu = document.getElementById('cadastroMenu');
@@ -168,7 +244,7 @@
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
                     document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
-                    cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
+                cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
                     totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
@@ -191,7 +267,7 @@
                         datasets: [{
                             label: 'Valor da Coleção',
                             data: dadoslinha,
-                            borderColor: '#f5da55',
+                            borderColor: '#F9CF30',
                             tension: 0.5,
                             pointRadius: 0,
                             pointHoverRadius: 5,
@@ -211,7 +287,7 @@
                                 position: 'top',
                                 align: 'end',
                                 labels: {
-                                    color: '#888',
+                                    color: '#808fa5',
                                     usePointStyle: false,
                                     boxWidth: 4,
                                     boxHeight: 4
@@ -220,12 +296,12 @@
                         },
                         scales: {
                             x: {
-                                ticks: { color: '#888' },
+                                ticks: { color: '#808fa5' },
                                 grid: { color: 'rgba(255,255,255,0.08)' }
                             },
                             y: {
                                 ticks: {
-                                    color: '#888',
+                                    color: '#808fa5',
                                     callback: function (value) {
                                         return 'R$ ' + value.toLocaleString('pt-BR');
                                     }
@@ -251,7 +327,7 @@
                         labels: ['VALOR REAL', 'VALOR DE COMPRA'],
                         datasets: [{
                             data: [valorLiga, valorCompra],
-                            backgroundColor: '#f5da55',
+                            backgroundColor: '#F9CF30',
                             barThickness: 20
                         }]
                     },
@@ -262,11 +338,11 @@
                         plugins: { legend: { display: false } },
                         scales: {
                             x: {
-                                ticks: { color: '#555' },
+                                ticks: { color: '#808fa5' },
                                 grid: { color: 'rgba(255,255,255,0.08)' }  // ← muda display:false para cor
                             },
                             y: {
-                                ticks: { color: '#555' },
+                                ticks: { color: '#808fa5' },
                                 grid: { color: 'rgba(255,255,255,0.08)' }
                             }
                         }
@@ -279,19 +355,3 @@
             })
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
