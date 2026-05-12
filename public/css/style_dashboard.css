@@ -706,3 +706,8 @@ input[type="url"] {
     z-index: 1;
     background: linear-gradient(to right, #1a1c1f, transparent);
 }
+
+#ipt_set,
+#label_set {
+    display: none;
+}

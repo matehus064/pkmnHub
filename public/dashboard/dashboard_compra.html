@@ -35,7 +35,7 @@
 
     <div class="main-container">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
         </header>
 
         <div class="cadastroFlex_wrapper">
@@ -93,7 +93,8 @@
                             <label class="raridadeItem"><input type="radio" name="n_raridade"
                                     value="Illustration Rare"><img
                                     src="../assets/imgs/raritys/illustration-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Special Illustration Rare"><img
+                            <label class="raridadeItem"><input type="radio" name="n_raridade"
+                                    value="Special Illustration Rare"><img
                                     src="../assets/imgs/raritys/special-illustration-rare.png"></label>
                             <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ace Spec"><img
                                     src="../assets/imgs/raritys/ace-spec-rare.png"></label>
@@ -105,13 +106,15 @@
 
                         <div class="inputsJuntos">
                             <div class="espaco">
-                                <label for="ipt_set">Expansão (Set)</label>
-                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos">
+                                <label for="ipt_numero">Número</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem()">
                             </div>
 
                             <div class="espaco">
-                                <label for="ipt_numero">Número</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                                <label for="ipt_set" id="label_set">Expansão (Set)</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos"
+                                    oninput="validandoImagem()">
                             </div>
                         </div>
 
@@ -133,10 +136,10 @@
                                     placeholder="0.00">
                             </div>
 
-                            <div class="espaco">
+                            <!-- <div class="espaco">
                                 <label for="ipt_url">URL IMAGEM</label>
                                 <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
-                            </div>
+                            </div> -->
                         </div>
 
                         <label id="div_validacao"></label>
@@ -148,7 +151,10 @@
                     </form>
                 </section>
 
-                <section class="direitaContainer_gyarados"></section>
+                <section class="direitaContainer_gyarados">
+                    <img src="https://images.pokemontcg.io/sv4pt5/1000_hires.png" alt="" id="imagem"
+                        style="width: 75%;">
+                </section>
             </main>
         </div>
     </div>
@@ -157,6 +163,143 @@
 </html>
 
 <script>
+    // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
+    function formatarTexto(texto) {
+        if (!texto) return "";
+        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    let setsSv = [
+        'Escarlate e Violeta', 'Scarlet & Violet', 'SV1', '198',
+        'Evoluções em Paldea', 'Paldea Evolved', 'PAL', '193',
+        'Obsidiana em Chamas', 'Obsidian Flames', 'OBF', '197',
+        '151', '151', 'MEW', '165',
+        'Fenda Paradoxal', 'Paradox Rift', 'PAR', '182',
+        'Destinos de Paldea', 'Paldean Fates', 'PAF', '091',
+        'Forças Temporais', 'Temporal Forces', 'TEF', '162',
+        'Máscaras do Crepúsculo', 'Twilight Masquerade', 'TWM', '167',
+        'Fábulas Nebulosas', 'Shrouded Fable', 'SFA', '064',
+        'Coroa Estelar', 'Stellar Crown', 'SCR', '142',
+        'Fagulhas Impetuosas', 'Surging Sparks', 'SSP', '191',
+        'Evoluções Prismáticas', 'Prismatic Evolutions', 'PRE', '131',
+        'Amigos de Jornada', 'Journey Together', 'JTG', '159',
+        'Rivais Predestinados', 'Destined Rivals', 'DRI', '182',
+        'Fogo Branco', 'White Flare', 'WHT', '086',
+        'Raio Preto', 'Black Bolt', 'BLK', '086',
+        'Scarlet & Violet Black Star Promos', 'Scarlet & Violet Black Star Promos', 'SVP', "000",
+        'Megaevolução', 'Mega Evolution', 'MEG', '132',
+        'Fogo Fantasmagórico', 'Phantasmal Flames', 'PAL', '094',
+        'Heróis Excelsos', 'Ascended Heroes', 'ASC', '217',
+        'Equilíbrio Perfeito', 'Perfect Order', 'POR', '088',
+        'Caos Ascendente', 'Chaos Rising', 'CRI', '086',
+        'INDISPONIVEL', 'Pitch Black', 'INDISPONIVEL', 'INDISPONIVEL',
+        'Mega Evolution Black Star Promos', 'Mega Evolution Black Star Promos', 'MEP', "000"
+    ];
+
+    let apiSetsSv = [
+        'sv1', 'sv1', 'sv1', 'sv1',
+        'sv2', 'sv2', 'sv2', 'sv2',
+        'sv3', 'sv3', 'sv3', 'sv3',
+        'sv3pt5', 'sv3pt5', 'sv3pt5', 'sv3pt5',
+        'sv4', 'sv4', 'sv4', 'sv4',
+        'sv4pt5', 'sv4pt5', 'sv4pt5', 'sv4pt5',
+        'sv5', 'sv5', 'sv5', 'sv5',
+        'sv6', 'sv6', 'sv6', 'sv6',
+        'sv6pt5', 'sv6pt5', 'sv6pt5', 'sv6pt5',
+        'sv7', 'sv7', 'sv7', 'sv7',
+        'sv8', 'sv8', 'sv8', 'sv8',
+        'sv8pt5', 'sv8pt5', 'sv8pt5', 'sv8pt5',
+        'sv9', 'sv9', 'sv9', 'sv9',
+        'sv10', 'sv10', 'sv10', 'sv10',
+        'rsv10pt5', 'rsv10pt5', 'rsv10pt5', 'rsv10pt5',
+        'zsv10pt5', 'zsv10pt5', 'zsv10pt5', 'zsv10pt5',
+        'svp', 'svp', 'svp', 'svp',
+        'me1', 'me1', 'me1', 'me1',
+        'me2', 'me2', 'me2', 'me2',
+        'me2pt5', 'me2pt5', 'me2pt5', 'me2pt5',
+        'me3', 'me3', 'me3', 'me3',
+        'me4', 'me4', 'me4', 'me4',
+        'me5', 'me5', 'me5', 'me5',
+        'mep', 'mep', 'mep', 'mep'
+    ];
+
+    let expansaoFinal = '';
+
+    function validandoImagem() {
+        let numeroIpt = ipt_numero.value;
+        let setIpt = ipt_set.value;
+        let makerSet = "";
+
+        let numCarta = Number(numeroIpt.substring(0, 3));
+        let numSetTotal = numeroIpt.substring(4, 7);
+
+        // ----- VALIDAÇÃO DIFERENTE PRA PROMO: -----
+        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
+
+        if (raridadeCarta == 'Promo') {
+            // numSetTotal = null; 
+        }
+
+        // ----- VALIDAÇÃO DIFERENTE PRA OUTROS: -----
+        let indicesEncontrados = [];
+
+        for (let i = 0; i < setsSv.length; i++) {
+            if (numSetTotal == setsSv[i]) {
+                indicesEncontrados.push(i);
+            }
+        }
+
+        // ----- CASO SEJA NECESSÁRIO O INPUT ELE APARECE E CASO SEJA INVÁLIDO RETORNA A FUNÇÃO: ----- 
+        if (indicesEncontrados.length == 0 && numeroIpt.length == 7) {
+            ipt_set.style.display = "none";
+            label_set.style.display = "none";
+            ipt_set.value = '';
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+            console.log("INVÁLIDO!!!!!");
+            return false; // PARA A FUNÇÃO AQUI
+        } else if (indicesEncontrados.length > 1 && numeroIpt.length == 7) {
+            ipt_set.style.display = "block";
+            label_set.style.display = "block";
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
+        } else {
+            ipt_set.style.display = "none";
+            label_set.style.display = "none";
+            div_validacao.innerHTML = "";
+            ipt_set.value = '';
+        }
+
+        if (indicesEncontrados.length == 1) {
+            makerSet = apiSetsSv[indicesEncontrados[0]];
+
+        } else if (indicesEncontrados.length > 1) {
+            for (let pos of indicesEncontrados) {
+                let nomePT = setsSv[pos - 3];
+                let nomeEN = setsSv[pos - 2];
+                let sigla = setsSv[pos - 1];
+
+                if (formatarTexto(setIpt) == formatarTexto(nomePT) ||
+                    formatarTexto(setIpt) == formatarTexto(nomeEN) ||
+                    formatarTexto(setIpt) == formatarTexto(sigla)) {
+
+                    makerSet = apiSetsSv[pos];
+                    break;
+                }
+            }
+        }
+
+        if (makerSet != "" && !isNaN(numCarta)) {
+            // imagem.src = `https://images.pokemontcg.io/${makerSet}/${numCarta}_hires.png`;
+            imagem.src = `https://images.scrydex.com/pokemon/${makerSet}-${numCarta}/large`;
+
+            for (let i = 0; i < apiSetsSv.length; i++) {
+                if (apiSetsSv[i] == makerSet) {
+                    expansaoFinal = setsSv[i + 1];
+                    break;
+                }
+            }
+        }
+    }
+
     // ----- DADOS: -----
     let todosPokemons = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate", "spearow", "fearow", "ekans", "arbok", "pikachu", "raichu", "sandshrew", "sandslash", "nidoran-f", "nidorina", "nidoqueen", "nidoran-m", "nidorino", "nidoking", "clefairy", "clefable", "vulpix", "ninetales", "jigglypuff", "wigglytuff", "zubat", "golbat", "oddish", "gloom", "vileplume", "paras", "parasect", "venonat", "venomoth", "diglett", "dugtrio", "meowth", "persian", "psyduck", "golduck", "mankey", "primeape", "growlithe", "arcanine", "poliwag", "poliwhirl", "poliwrath", "abra", "kadabra", "alakazam", "machop", "machoke", "machamp", "bellsprout", "weepinbell", "victreebel", "tentacool", "tentacruel", "geodude", "graveler", "golem", "ponyta", "rapidash", "slowpoke", "slowbro", "magnemite", "magneton", "farfetchd", "doduo", "dodrio", "seel", "dewgong", "grimer", "muk", "shellder", "cloyster", "gastly", "haunter", "gengar", "onix", "drowzee", "hypno", "krabby", "kingler", "voltorb", "electrode", "exeggcute", "exeggutor", "cubone", "marowak", "hitmonlee", "hitmonchan", "lickitung", "koffing", "weezing", "rhyhorn", "rhydon", "chansey", "tangela", "kangaskhan", "horsea", "seadra", "goldeen", "seaking", "staryu", "starmie", "mr-mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew", "chikorita", "bayleef", "meganium", "cyndaquil", "quilava", "typhlosion", "totodile", "croconaw", "feraligatr", "sentret", "furret", "hoothoot", "noctowl", "ledyba", "ledian", "spinarak", "ariados", "crobat", "chinchou", "lanturn", "pichu", "cleffa", "igglybuff", "togepi", "togetic", "natu", "xatu", "mareep", "flaaffy", "ampharos", "bellossom", "marill", "azumarill", "sudowoodo", "politoed", "hoppip", "skiploom", "jumpluff", "aipom", "sunkern", "sunflora", "yanma", "wooper", "quagsire", "espeon", "umbreon", "murkrow", "slowking", "misdreavus", "unown", "wobbuffet", "girafarig", "pineco", "forretress", "dunsparce", "gligar", "steelix", "snubbull", "granbull", "qwilfish", "scizor", "shuckle", "heracross", "sneasel", "teddiursa", "ursaring", "slugma", "magcargo", "swinub", "piloswine", "corsola", "remoraid", "octillery", "delibird", "mantine", "skarmory", "houndour", "houndoom", "kingdra", "phanpy", "donphan", "porygon2", "stantler", "smeargle", "tyrogue", "hitmontop", "smoochum", "elekid", "magby", "miltank", "blissey", "raikou", "entei", "suicune", "larvitar", "pupitar", "tyranitar", "lugia", "ho-oh", "celebi", "treecko", "grovyle", "sceptile", "torchic", "combusken", "blaziken", "mudkip", "marshtomp", "swampert", "poochyena", "mightyena", "zigzagoon", "linoone", "wurmple", "silcoon", "beautifly", "cascoon", "dustox", "lotad", "lombre", "ludicolo", "seedot", "nuzleaf", "shiftry", "taillow", "swellow", "wingull", "pelipper", "ralts", "kirlia", "gardevoir", "surskit", "masquerain", "shroomish", "breloom", "slakoth", "vigoroth", "slaking", "nincada", "ninjask", "shedinja", "whismur", "loudred", "exploud", "makuhita", "hariyama", "azurill", "nosepass", "skitty", "delcatty", "sableye", "mawile", "aron", "lairon", "aggron", "meditite", "medicham", "electrike", "manectric", "plusle", "minun", "volbeat", "illumise", "roselia", "gulpin", "swalot", "carvanha", "sharpedo", "wailmer", "wailord", "numel", "camerupt", "torkoal", "spoink", "grumpig", "spinda", "trapinch", "vibrava", "flygon", "cacnea", "cacturne", "swablu", "altaria", "zangoose", "seviper", "lunatone", "solrock", "barboach", "whiscash", "corphish", "crawdaunt", "baltoy", "claydol", "lileep", "cradily", "anorith", "armaldo", "feebas", "milotic", "castform", "kecleon", "shuppet", "banette", "duskull", "dusclops", "tropius", "chimecho", "absol", "wynaut", "snorunt", "glalie", "spheal", "sealeo", "walrein", "clamperl", "huntail", "gorebyss", "relicanth", "luvdisc", "bagon", "shelgon", "salamence", "beldum", "metang", "metagross", "regirock", "regice", "registeel", "latias", "latios", "kyogre", "groudon", "rayquaza", "jirachi", "deoxys-normal", "turtwig", "grotle", "torterra", "chimchar", "monferno", "infernape", "piplup", "prinplup", "empoleon", "starly", "staravia", "staraptor", "bidoof", "bibarel", "kricketot", "kricketune", "shinx", "luxio", "luxray", "budew", "roserade", "cranidos", "rampardos", "shieldon", "bastiodon", "burmy", "wormadam-plant", "mothim", "combee", "vespiquen", "pachirisu", "buizel", "floatzel", "cherubi", "cherrim", "shellos", "gastrodon", "ambipom", "drifloon", "drifblim", "buneary", "lopunny", "mismagius", "honchkrow", "glameow", "purugly", "chingling", "stunky", "skuntank", "bronzor", "bronzong", "bonsly", "mime-jr", "happiny", "chatot", "spiritomb", "gible", "gabite", "garchomp", "munchlax", "riolu", "lucario", "hippopotas", "hippowdon", "skorupi", "drapion", "croagunk", "toxicroak", "carnivine", "finneon", "lumineon", "mantyke", "snover", "abomasnow", "weavile", "magnezone", "lickilicky", "rhyperior", "tangrowth", "electivire", "magmortar", "togekiss", "yanmega", "leafeon", "glaceon", "gliscor", "mamoswine", "porygon-z", "gallade", "probopass", "dusknoir", "froslass", "rotom", "uxie", "mesprit", "azelf", "dialga", "palkia", "heatran", "regigigas", "giratina-altered", "cresselia", "phione", "manaphy", "darkrai", "shaymin-land", "arceus", "victini", "snivy", "servine", "serperior", "tepig", "pignite", "emboar", "oshawott", "dewott", "samurott", "patrat", "watchog", "lillipup", "herdier", "stoutland", "purrloin", "liepard", "pansage", "simisage", "pansear", "simisear", "panpour", "simipour", "munna", "musharna", "pidove", "tranquill", "unfezant", "blitzle", "zebstrika", "roggenrola", "boldore", "gigalith", "woobat", "swoobat", "drilbur", "excadrill", "audino", "timburr", "gurdurr", "conkeldurr", "tympole", "palpitoad", "seismitoad", "throh", "sawk", "sewaddle", "swadloon", "leavanny", "venipede", "whirlipede", "scolipede", "cottonee", "whimsicott", "petilil", "lilligant", "basculin-red-striped", "sandile", "krokorok", "krookodile", "darumaka", "darmanitan-standard", "maractus", "dwebble", "crustle", "scraggy", "scrafty", "sigilyph", "yamask", "cofagrigus", "tirtouga", "carracosta", "archen", "archeops", "trubbish", "garbodor", "zorua", "zoroark", "minccino", "cinccino", "gothita", "gothorita", "gothitelle", "solosis", "duosion", "reuniclus", "ducklett", "swanna", "vanillite", "vanillish", "vanilluxe", "deerling", "sawsbuck", "emolga", "karrablast", "escavalier", "foongus", "amoonguss", "frillish-male", "jellicent-male", "alomomola", "joltik", "galvantula", "ferroseed", "ferrothorn", "klink", "klang", "klinklang", "tynamo", "eelektrik", "eelektross", "elgyem", "beheeyem", "litwick", "lampent", "chandelure", "axew", "fraxure", "haxorus", "cubchoo", "beartic", "cryogonal", "shelmet", "accelgor", "stunfisk", "mienfoo", "mienshao", "druddigon", "golett", "golurk", "pawniard", "bisharp", "bouffalant", "rufflet", "braviary", "vullaby", "mandibuzz", "heatmor", "durant", "deino", "zweilous", "hydreigon", "larvesta", "volcarona", "cobalion", "terrakion", "virizion", "tornadus-incarnate", "thundurus-incarnate", "reshiram", "zekrom", "landorus-incarnate", "kyurem", "keldeo-ordinary", "meloetta-aria", "genesect", "chespin", "quilladin", "chesnaught", "fennekin", "braixen", "delphox", "froakie", "frogadier", "greninja", "bunnelby", "diggersby", "fletchling", "fletchinder", "talonflame", "scatterbug", "spewpa", "vivillon", "litleo", "pyroar-male", "flabebe", "floette", "florges", "skiddo", "gogoat", "pancham", "pangoro", "furfrou", "espurr", "meowstic-male", "honedge", "doublade", "aegislash-shield", "spritzee", "aromatisse", "swirlix", "slurpuff", "inkay", "malamar", "binacle", "barbaracle", "skrelp", "dragalge", "clauncher", "clawitzer", "helioptile", "heliolisk", "tyrunt", "tyrantrum", "amaura", "aurorus", "sylveon", "hawlucha", "dedenne", "carbink", "goomy", "sliggoo", "goodra", "klefki", "phantump", "trevenant", "pumpkaboo-average", "gourgeist-average", "bergmite", "avalugg", "noibat", "noivern", "xerneas", "yveltal", "zygarde-50", "diancie", "hoopa", "volcanion", "rowlet", "dartrix", "decidueye", "litten", "torracat", "incineroar", "popplio", "brionne", "primarina", "pikipek", "trumbeak", "toucannon", "yungoos", "gumshoos", "grubbin", "charjabug", "vikavolt", "crabrawler", "crabominable", "oricorio-baile", "cutiefly", "ribombee", "rockruff", "lycanroc-midday", "wishiwashi-solo", "mareanie", "toxapex", "mudbray", "mudsdale", "dewpider", "araquanid", "fomantis", "lurantis", "morelull", "shiinotic", "salandit", "salazzle", "stufful", "bewear", "bounsweet", "steenee", "tsareena", "comfey", "oranguru", "passimian", "wimpod", "golisopod", "sandygast", "palossand", "pyukumuku", "type-null", "silvally", "minior-red-meteor", "komala", "turtonator", "togedemaru", "mimikyu-disguised", "bruxish", "drampa", "dhelmise", "jangmo-o", "hakamo-o", "kommo-o", "tapu-koko", "tapu-lele", "tapu-bulu", "tapu-fini", "cosmog", "cosmoem", "solgaleo", "lunala", "nihilego", "buzzwole", "pheromosa", "xurkitree", "celesteela", "kartana", "guzzlord", "necrozma", "magearna", "marshadow", "poipole", "naganadel", "stakataka", "blacephalon", "zeraora", "meltan", "melmetal", "grookey", "thwackey", "rillaboom", "scorbunny", "raboot", "cinderace", "sobble", "drizzile", "inteleon", "skwovet", "greedent", "rookidee", "corvisquire", "corviknight", "blipbug", "dottler", "orbeetle", "nickit", "thievul", "gossifleur", "eldegoss", "wooloo", "dubwool", "chewtle", "drednaw", "yamper", "boltund", "rolycoly", "carkol", "coalossal", "applin", "flapple", "appletun", "silicobra", "sandaconda", "cramorant", "arrokuda", "barraskewda", "toxel", "toxtricity-amped", "sizzlipede", "centiskorch", "clobbopus", "grapploct", "sinistea", "polteageist", "hatenna", "hattrem", "hatterene", "impidimp", "morgrem", "grimmsnarl", "obstagoon", "perrserker", "cursola", "sirfetchd", "mr-rime", "runerigus", "milcery", "alcremie", "falinks", "pincurchin", "snom", "frosmoth", "stonjourner", "eiscue-ice", "indeedee-male", "morpeko-full-belly", "cufant", "copperajah", "dracozolt", "arctozolt", "dracovish", "arctovish", "duraludon", "dreepy", "drakloak", "dragapult", "zacian", "zamazenta", "eternatus", "kubfu", "urshifu-single-strike", "zarude", "regieleki", "regidrago", "glastrier", "spectrier", "calyrex", "wyrdeer", "kleavor", "ursaluna", "basculegion-male", "sneasler", "overqwil", "enamorus-incarnate", "sprigatito", "floragato", "meowscarada", "fuecoco", "crocalor", "skeledirge", "quaxly", "quaxwell", "quaquaval", "lechonk", "oinkologne-male", "tarountula", "spidops", "nymble", "lokix", "pawmi", "pawmo", "pawmot", "tandemaus", "maushold-family-of-four", "fidough", "dachsbun", "smoliv", "dolliv", "arboliva", "squawkabilly-green-plumage", "nacli", "naclstack", "garganacl", "charcadet", "armarouge", "ceruledge", "tadbulb", "bellibolt", "wattrel", "kilowattrel", "maschiff", "mabosstiff", "shroodle", "grafaiai", "bramblin", "brambleghast", "toedscool", "toedscruel", "klawf", "capsakid", "scovillain", "rellor", "rabsca", "flittle", "espathra", "tinkatink", "tinkatuff", "tinkaton", "wiglett", "wugtrio", "bombirdier", "finizen", "palafin-zero", "varoom", "revavroom", "cyclizar", "orthworm", "glimmet", "glimmora", "greavard", "houndstone", "flamigo", "cetoddle", "cetitan", "veluza", "dondozo", "tatsugiri-curly", "annihilape", "clodsire", "farigiraf", "dudunsparce-two-segment", "kingambit", "great-tusk", "scream-tail", "brute-bonnet", "flutter-mane", "slither-wing", "sandy-shocks", "iron-treads", "iron-bundle", "iron-hands", "iron-jugulis", "iron-moth", "iron-thorns", "frigibax", "arctibax", "baxcalibur", "gimmighoul", "gholdengo", "wo-chien", "chien-pao", "ting-lu", "chi-yu", "roaring-moon", "iron-valiant", "koraidon", "miraidon", "walking-wake", "iron-leaves", "dipplin", "poltchageist", "sinistcha", "okidogi", "munkidori", "fezandipiti", "ogerpon", "archaludon", "hydrapple", "gouging-fire", "raging-bolt", "iron-boulder", "iron-crown", "terapagos"];
 
@@ -170,12 +313,12 @@
     // ----- VARIAVEIS INPUTS: -----
     function cadastrarCarta() {
         let nomeCarta = ipt_nome.value;
-        let setCarta = ipt_set.value;
+        let setCarta = expansaoFinal;
         let numeroCarta = ipt_numero.value;
         let qntCarta = Number(ipt_qtd.value);
         let valorCompra = Number(ipt_valorCompra.value);
         let menorLiga = Number(ipt_precoLiga.value);
-        let imagemCarta = ipt_url.value;
+        let imagemCarta = imagem.src;
 
         let tipoCarta = document.querySelector('input[name="n_tipo"]:checked')?.value;
         let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
@@ -200,7 +343,7 @@
         let condicoesErro = [
             nomeCarta == "" || setCarta == "" || numeroCarta == "" || qntCarta == "" || imagemCarta == "",
             nomeCarta.length < 3 || !nomeValidado,
-            numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7,
+            (raridadeCarta != 'Promo' && (numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7)),
             tipoCarta == undefined,
             raridadeCarta == undefined
         ];
@@ -219,7 +362,7 @@
                 return false;
             }
         }
-        
+
         // ----- IMPLEMENTAÇÃO API: -----
         fetch("/cards/cadastrar", {
             method: "POST",
