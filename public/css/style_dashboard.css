@@ -49,6 +49,23 @@ body {
     font-family: 'Ballet';
 }
 
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-gray);
+}
+
 
 /* ==========================================================================
    2. SIDEBAR E NAVEGAÇÃO (global)

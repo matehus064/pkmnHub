@@ -3054,7 +3054,8 @@ let dadosColeções = {
 let sets = [
   {
     nomePt: 'Escarlate e Violeta',
-    nomeEn: 'Scarlet & Violet', sigla: 'SV1',
+    nomeEn: 'Scarlet & Violet', 
+    sigla: 'SV1',
     total: '198',
     apiId: 'sv1',
     cor: '#CB2453'

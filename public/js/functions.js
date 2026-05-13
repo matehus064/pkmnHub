@@ -52,3 +52,64 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+    function validandoImagem(inputNumero, inputExpansao) {
+        let numeroIpt = ipt_numero.value;
+        let setIpt = ipt_set.value;
+        let makerSet = "";
+
+        let numCarta = Number(numeroIpt.substring(0, 3));
+        let numSetTotal = numeroIpt.substring(4, 7);
+
+        // ----- VALIDAÇÃO DIFERENTE PRA PROMO: -----
+        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
+
+        // ----- BUSCA OS SETS QUE BATEM COM O NÚMERO: -----
+        let setsEncontrados = [];
+
+        for (let i = 0; i < sets.length; i++) {
+            if (numSetTotal == sets[i].total) {
+                setsEncontrados.push(sets[i]);
+            }
+        }
+
+        // ----- CASO SEJA NECESSÁRIO O INPUT ELE APARECE E CASO SEJA INVÁLIDO RETORNA A FUNÇÃO: ----- 
+        if (setsEncontrados.length == 0 && numeroIpt.length == 7) {
+            ipt_set.style.display = "none";
+            label_set.style.display = "none";
+            ipt_set.value = '';
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+            console.log("INVÁLIDO!!!!!");
+            return false;
+        } else if (setsEncontrados.length > 1 && numeroIpt.length == 7) {
+            ipt_set.style.display = "block";
+            label_set.style.display = "block";
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
+        } else {
+            ipt_set.style.display = "none";
+            label_set.style.display = "none";
+            div_validacao.innerHTML = "";
+            ipt_set.value = '';
+        }
+
+        if (setsEncontrados.length == 1) {
+            makerSet = setsEncontrados[0].apiId;
+            expansaoFinal = setsEncontrados[0].nomePt;
+
+        } else if (setsEncontrados.length > 1) {
+            for (let set of setsEncontrados) {
+                if (formatarTexto(setIpt) == formatarTexto(set.nomePt) ||
+                    formatarTexto(setIpt) == formatarTexto(set.nomeEn) ||
+                    formatarTexto(setIpt) == formatarTexto(set.sigla)) {
+
+                    makerSet = set.apiId;
+                    expansaoFinal = set.nomePt;
+                    break;
+                }
+            }
+        }
+
+        if (makerSet != "" && !isNaN(numCarta)) {
+            imagem.src = `https://images.scrydex.com/pokemon/${makerSet}-${numCarta}/large`;
+        }
+    }
+

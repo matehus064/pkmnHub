@@ -163,72 +163,78 @@
 </html>
 
 <script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
 <script src="../js/functions.js"></script>
 
 <script>
     // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
     let expansaoFinal = '';
 
-    function validandoImagem() {
-        let numeroIpt = ipt_numero.value;
-        let setIpt = ipt_set.value;
-        let makerSet = "";
+function validandoImagem() {
+    let numeroIpt = ipt_numero.value;
+    let setIpt = ipt_set.value;
+    let numCarta = Number(numeroIpt.substring(0, 3));
+    let numSetTotal = numeroIpt.substring(4, 7);
 
-        let numCarta = Number(numeroIpt.substring(0, 3));
-        let numSetTotal = numeroIpt.substring(4, 7);
+    // ----- BUSCA EM TODOS OS SETS DO BANCO: -----
+    let cartasEncontradas = [];
 
-        // ----- VALIDAÇÃO DIFERENTE PRA PROMO: -----
-        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
-
-        // ----- BUSCA OS SETS QUE BATEM COM O NÚMERO: -----
-        let setsEncontrados = [];
-
-        for (let i = 0; i < sets.length; i++) {
-            if (numSetTotal == sets[i].total) {
-                setsEncontrados.push(sets[i]);
-            }
+    for (let setId in bancoDados) {
+        let carta = bancoDados[setId].find(c => 
+            Number(c.number) === numCarta && 
+            Number(c.numSet) === Number(numSetTotal)
+        );
+        if (carta) {
+            cartasEncontradas.push({ ...carta, setId });
         }
+    }
 
-        // ----- CASO SEJA NECESSÁRIO O INPUT ELE APARECE E CASO SEJA INVÁLIDO RETORNA A FUNÇÃO: ----- 
-        if (setsEncontrados.length == 0 && numeroIpt.length == 7) {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            ipt_set.value = '';
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
-            console.log("INVÁLIDO!!!!!");
-            return false;
-        } else if (setsEncontrados.length > 1 && numeroIpt.length == 7) {
-            ipt_set.style.display = "block";
-            label_set.style.display = "block";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
-        } else {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            div_validacao.innerHTML = "";
-            ipt_set.value = '';
-        }
+    // ----- VALIDAÇÕES: -----
+    if (cartasEncontradas.length == 0 && numeroIpt.length == 7) {
+        ipt_set.style.display = "none";
+        label_set.style.display = "none";
+        ipt_set.value = '';
+        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+        return false;
 
-        if (setsEncontrados.length == 1) {
-            makerSet = setsEncontrados[0].apiId;
-            expansaoFinal = setsEncontrados[0].nomePt;
+    } else if (cartasEncontradas.length > 1 && numeroIpt.length == 7) {
+        ipt_set.style.display = "block";
+        label_set.style.display = "block";
+        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
 
-        } else if (setsEncontrados.length > 1) {
-            for (let set of setsEncontrados) {
-                if (formatarTexto(setIpt) == formatarTexto(set.nomePt) ||
+        // Se o usuário já digitou o set, tenta resolver
+        if (setIpt != '') {
+            for (let carta of cartasEncontradas) {
+                let set = sets.find(s => s.apiId === carta.setId);
+                if (set && (
+                    formatarTexto(setIpt) == formatarTexto(set.nomePt) ||
                     formatarTexto(setIpt) == formatarTexto(set.nomeEn) ||
-                    formatarTexto(setIpt) == formatarTexto(set.sigla)) {
-
-                    makerSet = set.apiId;
-                    expansaoFinal = set.nomePt;
+                    formatarTexto(setIpt) == formatarTexto(set.sigla)
+                )) {
+                    cartasEncontradas = [carta];
                     break;
                 }
             }
         }
-
-        if (makerSet != "" && !isNaN(numCarta)) {
-            imagem.src = `https://images.scrydex.com/pokemon/${makerSet}-${numCarta}/large`;
-        }
     }
+
+    // ----- PREENCHE OS CAMPOS SE ENCONTROU UMA CARTA: -----
+    if (cartasEncontradas.length == 1) {
+        ipt_set.style.display = "none";
+        label_set.style.display = "none";
+        div_validacao.innerHTML = "";
+        ipt_set.value = '';
+
+        let carta = cartasEncontradas[0];
+        let set = sets.find(s => s.apiId === carta.setId);
+
+        ipt_nome.value = carta.name;
+        imagem.src = `https://images.scrydex.com/pokemon/${carta.setId}-${numCarta}/large`;
+        expansaoFinal = set ? set.nomePt : carta.setName;
+
+        console.log("✅ Carta encontrada:", carta);
+    }
+}
 
     // ----- VARIAVEIS INPUTS: -----
     function cadastrarCarta() {

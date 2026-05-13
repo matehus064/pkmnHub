@@ -9,6 +9,116 @@
     <link rel="stylesheet" href="../css/style_dashboard.css">
 </head>
 
+<style>
+    /* ----- GRID DE COLEÇÃO ----- */
+    .grid-colecao {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding: 20px;
+        overflow-y: auto;
+        height: calc(100vh - 100px);
+        align-content: flex-start;
+        justify-content: center;
+    }
+
+    /* ----- CARD DA CARTA ----- */
+    .carta-card {
+        width: calc(25% - 25px);
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        isolation: isolate;
+        transform: translateZ(0);
+        transition: scale 0.2s ease;
+        border-radius: 15px;
+    }
+
+    .carta-card:hover {
+        scale: 1.02;
+    }
+
+    /* ----- IMAGEM DA CARTA ----- */
+    .carta-grid-img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+        border: 2px solid rgba(249, 205, 48, 0.24);
+        display: block;
+    }
+
+    /* ----- BANDEJA DE INFORMAÇÕES ----- */
+    .carta-hover-info {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(26, 28, 31, 0.88);
+        border-radius: 15px;
+        backdrop-filter: blur(4px);
+        padding: 20px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 10;
+        box-sizing: border-box;
+    }
+
+    .carta-hover-info.visivel {
+        opacity: 1;
+    }
+
+    /* ----- TEXTOS DA BANDEJA ----- */
+    .carta-info-nome {
+        font-size: 22px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.2;
+    }
+
+    .carta-info-set {
+        color: var(--accent-yellow);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .carta-info-numero {
+        color: var(--text-gray);
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .carta-info-divider {
+        width: 100%;
+        height: 2px;
+        background: var(--accent-yellow);
+    }
+
+    .carta-info-linha {
+        font-size: 12px;
+        color: var(--text-gray);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .carta-info-linha strong {
+        color: white;
+        font-weight: 700;
+    }
+
+    /* ----- MAIN CONTAINER ----- */
+    .main-container-colecao {
+        overflow: hidden;
+    }
+</style>
+
 <body onload="colecao()">
     <aside class="sidebar">
         <div class="logo">
@@ -33,35 +143,14 @@
         </nav>
     </aside>
 
-    <div class="main-container">
+    <div class="main-container main-container-colecao">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
         </header>
 
-        <div class="cadastroFlex_wrapper">
+        <div id="grid_colecao" class="grid-colecao"></div>
+    </div>
 
-            <main class="colecao-container">
-                <section class="colecao-formulario">
-                    <div class="colecao-wrapper">
-                        <table class="colecao-table">
-                            <thead>
-                                <tr>
-                                    <th>Carta</th>
-                                    <th>Set</th>
-                                    <th>Número</th>
-                                    <th>Quantidade</th>
-                                    <th>Valor Pago (UN)</th>
-                                    <th>Valor Real (UN)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="lista_colecao">
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                <div class="colecao-gyarados"></div>
-            </main>
-        </div>
 </body>
 
 </html>
@@ -70,7 +159,6 @@
 <script src="../js/functions.js"></script>
 
 <script>
-    // ----- ALGORITIMO SÓ PRA FORMATAR OS NÚMEROS: -----
     function colecao() {
         let usuario = sessionStorage.getItem("ID_USER");
 
@@ -79,28 +167,54 @@
                 return resposta.json();
             })
             .then(function (json) {
-                json.forEach(function (carta) {
-                    lista_colecao.innerHTML += `
-                    <tr>
-                        <td>
-                            <div class="carta-cell">
-                                <div class="carta-thumbnail-wrapper">
-                                    <img src="${carta.url_imagem}" class="carta-thumbnail">
+                json.forEach(carta => {
+                    grid_colecao.innerHTML += `
+                        <div class="carta-card" onclick="toggleInfo(this)">
+                            <img src="${carta.url_imagem}" class="carta-grid-img">
+                            <div class="carta-hover-info">
+                                <span class="carta-info-nome">${carta.nome_pokemon}</span>
+                                <span class="carta-info-set">${carta.set_nome}</span>
+                                <span class="carta-info-numero"># ${carta.numero_set}</span>
+                                <div class="carta-info-divider"></div>
+                                <div class="carta-info-linha">
+                                    <span>Quantidade</span>
+                                    <strong>${carta.quantidade}</strong>
                                 </div>
-                                ${carta.nome_pokemon}
+                                <div class="carta-info-linha">
+                                    <span>Valor Pago</span>
+                                    <strong>${formatarBrl(carta.preco_compra)}</strong>
+                                </div>
+                                <div class="carta-info-linha">
+                                    <span>Valor Real</span>
+                                    <strong>${formatarBrl(carta.preco_ligaPkmn)}</strong>
+                                </div>
                             </div>
-                        </td>
-                        <td>${carta.set_nome}</td>
-                        <td>${carta.numero_set}</td>
-                        <td>${carta.quantidade}</td>
-                        <td>${formatarBrl(carta.preco_compra)}</td>
-                        <td>${formatarBrl(carta.preco_ligaPkmn)}</td>
-                    </tr>
+                        </div>
                     `;
                 });
             })
             .catch(function (erro) {
                 console.log(erro);
-            })
+            });
     }
+
+    function toggleInfo(card) {
+        let info = card.querySelector('.carta-hover-info');
+        let isVisible = info.classList.contains('visivel');
+
+        document.querySelectorAll('.carta-hover-info').forEach(i => i.classList.remove('visivel'));
+
+        if (!isVisible) {
+            info.classList.add('visivel');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const cadastroMenu = document.getElementById('cadastroMenu');
+        const linkCadastro = cadastroMenu.querySelector('.nav-link');
+        linkCadastro.addEventListener('click', function (e) {
+            e.preventDefault();
+            cadastroMenu.classList.toggle('open');
+        });
+    });
 </script>
