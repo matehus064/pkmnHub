@@ -32,10 +32,15 @@ function cadastrar(req, res) {
     } else if (raridadeCartaServer == undefined) {
         res.status(400).send("A raridade da carta não foi definida!");
     } else {
-        cardsModel.existeCarta(nomeCartaServer, numeroCartaServer)
-            .then(function (resultado) {
-                if (resultado.length == 1) {
+    cardsModel.existeCarta(nomeCartaServer, numeroCartaServer)
+        .then(function (resultado) {
+            console.log("valorCompra recebido:", valorCompraServer); // <-- aqui
+            console.log("menorLiga recebido:", menorLigaServer);     // <-- aqui
+            if (resultado.length == 1) {
                     let idCarta = resultado[0].id;
+                    console.log("Carta encontrada:", resultado[0]);
+                    console.log("valorCompra:", valorCompraServer);
+                    console.log("menorLiga:", menorLigaServer);
                     cardsModel.adicionarNaColecao(usuarioServer, resultado[0].id, qntCartaServer, valorCompraServer, menorLigaServer)
                         .then(function (resultado) {
                             cardsModel.buscarValorTotalColecao(usuarioServer)
@@ -78,9 +83,9 @@ function buscarColecao(req, res) {
     var usuarioServer = req.query.usuarioServer;
 
     cardsModel.buscarColecao(usuarioServer)
-        .then(function(resultado) {
+        .then(function (resultado) {
             res.json(resultado);
-        }).catch(function(erro) {
+        }).catch(function (erro) {
             console.log(erro);
             res.status(500).json(erro.sqlMessage);
         });

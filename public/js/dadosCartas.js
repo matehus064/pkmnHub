@@ -41007,7 +41007,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/1_hires.png"
@@ -41019,7 +41019,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/2_hires.png"
@@ -41031,7 +41031,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/3_hires.png"
@@ -41043,7 +41043,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/4_hires.png"
@@ -41055,7 +41055,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/5_hires.png"
@@ -41067,7 +41067,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/6_hires.png"
@@ -41079,7 +41079,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/7_hires.png"
@@ -41091,7 +41091,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/8_hires.png"
@@ -41103,7 +41103,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/9_hires.png"
@@ -41115,7 +41115,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/10_hires.png"
@@ -41127,7 +41127,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/11_hires.png"
@@ -41139,7 +41139,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/12_hires.png"
@@ -41151,7 +41151,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/13_hires.png"
@@ -41163,7 +41163,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/14_hires.png"
@@ -41175,7 +41175,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/15_hires.png"
@@ -41187,7 +41187,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/16_hires.png"
@@ -41199,7 +41199,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/17_hires.png"
@@ -41211,7 +41211,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/18_hires.png"
@@ -41223,7 +41223,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/19_hires.png"
@@ -41235,7 +41235,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/20_hires.png"
@@ -41247,7 +41247,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/21_hires.png"
@@ -41259,7 +41259,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/22_hires.png"
@@ -41271,7 +41271,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/23_hires.png"
@@ -41283,7 +41283,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/24_hires.png"
@@ -41295,7 +41295,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/25_hires.png"
@@ -41307,7 +41307,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/26_hires.png"
@@ -41319,7 +41319,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/27_hires.png"
@@ -41331,7 +41331,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/28_hires.png"
@@ -41343,7 +41343,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/29_hires.png"
@@ -41355,7 +41355,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/30_hires.png"
@@ -41367,7 +41367,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/31_hires.png"
@@ -41379,7 +41379,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/32_hires.png"
@@ -41391,7 +41391,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/33_hires.png"
@@ -41403,7 +41403,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/34_hires.png"
@@ -41415,7 +41415,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/35_hires.png"
@@ -41427,7 +41427,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/36_hires.png"
@@ -41439,7 +41439,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/37_hires.png"
@@ -41451,7 +41451,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/38_hires.png"
@@ -41463,7 +41463,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/39_hires.png"
@@ -41475,7 +41475,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/40_hires.png"
@@ -41487,7 +41487,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/41_hires.png"
@@ -41499,7 +41499,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/42_hires.png"
@@ -41511,7 +41511,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/43_hires.png"
@@ -41523,7 +41523,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/44_hires.png"
@@ -41535,7 +41535,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/45_hires.png"
@@ -41547,7 +41547,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/46_hires.png"
@@ -41559,7 +41559,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/47_hires.png"
@@ -41571,7 +41571,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/48_hires.png"
@@ -41583,7 +41583,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/49_hires.png"
@@ -41595,7 +41595,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/50_hires.png"
@@ -41607,7 +41607,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/51_hires.png"
@@ -41619,7 +41619,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/52_hires.png"
@@ -41631,7 +41631,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/53_hires.png"
@@ -41643,7 +41643,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/54_hires.png"
@@ -41655,7 +41655,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/55_hires.png"
@@ -41667,7 +41667,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/56_hires.png"
@@ -41679,7 +41679,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/57_hires.png"
@@ -41691,7 +41691,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/58_hires.png"
@@ -41703,7 +41703,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/59_hires.png"
@@ -41715,7 +41715,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/60_hires.png"
@@ -41727,7 +41727,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/61_hires.png"
@@ -41739,7 +41739,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/62_hires.png"
@@ -41751,7 +41751,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/63_hires.png"
@@ -41763,7 +41763,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/64_hires.png"
@@ -41775,7 +41775,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/65_hires.png"
@@ -41787,7 +41787,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/66_hires.png"
@@ -41799,7 +41799,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/67_hires.png"
@@ -41811,7 +41811,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/68_hires.png"
@@ -41823,7 +41823,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/69_hires.png"
@@ -41835,7 +41835,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/70_hires.png"
@@ -41847,7 +41847,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/71_hires.png"
@@ -41859,7 +41859,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/72_hires.png"
@@ -41871,7 +41871,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/73_hires.png"
@@ -41883,7 +41883,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/74_hires.png"
@@ -41895,7 +41895,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/75_hires.png"
@@ -41907,7 +41907,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/76_hires.png"
@@ -41919,7 +41919,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/77_hires.png"
@@ -41931,7 +41931,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/78_hires.png"
@@ -41943,7 +41943,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/79_hires.png"
@@ -41955,7 +41955,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/80_hires.png"
@@ -41967,7 +41967,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/81_hires.png"
@@ -41979,7 +41979,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/82_hires.png"
@@ -41991,7 +41991,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/83_hires.png"
@@ -42003,7 +42003,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/84_hires.png"
@@ -42015,7 +42015,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/85_hires.png"
@@ -42027,7 +42027,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/86_hires.png"
@@ -42039,7 +42039,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/87_hires.png"
@@ -42051,7 +42051,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/88_hires.png"
@@ -42063,7 +42063,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/89_hires.png"
@@ -42075,7 +42075,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/90_hires.png"
@@ -42087,7 +42087,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/91_hires.png"
@@ -42099,7 +42099,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/92_hires.png"
@@ -42111,7 +42111,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/93_hires.png"
@@ -42123,7 +42123,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/94_hires.png"
@@ -42135,7 +42135,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/95_hires.png"
@@ -42147,7 +42147,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/96_hires.png"
@@ -42159,7 +42159,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/97_hires.png"
@@ -42171,7 +42171,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/98_hires.png"
@@ -42183,7 +42183,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/99_hires.png"
@@ -42195,7 +42195,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/100_hires.png"
@@ -42207,7 +42207,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/101_hires.png"
@@ -42219,7 +42219,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/102_hires.png"
@@ -42231,7 +42231,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/103_hires.png"
@@ -42243,7 +42243,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/104_hires.png"
@@ -42255,7 +42255,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/105_hires.png"
@@ -42267,7 +42267,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/106_hires.png"
@@ -42279,7 +42279,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/107_hires.png"
@@ -42291,7 +42291,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/108_hires.png"
@@ -42303,7 +42303,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/109_hires.png"
@@ -42315,7 +42315,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/110_hires.png"
@@ -42327,7 +42327,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/111_hires.png"
@@ -42339,7 +42339,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/112_hires.png"
@@ -42351,7 +42351,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/113_hires.png"
@@ -42363,7 +42363,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/114_hires.png"
@@ -42375,7 +42375,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/115_hires.png"
@@ -42387,7 +42387,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/116_hires.png"
@@ -42399,7 +42399,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/117_hires.png"
@@ -42411,7 +42411,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/118_hires.png"
@@ -42423,7 +42423,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/119_hires.png"
@@ -42435,7 +42435,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/120_hires.png"
@@ -42447,7 +42447,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/121_hires.png"
@@ -42459,7 +42459,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/122_hires.png"
@@ -42471,7 +42471,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/123_hires.png"
@@ -42483,7 +42483,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/124_hires.png"
@@ -42495,7 +42495,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/125_hires.png"
@@ -42507,7 +42507,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/126_hires.png"
@@ -42519,7 +42519,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/127_hires.png"
@@ -42531,7 +42531,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/128_hires.png"
@@ -42543,7 +42543,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/129_hires.png"
@@ -42555,7 +42555,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/130_hires.png"
@@ -42567,7 +42567,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/131_hires.png"
@@ -42579,7 +42579,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/132_hires.png"
@@ -42591,7 +42591,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/133_hires.png"
@@ -42603,7 +42603,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/134_hires.png"
@@ -42615,7 +42615,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/135_hires.png"
@@ -42627,7 +42627,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/136_hires.png"
@@ -42639,7 +42639,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/137_hires.png"
@@ -42651,7 +42651,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/138_hires.png"
@@ -42663,7 +42663,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/139_hires.png"
@@ -42675,7 +42675,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/140_hires.png"
@@ -42687,7 +42687,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/141_hires.png"
@@ -42699,7 +42699,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/142_hires.png"
@@ -42711,7 +42711,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/143_hires.png"
@@ -42723,7 +42723,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/144_hires.png"
@@ -42735,7 +42735,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/145_hires.png"
@@ -42747,7 +42747,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/146_hires.png"
@@ -42759,7 +42759,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/147_hires.png"
@@ -42771,7 +42771,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/148_hires.png"
@@ -42783,7 +42783,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/149_hires.png"
@@ -42795,7 +42795,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/150_hires.png"
@@ -42807,7 +42807,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/151_hires.png"
@@ -42819,7 +42819,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/152_hires.png"
@@ -42831,7 +42831,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/153_hires.png"
@@ -42843,7 +42843,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/154_hires.png"
@@ -42855,7 +42855,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/155_hires.png"
@@ -42867,7 +42867,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/156_hires.png"
@@ -42879,7 +42879,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/157_hires.png"
@@ -42891,7 +42891,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/158_hires.png"
@@ -42903,7 +42903,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/159_hires.png"
@@ -42915,7 +42915,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/160_hires.png"
@@ -42927,7 +42927,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/161_hires.png"
@@ -42939,7 +42939,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/162_hires.png"
@@ -42951,7 +42951,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/163_hires.png"
@@ -42963,7 +42963,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/164_hires.png"
@@ -42975,7 +42975,7 @@ let bancoDados = {
             "rarity":"Promo",
             "setNameBr":"2023/01/01",
             "setNameEn":"Scarlet & Violet Black Star Promos",
-            "ptcgoCode":"PR-SV",
+            "ptcgoCode":"SVP",
             "numSet":215,
             "setId":"svp",
             "imageLarge":"https://images.pokemontcg.io/svp/165_hires.png"
@@ -52260,6 +52260,17 @@ let bancoDados = {
         
     ],
     "mep":[
-        
+        {
+            "name":null,
+            "number":null,
+            "type":null,
+            "rarity":"Promo",
+            "setNameBr":null,
+            "setNameEn":"Mega Evolution Black Star Promos",
+            "ptcgoCode":"MEP",
+            "numSet":null,
+            "setId":"mep",
+            "imageLarge":"https://images.scrydex.com/pokemon/me3-124/large"
+        }
     ]
 }

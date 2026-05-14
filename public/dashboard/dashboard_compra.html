@@ -9,6 +9,27 @@
     <link rel="stylesheet" href="../css/style_dashboard.css">
 </head>
 
+<style>
+    .btnLimpar {
+        width: 100%;
+        background-color: #2a2a2a00;
+        color: #F9CF30;
+        border: 1px solid #F9CF30;
+        padding: 10px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        transition: background-color 0.3s;
+
+    }
+
+    .btnLimpar:hover {
+        background-color: #F9CF30;
+        color: #000;
+    }
+</style>
+
 <body>
     <aside class="sidebar">
         <div class="logo">
@@ -25,8 +46,6 @@
                     <ul class="submenu active">
                         <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
                         <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
-                        <li><a href="dashboard_troca.html" class="submenu-link">Troca</a></li>
-                        <li><a href="#" class="submenu-link">Atualização</a></li>
                     </ul>
                 </li>
             </ul>
@@ -43,12 +62,25 @@
                 <section class="formularioCadastro">
                     <div class="welcome-text">
                         <h1>Cadastre sua <span class="ballet" style="color: #F9CF30;">Aquisição</span></h1>
-                        <p>Preencha os dados técnicos e financeiros.</p>
+                        <p>Preencha a numeração da sua carta</p>
                     </div>
 
                     <form>
-                        <label for="ipt_nome">Nome da Carta</label>
-                        <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_numero">Número</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                            </div>
+
+                            <div class="espaco">
+                                <label style="color: transparent;">.</label>
+                                <button type="button" onclick="limparFormulario()" class="btnLimpar">LIMPAR</button>
+                            </div>
+                        </div>
+
+                        <div class="carta-info-divider" style="margin-bottom: 15px;"></div>
 
                         <label>SELECIONE O TIPO</label>
                         <div class="tipoSelector">
@@ -96,7 +128,7 @@
                             <label class="raridadeItem"><input type="radio" name="n_raridade"
                                     value="Special Illustration Rare"><img
                                     src="../assets/imgs/raritys/special-illustration-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ace Spec"><img
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="ACE SPEC Rare"><img
                                     src="../assets/imgs/raritys/ace-spec-rare.png"></label>
                             <label class="raridadeItem"><input type="radio" name="n_raridade" value="Hyper Rare"><img
                                     src="../assets/imgs/raritys/hyper-rare.png"></label>
@@ -106,15 +138,14 @@
 
                         <div class="inputsJuntos">
                             <div class="espaco">
-                                <label for="ipt_numero">Número</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
-                                    oninput="validandoImagem()">
+                                <label for="ipt_nome">Nome da Carta</label>
+                                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
                             </div>
 
                             <div class="espaco">
                                 <label for="ipt_set" id="label_set">Expansão (Set)</label>
                                 <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos"
-                                    oninput="validandoImagem()">
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
                         </div>
 
@@ -126,13 +157,13 @@
 
                             <div class="espaco">
                                 <label for="ipt_preco">VALOR DE COMPRA (R$)</label>
-                                <input type="number" id="ipt_valorCompra" value="0" min="1" step="1.00"
+                                <input type="number" id="ipt_valorCompra" value="0" min="0" step="1.00"
                                     placeholder="0.00">
                             </div>
 
                             <div class="espaco">
                                 <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
-                                <input type="number" id="ipt_precoLiga" value="0" min="1" step="1.00"
+                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
                                     placeholder="0.00">
                             </div>
 
@@ -152,8 +183,7 @@
                 </section>
 
                 <section class="direitaContainer_gyarados">
-                    <img src="https://images.pokemontcg.io/sv4pt5/1000_hires.png" alt="" id="imagem"
-                        style="width: 75%;">
+                    <img src="" alt="" id="imagem" style="width: 75%;">
                 </section>
             </main>
         </div>
@@ -170,82 +200,19 @@
     // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
     let expansaoFinal = '';
 
-    function validandoImagem() {
-        let numeroIpt = ipt_numero.value;
-        let setIpt = ipt_set.value;
-        let numCarta = Number(numeroIpt.substring(0, 3));
-        let numSetTotal = numeroIpt.substring(4, 7);
+    function limparFormulario() {
+        ipt_nome.value = "";
+        ipt_set.value = "";
+        ipt_numero.value = "";
+        ipt_qtd.value = 1;
+        ipt_valorCompra.value = 0;
+        ipt_precoLiga.value = 0;
+        trocarImagem('');
+        document.querySelectorAll('input[name="n_tipo"]').forEach(r => r.checked = false);
+        document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
 
-        // ----- BUSCA EM TODOS OS SETS DO BANCO: -----
-        let cartasEncontradas = [];
-
-        for (let setId in bancoDados) {
-            let carta = bancoDados[setId].find(c =>
-                Number(c.number) === numCarta &&
-                Number(c.numSet) === Number(numSetTotal)
-            );
-            if (carta) {
-                cartasEncontradas.push({ ...carta, setId });
-            }
-        }
-
-        // ----- VALIDAÇÕES: -----
-        if (cartasEncontradas.length == 0 && numeroIpt.length == 7) {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            ipt_set.value = '';
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
-            return false;
-
-        } else if (cartasEncontradas.length > 1 && numeroIpt.length == 7) {
-            ipt_set.style.display = "block";
-            label_set.style.display = "block";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
-
-            // Se o usuário já digitou o set, tenta resolver
-            if (setIpt != '') {
-                for (let carta of cartasEncontradas) {
-                    let set = sets.find(s => s.apiId === carta.setId);
-                    if (set && (
-                        formatarTexto(setIpt) == formatarTexto(set.nomePt) ||
-                        formatarTexto(setIpt) == formatarTexto(set.nomeEn) ||
-                        formatarTexto(setIpt) == formatarTexto(set.sigla)
-                    )) {
-                        cartasEncontradas = [carta];
-                        break;
-                    }
-                }
-            }
-        }
-
-
-        // ----- PREENCHE OS CAMPOS SE ENCONTROU UMA CARTA: -----
-        if (cartasEncontradas.length == 1) {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            div_validacao.innerHTML = "";
-            ipt_set.value = '';
-
-            let carta = cartasEncontradas[0];
-            let set = sets.find(s => s.apiId === carta.setId);
-
-            ipt_nome.value = carta.name;
-            imagem.src = `https://images.scrydex.com/pokemon/${carta.setId}-${numCarta}/large`;
-            expansaoFinal = set ? set.nomePt : carta.setName;
-
-            // Seta o tipo
-            let radioTipo = document.querySelector(`input[name="n_tipo"][value="${carta.type}"]`);
-            if (radioTipo) radioTipo.checked = true;
-
-            // Seta a raridade
-            let radioRaridade = document.querySelector(`input[name="n_raridade"][value="${carta.rarity}"]`);
-            if (radioRaridade) radioRaridade.checked = true;
-
-            console.log("✅ Carta encontrada:", carta);
-        }
     }
 
-    
     // ----- VARIAVEIS INPUTS: -----
     function cadastrarCarta() {
         let nomeCarta = ipt_nome.value;
@@ -264,7 +231,7 @@
         let nomeValidado = true;
 
         // ----- VALIDAÇÕES: -----
-        if (tipoCarta != "None") {
+        if (tipoCarta !== 'null') {
             nomeValidado = false;
             console.log("situação 1: " + nomeValidado);
             for (let i = 0; i < todosPokemons.length; i++) {
@@ -299,6 +266,9 @@
             }
         }
 
+
+        console.log("valorCompra enviado:", valorCompra);
+        console.log("menorLiga enviado:", menorLiga);
         // ----- IMPLEMENTAÇÃO API: -----
         fetch("/cards/cadastrar", {
             method: "POST",

@@ -39,77 +39,112 @@ function toggleLegenda(idGrafico) {
     });
 }
 
+// ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
+    function trocarImagem(src) {
+        imagem.style.opacity = 0;
+        setTimeout(() => {
+            imagem.src = src;
+            imagem.style.opacity = 1;
+        }, 200);
+    }
+
+// ----- AUTOMATIZAÇÃO DO CADASTRO  : -----
+function validandoImagem(numeroIpt, setIpt) {
+    let numCarta = Number(numeroIpt.substring(0, 3));
+    let numSetTotal = numeroIpt.substring(4, 7);
+    let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
+    let isPromo = raridadeCarta === "Promo";
+
+    // ----- HELPERS: -----
+    let matchSet = (input, set) => [set.nomePt, set.nomeEn, set.sigla].some(
+        nome => formatarTexto(input) === formatarTexto(nome)
+    );
+
+    let setErro = (msg) => {
+        ipt_set.style.border = "1px solid #F9CF30";
+        div_validacao.innerHTML = `<span style='color: #EE3D2D'>${msg}</span>`;
+    };
+
+    // ----- VALIDAÇÃO INICIAL: -----
+    if (isNaN(numCarta) || numCarta === 0) return null;
+
+    // ----- BLOCO PROMO: -----
+    if (isPromo) {
+        if (!setIpt) return setErro("Insira a expansão!");
+
+        let setEncontrado = sets.find(s => matchSet(setIpt, s));
+
+        if (setEncontrado) {
+            ipt_set.style.border = "none";
+            div_validacao.innerHTML = "";
+            expansaoFinal = setEncontrado.nomeEn;
+            ipt_set.value = setEncontrado.nomeEn;
+            imagem.src = `https://images.scrydex.com/pokemon/${setEncontrado.apiId}-${numCarta}/large`;
+        } else {
+            setErro("Expansão não encontrada!");
+        }
+        return;
+    }
+
+    // ----- BUSCA NORMAL: -----
+    let cartasEncontradas = Object.entries(bancoDados).reduce((acc, [setId, cartas]) => {
+        let carta = cartas.find(c =>
+            Number(c.number) === numCarta &&
+            Number(c.numSet) === Number(numSetTotal)
+        );
+        if (carta) acc.push({ ...carta, setId });
+        return acc;
+    }, []);
+
+    // ----- VALIDAÇÕES: -----
+    if (!cartasEncontradas.length && numeroIpt.length === 7) {
+        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+        return false;
+    }
+
+    if (cartasEncontradas.length > 1 && numeroIpt.length === 7) {
+        setErro("Múltiplos sets encontrados, insira a expansão!");
+
+        if (setIpt) {
+            let cartaFiltrada = cartasEncontradas.find(carta => {
+                let set = sets.find(s => s.apiId === carta.setId);
+                return set && matchSet(setIpt, set);
+            });
+            if (cartaFiltrada) cartasEncontradas = [cartaFiltrada];
+        }
+    }
+
+    // ----- PREENCHE OS CAMPOS: -----
+    if (cartasEncontradas.length !== 1) return null;
+
+    let carta = cartasEncontradas[0];
+
+    ipt_set.style.border = "none";
+    ipt_nome.value = carta.name;
+    expansaoFinal = carta.setNameEn;
+    ipt_set.value = carta.setNameEn;
+    trocarImagem(`https://images.scrydex.com/pokemon/${carta.setId}-${numCarta}/large`);
+
+    let radioTipo = document.querySelector(`input[name="n_tipo"][value="${carta.type}"]`);
+    if (radioTipo) radioTipo.checked = true;
+
+    if (numeroIpt.length >= 3 && !raridadeCarta) {
+        let radioRaridade = document.querySelector(`input[name="n_raridade"][value="${carta.rarity}"]`);
+        if (radioRaridade) radioRaridade.checked = true;
+    }
+
+    console.log("✅ Carta encontrada:", carta);
+    return carta;
+}
+
 
 // LÓGICA DA BANDEJA (SIDEBAR)
 document.addEventListener('DOMContentLoaded', function () {
-    const cadastroMenu = document.getElementById('cadastroMenu');
-    const linkCadastro = cadastroMenu.querySelector('.nav-link');
+    let cadastroMenu = document.getElementById('cadastroMenu');
+    let linkCadastro = cadastroMenu.querySelector('.nav-link');
 
     linkCadastro.addEventListener('click', function (e) {
         e.preventDefault();
         cadastroMenu.classList.toggle('open');
     });
 });
-
-
-    function validandoImagem(inputNumero, inputExpansao) {
-        let numeroIpt = ipt_numero.value;
-        let setIpt = ipt_set.value;
-        let makerSet = "";
-
-        let numCarta = Number(numeroIpt.substring(0, 3));
-        let numSetTotal = numeroIpt.substring(4, 7);
-
-        // ----- VALIDAÇÃO DIFERENTE PRA PROMO: -----
-        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
-
-        // ----- BUSCA OS SETS QUE BATEM COM O NÚMERO: -----
-        let setsEncontrados = [];
-
-        for (let i = 0; i < sets.length; i++) {
-            if (numSetTotal == sets[i].total) {
-                setsEncontrados.push(sets[i]);
-            }
-        }
-
-        // ----- CASO SEJA NECESSÁRIO O INPUT ELE APARECE E CASO SEJA INVÁLIDO RETORNA A FUNÇÃO: ----- 
-        if (setsEncontrados.length == 0 && numeroIpt.length == 7) {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            ipt_set.value = '';
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
-            console.log("INVÁLIDO!!!!!");
-            return false;
-        } else if (setsEncontrados.length > 1 && numeroIpt.length == 7) {
-            ipt_set.style.display = "block";
-            label_set.style.display = "block";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
-        } else {
-            ipt_set.style.display = "none";
-            label_set.style.display = "none";
-            div_validacao.innerHTML = "";
-            ipt_set.value = '';
-        }
-
-        if (setsEncontrados.length == 1) {
-            makerSet = setsEncontrados[0].apiId;
-            expansaoFinal = setsEncontrados[0].nomePt;
-
-        } else if (setsEncontrados.length > 1) {
-            for (let set of setsEncontrados) {
-                if (formatarTexto(setIpt) == formatarTexto(set.nomePt) ||
-                    formatarTexto(setIpt) == formatarTexto(set.nomeEn) ||
-                    formatarTexto(setIpt) == formatarTexto(set.sigla)) {
-
-                    makerSet = set.apiId;
-                    expansaoFinal = set.nomePt;
-                    break;
-                }
-            }
-        }
-
-        if (makerSet != "" && !isNaN(numCarta)) {
-            imagem.src = `https://images.scrydex.com/pokemon/${makerSet}-${numCarta}/large`;
-        }
-    }
-

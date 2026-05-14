@@ -1,67 +1,53 @@
 var database = require("../database/config")
 
 function buscarCartaNaColecao(usuario, nomePokemon, numeroSet) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, nomePokemon, numeroSet)
     var instrucaoSql = `
-    SELECT fk_usuario, fk_carta, quantidade, preco_compra, preco_ligaPkmn, data_adicao FROM colecao c INNER JOIN base_cards bc ON c.fk_carta = bc.id WHERE fk_usuario = '${usuario}' AND bc.nome_pokemon = '${nomePokemon}' AND bc.numero_set = '${numeroSet}';
+        SELECT fk_usuario, fk_carta, quantidade, preco_compra, preco_ligaPkmn, data_adicao FROM colecao c INNER JOIN base_cards bc ON c.fk_carta = bc.id WHERE fk_usuario = ? AND bc.nome_pokemon = ? AND bc.numero_set = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [usuario, nomePokemon, numeroSet]);
 }
 
 function atualizarQuantidade(usuario, carta, quantidade) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, carta, quantidade)
     var instrucaoSql = `
-    UPDATE colecao SET quantidade = quantidade - '${quantidade}' WHERE fk_usuario = '${usuario}' AND fk_carta = '${carta}';
+        UPDATE colecao SET quantidade = quantidade - ? WHERE fk_usuario = ? AND fk_carta = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [quantidade, usuario, carta]);
 }
 
 function removerDaColecao(usuario, carta) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", usuario, carta)
     var instrucaoSql = `
-    DELETE FROM colecao WHERE fk_usuario = '${usuario}' AND fk_carta = '${carta}';
+        DELETE FROM colecao WHERE fk_usuario = ? AND fk_carta = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [usuario, carta]);
 }
 
 function registrarTransacao(usuario, carta, tipoMovimentacao, valorVenda, precoLigaPkmn) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario, carta, valorVenda, precoLigaPkmn);
     var instrucaoSql = `
-        INSERT INTO transacoes (fk_usuario, fk_carta, tipo_movimentacao, valor_transacao, preco_ligaPkmn) VALUES ('${usuario}', '${carta}', '${tipoMovimentacao}', '${valorVenda}', '${precoLigaPkmn}');
+        INSERT INTO transacoes (fk_usuario, fk_carta, tipo_movimentacao, valor_transacao, preco_ligaPkmn) VALUES (?, ?, ?, ?, ?);
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [usuario, carta, tipoMovimentacao, valorVenda, precoLigaPkmn]);
 }
 
-// ----- IMPLEMENTAÇÕES KPS: -----
 function buscarTotalGasto(usuario) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
-        SELECT SUM(valor_transacao) AS total_investido FROM transacoes WHERE fk_usuario = '${usuario}' AND tipo_movimentacao = 'compra';
+        SELECT SUM(valor_transacao) AS total_investido FROM transacoes WHERE fk_usuario = ? AND tipo_movimentacao = 'compra';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [usuario]);
 }
 
 function buscarTotalRetorno(usuario) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
     var instrucaoSql = `
-        SELECT SUM(valor_transacao) AS total_retorno FROM transacoes WHERE fk_usuario = '${usuario}' AND tipo_movimentacao = 'venda';
+        SELECT SUM(valor_transacao) AS total_retorno FROM transacoes WHERE fk_usuario = ? AND tipo_movimentacao = 'venda';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [usuario]);
 }
 
-// ----- DADOS PARA A DASHBOARD DINÂMICA: -----
 function buscarEvolucaoColecao(usuario, intervalo) {
-    console.log("ACESSEI O CARDS MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", usuario);
+    // intervalo não pode ser prepared statement pois é parte da sintaxe SQL (INTERVAL 7 DAY)
     var instrucaoSql = `
-SELECT data_adicao, SUM(preco_ligaPkmn * quantidade) AS valor_total FROM colecao WHERE fk_usuario = '${usuario}' AND data_adicao >= DATE_SUB(NOW(), INTERVAL ${intervalo}) GROUP BY data_adicao ORDER BY data_adicao;`;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+        SELECT data_adicao, SUM(preco_ligaPkmn * quantidade) AS valor_total FROM colecao WHERE fk_usuario = ? AND data_adicao >= DATE_SUB(NOW(), INTERVAL ${intervalo}) GROUP BY data_adicao ORDER BY data_adicao;
+    `;
+    return database.executar(instrucaoSql, [usuario]);
 }
 
 module.exports = {
