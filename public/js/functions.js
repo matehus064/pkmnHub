@@ -4,6 +4,10 @@ document.getElementById("username").innerHTML = username;
 let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
 header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
 
+//======================================================================================
+//======================================================================================
+
+
 // ----- ALGORITIMO SÓ PRA FORMATAR OS VALORES EM BRL: -----
 function formatarBrl(valor) {
     if (valor == null) return "R$ 0,00";
@@ -22,11 +26,17 @@ function formatarBrl(valor) {
     return "R$ " + v;
 }
 
+//======================================================================================
+//======================================================================================
+
 // ----- ALGORITIMO SÓ PRA FORMATAR OS TEXTO PARA VALIDAÇÃO: -----
 function formatarTexto(texto) {
     if (!texto) return "";
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
+
+//======================================================================================
+//======================================================================================
 
 // ----- FUNÇÃO PRA HABILITAR E DESABILITAR A LEGENDA: -----
 function toggleLegenda(idGrafico) {
@@ -39,6 +49,9 @@ function toggleLegenda(idGrafico) {
     });
 }
 
+//======================================================================================
+//======================================================================================
+
 // ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
     function trocarImagem(src) {
         imagem.style.opacity = 0;
@@ -48,6 +61,9 @@ function toggleLegenda(idGrafico) {
         }, 200);
     }
 
+//======================================================================================
+//======================================================================================
+
 // ----- AUTOMATIZAÇÃO DO CADASTRO  : -----
 function validandoImagem(numeroIpt, setIpt) {
     let numCarta = Number(numeroIpt.substring(0, 3));
@@ -55,62 +71,85 @@ function validandoImagem(numeroIpt, setIpt) {
     let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
     let isPromo = raridadeCarta === "Promo";
 
-    // ----- HELPERS: -----
-    let matchSet = (input, set) => [set.nomePt, set.nomeEn, set.sigla].some(
-        nome => formatarTexto(input) === formatarTexto(nome)
-    );
-
-    let setErro = (msg) => {
-        ipt_set.style.border = "1px solid #F9CF30";
-        div_validacao.innerHTML = `<span style='color: #EE3D2D'>${msg}</span>`;
-    };
-
     // ----- VALIDAÇÃO INICIAL: -----
     if (isNaN(numCarta) || numCarta === 0) return null;
 
     // ----- BLOCO PROMO: -----
     if (isPromo) {
-        if (!setIpt) return setErro("Insira a expansão!");
 
-        let setEncontrado = sets.find(s => matchSet(setIpt, s));
+        if (!setIpt) {
+            ipt_set.style.border = "1px solid #F9CF30";
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Insira a expansão!</span>";
+            return;
+        }
+
+        let setEncontrado = null;
+        for (let i = 0; i < sets.length; i++) {
+            if (formatarTexto(setIpt) === formatarTexto(sets[i].nomePt) ||
+                formatarTexto(setIpt) === formatarTexto(sets[i].nomeEn) ||
+                formatarTexto(setIpt) === formatarTexto(sets[i].sigla)) {
+                setEncontrado = sets[i];
+                break;
+            }
+        }
 
         if (setEncontrado) {
             ipt_set.style.border = "none";
             div_validacao.innerHTML = "";
             expansaoFinal = setEncontrado.nomeEn;
             ipt_set.value = setEncontrado.nomeEn;
-            imagem.src = `https://images.scrydex.com/pokemon/${setEncontrado.apiId}-${numCarta}/large`;
+            trocarImagem("https://images.scrydex.com/pokemon/" + setEncontrado.apiId + "-" + numCarta + "/large");
         } else {
-            setErro("Expansão não encontrada!");
+            ipt_set.style.border = "1px solid #F9CF30";
+            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Expansão não encontrada!</span>";
         }
         return;
     }
 
     // ----- BUSCA NORMAL: -----
-    let cartasEncontradas = Object.entries(bancoDados).reduce((acc, [setId, cartas]) => {
-        let carta = cartas.find(c =>
-            Number(c.number) === numCarta &&
-            Number(c.numSet) === Number(numSetTotal)
-        );
-        if (carta) acc.push({ ...carta, setId });
-        return acc;
-    }, []);
+    let cartasEncontradas = [];
+
+    for (let setId in bancoDados) {
+        let cartas = bancoDados[setId];
+
+        for (let j = 0; j < cartas.length; j++) {
+            if (Number(cartas[j].number) === numCarta && Number(cartas[j].numSet) === Number(numSetTotal)) {
+                cartasEncontradas.push(cartas[j]);
+                break;
+            }
+        }
+    }
 
     // ----- VALIDAÇÕES: -----
-    if (!cartasEncontradas.length && numeroIpt.length === 7) {
+    if (cartasEncontradas.length === 0 && numeroIpt.length === 7) {
         div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
         return false;
     }
 
     if (cartasEncontradas.length > 1 && numeroIpt.length === 7) {
-        setErro("Múltiplos sets encontrados, insira a expansão!");
+        ipt_set.style.border = "1px solid #F9CF30";
+        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
 
         if (setIpt) {
-            let cartaFiltrada = cartasEncontradas.find(carta => {
-                let set = sets.find(s => s.apiId === carta.setId);
-                return set && matchSet(setIpt, set);
-            });
-            if (cartaFiltrada) cartasEncontradas = [cartaFiltrada];
+            for (let i = 0; i < cartasEncontradas.length; i++) {
+
+                let set = null;
+                for (let j = 0; j < sets.length; j++) {
+                    if (sets[j].apiId === cartasEncontradas[i].setId) {
+                        set = sets[j];
+                        break;
+                    }
+                }
+
+                if (set && (
+                    formatarTexto(setIpt) === formatarTexto(set.nomePt) ||
+                    formatarTexto(setIpt) === formatarTexto(set.nomeEn) ||
+                    formatarTexto(setIpt) === formatarTexto(set.sigla)
+                )) {
+                    cartasEncontradas = [cartasEncontradas[i]];
+                    break;
+                }
+            }
         }
     }
 
@@ -123,13 +162,13 @@ function validandoImagem(numeroIpt, setIpt) {
     ipt_nome.value = carta.name;
     expansaoFinal = carta.setNameEn;
     ipt_set.value = carta.setNameEn;
-    trocarImagem(`https://images.scrydex.com/pokemon/${carta.setId}-${numCarta}/large`);
+    trocarImagem("https://images.scrydex.com/pokemon/" + carta.setId + "-" + numCarta + "/large");
 
-    let radioTipo = document.querySelector(`input[name="n_tipo"][value="${carta.type}"]`);
+    let radioTipo = document.querySelector('input[name="n_tipo"][value="' + carta.type + '"]');
     if (radioTipo) radioTipo.checked = true;
 
     if (numeroIpt.length >= 3 && !raridadeCarta) {
-        let radioRaridade = document.querySelector(`input[name="n_raridade"][value="${carta.rarity}"]`);
+        let radioRaridade = document.querySelector('input[name="n_raridade"][value="' + carta.rarity + '"]');
         if (radioRaridade) radioRaridade.checked = true;
     }
 
@@ -137,6 +176,8 @@ function validandoImagem(numeroIpt, setIpt) {
     return carta;
 }
 
+//======================================================================================
+//======================================================================================
 
 // LÓGICA DA BANDEJA (SIDEBAR)
 document.addEventListener('DOMContentLoaded', function () {
