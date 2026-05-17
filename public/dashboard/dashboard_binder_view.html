@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Binder</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+
+    <style>
+        .btnLimpar {
+            width: 100%;
+            background-color: transparent;
+            color: #F9CF30;
+            border: 1px solid #F9CF30;
+            padding: 10px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+
+        }
+
+        .btnLimpar:hover {
+            background-color: #F9CF30;
+            color: #000;
+        }
+
+        /* ========== LAYOUT ========== */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 30px 40px;
+        }
+
+        .main-container>header {
+            flex-shrink: 0;
+        }
+
+        .binder-view-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            gap: 14px;
+        }
+
+        /* ========== TOPBAR ========== */
+        .binder-view-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .binder-view-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .binder-view-title {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .binder-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: #2a2d32;
+            color: #94a3b8;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid #2a2d32;
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .btn-voltar:hover {
+            color: white;
+            border-color: #94a3b8;
+        }
+
+        /* ========== ÁREA DO BINDER ========== */
+        .binder-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            background: var(--bg-card);
+            border: 1px solid #202226;
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 20px 60px;
+            position: relative;
+        }
+
+        .binder-page {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .binder-page-blank {
+            flex: 1;
+            height: 100%;
+        }
+
+        .binder-spine {
+            width: 8px;
+            flex-shrink: 0;
+            background: #202226;
+            border-radius: 3px;
+            align-self: stretch;
+            margin: 0 10px;
+        }
+
+        .binder-page-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .binder-page-row {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        /* ========== SLOTS ========== */
+        .binder-slot {
+            background: #0e1013;
+            border: 1px solid #202226;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .binder-slot:hover {
+            border-color: #F9CF30;
+        }
+
+        .slot-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slot-label {
+            color: #94a3b8;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .slot-num {
+            color: white;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .slot-plus {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #F9CF3055;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #F9CF30;
+            font-size: 16px;
+            margin-top: 4px;
+            transition: background 0.2s;
+        }
+
+        .binder-slot:hover .slot-plus {
+            background: #F9CF3022;
+        }
+
+        .slot-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 7px;
+        }
+
+        .slot-remove {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            border: none;
+            border-radius: 50%;
+            color: #94a3b8;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s, color 0.2s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .binder-slot:hover .slot-remove {
+            opacity: 1;
+        }
+
+        .slot-remove:hover {
+            color: #EE3D2D;
+        }
+
+        /* ========== NAVEGAÇÃO ========== */
+        .btn-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
+            transition: opacity 0.2s;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .btn-nav:hover {
+            opacity: 0.85;
+        }
+
+        .btn-nav:disabled {
+            background: none;
+            color: #94a3b8;
+            cursor: default;
+            opacity: 1;
+        }
+
+        #btn-prev {
+            left: 10px;
+        }
+
+        #btn-next {
+            right: 10px;
+        }
+
+        .nav-page-info {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        /* ========== MODAL ========== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid #F9CF30;
+            border-radius: 20px;
+            padding: 32px;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            animation: modalEntrar 0.2s ease;
+        }
+
+        @keyframes modalEntrar {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal-box h2 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .modal-slot-info {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .modal-search-input {
+            width: 100%;
+            background: #121417;
+            border: 1px solid #2a2d32;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            margin-bottom: 14px;
+        }
+
+        .modal-search-input:focus {
+            border-color: #F9CF30;
+        }
+
+        .modal-results {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .modal-result-card {
+            background: #121417;
+            border: 1px solid #2a2d32;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            width: calc(33.333% - 7px);
+        }
+
+        .modal-result-card:hover {
+            border-color: #F9CF30;
+        }
+
+        .modal-result-card img {
+            width: 100%;
+            display: block;
+        }
+
+        .modal-result-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            padding: 6px 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .modal-empty {
+            color: #94a3b8;
+            font-size: 13px;
+            text-align: center;
+            padding: 30px 0;
+            width: 100%;
+        }
+
+        .modal-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-salvar-url {
+            background: #F9CF30;
+            color: #121417;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-salvar-url:hover {
+            background: #e6bf2a;
+        }
+
+        .btn-salvar-url:active {
+            transform: scale(0.98);
+        }
+
+        .modal-box label {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+        /* ----- FUNCIONALIDADE DE WISHLIST ----- */
+
+        /* Classe para deixar a carta transparente e preto e branco */
+        .nao-obtida {
+            opacity: 0.4;
+            filter: grayscale(80%);
+        }
+
+        /* O botão novo, posicionado no topo esquerdo */
+        .slot-toggle {
+            position: absolute;
+            bottom: 4px;
+            /* <-- MUDOU DE TOP PARA BOTTOM */
+            left: 4px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            border: none;
+            border-radius: 50%;
+            color: #94a3b8;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s, color 0.2s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .binder-slot:hover .slot-toggle {
+            opacity: 1;
+        }
+
+        .slot-toggle:hover {
+            color: #F9CF30;
+        }
+
+        /* ========== MODAL DE IMAGEM ========== */
+        .modal-image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: modalEntrar 0.2s ease;
+        }
+
+        .modal-image-container img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 15px;
+            /* Bordas levemente arredondadas acompanhando a carta */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            /* Sombra para dar destaque */
+            object-fit: contain;
+        }
+
+        .modal-close-img {
+            /* Ajuste do botão de fechar para ficar fora da imagem */
+            top: -40px;
+            right: 0;
+            font-size: 26px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link active">Cadastro</a>
+                    <ul class="submenu active">
+                        <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
+        </header>
+
+        <div class="binder-view-wrapper">
+            <div class="binder-view-topbar">
+                <div class="binder-view-meta">
+                    <span class="binder-view-title" id="binder-titulo">Carregando...</span>
+                    <span class="binder-badge" id="binder-tipo-badge">--</span>
+                </div>
+                <button class="btn-voltar" onclick="window.location.href='dashboard_binders.html'">← Voltar</button>
+            </div>
+
+            <div class="binder-area" id="binder-area">
+                <button class="btn-nav" id="btn-prev" onclick="navegarPagina(-1)">‹</button>
+                <div class="binder-page" id="lado-esquerdo"></div>
+                <div class="binder-spine"></div>
+                <div class="binder-page" id="lado-direito"></div>
+                <button class="btn-nav" id="btn-next" onclick="navegarPagina(1)">›</button>
+                <span class="nav-page-info" id="nav-info">Page 1</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_busca" class="modal-backdrop" style="display:none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModalBusca()">✕</button>
+            <h2>Adicionar Carta</h2>
+            <p class="modal-slot-info" id="modal-slot-info">Slot #1</p>
+
+            <div class="modal-input-group">
+                <div class="inputsJuntos">
+                    <div class="espaco">
+                        <label for="ipt_numeracao">Número</label>
+                        <input class="modal-search-input" type="text" id="ipt_numeracao"
+                            oninput="validandoImagem2(ipt_numeracao.value, ipt_set.value) " placeholder="Ex: 206/198">
+                    </div>
+
+                    <div class="inputsJuntos">
+                        <div class="espaco">
+                            <label style="color: transparent;">.</label>
+                            <button type="button" onclick="limparFormulario()" class="btnLimpar">LIMPAR</button>
+                        </div>
+
+                        <div class="espaco">
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img
+                                    src="../assets/imgs/raritys/promo.png"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <input class="modal-search-input" type="text" id="ipt_set"
+                    oninput="validandoImagem2(ipt_numeracao.value, ipt_set.value)" placeholder="Ex: Heróis Excelsos">
+                <input class="modal-search-input" type="text" id="ipt_url_imagem">
+                <div id="div_validacao"></div>
+                <button class="btn-salvar-url" onclick="salvarCartaLink()">Salvar Imagem</button>
+            </div>
+        </div>
+        <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem"
+            style="width: 20%; opacity: 0; margin-left: 25px;">
+    </div>
+
+    <div id="modal_imagem" class="modal-backdrop" style="display:none;">
+        <div class="modal-image-container">
+            <button class="modal-close modal-close-img" onclick="fecharModalImagem()">✕</button>
+            <img id="img_ampliada" src="" alt="Carta Ampliada">
+        </div>
+    </div>
+
+    <!-- Scripts no final do body -->
+    <script src="../js/dados.js"></script>
+    <script src="../js/dadosCartas.js"></script>
+    <script src="../js/functions.js"></script>
+
+    <script>
+
+        function limparFormulario() {
+            ipt_set.value = "";
+            ipt_numeracao.value = "";
+
+            let img = document.getElementById('imagem');
+            img.style.opacity = '0';
+
+            document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
+        }
+
+        /* ══════════════════════════════
+           CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
+        ══════════════════════════════ */
+        let CONFIG_TIPO = {
+            '2x2': { cols: 2, rows: 2, totalSlots: 160 },
+            '3x3': { cols: 3, rows: 3, totalSlots: 360 },
+            '4x3': { cols: 4, rows: 3, totalSlots: 480 },
+        };
+
+        let binderAtual = {
+            id: -1,
+            nome: "Carregando...",
+            tipo: "3x3",
+            cartas: {}
+        };
+
+        let paginaAtual = 0;
+        let slotSelecionado = -1;
+        let idSlotSelecionadoNoBanco = -1;
+        let listaResultados = [];
+
+        /* ══════════════════════════════
+           1. INTEGRAÇÃO COM A API (CARREGAR BINDER)
+        ══════════════════════════════ */
+        function carregarBinder() {
+            let idBinder = sessionStorage.getItem('BINDER_ID');
+            let nomeBinder = sessionStorage.getItem('BINDER_NOME');
+            let tipoBinder = sessionStorage.getItem('BINDER_TIPO');
+
+            if (!idBinder) {
+                console.error("Erro: BINDER_ID não encontrado no sessionStorage.");
+                return;
+            }
+
+            binderAtual.id = idBinder;
+            binderAtual.nome = nomeBinder;
+            binderAtual.tipo = tipoBinder;
+            binderAtual.cartas = {};
+
+            fetch(`/binder/buscarSlots?binderServer=${idBinder}`)
+                .then(function (resposta) {
+                    if (!resposta.ok) {
+                        throw new Error("Erro na resposta da API");
+                    }
+                    return resposta.json();
+                })
+                .then(function (slotsDoBanco) {
+                    slotsDoBanco.forEach(function (linha) {
+                        let slotIndexFront = linha.slot - 1;
+
+                        binderAtual.cartas[slotIndexFront] = {
+                            idSlotBanco: linha.id,
+                            img: linha.url_imagem,
+                            obtida: linha.obtida
+                        };
+                    });
+
+                    inicializar();
+                })
+                .catch(function (erro) {
+                    console.error("Erro ao carregar o binder:", erro);
+                });
+        }
+
+        /* ══════════════════════════════
+           2. INICIALIZAÇÃO E LAYOUT
+        ══════════════════════════════ */
+        function inicializar() {
+            document.getElementById("binder-titulo").textContent = binderAtual.nome;
+            document.getElementById("binder-tipo-badge").textContent = binderAtual.tipo;
+            renderizarPagina();
+        }
+
+        function calcularTamanhoSlot(cfg) {
+            let area = document.getElementById("binder-area");
+            let gap = 8;
+            let padArea = 40;
+            let spine = 28;
+
+            let alturaDisp = area.clientHeight - padArea;
+            let larguraDisp = (area.clientWidth - padArea - spine) / 2;
+
+            let slotH = Math.floor((alturaDisp - (cfg.rows - 1) * gap) / cfg.rows);
+            let slotW = Math.floor(slotH * 5 / 7);
+
+            let maxSlotW = Math.floor((larguraDisp - (cfg.cols - 1) * gap) / cfg.cols);
+            if (slotW > maxSlotW) {
+                slotW = maxSlotW;
+                slotH = Math.floor(slotW * 7 / 5);
+            }
+
+            return { w: slotW, h: slotH };
+        }
+
+        // SUBSTITUA a função gerarSlotHTML() por esta:
+function gerarSlotHTML(slotIndex, w, h) {
+            let carta = binderAtual.cartas[slotIndex];
+            let num = slotIndex + 1;
+            let style = 'width:' + w + 'px;height:' + h + 'px;';
+
+            if (carta && carta.img) {
+                // Se obtida for 0 (false), adiciona a classe nao-obtida
+                let classeImg = carta.obtida == 0 ? "slot-card-img nao-obtida" : "slot-card-img";
+
+                return '<div class="binder-slot" style="' + style + '">' +
+                    // AQUI ESTÁ O ONCLICK CORRETO NA IMAGEM
+                    '<img class="' + classeImg + '" src="' + carta.img + '" onclick="abrirModalImagem(\'' + carta.img + '\')" style="cursor: pointer;">' +
+
+                    // BOTÃO DE ALTERNAR (✔)
+                    '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ', ' + carta.idSlotBanco + ', ' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
+
+                    // BOTÃO DE REMOVER (✕)
+                    '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ', ' + carta.idSlotBanco + ')" title="Remover">✕</button>' +
+                    '</div>';
+            }
+
+            let idBanco = carta ? carta.idSlotBanco : 'null';
+            return '<div class="binder-slot" style="' + style + '" onclick="abrirModalBusca(' + slotIndex + ', ' + idBanco + ')">' +
+                '<div class="slot-empty">' +
+                '<span class="slot-label">Slot</span>' +
+                '<span class="slot-num">#' + num + '</span>' +
+                '<div class="slot-plus">+</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        function gerarPaginaHTML(cfg, offset, tam) {
+            let html = '<div class="binder-page-grid">';
+            let total = CONFIG_TIPO[binderAtual.tipo].totalSlots;
+
+            for (let r = 0; r < cfg.rows; r++) {
+                html += '<div class="binder-page-row">';
+                for (let c = 0; c < cfg.cols; c++) {
+                    let slotIndex = offset + (r * cfg.cols + c);
+                    if (slotIndex >= total) break;
+                    html += gerarSlotHTML(slotIndex, tam.w, tam.h);
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+
+        function alternarCarta(slotIndex, idBanco, estadoAtual) {
+            // Garante que campos vazios ou indefinidos sejam tratados
+            let estado = estadoAtual === undefined || estadoAtual === null ? 1 : estadoAtual;
+
+            fetch("/binder/alternarPosseCarta", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    slotServer: idBanco,
+                    estadoAtual: estado
+                })
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        // Inverte o estado no objeto local e redesenha a tela
+                        binderAtual.cartas[slotIndex].obtida = estado == 1 ? 0 : 1;
+                        renderizarPagina();
+                    } else {
+                        console.error("Erro na API ao alternar opacidade da carta.");
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("Erro no fetch alternarCarta:", erro);
+                });
+        }
+
+        function renderizarPagina() {
+            let cfg = CONFIG_TIPO[binderAtual.tipo];
+            let totalPaginas = calcularTotalPaginas();
+            let slotsPorPag = cfg.cols * cfg.rows;
+            let tam = calcularTamanhoSlot(cfg);
+
+            let ladoEsq = document.getElementById("lado-esquerdo");
+            let ladoDir = document.getElementById("lado-direito");
+
+            if (paginaAtual === 0) {
+                ladoEsq.className = 'binder-page-blank';
+                ladoEsq.innerHTML = '';
+                ladoDir.className = 'binder-page';
+                ladoDir.innerHTML = gerarPaginaHTML(cfg, 0, tam);
+            } else if (paginaAtual === totalPaginas - 1) {
+                let offsetEsq = (paginaAtual * 2 - 1) * slotsPorPag;
+                ladoEsq.className = 'binder-page';
+                ladoEsq.innerHTML = gerarPaginaHTML(cfg, offsetEsq, tam);
+                ladoDir.className = 'binder-page-blank';
+                ladoDir.innerHTML = '';
+            } else {
+                let offsetEsq = (paginaAtual * 2 - 1) * slotsPorPag;
+                let offsetDir = paginaAtual * 2 * slotsPorPag;
+                ladoEsq.className = 'binder-page';
+                ladoDir.className = 'binder-page';
+                ladoEsq.innerHTML = gerarPaginaHTML(cfg, offsetEsq, tam);
+                ladoDir.innerHTML = gerarPaginaHTML(cfg, offsetDir, tam);
+            }
+            atualizarNav(totalPaginas);
+        }
+
+        /* ══════════════════════════════
+           3. PAGINAÇÃO
+        ══════════════════════════════ */
+        function calcularTotalPaginas() {
+            let cfg = CONFIG_TIPO[binderAtual.tipo];
+            let slotsPorPag = cfg.cols * cfg.rows;
+            let totalBlocos = Math.ceil(cfg.totalSlots / slotsPorPag);
+            return Math.ceil(totalBlocos / 2) + 1;
+        }
+
+        function atualizarNav(totalPaginas) {
+            let paginaExibida = paginaAtual + 1;
+            document.getElementById("nav-info").textContent = paginaExibida;
+            document.getElementById("btn-prev").disabled = (paginaAtual === 0);
+            document.getElementById("btn-next").disabled = (paginaAtual >= totalPaginas - 1);
+        }
+
+        function navegarPagina(direcao) {
+            let totalPaginas = calcularTotalPaginas();
+            paginaAtual = paginaAtual + direcao;
+            if (paginaAtual < 0) paginaAtual = 0;
+            if (paginaAtual >= totalPaginas) paginaAtual = totalPaginas - 1;
+            renderizarPagina();
+        }
+        /* ══════════════════════════════
+                   4. MODAL E INSERÇÃO DE LINK
+                ══════════════════════════════ */
+        function abrirModalBusca(slotIndex, idBanco) {
+            slotSelecionado = slotIndex;
+            idSlotSelecionadoNoBanco = idBanco;
+
+            document.getElementById("modal-slot-info").textContent = "Slot #" + (slotIndex + 1);
+
+            // Limpa o input sempre que abrir o modal
+            document.getElementById("ipt_url_imagem").value = '';
+            document.getElementById("ipt_numeracao").value = '';
+            document.getElementById("ipt_set").value = '';
+            document.getElementById("ipt_set").value = '';
+            document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
+
+            document.getElementById("modal_busca").style.display = "flex";
+            document.getElementById("ipt_url_imagem").focus();
+        }
+
+        function fecharModalBusca() {
+            document.getElementById("modal_busca").style.display = "none";
+            slotSelecionado = -1;
+        }
+
+        // Fechar clicando fora ou no ESC
+        document.getElementById("modal_busca").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalBusca();
+        });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                fecharModalBusca();
+                fecharModalImagem(); // Adicione esta linha
+            }
+        });
+
+        /* ══════════════════════════════
+           MODAL DE IMAGEM AMPLIADA
+        ══════════════════════════════ */
+        function abrirModalImagem(urlImagem) {
+            document.getElementById("img_ampliada").src = urlImagem;
+            document.getElementById("modal_imagem").style.display = "flex";
+        }
+
+        function fecharModalImagem() {
+            document.getElementById("modal_imagem").style.display = "none";
+            // Limpa o src para não aparecer a carta antiga piscando na próxima vez
+            setTimeout(() => document.getElementById("img_ampliada").src = "", 200);
+        }
+
+        // Fechar clicando fora da imagem
+        document.getElementById("modal_imagem").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalImagem();
+        });
+
+        /* ══════════════════════════════
+           5. AÇÕES DE BANCO: ATUALIZAR E LIMPAR
+        ══════════════════════════════ */
+        function salvarCartaLink() {
+            // Pega o link que o usuário colou
+            let urlImagem = document.getElementById("ipt_url_imagem").value.trim();
+
+            if (!urlImagem) {
+                alert("Por favor, cole um link válido da imagem.");
+                return;
+            }
+
+            if (slotSelecionado < 0 || idSlotSelecionadoNoBanco < 0) return;
+
+            // Faz o POST para a rota do seu controller
+            fetch("/binder/atualizarSlot", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    slotServer: idSlotSelecionadoNoBanco,
+                    imagemCartaServer: urlImagem // Envia a string da URL
+                })
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        // Atualiza a imagem no front-end na hora
+                        binderAtual.cartas[slotSelecionado].img = urlImagem;
+                        fecharModalBusca();
+                        renderizarPagina();
+                    } else {
+                        console.error("Erro na API ao atualizar o slot.");
+                        alert("Erro ao salvar a imagem. Tente novamente.");
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("Erro no fetch salvarCartaLink:", erro);
+                    alert("Erro de conexão.");
+                });
+        }
+
+
+
+        function removerCarta(slotIndex, idBanco) {
+            fetch("/binder/limparSlot", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    slotServer: idBanco
+                })
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        binderAtual.cartas[slotIndex].img = null;
+                        renderizarPagina();
+                    } else {
+                        console.error("Erro na API ao limpar o slot.");
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("Erro no fetch removerCarta:", erro);
+                });
+        }
+
+        /* ══════════════════════════════
+           START & EVENT LISTENERS
+        ══════════════════════════════ */
+        window.addEventListener('resize', function () {
+            renderizarPagina();
+        });
+
+        // Inicia o fluxo carregando o banco de dados
+        carregarBinder();
+
+    </script>
+</body>
+
+</html>

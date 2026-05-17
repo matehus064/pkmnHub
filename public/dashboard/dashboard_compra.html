@@ -12,7 +12,7 @@
 <style>
     .btnLimpar {
         width: 100%;
-        background-color: #2a2a2a00;
+        background-color: transparent;
         color: #F9CF30;
         border: 1px solid #F9CF30;
         padding: 10px 14px;
@@ -66,7 +66,6 @@
                     </div>
 
                     <form>
-
                         <div class="inputsJuntos">
                             <div class="espaco">
                                 <label for="ipt_numero">Número</label>
@@ -130,8 +129,8 @@
                                     src="../assets/imgs/raritys/special-illustration-rare.png"></label>
                             <label class="raridadeItem"><input type="radio" name="n_raridade" value="ACE SPEC Rare"><img
                                     src="../assets/imgs/raritys/ace-spec-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Mega Hyper Rare"><img
-                                    src="../assets/imgs/raritys/hyper-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade"
+                                    value="Mega Hyper Rare"><img src="../assets/imgs/raritys/hyper-rare.png"></label>
                             <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img
                                     src="../assets/imgs/raritys/promo.png"></label>
                         </div>
@@ -182,8 +181,16 @@
                     </form>
                 </section>
 
-                <section class="direitaContainer_gyarados">
-                    <img src="" alt="" id="imagem" style="width: 75%;">
+                <section class="direitaContainer_gyarados" style="align-items: center;">
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem"
+                        style="width: 75%; opacity: 0;">
+                    <div class="card"
+                        style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: #F9CF30; background-color: #1214176e; backdrop-filter: blur(10px);;">
+                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!
+                        </div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será
+                            solicitado outros campos.</div>
+                    </div>
                 </section>
             </main>
         </div>
@@ -207,10 +214,12 @@
         ipt_qtd.value = 1;
         ipt_valorCompra.value = 0;
         ipt_precoLiga.value = 0;
-        trocarImagem('');
+
+        let img = document.getElementById('imagem');
+            img.style.opacity = '0';
+
         document.querySelectorAll('input[name="n_tipo"]').forEach(r => r.checked = false);
         document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
-
     }
 
     // ----- VARIAVEIS INPUTS: -----

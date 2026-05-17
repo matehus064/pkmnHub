@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+    .btnLimpar {
+        width: 100%;
+        background-color: transparent;
+        color: #F9CF30;
+        border: 1px solid #F9CF30;
+        padding: 10px 14px;
+        border-radius: 50px;
+        font-size: 12px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        transition: background-color 0.3s;
+
+    }
+
+    .btnLimpar:hover {
+        background-color: #F9CF30;
+        color: #000;
+    }
+
+/* Esconde o checkbox padrão do HTML */
+#botao-on-off {
+  display: none;
+}
+
+/* O corpo do botão (trilho) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  border: 1px solid #2a2d32;
+  background-color: transparent; /* Cor de fundo quando está OFF */
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.4s; /* Suaviza a mudança de cor */
+}
+
+/* A bolinha do interruptor */
+.switch::before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #F9CF30;
+  border-radius: 50%;
+  transition: transform 0.4s; /* Suaviza o movimento */
+}
+
+/* Estado quando o botão está LIGADO (ON) */
+#botao-on-off:checked + .switch {
+  background-color: #121417; /* Cor de fundo quando está ON */
+  border: none;
+}
+
+/* Move a bolinha para a direita quando LIGADO */
+#botao-on-off:checked + .switch::before {
+  transform: translateX(26px);
+}
+
+
+</style>
+
+<body>
+    <div class="toggle-container">
+  <input type="checkbox" id="botao-on-off">
+  <label for="botao-on-off" class="switch"></label>
+</div>
+
+</body>
+</html>

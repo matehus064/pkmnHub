@@ -38,21 +38,49 @@ CREATE TABLE base_cards (
     
     -- Correção da Constraint: especifique a coluna 'raridade' antes do IN
     CONSTRAINT chk_raridade CHECK (raridade IN (
-        'Common', 
-        'Uncommon', 
-        'Rare', 
-        'Double Rare', 
-        'Ultra Rare', 
-        'Illustration Rare', 
-        'Special Illustration Rare', 
-        'ACE SPEC rare', 
-        'Hyper Rare', 
-        'Promo'
+        "ACE SPEC Rare",
+        "Amazing Rare",
+        "Black White Rare",
+        "Classic Collection",
+        "Common",
+        "Double Rare",
+        "Hyper Rare",
+        "Illustration Rare",
+        "LEGEND",
+        "MEGA_ATTACK_RARE",
+        "Mega Hyper Rare",
+        "Promo",
+        "Radiant Rare",
+        "Rare",
+        "Rare ACE",
+        "Rare BREAK",
+        "Rare Holo",
+        "Rare Holo EX",
+        "Rare Holo GX",
+        "Rare Holo LV.X",
+        "Rare Holo Star",
+        "Rare Holo V",
+        "Rare Holo VMAX",
+        "Rare Holo VSTAR",
+        "Rare Prime",
+        "Rare Prism Star",
+        "Rare Rainbow",
+        "Rare Secret",
+        "Rare Shining",
+        "Rare Shiny",
+        "Rare Shiny GX",
+        "Rare Ultra",
+        "Shiny Rare",
+        "Shiny Ultra Rare",
+        "Special Illustration Rare",
+        "Trainer Gallery Rare Holo",
+        "Ultra Rare",
+        "Uncommon"
     ))
 );
 
 -- 3. A Coleção do Usuário (Relacionamento N:N puro)
--- Agora a identificação única da linha é o par (fk_usuario, fk_carta)
+-- Agora a identificação única da linha é o par (fk_usuario,fk_carta)
 CREATE TABLE colecao (
     fk_usuario INT,
     fk_carta INT,
@@ -79,7 +107,10 @@ CREATE TABLE transacoes (
     valor_transacao DECIMAL(10, 2),
     preco_ligaPkmn DECIMAL(10, 2),
     data_movimento DATE DEFAULT (CURRENT_DATE), 
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id),	
+    
+    -- ADICIONADO O ON DELETE CASCADE AQUI:
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,    
+    
     FOREIGN KEY (fk_carta) REFERENCES base_cards(id)
 );
 
@@ -88,9 +119,29 @@ CREATE TABLE snapshots_colecao (
     fk_usuario INT,
     valor_total DECIMAL(10, 2),
     data_snapshot DATE DEFAULT (CURRENT_DATE),
-    FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+    
+    -- ADICIONADO O ON DELETE CASCADE AQUI:
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
+-- ----- TESTE DE BINDER: -----
+CREATE TABLE binder (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_usuario INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    tipo ENUM('2x2', '3x3', '4x3') NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
+CREATE TABLE binder_slots (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    fk_binder INT NOT NULL,
+    slot INT NOT NULL,
+    url_imagem VARCHAR(255),
+    obtida BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (fk_binder) REFERENCES binder(id) ON DELETE CASCADE
+);
 
 -- ----- SELECTS PARA A API: -----
 

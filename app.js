@@ -20,6 +20,7 @@ var usuarioRouter = require("./src/routes/usuarios");
 var cardsRouter = require("./src/routes/cards");
 var transacoesRouter = require("./src/routes/transacoes");
 var kpisRouter = require("./src/routes/kpis");
+var binderRouter = require("./src/routes/binder");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +33,8 @@ app.use("/usuarios", usuarioRouter);
 app.use("/cards", cardsRouter);
 app.use("/transacoes", transacoesRouter);
 app.use("/kpis", kpisRouter);
+app.use("/binder", binderRouter);
+
 
 
 app.listen(PORTA_APP, function () {
