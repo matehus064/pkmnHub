@@ -32,26 +32,36 @@ function cadastrar(req, res) {
     } else if (raridadeCartaServer == undefined) {
         res.status(400).send("A raridade da carta não foi definida!");
     } else {
-    cardsModel.existeCarta(nomeCartaServer, numeroCartaServer)
-        .then(function (resultado) {
-            console.log("valorCompra recebido:", valorCompraServer); // <-- aqui
-            console.log("menorLiga recebido:", menorLigaServer);     // <-- aqui
-            if (resultado.length == 1) {
+        cardsModel.existeCarta(nomeCartaServer, numeroCartaServer)
+            .then(function (resultado) {
+                console.log("valorCompra recebido:", valorCompraServer);
+                console.log("menorLiga recebido:", menorLigaServer);
+                
+                if (resultado.length == 1) {
                     let idCarta = resultado[0].id;
-                    console.log("Carta encontrada:", resultado[0]);
-                    console.log("valorCompra:", valorCompraServer);
-                    console.log("menorLiga:", menorLigaServer);
-                    cardsModel.adicionarNaColecao(usuarioServer, resultado[0].id, qntCartaServer, valorCompraServer, menorLigaServer)
-                        .then(function (resultado) {
+                    console.log("Carta encontrada na base_cards:", resultado[0]);
+                    cardsModel.verificarCartaNaColecaoPorId(usuarioServer, idCarta)
+                        .then(function(resultadoColecao) {
+                            if (resultadoColecao.length > 0) {
+                                console.log("Carta já na coleção. Atualizando quantidade...");
+                                return cardsModel.somarQuantidadeCompra(usuarioServer, idCarta, qntCartaServer, valorCompraServer, menorLigaServer);
+                            } else {
+                                console.log("Nova carta para o usuário. Inserindo na coleção...");
+                                return cardsModel.adicionarNaColecao(usuarioServer, idCarta, qntCartaServer, valorCompraServer, menorLigaServer);
+                            }
+                        })
+                        .then(function(resultadoAcao) {
                             cardsModel.buscarValorTotalColecao(usuarioServer)
                                 .then(function (resultadoValor) {
                                     let valorTotal = resultadoValor[0].valor_total_colecao;
                                     cardsModel.salvarSnapshot(usuarioServer, valorTotal);
                                 });
-                            res.json(resultado);
-                            transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer)
-                        }).catch(function (erro) {
-                            console.log(erro);
+                            
+                            res.json(resultadoAcao);
+                            transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer);
+                        })
+                        .catch(function (erro) {
+                            console.log("Erro na verificação da coleção: ", erro);
                             res.status(500).json(erro.sqlMessage);
                         });
                 } else if (resultado.length == 0) {
@@ -65,11 +75,14 @@ function cadastrar(req, res) {
                                             cardsModel.salvarSnapshot(usuarioServer, valorTotal);
                                         });
                                     res.json(resultado);
-                                    transacoesModel.registrarTransacao(usuarioServer, resultadoCadastro.insertId, 'compra', valorCompraServer, menorLigaServer)
+                                    transacoesModel.registrarTransacao(usuarioServer, resultadoCadastro.insertId, 'compra', valorCompraServer, menorLigaServer);
                                 }).catch(function (erro) {
                                     console.log(erro);
                                     res.status(500).json(erro.sqlMessage);
                                 });
+                        }).catch(function (erro) {
+                            console.log(erro);
+                            res.status(500).json(erro.sqlMessage);
                         });
                 }
             }).catch(function (erro) {

@@ -213,7 +213,7 @@ function validandoImagem2(numeroIpt, setIpt) {
             trocarImagem("https://images.scrydex.com/pokemon/" + setEncontrado.apiId + "-" + numCarta + "/large");
             
             // CORREÇÃO: Usando 'setEncontrado.apiId' em vez de 'carta.setId' (que não existia aqui)
-            ipt_url_imagem.value = "https://images.scrydex.com/pokemon/" + setEncontrado.apiId + "-" + numCarta + "/large";
+            ipt_url_imagem.value = "https://images.scrydex.com/pokemon/" + setEncontrado.apiId + "-" + numCarta + "/small";
 
         } else {
             ipt_set.style.border = "1px solid #F9CF30";
@@ -277,7 +277,7 @@ function validandoImagem2(numeroIpt, setIpt) {
     ipt_set.style.border = "none";
     ipt_set.value = carta.setNameEn;
     trocarImagem("https://images.scrydex.com/pokemon/" + carta.setId + "-" + numCarta + "/large");
-    ipt_url_imagem.value = "https://images.scrydex.com/pokemon/" + carta.setId + "-" + numCarta + "/large";
+    ipt_url_imagem.value = "https://images.scrydex.com/pokemon/" + carta.setId + "-" + numCarta + "/small";
 
     return imagemFinal;
 }

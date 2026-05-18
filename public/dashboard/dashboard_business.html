@@ -31,10 +31,9 @@
         </nav>
     </aside>
 
-    <!-- CONTEÚDO -->
     <div class="main-container">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
+            <span class="header-saudacao">hey! <span class="header-saudacao-nome" id="username"></span></span>
         </header>
 
         <div class="dashboard-flex-wrapper">
@@ -52,12 +51,12 @@
 
                     <div class="chart-wrapper">
                         <canvas id="myChart"></canvas>
-                    </div>  
+                    </div>
                 </div>
 
-                <div class="card chart-main-card" style="min-height: fit-content; height: fit-content">
+                <div class="card chart-main-card chart-main-card--compact">
                     <div class="label">COMPARATIVO (TOTAL)</div>
-                    <div class="card" style="height: 160px; padding: 0px 0px 0px 0px;">
+                    <div class="card card--canvas">
                         <canvas id="barChart"></canvas>
                     </div>
                 </div>
@@ -76,10 +75,9 @@
                     <div class="most-expensive-content">
                         <div>
                             <div class="label">Carta mais cara</div>
-                            <div style="color: var(--text-gray); font-size: 13px; margin-top: 5px;" id="cartaMaisCara">
-                            </div>
+                            <div class="carta-mais-cara-nome" id="cartaMaisCara"></div>
                         </div>
-                        <div style="font-size: 30px; font-weight: 700;" id="cartaMaisCaraValor"></div>
+                        <div class="carta-mais-cara-valor" id="cartaMaisCaraValor"></div>
                     </div>
                     <div class="card-img-wrapper" id="cartaMaisCaraImg"></div>
                 </div>
@@ -87,36 +85,36 @@
                 <div class="row-inner">
                     <div class="card gasto-card">
                         <div class="label">Gasto</div>
-                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalGasto"></div>
+                        <div class="kpi-valor" id="totalGasto"></div>
                     </div>
                     <div class="card retorno-card">
                         <div class="label">Retorno</div>
-                        <div style="font-size: 28px; font-weight: 700; margin-top: 10px;" id="totalRetorno"></div>
+                        <div class="kpi-valor" id="totalRetorno"></div>
                     </div>
                 </div>
 
                 <div class="row-inner">
-                    <div class="card chart-main-card" style="min-height: fit-content; min-width: 350px">
+                    <div class="card chart-main-card chart-main-card--compact-wide">
                         <div class="label">COMPARATIVO (COLEÇÕES)</div>
-                        <div class="card" style="height: 160px; padding: 0px">
+                        <div class="card card--canvas">
                             <canvas id="meuGraficoRosca"></canvas>
                         </div>
                     </div>
 
-                    <div class="row-inner" style="flex-direction: column;">
-                        <div class="card" style="flex: 0; min-height: fit-content">
+                    <div class="row-inner row-inner--column">
+                        <div class="card card--kpi-small">
                             <div class="label">ROI</div>
                             <div class="roi-value" id="roi"></div>
                         </div>
 
-                        <div class="card"
-                            style="flex: 0; min-height: 85px; display: flex; align-items: center; justify-content: center;">
+                        <div class="card card--action-center">
                             <button class="btn-legend" onclick="toggleLegenda(meuGraficoRosca)">EXIBIR LEGENDA</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
@@ -126,14 +124,11 @@
 <script src="../js/functions.js"></script>
 
 <script>
-    // ----- IMPLEMENTAÇÃO API (KPIS): -----
     let meuGraficoLinhas = null;
     let meuGraficoBarras = null;
     let meuGraficoRosca = null;
 
     function buscarKpis(intervalo = '30 DAY', botao) {
-
-
         document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
         if (botao) botao.classList.add('active');
 
@@ -144,7 +139,6 @@
                 return resposta.json();
             })
             .then(function (json) {
-
                     valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
@@ -154,15 +148,13 @@
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
 
-                // ----- GRÁFICO DE LINHA: -----
+                // ----- GRÁFICO DE LINHA -----
                 let labelsLinha = json.evolucaoColecao.map(item =>
                     new Date(item.data_snapshot).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
                 );
                 let dadoslinha = json.evolucaoColecao.map(item => item.valor_total);
 
-                if (meuGraficoLinhas) {
-                    meuGraficoLinhas.destroy();
-                }
+                if (meuGraficoLinhas) meuGraficoLinhas.destroy();
 
                 const ctx = document.getElementById('myChart').getContext('2d');
                 meuGraficoLinhas = new Chart(ctx, {
@@ -182,34 +174,21 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            mode: 'index',
-                            intersect: false
-                        },
+                        interaction: { mode: 'index', intersect: false },
                         plugins: {
                             legend: {
                                 display: true,
                                 position: 'top',
                                 align: 'end',
-                                labels: {
-                                    color: '#808fa5',
-                                    usePointStyle: false,
-                                    boxWidth: 4,
-                                    boxHeight: 4
-                                }
+                                labels: { color: '#808fa5', usePointStyle: false, boxWidth: 4, boxHeight: 4 }
                             }
                         },
                         scales: {
-                            x: {
-                                ticks: { color: '#808fa5' },
-                                grid: { color: 'rgba(255,255,255,0.08)' }
-                            },
+                            x: { ticks: { color: '#808fa5' }, grid: { color: 'rgba(255,255,255,0.08)' } },
                             y: {
                                 ticks: {
                                     color: '#808fa5',
-                                    callback: function (value) {
-                                        return 'R$ ' + value.toLocaleString('pt-BR');
-                                    }
+                                    callback: function (value) { return 'R$ ' + value.toLocaleString('pt-BR'); }
                                 },
                                 grid: { color: 'rgba(255,255,255,0.08)' }
                             }
@@ -217,24 +196,18 @@
                     }
                 });
 
-                // ----- GRÁFICO DE BARRAS: -----
+                // ----- GRÁFICO DE BARRAS -----
                 let valorLiga = json.valorTotalColecao[0].valor_total_colecao;
                 let valorCompra = json.valorTotalCompra[0].valor_total_compra;
 
-                if (meuGraficoBarras) {
-                    meuGraficoBarras.destroy();
-                }
+                if (meuGraficoBarras) meuGraficoBarras.destroy();
 
                 const ctxBar = document.getElementById('barChart').getContext('2d');
                 meuGraficoBarras = new Chart(ctxBar, {
                     type: 'bar',
                     data: {
                         labels: ['VALOR REAL', 'VALOR DE COMPRA'],
-                        datasets: [{
-                            data: [valorLiga, valorCompra],
-                            backgroundColor: '#F9CF30',
-                            barThickness: 20
-                        }]
+                        datasets: [{ data: [valorLiga, valorCompra], backgroundColor: '#F9CF30', barThickness: 20 }]
                     },
                     options: {
                         indexAxis: 'y',
@@ -242,65 +215,41 @@
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            x: {
-                                ticks: { color: '#808fa5' },
-                                grid: { color: 'rgba(255,255,255,0.08)' }  // ← muda display:false para cor
-                            },
-                            y: {
-                                ticks: { color: '#808fa5' },
-                                grid: { color: 'rgba(255,255,255,0.08)' }
-                            }
+                            x: { ticks: { color: '#808fa5' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                            y: { ticks: { color: '#808fa5' }, grid: { color: 'rgba(255,255,255,0.08)' } }
                         }
                     }
                 });
 
-                // ----- GRÁFICO DE ROSCA: -----
+                // ----- GRÁFICO DE ROSCA -----
                 let labelsRosca = json.valorPorSet.map(item => {
                     let set = sets.find(s => s.nomePt === item.set_nome || s.nomeEn === item.set_nome);
                     return set ? set.sigla : item.set_nome;
                 });
-
                 let dadosRosca = json.valorPorSet.map(item => item.total_valor);
-
-                if (meuGraficoRosca) {
-                    meuGraficoRosca.destroy();
-                }
-
                 let coresRosca = json.valorPorSet.map(item => {
                     let set = sets.find(s => s.nomePt === item.set_nome || s.nomeEn === item.set_nome);
                     return set ? set.cor : '#808fa5';
                 });
+
+                if (meuGraficoRosca) meuGraficoRosca.destroy();
 
                 const ctxRosca = document.getElementById('meuGraficoRosca').getContext('2d');
                 meuGraficoRosca = new Chart(ctxRosca, {
                     type: 'doughnut',
                     data: {
                         labels: labelsRosca,
-                        datasets: [{
-                            data: dadosRosca,
-                            backgroundColor: coresRosca,
-                            borderColor: [
-                            ],
-                            borderWidth: 0,
-                            hoverOffset: 5
-                        }]
+                        datasets: [{ data: dadosRosca, backgroundColor: coresRosca, borderWidth: 0, hoverOffset: 5 }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        layout: {
-                            padding: 5
-                        },
+                        layout: { padding: 5 },
                         plugins: {
                             legend: {
                                 position: 'right',
                                 display: false,
-                                labels: {
-                                    color: '#808fa5',
-                                    font: { size: 9 },
-                                    boxWidth: 9,
-                                    padding: 10
-                                }
+                                labels: { color: '#808fa5', font: { size: 9 }, boxWidth: 9, padding: 10 }
                             },
                             tooltip: {
                                 callbacks: {
@@ -313,9 +262,7 @@
                                     }
                                 }
                             },
-                            datalabels: {
-                                display: true
-                            }
+                            datalabels: { display: true }
                         },
                         cutout: '65%'
                     }
@@ -323,6 +270,6 @@
             })
             .catch(function (erro) {
                 console.log(erro);
-            })
+            });
     }
 </script>

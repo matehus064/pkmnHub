@@ -78,10 +78,30 @@ function buscarValorPorSet(usuario) {
     return database.executar(instrucaoSql, [usuario]);
 }
 
+function verificarCartaNaColecaoPorId(usuario, carta) {
+    var instrucaoSql = `
+        SELECT quantidade FROM colecao WHERE fk_usuario = ? AND fk_carta = ?;
+    `;
+    return database.executar(instrucaoSql, [usuario, carta]);
+}
+
+function somarQuantidadeCompra(usuario, carta, quantidade, precoCompra, precoLigaPkmn) {
+    var instrucaoSql = `
+        UPDATE colecao 
+        SET quantidade = quantidade + ?, 
+            preco_compra = ?, 
+            preco_ligaPkmn = ?
+        WHERE fk_usuario = ? AND fk_carta = ?;
+    `;
+    return database.executar(instrucaoSql, [quantidade, precoCompra, precoLigaPkmn, usuario, carta]);
+}
+
 module.exports = {
     existeCarta,
     cadastrar,
     adicionarNaColecao,
+    verificarCartaNaColecaoPorId, 
+    somarQuantidadeCompra,        
     buscarValorTotalColecao,
     buscarValorTotalCompra,
     buscarTotalCartas,
