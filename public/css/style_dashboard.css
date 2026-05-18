@@ -536,9 +536,7 @@ input[type="url"] {
    9. CADASTRO — banners laterais (personagens)
    ========================================================================== */
 .direitaContainer_gyarados,
-.direitaContainer_nidoking,
-.direitaContainer_squirtle,
-.direitaContainer_bulbassaur {
+.direitaContainer_nidoking {
     flex: 1;
     padding: 40px;
     display: flex;
@@ -550,28 +548,14 @@ input[type="url"] {
 
 .direitaContainer_gyarados {
     background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
-        url('../assets/imgs/pkmnOficial/pocket/gyaradosPocket.png');
+        url('../assets/imgs/pkmnOficial/pocket/gyaradosPocket.webp');
     background-position: center center;
     background-repeat: no-repeat;
 }
 
 .direitaContainer_nidoking {
     background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
-        url('../assets/imgs/pkmnOficial/pocket/nidokingPocket.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-.direitaContainer_squirtle {
-    background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
-        url('../assets/imgs/pkmnOficial/pocket/squirtlePocket.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-.direitaContainer_bulbassaur {
-    background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
-        url('../assets/imgs/pkmnOficial/pocket/bulbaPocketB.png');
+        url('../assets/imgs/pkmnOficial/pocket/nidokingPocket.webp');
     background-position: center center;
     background-repeat: no-repeat;
 }

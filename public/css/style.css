@@ -162,7 +162,7 @@ button {
     width: 100%;
     gap: 0px;
     background-image: linear-gradient(#12141774, #2f30347e),
-        url(../assets/imgs/main/background_home.png);
+        url(../assets/imgs/main/background_home.webp);
     background-size: cover;
 
 }
@@ -588,7 +588,7 @@ input:focus {
 .direitaContainer {
     flex: 1.2;
     background: linear-gradient(to right, var(--cinzaPrimario), rgba(0, 0, 0, 0.011)),
-        url('../assets/imgs/pkmnOficial/pocket/venuPocket.png') no-repeat center center;
+        url('../assets/imgs/pkmnOficial/pocket/venuPocket.webp') no-repeat center center;
     background-size: cover;
     display: flex;
     align-items: flex-end;
@@ -599,7 +599,7 @@ input:focus {
 .esquerdaContainer {
     flex: 1.2;
     background: linear-gradient(to left, var(--cinzaPrimario), rgba(0, 0, 0, 0.2)),
-        url('../assets/imgs/pkmnOficial/pocket/pikachuPocket.png') no-repeat center center;
+        url('../assets/imgs/pkmnOficial/pocket/pikachuPocket.webp') no-repeat center center;
     background-size: cover;
     display: flex;
     align-items: flex-end;
