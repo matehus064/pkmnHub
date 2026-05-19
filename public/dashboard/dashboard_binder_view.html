@@ -18,6 +18,7 @@
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item active"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
                 <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
                     <a class="nav-link active">Cadastro</a>
@@ -32,7 +33,16 @@
 
     <div class="main-container main-container--binder-view">
         <header id="header">
-            <span class="header-saudacao">hey! <span class="header-saudacao-nome" id="username"></span></span>
+            <!-- Bloco da Esquerda (Início) -->
+            <div class="header-left">
+                <div class="header-search-group">
+                </div>
+            </div>
+
+            <!-- Bloco da Direita (Fim) -->
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
         </header>
 
         <div class="binder-view-wrapper">
@@ -40,8 +50,13 @@
                 <div class="binder-view-meta">
                     <span class="binder-view-title" id="binder-titulo">Carregando...</span>
                     <span class="binder-badge" id="binder-tipo-badge">--</span>
+                    <span class="binder-owner" id="binder-owner" style="display:none;"></span>
                 </div>
-                <button class="btn-voltar" onclick="window.location.href='dashboard_binders.html'">← Voltar</button>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-voltar" id="btn-copiar" onclick="copiarLink()">🔗 Copiar link</button>
+                    <button class="btn-voltar" id="btn-voltar" onclick="window.location.href='dashboard_binders.html'">←
+                        Voltar</button>
+                </div>
             </div>
 
             <div class="binder-area" id="binder-area">
@@ -50,7 +65,7 @@
                 <div class="binder-spine"></div>
                 <div class="binder-page" id="lado-direito"></div>
                 <button class="btn-nav" id="btn-next" onclick="navegarPagina(1)">›</button>
-                <span class="nav-page-info" id="nav-info">1</span>
+                <span class="nav-page-info" id="nav-info">Page 1</span>
             </div>
         </div>
     </div>
@@ -75,6 +90,7 @@
                             <label class="label--invisible">.</label>
                             <button type="button" onclick="limparFormulario()" class="btnLimpar">LIMPAR</button>
                         </div>
+
                         <div class="espaco">
                             <label class="raridadeItem">
                                 <input type="radio" name="n_raridade" value="Promo">
@@ -101,366 +117,340 @@
             <img id="img_ampliada" src="" alt="Carta Ampliada">
         </div>
     </div>
-</body>
 
-</html>
+    <script src="../js/dados.js"></script>
+    <script src="../js/dadosCartas.js"></script>
+    <script src="../js/functions.js"></script>
 
-<script src="../js/dados.js"></script>
-<script src="../js/dadosCartas.js"></script>
-<script src="../js/functions.js"></script>
-
-<script>
-    /* ══════════════════════════════
-       VARIÁVEIS GLOBAIS
-    ══════════════════════════════ */
-    let CONFIG_TIPO = {
-        '2x2': { cols: 2, rows: 2, totalSlots: 160 },
-        '3x3': { cols: 3, rows: 3, totalSlots: 360 },
-        '4x3': { cols: 4, rows: 3, totalSlots: 480 },
-    };
-
-    let binderAtual = {
-        id:     -1,
-        nome:   "Carregando...",
-        tipo:   "3x3",
-        cartas: {}
-    };
-
-    let paginaAtual              = 0;
-    let slotSelecionado          = -1;
-    let idSlotSelecionadoNoBanco = -1;
-
-    /* ══════════════════════════════
-       1. CARREGAR BINDER
-    ══════════════════════════════ */
-    function carregarBinder() {
-        let idBinder   = sessionStorage.getItem('BINDER_ID');
-        let nomeBinder = sessionStorage.getItem('BINDER_NOME');
-        let tipoBinder = sessionStorage.getItem('BINDER_TIPO');
-
-        if (!idBinder) {
-            console.error("Erro: BINDER_ID não encontrado no sessionStorage.");
-            return;
-        }
-
-        binderAtual.id     = idBinder;
-        binderAtual.nome   = nomeBinder;
-        binderAtual.tipo   = tipoBinder;
-        binderAtual.cartas = {};
-
-        fetch('/binder/buscarSlots?binderServer=' + idBinder)
-            .then(function(resposta) {
-                if (!resposta.ok) throw new Error("Erro na resposta da API");
-                return resposta.json();
-            })
-            .then(function(slotsDoBanco) {
-                for (let i = 0; i < slotsDoBanco.length; i++) {
-                    let linha          = slotsDoBanco[i];
-                    let slotIndexFront = linha.slot - 1;
-                    binderAtual.cartas[slotIndexFront] = {
-                        idSlotBanco: linha.id,
-                        img:         linha.url_imagem,
-                        obtida:      linha.obtida
-                    };
-                }
-                inicializar();
-            })
-            .catch(function(erro) {
-                console.error("Erro ao carregar o binder:", erro);
+    <script>
+        function copiarLink() {
+            navigator.clipboard.writeText(window.location.href).then(function () {
+                let btn = document.getElementById("btn-copiar");
+                btn.textContent = "✓ Copiado!";
+                setTimeout(function () { btn.textContent = "🔗 Copiar link"; }, 2000);
             });
-    }
-
-    /* ══════════════════════════════
-       2. INICIALIZAÇÃO E LAYOUT
-    ══════════════════════════════ */
-    function inicializar() {
-        document.getElementById("binder-titulo").textContent     = binderAtual.nome;
-        document.getElementById("binder-tipo-badge").textContent = binderAtual.tipo;
-        renderizarPagina();
-    }
-
-    function calcularTamanhoSlot(cfg) {
-        let area       = document.getElementById("binder-area");
-        let gap        = 8;
-        let padArea    = 40;
-        let spine      = 28;
-
-        let alturaDisp  = area.clientHeight - padArea;
-        let larguraDisp = (area.clientWidth - padArea - spine) / 2;
-
-        let slotH = Math.floor((alturaDisp  - (cfg.rows - 1) * gap) / cfg.rows);
-        let slotW = Math.floor(slotH * 5 / 7);
-
-        let maxSlotW = Math.floor((larguraDisp - (cfg.cols - 1) * gap) / cfg.cols);
-        if (slotW > maxSlotW) {
-            slotW = maxSlotW;
-            slotH = Math.floor(slotW * 7 / 5);
         }
 
-        return { w: slotW, h: slotH };
-    }
+        /* ══════════════════════════════
+           VARIÁVEIS GLOBAIS
+        ══════════════════════════════ */
+        let CONFIG_TIPO = {
+            '2x2': { cols: 2, rows: 2, totalSlots: 160 },
+            '3x3': { cols: 3, rows: 3, totalSlots: 360 },
+            '4x3': { cols: 4, rows: 3, totalSlots: 480 },
+        };
 
-    function gerarSlotHTML(slotIndex, w, h) {
-        let carta = binderAtual.cartas[slotIndex];
-        let num   = slotIndex + 1;
-        let style = 'width:' + w + 'px;height:' + h + 'px;';
+        let binderAtual = { id: -1, nome: "Carregando...", tipo: "3x3", cartas: {} };
+        let paginaAtual = 0;
+        let slotSelecionado = -1;
+        let idSlotSelecionadoNoBanco = -1;
 
-        if (carta && carta.img) {
-            let classeImg = carta.obtida == 0 ? "slot-card-img nao-obtida" : "slot-card-img";
+        // Resolve se o usuário atual é o dono do binder
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUsername = urlParams.get('u');
+        const urlBinderId = urlParams.get('b');
+        const sessionUsername = sessionStorage.getItem("USERNAME");
+        const isDono = !!(urlUsername && sessionUsername && urlUsername === sessionUsername);
 
-            return '<div class="binder-slot" style="' + style + '">' +
-                       '<img class="' + classeImg + '" src="' + carta.img + '" onclick="abrirModalImagem(\'' + carta.img + '\')" style="cursor:pointer;">' +
-                       '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ', ' + carta.idSlotBanco + ', ' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
-                       '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ', ' + carta.idSlotBanco + ')" title="Remover">✕</button>' +
-                   '</div>';
-        }
+        /* ══════════════════════════════
+           1. CARREGAR BINDER
+        ══════════════════════════════ */
+        function carregarBinder() {
+            let idBinder = urlBinderId || sessionStorage.getItem('BINDER_ID');
 
-        let idBanco = carta ? carta.idSlotBanco : 'null';
-        return '<div class="binder-slot" style="' + style + '" onclick="abrirModalBusca(' + slotIndex + ', ' + idBanco + ')">' +
-                   '<div class="slot-empty">' +
-                       '<span class="slot-label">Slot</span>' +
-                       '<span class="slot-num">#' + num + '</span>' +
-                       '<div class="slot-plus">+</div>' +
-                   '</div>' +
-               '</div>';
-    }
-
-    function gerarPaginaHTML(cfg, offset, tam) {
-        let html  = '<div class="binder-page-grid">';
-        let total = CONFIG_TIPO[binderAtual.tipo].totalSlots;
-
-        for (let r = 0; r < cfg.rows; r++) {
-            html += '<div class="binder-page-row">';
-            for (let c = 0; c < cfg.cols; c++) {
-                let slotIndex = offset + (r * cfg.cols + c);
-                if (slotIndex >= total) break;
-                html += gerarSlotHTML(slotIndex, tam.w, tam.h);
+            if (!idBinder) {
+                console.error("Erro: ID do binder não encontrado.");
+                return;
             }
-            html += '</div>';
+
+            binderAtual.id = idBinder;
+            binderAtual.cartas = {};
+
+            fetch('/binder/buscarSlots?binderServer=' + idBinder)
+                .then(function (resposta) {
+                    if (!resposta.ok) throw new Error("Erro na resposta da API");
+                    return resposta.json();
+                })
+                .then(function (slotsDoBanco) {
+                    // Suporta resposta com meta { nome, tipo } ou só array de slots
+                    if (slotsDoBanco.meta) {
+                        binderAtual.nome = slotsDoBanco.meta.nome;
+                        binderAtual.tipo = slotsDoBanco.meta.tipo;
+                    } else {
+                        binderAtual.nome = sessionStorage.getItem('BINDER_NOME') || "Binder";
+                        binderAtual.tipo = sessionStorage.getItem('BINDER_TIPO') || "3x3";
+                    }
+
+                    let slots = slotsDoBanco.slots || slotsDoBanco;
+                    for (let i = 0; i < slots.length; i++) {
+                        let linha = slots[i];
+                        binderAtual.cartas[linha.slot - 1] = {
+                            idSlotBanco: linha.id,
+                            img: linha.url_imagem,
+                            obtida: linha.obtida
+                        };
+                    }
+                    inicializar();
+                })
+                .catch(function (erro) {
+                    console.error("Erro ao carregar o binder:", erro);
+                });
         }
 
-        html += '</div>';
-        return html;
+        /* ══════════════════════════════
+           2. INICIALIZAÇÃO E LAYOUT
+        ══════════════════════════════ */
+        function inicializar() {
+    document.getElementById("binder-titulo").textContent = binderAtual.nome;
+    document.getElementById("binder-tipo-badge").textContent = binderAtual.tipo;
+
+    let ownerEl = document.getElementById("binder-owner");
+    let voltarEl = document.getElementById("btn-voltar");
+    let copiarEl = document.getElementById("btn-copiar");
+
+    if (!isDono && urlUsername) {
+        if (ownerEl) { ownerEl.textContent = "@" + urlUsername; ownerEl.style.display = "inline"; }
+        if (copiarEl) copiarEl.style.display = "none";
+        if (voltarEl) voltarEl.style.display = sessionUsername ? "inline" : "none";
     }
 
-    function renderizarPagina() {
-        let cfg          = CONFIG_TIPO[binderAtual.tipo];
-        let totalPaginas = calcularTotalPaginas();
-        let slotsPorPag  = cfg.cols * cfg.rows;
-        let tam          = calcularTamanhoSlot(cfg);
+    if (!sessionUsername) {
+        document.getElementById("header").innerHTML = `
+            <div class="header-left">
+                <div class="logo">
+                    <a href="../index.html">
+                    <img src="../assets/imgs/main/logo2.png">pkmnHub</a>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btnSecundario_header" onclick="window.location.href='../login.html'">Login</button>
+                <button class="btnPrincipal_header" onclick="window.location.href='../cadastro.html'">Cadastrar</button>
+            </div>
+        `;
+        document.querySelector(".sidebar").style.display = "none";
+        if (voltarEl) voltarEl.style.display = "none";
+        if (copiarEl) copiarEl.style.display = "none";
+    }
 
-        let ladoEsq = document.getElementById("lado-esquerdo");
-        let ladoDir = document.getElementById("lado-direito");
+    function tentarRenderizar(tentativas) {
+        let area = document.getElementById("binder-area");
+        if (area.clientHeight > 0) {
+            renderizarPagina();
+        } else if (tentativas > 0) {
+            setTimeout(function () { tentarRenderizar(tentativas - 1); }, 50);
+        }
+    }
+    tentarRenderizar(10);
+}
 
-        if (paginaAtual === 0) {
-            ladoEsq.className = 'binder-page-blank';
-            ladoEsq.innerHTML = '';
-            ladoDir.className = 'binder-page';
-            ladoDir.innerHTML = gerarPaginaHTML(cfg, 0, tam);
-
-        } else if (paginaAtual === totalPaginas - 1) {
-            let offsetEsq     = (paginaAtual * 2 - 1) * slotsPorPag;
-            ladoEsq.className = 'binder-page';
-            ladoEsq.innerHTML = gerarPaginaHTML(cfg, offsetEsq, tam);
-            ladoDir.className = 'binder-page-blank';
-            ladoDir.innerHTML = '';
-
-        } else {
-            let offsetEsq     = (paginaAtual * 2 - 1) * slotsPorPag;
-            let offsetDir     = paginaAtual * 2 * slotsPorPag;
-            ladoEsq.className = 'binder-page';
-            ladoDir.className = 'binder-page';
-            ladoEsq.innerHTML = gerarPaginaHTML(cfg, offsetEsq, tam);
-            ladoDir.innerHTML = gerarPaginaHTML(cfg, offsetDir, tam);
+        function calcularTamanhoSlot(cfg) {
+            let area = document.getElementById("binder-area");
+            let gap = 8, padArea = 40, spine = 28;
+            let alturaDisp = area.clientHeight - padArea;
+            let larguraDisp = (area.clientWidth - padArea - spine) / 2;
+            let slotH = Math.floor((alturaDisp - (cfg.rows - 1) * gap) / cfg.rows);
+            let slotW = Math.floor(slotH * 5 / 7);
+            let maxSlotW = Math.floor((larguraDisp - (cfg.cols - 1) * gap) / cfg.cols);
+            if (slotW > maxSlotW) { slotW = maxSlotW; slotH = Math.floor(slotW * 7 / 5); }
+            return { w: slotW, h: slotH };
         }
 
-        atualizarNav(totalPaginas);
-    }
+        function gerarSlotHTML(slotIndex, w, h) {
+            let carta = binderAtual.cartas[slotIndex];
+            let num = slotIndex + 1;
+            let style = 'width:' + w + 'px;height:' + h + 'px;';
 
-    /* ══════════════════════════════
-       3. PAGINAÇÃO
-    ══════════════════════════════ */
-    function calcularTotalPaginas() {
-        let cfg         = CONFIG_TIPO[binderAtual.tipo];
-        let slotsPorPag = cfg.cols * cfg.rows;
-        let totalBlocos = Math.ceil(cfg.totalSlots / slotsPorPag);
-        return Math.ceil(totalBlocos / 2) + 1;
-    }
+            if (carta && carta.img) {
+                let classeImg = carta.obtida == 0 ? "slot-card-img nao-obtida" : "slot-card-img";
+                let botoesEdicao = isDono
+                    ? '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ', ' + carta.idSlotBanco + ', ' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
+                    '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ', ' + carta.idSlotBanco + ')" title="Remover">✕</button>'
+                    : '';
+                return '<div class="binder-slot" style="' + style + '">' +
+                    '<img class="' + classeImg + '" src="' + carta.img + '" onclick="abrirModalImagem(\'' + carta.img + '\')" style="cursor:pointer;">' +
+                    botoesEdicao + '</div>';
+            }
 
-    function atualizarNav(totalPaginas) {
-        let paginaExibida = paginaAtual + 1;
-        document.getElementById("nav-info").textContent = paginaExibida;
-        document.getElementById("btn-prev").disabled    = (paginaAtual === 0);
-        document.getElementById("btn-next").disabled    = (paginaAtual >= totalPaginas - 1);
-    }
-
-    function navegarPagina(direcao) {
-        let totalPaginas = calcularTotalPaginas();
-        paginaAtual      = paginaAtual + direcao;
-        if (paginaAtual < 0)             paginaAtual = 0;
-        if (paginaAtual >= totalPaginas) paginaAtual = totalPaginas - 1;
-        renderizarPagina();
-    }
-
-    /* ══════════════════════════════
-       4. MODAL DE BUSCA
-    ══════════════════════════════ */
-    function abrirModalBusca(slotIndex, idBanco) {
-        slotSelecionado          = slotIndex;
-        idSlotSelecionadoNoBanco = idBanco;
-
-        document.getElementById("modal-slot-info").textContent = "Slot #" + (slotIndex + 1);
-        document.getElementById("ipt_url_imagem").value        = '';
-        document.getElementById("ipt_numeracao").value         = '';
-        document.getElementById("ipt_set").value               = '';
-
-        let radios = document.querySelectorAll('input[name="n_raridade"]');
-        for (let i = 0; i < radios.length; i++) radios[i].checked = false;
-
-        document.getElementById("modal_busca").style.display = "flex";
-        document.getElementById("ipt_numeracao").focus();
-    }
-
-    function fecharModalBusca() {
-        document.getElementById("modal_busca").style.display = "none";
-        slotSelecionado = -1;
-    }
-
-    function limparFormulario() {
-        document.getElementById("ipt_set").value       = '';
-        document.getElementById("ipt_numeracao").value = '';
-
-        let img = document.getElementById('imagem');
-        img.style.opacity = '0';
-
-        let radios = document.querySelectorAll('input[name="n_raridade"]');
-        for (let i = 0; i < radios.length; i++) radios[i].checked = false;
-    }
-
-    /* ══════════════════════════════
-       5. MODAL DE IMAGEM AMPLIADA
-    ══════════════════════════════ */
-    function abrirModalImagem(urlImagem) {
-        let urlGrande = urlImagem.replace('small', 'large');
-        document.getElementById("img_ampliada").src           = urlGrande;
-        document.getElementById("modal_imagem").style.display = "flex";
-    }
-
-    function fecharModalImagem() {
-        document.getElementById("modal_imagem").style.display = "none";
-        setTimeout(function() {
-            document.getElementById("img_ampliada").src = "";
-        }, 200);
-    }
-
-    document.getElementById("modal_imagem").addEventListener("click", function(e) {
-        if (e.target === this) fecharModalImagem();
-    });
-
-    /* ══════════════════════════════
-       6. AÇÕES DE BANCO
-    ══════════════════════════════ */
-    function salvarCartaLink() {
-        let urlImagem = document.getElementById("ipt_url_imagem").value.trim();
-
-        if (!urlImagem) {
-            alert("Por favor, cole um link válido da imagem.");
-            return;
+            let idBanco = carta ? carta.idSlotBanco : 'null';
+            let clickAttr = isDono ? ' onclick="abrirModalBusca(' + slotIndex + ', ' + idBanco + ')"' : '';
+            let cursorStyle = isDono ? '' : 'cursor:default;';
+            return '<div class="binder-slot" style="' + style + cursorStyle + '"' + clickAttr + '>' +
+                '<div class="slot-empty">' +
+                '<span class="slot-label">Slot</span>' +
+                '<span class="slot-num">#' + num + '</span>' +
+                (isDono ? '<div class="slot-plus">+</div>' : '') +
+                '</div></div>';
         }
 
-        if (slotSelecionado < 0 || idSlotSelecionadoNoBanco < 0) return;
-
-        fetch("/binder/atualizarSlot", {
-            method:  "PUT",
-            headers: { "Content-Type": "application/json" },
-            body:    JSON.stringify({
-                slotServer:        idSlotSelecionadoNoBanco,
-                imagemCartaServer: urlImagem
-            })
-        })
-            .then(function(resposta) {
-                if (resposta.ok) {
-                    binderAtual.cartas[slotSelecionado].img = urlImagem;
-                    fecharModalBusca();
-                    renderizarPagina();
-                } else {
-                    console.error("Erro na API ao atualizar o slot.");
-                    alert("Erro ao salvar a imagem. Tente novamente.");
+        function gerarPaginaHTML(cfg, offset, tam) {
+            let html = '<div class="binder-page-grid">';
+            let total = CONFIG_TIPO[binderAtual.tipo].totalSlots;
+            for (let r = 0; r < cfg.rows; r++) {
+                html += '<div class="binder-page-row">';
+                for (let c = 0; c < cfg.cols; c++) {
+                    let slotIndex = offset + (r * cfg.cols + c);
+                    if (slotIndex >= total) break;
+                    html += gerarSlotHTML(slotIndex, tam.w, tam.h);
                 }
-            })
-            .catch(function(erro) {
-                console.error("Erro no fetch salvarCartaLink:", erro);
-                alert("Erro de conexão.");
-            });
-    }
-
-    function removerCarta(slotIndex, idBanco) {
-        fetch("/binder/limparSlot", {
-            method:  "PUT",
-            headers: { "Content-Type": "application/json" },
-            body:    JSON.stringify({ slotServer: idBanco })
-        })
-            .then(function(resposta) {
-                if (resposta.ok) {
-                    binderAtual.cartas[slotIndex].img = null;
-                    renderizarPagina();
-                } else {
-                    console.error("Erro na API ao limpar o slot.");
-                }
-            })
-            .catch(function(erro) {
-                console.error("Erro no fetch removerCarta:", erro);
-            });
-    }
-
-    function alternarCarta(slotIndex, idBanco, estadoAtual) {
-        let estado = (estadoAtual === undefined || estadoAtual === null) ? 1 : estadoAtual;
-
-        fetch("/binder/alternarPosseCarta", {
-            method:  "PUT",
-            headers: { "Content-Type": "application/json" },
-            body:    JSON.stringify({ slotServer: idBanco, estadoAtual: estado })
-        })
-            .then(function(resposta) {
-                if (resposta.ok) {
-                    binderAtual.cartas[slotIndex].obtida = estado == 1 ? 0 : 1;
-                    renderizarPagina();
-                } else {
-                    console.error("Erro na API ao alternar opacidade da carta.");
-                }
-            })
-            .catch(function(erro) {
-                console.error("Erro no fetch alternarCarta:", erro);
-            });
-    }
-
-    /* ══════════════════════════════
-       7. EVENT LISTENERS
-    ══════════════════════════════ */
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape") {
-            fecharModalBusca();
-            fecharModalImagem();
-            return;
+                html += '</div>';
+            }
+            return html + '</div>';
         }
 
-        let modalBuscaAberto  = document.getElementById("modal_busca").style.display  === "flex";
-        let modalImagemAberto = document.getElementById("modal_imagem").style.display === "flex";
+        function renderizarPagina() {
+            let cfg = CONFIG_TIPO[binderAtual.tipo];
+            let totalPaginas = calcularTotalPaginas();
+            let slotsPorPag = cfg.cols * cfg.rows;
+            let tam = calcularTamanhoSlot(cfg);
+            let ladoEsq = document.getElementById("lado-esquerdo");
+            let ladoDir = document.getElementById("lado-direito");
 
-        if (!modalBuscaAberto && !modalImagemAberto) {
-            if (e.key === "ArrowLeft"  && !document.getElementById("btn-prev").disabled) navegarPagina(-1);
-            if (e.key === "ArrowRight" && !document.getElementById("btn-next").disabled) navegarPagina(1);
+            if (paginaAtual === 0) {
+                ladoEsq.className = 'binder-page-blank'; ladoEsq.innerHTML = '';
+                ladoDir.className = 'binder-page';
+                ladoDir.innerHTML = gerarPaginaHTML(cfg, 0, tam);
+            } else if (paginaAtual === totalPaginas - 1) {
+                ladoEsq.className = 'binder-page';
+                ladoEsq.innerHTML = gerarPaginaHTML(cfg, (paginaAtual * 2 - 1) * slotsPorPag, tam);
+                ladoDir.className = 'binder-page-blank'; ladoDir.innerHTML = '';
+            } else {
+                ladoEsq.className = 'binder-page'; ladoDir.className = 'binder-page';
+                ladoEsq.innerHTML = gerarPaginaHTML(cfg, (paginaAtual * 2 - 1) * slotsPorPag, tam);
+                ladoDir.innerHTML = gerarPaginaHTML(cfg, paginaAtual * 2 * slotsPorPag, tam);
+            }
+            atualizarNav(totalPaginas);
         }
 
-        if (modalBuscaAberto && e.key === "Enter") salvarCartaLink();
-    });
+        /* ══════════════════════════════
+           3. PAGINAÇÃO
+        ══════════════════════════════ */
+        function calcularTotalPaginas() {
+            let cfg = CONFIG_TIPO[binderAtual.tipo];
+            let slotsPorPag = cfg.cols * cfg.rows;
+            return Math.ceil(Math.ceil(cfg.totalSlots / slotsPorPag) / 2) + 1;
+        }
 
-    window.addEventListener('resize', function() {
-        renderizarPagina();
-    });
+        function atualizarNav(totalPaginas) {
+            document.getElementById("nav-info").textContent = paginaAtual + 1;
+            document.getElementById("btn-prev").disabled = (paginaAtual === 0);
+            document.getElementById("btn-next").disabled = (paginaAtual >= totalPaginas - 1);
+        }
 
-    /* ══════════════════════════════
-       START
-    ══════════════════════════════ */
-    carregarBinder();
-</script>
+        function navegarPagina(direcao) {
+            let totalPaginas = calcularTotalPaginas();
+            paginaAtual = Math.min(Math.max(paginaAtual + direcao, 0), totalPaginas - 1);
+            renderizarPagina();
+        }
+
+        /* ══════════════════════════════
+           4. MODAL DE BUSCA (somente dono)
+        ══════════════════════════════ */
+        function abrirModalBusca(slotIndex, idBanco) {
+            if (!isDono) return;
+            slotSelecionado = slotIndex;
+            idSlotSelecionadoNoBanco = idBanco;
+            document.getElementById("modal-slot-info").textContent = "Slot #" + (slotIndex + 1);
+            document.getElementById("ipt_url_imagem").value = '';
+            document.getElementById("ipt_numeracao").value = '';
+            document.getElementById("ipt_set").value = '';
+            document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
+            document.getElementById("modal_busca").style.display = "flex";
+            document.getElementById("ipt_numeracao").focus();
+        }
+
+        function fecharModalBusca() {
+            document.getElementById("modal_busca").style.display = "none";
+            slotSelecionado = -1;
+        }
+
+        function limparFormulario() {
+            document.getElementById("ipt_set").value = '';
+            document.getElementById("ipt_numeracao").value = '';
+            document.getElementById('imagem').style.opacity = '0';
+            document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
+        }
+
+        /* ══════════════════════════════
+           5. MODAL DE IMAGEM AMPLIADA
+        ══════════════════════════════ */
+        function abrirModalImagem(urlImagem) {
+            document.getElementById("img_ampliada").src = urlImagem.replace('small', 'large');
+            document.getElementById("modal_imagem").style.display = "flex";
+        }
+
+        function fecharModalImagem() {
+            document.getElementById("modal_imagem").style.display = "none";
+            setTimeout(function () { document.getElementById("img_ampliada").src = ""; }, 200);
+        }
+
+        document.getElementById("modal_imagem").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalImagem();
+        });
+
+        /* ══════════════════════════════
+           6. AÇÕES DE BANCO (somente dono)
+        ══════════════════════════════ */
+        function salvarCartaLink() {
+            if (!isDono) return;
+            let urlImagem = document.getElementById("ipt_url_imagem").value.trim();
+            if (!urlImagem) { alert("Por favor, cole um link válido da imagem."); return; }
+            if (slotSelecionado < 0 || idSlotSelecionadoNoBanco < 0) return;
+
+            fetch("/binder/atualizarSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idSlotSelecionadoNoBanco, imagemCartaServer: urlImagem })
+            })
+                .then(function (r) {
+                    if (r.ok) { binderAtual.cartas[slotSelecionado].img = urlImagem; fecharModalBusca(); renderizarPagina(); }
+                    else alert("Erro ao salvar a imagem. Tente novamente.");
+                })
+                .catch(function (e) { console.error(e); alert("Erro de conexão."); });
+        }
+
+        function removerCarta(slotIndex, idBanco) {
+            if (!isDono) return;
+            fetch("/binder/limparSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idBanco })
+            })
+                .then(function (r) { if (r.ok) { binderAtual.cartas[slotIndex].img = null; renderizarPagina(); } })
+                .catch(function (e) { console.error(e); });
+        }
+
+        function alternarCarta(slotIndex, idBanco, estadoAtual) {
+            if (!isDono) return;
+            let estado = (estadoAtual == null) ? 1 : estadoAtual;
+            fetch("/binder/alternarPosseCarta", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idBanco, estadoAtual: estado })
+            })
+                .then(function (r) {
+                    if (r.ok) { binderAtual.cartas[slotIndex].obtida = estado == 1 ? 0 : 1; renderizarPagina(); }
+                })
+                .catch(function (e) { console.error(e); });
+        }
+
+        /* ══════════════════════════════
+           7. EVENT LISTENERS
+        ══════════════════════════════ */
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") { fecharModalBusca(); fecharModalImagem(); return; }
+            let buscaAberto = document.getElementById("modal_busca").style.display === "flex";
+            let imgAberto = document.getElementById("modal_imagem").style.display === "flex";
+            if (!buscaAberto && !imgAberto) {
+                if (e.key === "ArrowLeft" && !document.getElementById("btn-prev").disabled) navegarPagina(-1);
+                if (e.key === "ArrowRight" && !document.getElementById("btn-next").disabled) navegarPagina(1);
+            }
+            if (buscaAberto && isDono && e.key === "Enter") salvarCartaLink();
+        });
+
+        window.addEventListener('resize', renderizarPagina);
+
+        /* ══════════════════════════════
+           START
+        ══════════════════════════════ */
+        carregarBinder();
+    </script>

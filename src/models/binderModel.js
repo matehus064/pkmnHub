@@ -28,10 +28,26 @@ function buscarBinders(usuario) {
     return database.executar(instrucaoSql);
 }
 
+function buscarBindersPorUsername(username) {
+    var instrucaoSql = `
+        SELECT b.id, b.nome, b.tipo 
+        FROM binder b
+        JOIN usuario u ON u.id = b.fk_usuario
+        WHERE u.username = '${username}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarSlots(idBinder) {
     var instrucaoSql = `
-    SELECT * FROM binder_slots WHERE fk_binder = '${idBinder}';
-        `;
+        SELECT 
+            b.nome, b.tipo,
+            bs.id, bs.slot, bs.url_imagem, bs.obtida
+        FROM binder b
+        JOIN binder_slots bs ON bs.fk_binder = b.id
+        WHERE b.id = '${idBinder}';
+    `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -78,5 +94,6 @@ module.exports = {
     atualizarSlot,
     limparSlot,
     deletarBinder,
-    alternarPosseCarta
+    alternarPosseCarta,
+    buscarBindersPorUsername
 };

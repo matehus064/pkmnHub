@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="icon" href="../assets/imgs/main/logo.png">
     <link rel="stylesheet" href="../css/style_dashboard.css">
 </head>
+
 <body>
     <aside class="sidebar">
         <div class="logo">
@@ -17,6 +19,7 @@
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
                 <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
                     <a class="nav-link active">Cadastro</a>
@@ -31,7 +34,16 @@
 
     <div class="main-container">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span ></span>
+            <!-- Bloco da Esquerda (Início) -->
+            <div class="header-left">
+                <div class="header-search-group">
+                </div>
+            </div>
+
+            <!-- Bloco da Direita (Fim) -->
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
         </header>
 
         <div class="cadastroFlex_wrapper">
@@ -45,45 +57,47 @@
                     <form>
                         <div class="inputsJuntos">
                             <div class="espaco">
+                                <label for="ipt_numero">NÚMERO</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+                        </div>
+
+                        <div class="carta-info-divider" style="margin-bottom: 15px;"></div>
+
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
                                 <label for="ipt_nome">Nome da Carta</label>
                                 <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
                             </div>
 
                             <div class="espaco">
-                                <label for="ipt_numero">NÚMERO</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
-                            </div>
-                        </div>
-
-                        <div class="inputsJuntos">
-                            <div class="espaco">
-                                <label for="ipt_qtd">QNT.</label>
-                                <input type="number" id="ipt_qtd" min="1" value="1">
+                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
                             </div>
 
                             <div class="espaco">
                                 <label for="ipt_preco">VALOR DE VENDA (R$)</label>
                                 <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00" placeholder="0.00">
                             </div>
-
-                            <div class="espaco">
-                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
-                                <input type="number" id="ipt_precoLiga" value="0" min="1" step="1.00"
-                                    placeholder="0.00">
-                            </div>
                         </div>
 
                         <label id="div_validacao"></label>
 
-                        <button type="button" onclick="cadastrarCartaVenda()" class="btnPrincipal_sign">Finalizar Cadastro</button>
+                        <button type="button" onclick="cadastrarCartaVenda()" class="btnPrincipal_sign">FinalizarCadastro</button>
                     </form>
                 </section>
-
                 <section class="direitaContainer_nidoking"></section>
             </main>
         </div>
     </div>
 </body>
+
 </html>
 
 <script src="../js/dados.js"></script>
@@ -102,7 +116,7 @@
 
         let nomeValidado = true;
 
-    // ----- VALIDAÇÕES: -----
+        // ----- VALIDAÇÕES: -----
 
         let condicoesErro = [
             nomeCarta == "" || numeroCarta == "" || qntCarta == "",

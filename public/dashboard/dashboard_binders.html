@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/style_dashboard.css">
 </head>
 
-<body onload="buscarBinders()">
+<body onload="buscarBinders(); verificarSessao()">
     <aside class="sidebar">
         <div class="logo">
             <a href="../index.html"><img src="../assets/imgs/main/logo2.png">pkmnHub</a>
@@ -19,10 +19,11 @@
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item active"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
                 <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
-                    <a class="nav-link active">Cadastro</a>
-                    <ul class="submenu active">
+                    <a class="nav-link">Cadastro</a>
+                    <ul class="submenu">
                         <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
                         <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
                     </ul>
@@ -33,11 +34,31 @@
 
     <div class="main-container main-container--binders">
         <header id="header">
-            <span class="header-saudacao">hey! <span class="header-saudacao-nome" id="username"></span></span>
+            <!-- Bloco da Esquerda (Início) -->
+            <div class="header-left">
+                <div class="header-search-group">
+                    <input type="text" id="ipt_busca_username" class="modal-search-input header-search-input"
+                        placeholder="Buscar por @username"
+                        onkeydown="if(event.key === 'Enter') buscarBindersPublicos()">
+                    <button class="btn-salvar-url header-search-btn" onclick="buscarBindersPublicos()">Buscar</button>
+                </div>
+            </div>
+
+            <!-- Bloco da Direita (Fim) -->
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
         </header>
+
+
+
 
         <div class="cadastroFlex_wrapper cadastroFlex_wrapper--binders">
             <main class="cadastroContainer cadastroContainer--binders">
+                <div id="area-titulo" class="binder-area-titulo" style="display:none;">
+                    <span id="resultados_titulo" class="label"></span>
+                    <button class="modal-btn-cancel" onclick="fecharBusca()">✕ Voltar aos meus binders</button>
+                </div>
                 <div id="lista_binders" class="binder-grid"></div>
             </main>
         </div>
@@ -97,11 +118,32 @@
 <script src="../js/functions.js"></script>
 
 <script>
+    function verificarSessao() {
+        let sessionUsername = sessionStorage.getItem("USERNAME");
+        if (!sessionUsername) {
+            document.getElementById("header").innerHTML = `
+            <div class="header-left">
+                <div class="header-search-group">
+                    <input type="text" id="ipt_busca_username" class="modal-search-input header-search-input" placeholder="Buscar por @username" onkeydown="if(event.key === 'Enter') buscarBindersPublicos()">
+                    <button class="btn-salvar-url header-search-btn" onclick="buscarBindersPublicos()">Buscar</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btnSecundario_header" onclick="window.location.href='../login.html'">Login</button>
+                <button class="btnPrincipal_header" onclick="window.location.href='../cadastro.html'">Cadastrar</button>
+            </div>
+        `;
+            document.querySelector(".sidebar").style.display = "none";
+            document.getElementById("lista_binders").innerHTML = '';
+        }
+    }
+
     function abrirBinder(idBinder, nomeBinder, tipoBinder) {
         sessionStorage.setItem('BINDER_ID', idBinder);
         sessionStorage.setItem('BINDER_NOME', nomeBinder);
         sessionStorage.setItem('BINDER_TIPO', tipoBinder);
-        window.location.href = 'dashboard_binder_view.html';
+        let username = sessionStorage.getItem("USERNAME");
+        window.location.href = `dashboard_binder_view.html?u=${encodeURIComponent(username)}&b=${idBinder}`;
     }
 
     function buscarBinders() {
@@ -147,6 +189,56 @@
             .catch(function (erro) {
                 console.log(erro);
             });
+    }
+
+    function buscarBindersPublicos() {
+        let username = document.getElementById("ipt_busca_username").value.trim();
+        if (!username) return;
+
+        fetch(`/binder/buscarBindersPorUsername?usernameServer=${encodeURIComponent(username)}`)
+            .then(function (resposta) { return resposta.json(); })
+            .then(function (json) {
+                let grid = document.getElementById("lista_binders");
+                let titulo = document.getElementById("resultados_titulo");
+                let areaTitulo = document.getElementById("area-titulo");
+
+                grid.innerHTML = '';
+                areaTitulo.style.display = 'flex';
+
+                if (json.length === 0) {
+                    titulo.textContent = 'Nenhum binder encontrado para @' + username;
+                    return;
+                }
+
+                titulo.textContent = json.length + ' binder(s) de @' + username;
+                json.forEach(function (binder) {
+                    grid.innerHTML += `
+                        <div class="binder-card">
+                            <div class="binder-cover-wrapper">
+                                <img class="binder-cover" src="../assets/imgs/binders/binder_${binder.tipo}.png" alt="${binder.nome}">
+                            </div>
+                            <div class="binder-body">
+                                <div>
+                                    <div class="binder-name">${binder.nome}</div>
+                                    <div class="binder-meta">
+                                        <span class="binder-badge">${binder.tipo}</span>
+                                    </div>
+                                </div>
+                                <div class="binder-actions">
+                                    <button class="btn-edit" onclick="window.location.href='dashboard_binder_view.html?u=${encodeURIComponent(username)}&b=${binder.id}'">Abrir</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            })
+            .catch(function (erro) { console.error(erro); });
+    }
+
+    function fecharBusca() {
+        document.getElementById("ipt_busca_username").value = "";
+        document.getElementById("area-titulo").style.display = "none";
+        buscarBinders();
     }
 
     function abrirModal() {

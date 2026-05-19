@@ -31,4 +31,8 @@ router.put("/alternarPosseCarta", function (req, res) {
     binderController.alternarPosseCarta(req, res);
 });
 
+router.get("/buscarBindersPorUsername", function (req, res) {
+    binderController.buscarBindersPorUsername(req, res);
+});
+
 module.exports = router;

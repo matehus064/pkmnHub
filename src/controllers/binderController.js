@@ -50,12 +50,34 @@ function buscarBinders(req, res) {
         });
 }
 
+function buscarBindersPorUsername(req, res) {
+    var usernameServer = req.query.usernameServer;
+
+    if (!usernameServer) {
+        return res.status(400).send("Username não informado.");
+    }
+
+    binderModel.buscarBindersPorUsername(usernameServer)
+        .then(function (resultado) {
+            res.json(resultado);
+        }).catch(function (erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 function buscarSlots(req, res) {
     var binders = req.query.binderServer;
 
     binderModel.buscarSlots(binders)
         .then(function (resultado) {
-            res.json(resultado);
+            if (resultado.length === 0) {
+                return res.json({ meta: null, slots: [] });
+            }
+            res.json({
+                meta: { nome: resultado[0].nome, tipo: resultado[0].tipo },
+                slots: resultado
+            });
         }).catch(function (erro) {
             console.log(erro);
             res.status(500).json(erro.sqlMessage);
@@ -123,5 +145,6 @@ module.exports = {
     atualizarSlot,
     limparSlot,
     deletarBinder,
-    alternarPosseCarta
+    alternarPosseCarta,
+    buscarBindersPorUsername
 };

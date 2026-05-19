@@ -180,18 +180,37 @@ body {
 
 header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
     gap: 15px;
 }
 
-header span {
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.user-welcome {
+    font-weight: 100;
+}
+
+.user-welcome #username {
     font-weight: 900;
 }
 
 .user-avatar {
     width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: 2px solid var(--border-dark);
 }
@@ -373,6 +392,14 @@ header span {
     height: 85%;
 }
 
+.cadastroTroca_wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 45%;
+    gap: 25px;
+}
+
 .cadastroContainer {
     flex: 1;
     display: flex;
@@ -536,7 +563,9 @@ input[type="url"] {
    9. CADASTRO — banners laterais (personagens)
    ========================================================================== */
 .direitaContainer_gyarados,
-.direitaContainer_nidoking {
+.direitaContainer_nidoking,
+.direitaContainer_squirtle,
+.direitaContainer_bulbassaur {
     flex: 1;
     padding: 40px;
     display: flex;
@@ -559,6 +588,163 @@ input[type="url"] {
     background-position: center center;
     background-repeat: no-repeat;
 }
+
+.direitaContainer_squirtle {
+    background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/squirtlePocket.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.direitaContainer_bulbassaur {
+    background-image: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/bulbaPocketB.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+/* ==========================================================================
+   10. COLEÇÃO — tabela de cartas
+   ========================================================================== */
+.colecao-container {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-dark);
+}
+
+.colecao-formulario {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1;
+    position: relative;
+}
+
+.colecao-gyarados {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(to right, #1a1c1f, rgba(0, 0, 0, 0.011)),
+        url('../assets/imgs/pkmnOficial/pocket/rapidashPocket.png') no-repeat center center;
+    background-size: cover;
+    z-index: 0;
+}
+
+.colecao-wrapper {
+    width: 100%;
+    backdrop-filter: blur(12px);
+    background-color: rgba(26, 28, 31, 0.453);
+    border-radius: 18px;
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+}
+
+.colecao-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.colecao-table th {
+    text-align: left;
+    padding: 14px 20px;
+    color: var(--text-gray);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.colecao-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-dark);
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.3s ease;
+}
+
+.colecao-table tr {
+    height: 60px;
+}
+
+.colecao-table tr:last-child td {
+    border-bottom: none;
+}
+
+.colecao-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.012);
+}
+
+/* Larguras das colunas */
+.colecao-table th:nth-child(1),
+.colecao-table td:nth-child(1) { width: 30%; }
+
+.colecao-table th:nth-child(2),
+.colecao-table td:nth-child(2) { width: 20%; }
+
+.colecao-table th:nth-child(3),
+.colecao-table td:nth-child(3) { width: 12%; }
+
+.colecao-table th:nth-child(4),
+.colecao-table td:nth-child(4) { width: 12%; }
+
+.colecao-table th:nth-child(5),
+.colecao-table td:nth-child(5) { width: 13%; }
+
+.colecao-table th:nth-child(6),
+.colecao-table td:nth-child(6) { width: 13%; }
+
+.colecao-table td:first-child {
+    padding-left: 0;
+}
+
+.carta-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.carta-thumbnail-wrapper {
+    position: relative;
+    width: 120px;
+    height: 65px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 6% 0 0 6%;
+    background-color: var(--bg-card);
+}
+
+.carta-thumbnail-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(26, 28, 31, 0.15), rgb(26, 28, 31));
+}
+
+.carta-thumbnail {
+    width: 120px;
+    height: 65px;
+    object-fit: cover;
+    object-position: 60% 15%;
+    transform: scale(1.2);
+    flex-shrink: 0;
+    display: block;
+}
+
 
 /* ==========================================================================
    11. COLEÇÃO — grid de cartas
@@ -905,6 +1091,32 @@ input[type="url"] {
     color: var(--danger);
 }
 
+/* Busca no header */
+.header-search-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-search-input {
+    width: 220px;
+    margin-bottom: 0;
+}
+
+.header-search-btn {
+    white-space: nowrap;
+    padding: 10px 16px;
+}
+
+/* Título da área de resultados de busca */
+.binder-area-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
 /* Card de adicionar novo binder */
 .binder-card-add {
     background: var(--bg-card);
@@ -967,11 +1179,6 @@ input[type="url"] {
     align-items: center;
     justify-content: center;
     z-index: 1000;
-}
-
-.modal-preview-img {
-    margin-left: 25px;
-    width: 20%;
 }
 
 .modal-box {
@@ -1159,6 +1366,7 @@ input[type="url"] {
     font-size: 14px;
     transition: border-color 0.2s;
     margin-bottom: 14px;
+
 }
 
 .modal-search-input:focus {
@@ -1221,13 +1429,14 @@ input[type="url"] {
     background: var(--accent-yellow);
     color: var(--bg-body);
     border: none;
-    padding: 12px;
+    padding: 10px 14px;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 800;
     cursor: pointer;
     font-family: 'Manrope', sans-serif;
     transition: background 0.2s, transform 0.1s;
+    margin-bottom: 14px;
 }
 
 .btn-salvar-url:hover {
@@ -1302,6 +1511,12 @@ input[type="url"] {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.binder-owner {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-gray);
 }
 
 .binder-view-title {
@@ -1561,6 +1776,13 @@ input[type="url"] {
     pointer-events: none;
 }
 
+/* Preview de imagem ao lado do modal de busca */
+.modal-preview-img {
+    width: 20%;
+    opacity: 0;
+    margin-left: 25px;
+}
+
 /* Botão limpar formulário do binder view */
 .btnLimpar {
     width: 100%;
@@ -1583,4 +1805,38 @@ input[type="url"] {
 /* Label invisível (alinhamento de formulário) */
 .label--invisible {
     color: transparent;
+}
+
+.btnPrincipal_header {
+    background: #F9CF30;
+    color: #16191d;
+    height: 40px;
+        padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 50px;
+    padding: 0 25px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.btnSecundario_header {
+    background: #16191d;
+    color: #F9CF30;
+    height: 40px;
+        padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 50px;
+    padding: 0 25px;
+    box-shadow: 0px 4px 10px #00000040;
 }

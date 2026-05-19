@@ -52,6 +52,7 @@ function toggleLegenda(idGrafico) {
 //======================================================================================
 //======================================================================================
 
+
 // ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
     function trocarImagem(src) {
         imagem.style.opacity = 0;
@@ -59,6 +60,19 @@ function toggleLegenda(idGrafico) {
             imagem.src = src;
             imagem.style.opacity = 1;
         }, 200);
+    }
+
+
+    //======================================================================================
+//======================================================================================
+
+
+// ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
+    function mensagemTemporizada(div, mensagem) {
+        div.innerHTML = mensagem;
+        setTimeout(() => {
+            div.innerHTML = "";
+        }, 5000);
     }
 
 //======================================================================================
@@ -79,7 +93,7 @@ function validandoImagem(numeroIpt, setIpt) {
 
         if (!setIpt) {
             ipt_set.style.border = "1px solid #F9CF30";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Insira a expansão!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Insira a expansão!</span>");
             return;
         }
 
@@ -95,13 +109,13 @@ function validandoImagem(numeroIpt, setIpt) {
 
         if (setEncontrado) {
             ipt_set.style.border = "none";
-            div_validacao.innerHTML = "";
+            mensagemTemporizada(div_validacao, "");
             expansaoFinal = setEncontrado.nomeEn;
             ipt_set.value = setEncontrado.nomeEn;
             trocarImagem("https://images.scrydex.com/pokemon/" + setEncontrado.apiId + "-" + numCarta + "/large");
         } else {
             ipt_set.style.border = "1px solid #F9CF30";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Expansão não encontrada!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Expansão não encontrada!</span>");
         }
         return;
     }
@@ -122,13 +136,16 @@ function validandoImagem(numeroIpt, setIpt) {
 
     // ----- VALIDAÇÕES: -----
     if (cartasEncontradas.length === 0 && numeroIpt.length === 7) {
-        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+        mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Número de set inválido!</span>");
         return false;
     }
 
     if (cartasEncontradas.length > 1 && numeroIpt.length === 7) {
         ipt_set.style.border = "1px solid #F9CF30";
-        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
+        mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>");
+        setTimeout(() => {
+        ipt_set.focus();
+    }, 50);
 
         if (setIpt) {
             for (let i = 0; i < cartasEncontradas.length; i++) {
@@ -172,6 +189,8 @@ function validandoImagem(numeroIpt, setIpt) {
         if (radioRaridade) radioRaridade.checked = true;
     }
 
+    ipt_precoLiga.focus();
+
     console.log("✅ Carta encontrada:", carta);
     return carta;
 }
@@ -189,7 +208,7 @@ function validandoImagem2(numeroIpt, setIpt) {
     if (isPromo) {
         if (!setIpt) {
             ipt_set.style.border = "1px solid #F9CF30";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Insira a expansão!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Insira a expansão!</span>");
             return;
         }
 
@@ -217,7 +236,7 @@ function validandoImagem2(numeroIpt, setIpt) {
 
         } else {
             ipt_set.style.border = "1px solid #F9CF30";
-            div_validacao.innerHTML = "<span style='color: #EE3D2D'>Expansão não encontrada!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Expansão não encontrada!</span>");
         }
         
         return; // Sai da função após lidar com a carta Promo
@@ -239,13 +258,16 @@ function validandoImagem2(numeroIpt, setIpt) {
 
     // ----- VALIDAÇÕES: -----
     if (cartasEncontradas.length === 0 && numeroIpt.length === 7) {
-        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Número de set inválido!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Número de set inválido!</span>");
         return false;
     }
 
     if (cartasEncontradas.length > 1 && numeroIpt.length === 7) {
         ipt_set.style.border = "1px solid #F9CF30";
-        div_validacao.innerHTML = "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>";
+            mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>");
+        setTimeout(() => {
+        ipt_set.focus();
+    }, 50);
 
         if (setIpt) {
             for (let i = 0; i < cartasEncontradas.length; i++) {

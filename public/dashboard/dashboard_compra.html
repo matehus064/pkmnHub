@@ -19,6 +19,7 @@
             <ul>
                 <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
                 <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
                     <a class="nav-link active">Cadastro</a>
@@ -33,7 +34,16 @@
 
     <div class="main-container">
         <header id="header">
-            <span style="font-weight: 100;">hey! <span style="font-weight: 900;" id="username"></span></span>
+            <!-- Bloco da Esquerda (Início) -->
+            <div class="header-left">
+                <div class="header-search-group">
+                </div>
+            </div>
+
+            <!-- Bloco da Direita (Fim) -->
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
         </header>
 
         <div class="cadastroFlex_wrapper">
@@ -133,17 +143,20 @@
                                 <input type="number" id="ipt_qtd" min="1" value="1">
                             </div>
 
+
+                            <div class="espaco">
+                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
+                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
+                                    oninput="ipt_valorCompra.value = (Number(ipt_precoLiga.value) * 0.7).toFixed(2)"
+                                    placeholder="0.00">
+                            </div>
+
                             <div class="espaco">
                                 <label for="ipt_preco">VALOR DE COMPRA (R$)</label>
                                 <input type="number" id="ipt_valorCompra" value="0" min="0" step="1.00"
                                     placeholder="0.00">
                             </div>
 
-                            <div class="espaco">
-                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
-                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
-                                    placeholder="0.00">
-                            </div>
 
                             <!-- <div class="espaco">
                                 <label for="ipt_url">URL IMAGEM</label>
@@ -183,6 +196,9 @@
 <script src="../js/functions.js"></script>
 
 <script>
+
+
+
     // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
     let expansaoFinal = '';
 
@@ -195,7 +211,7 @@
         ipt_precoLiga.value = 0;
 
         let img = document.getElementById('imagem');
-            img.style.opacity = '0';
+        img.style.opacity = '0';
 
         document.querySelectorAll('input[name="n_tipo"]').forEach(r => r.checked = false);
         document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
@@ -209,7 +225,7 @@
         let qntCarta = Number(ipt_qtd.value);
         let valorCompra = Number(ipt_valorCompra.value);
         let menorLiga = Number(ipt_precoLiga.value);
-        let imagemCarta = imagem.src;
+        let imagemCarta = imagem.src.replace('/large', '/small');
 
         let tipoCarta = document.querySelector('input[name="n_tipo"]:checked')?.value;
         let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
@@ -249,7 +265,7 @@
 
         for (let i = 0; i < condicoesErro.length; i++) {
             if (condicoesErro[i]) {
-                div_validacao.innerHTML = "<span style='color: #EE3D2D'>" + mensagensErro[i] + "</span>";
+                mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>" + mensagensErro[i] + "</span>");
                 return false;
             }
         }
@@ -279,9 +295,11 @@
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
                 if (resposta.ok) {
-                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>";
+                    mensagemTemporizada(div_validacao, "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>");
+                    limparFormulario();
+                    ipt_numero.focus();
                 } else {
-                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>";;
+                    mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>");
                 }
             })
             .catch(function (resposta) {
@@ -290,4 +308,13 @@
 
         return false;
     }
+
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            cadastrarCarta();
+            return;
+        }
+    });
+
 </script>
