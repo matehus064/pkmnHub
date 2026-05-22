@@ -36,7 +36,8 @@
         <header id="header">
             <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
-                <div class="header-search-group">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
+                    Hub de Desempenho
                 </div>
             </div>
 
@@ -149,11 +150,11 @@
                 return resposta.json();
             })
             .then(function (json) {
-                    valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
+                valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
                     document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
-                    cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
+                cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
                     totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
