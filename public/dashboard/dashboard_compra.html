@@ -64,7 +64,7 @@
 
                             <div class="espaco">
                                 <label style="color: transparent;">.</label>
-                                <button type="button" onclick="limparFormulario()" class="btnLimpar">LIMPAR</button>
+                                <button type="button" onclick="limparFormulario(camposCompra)" class="btnLimpar">LIMPAR</button>
                             </div>
                         </div>
 
@@ -122,6 +122,7 @@
                                     value="Mega Hyper Rare"><img src="../assets/imgs/raritys/hyper-rare.png"></label>
                             <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img
                                     src="../assets/imgs/raritys/promo.png"></label>
+                            <input type="hidden" id="ipt_raridade_fallback" value="">
                         </div>
 
                         <div class="inputsJuntos">
@@ -197,25 +198,20 @@
 
 <script>
 
+var camposCompra = [
+    { id: "ipt_nome", valor: "" },
+    { id: "ipt_set", valor: "" },
+    { id: "ipt_numero", valor: "" },
+    { id: "ipt_qtd", valor: 1 },
+    { id: "ipt_valorCompra", valor: 0 },
+    { id: "ipt_precoLiga", valor: 0 },
+    { id: "ipt_raridade_fallback", valor: "" }
+];
+
 
 
     // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
     let expansaoFinal = '';
-
-    function limparFormulario() {
-        ipt_nome.value = "";
-        ipt_set.value = "";
-        ipt_numero.value = "";
-        ipt_qtd.value = 1;
-        ipt_valorCompra.value = 0;
-        ipt_precoLiga.value = 0;
-
-        let img = document.getElementById('imagem');
-        img.style.opacity = '0';
-
-        document.querySelectorAll('input[name="n_tipo"]').forEach(r => r.checked = false);
-        document.querySelectorAll('input[name="n_raridade"]').forEach(r => r.checked = false);
-    }
 
     // ----- VARIAVEIS INPUTS: -----
     function cadastrarCarta() {
@@ -228,37 +224,35 @@
         let imagemCarta = imagem.src.replace('/large', '/small');
 
         let tipoCarta = document.querySelector('input[name="n_tipo"]:checked')?.value;
-        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value;
+        let raridadeCarta = document.querySelector('input[name="n_raridade"]:checked')?.value || ipt_raridade_fallback.value;
 
         let usuario = sessionStorage.getItem("ID_USER");
-
         let nomeValidado = true;
 
-        // ----- VALIDAÇÕES: -----
+        // ----- VALIDAÇÃO DO NOME: -----
         if (tipoCarta !== 'null') {
             nomeValidado = false;
-            console.log("situação 1: " + nomeValidado);
             for (let i = 0; i < todosPokemons.length; i++) {
-                if ((nomeCarta.toLowerCase()).includes(todosPokemons[i])) {
+                if (nomeCarta.toLowerCase().includes(todosPokemons[i])) {
                     nomeValidado = true;
-                    console.log("situação 2 entrou no if: " + nomeValidado);
                     break;
                 }
             }
         }
 
+        // ----- VALIDAÇÕES: -----
         let condicoesErro = [
             nomeCarta == "" || setCarta == "" || numeroCarta == "" || qntCarta == "" || imagemCarta == "",
             nomeCarta.length < 3 || !nomeValidado,
             (raridadeCarta != 'Promo' && (numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7)),
             tipoCarta == undefined,
-            raridadeCarta == undefined
+            raridadeCarta == undefined || raridadeCarta == ""
         ];
 
         let mensagensErro = [
             "Preencha todos os campos",
             "Nome inválido",
-            "Observe a parte inferior da sua carta e preencha corretamente a númeração",
+            "Observe a parte inferior da sua carta e preencha corretamente a numeração",
             "Selecione o tipo da carta",
             "Selecione a raridade da carta"
         ];
@@ -270,15 +264,10 @@
             }
         }
 
-
-        console.log("valorCompra enviado:", valorCompra);
-        console.log("menorLiga enviado:", menorLiga);
         // ----- IMPLEMENTAÇÃO API: -----
         fetch("/cards/cadastrar", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 nomeCartaServer: nomeCarta,
                 setCartaServer: setCarta,
@@ -293,19 +282,19 @@
             }),
         })
             .then(function (resposta) {
-                console.log("resposta: ", resposta);
                 if (resposta.ok) {
                     mensagemTemporizada(div_validacao, "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>");
-                    limparFormulario();
+                    limparFormulario(camposCompra);
                     ipt_numero.focus();
                 } else {
                     mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>");
                 }
             })
             .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+                console.log("#ERRO: " + resposta);
             });
 
+        
         return false;
     }
 

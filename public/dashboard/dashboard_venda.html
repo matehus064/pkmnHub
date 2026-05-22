@@ -58,12 +58,26 @@
                         <div class="inputsJuntos">
                             <div class="espaco">
                                 <label for="ipt_numero">NÚMERO</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191">
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
+
+
+
+
 
                             <div class="espaco">
                                 <label for="ipt_qtd">QNT.</label>
                                 <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+
+
+
+                            <div class="espaco">
+                                <label style="color: transparent;">.</label>
+                                <button type="button" onclick="limparFormulario(camposCompra)"
+                                    class="btnLimpar">LIMPAR</button>
                             </div>
                         </div>
 
@@ -75,24 +89,46 @@
                                 <label for="ipt_nome">Nome da Carta</label>
                                 <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
                             </div>
-
-                            <div class="espaco">
-                                <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
-                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
+                                                        <div class="espaco">
+                                <label for="ipt_set">SET</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
 
                             <div class="espaco">
-                                <label for="ipt_preco">VALOR DE VENDA (R$)</label>
-                                <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00" placeholder="0.00">
+                                <div class="inputsJuntos">
+                                    <div class="espaco">
+                                        <label for="ipt_precoLiga">LIGA (R$)</label>
+                                        <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
+                                            placeholder="0.00">
+                                    </div>
+
+                                    <div class="espaco">
+                                        <label for="ipt_preco">VENDA (R$)</label>
+                                        <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00"
+                                            placeholder="0.00">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <label id="div_validacao"></label>
 
-                        <button type="button" onclick="cadastrarCartaVenda()" class="btnPrincipal_sign">FinalizarCadastro</button>
+                        <button type="button" onclick="cadastrarCartaVenda()"
+                            class="btnPrincipal_sign">FinalizarCadastro</button>
                     </form>
                 </section>
-                <section class="direitaContainer_nidoking"></section>
+                <section class="direitaContainer_nidoking" style="align-items: center;">
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem"
+                        style="width: 75%; opacity: 0;">
+                    <div class="card"
+                        style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: #F9CF30; background-color: #1214176e; backdrop-filter: blur(10px);;">
+                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!
+                        </div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será
+                            solicitado outros campos.</div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
@@ -101,9 +137,20 @@
 </html>
 
 <script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
 <script src="../js/functions.js"></script>
 
+
 <script>
+    var camposCompra = [
+        { id: "ipt_nome", valor: "" },
+        { id: "ipt_set", valor: "" },
+        { id: "ipt_numero", valor: "" },
+        { id: "ipt_qtd", valor: 1 },
+        { id: "ipt_valorVenda", valor: 0 },
+        { id: "ipt_precoLiga", valor: 0 },
+    ];
+
     // ----- VARIAVEIS INPUTS: -----
     function cadastrarCartaVenda() {
         let nomeCarta = ipt_nome.value;

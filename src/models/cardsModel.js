@@ -66,7 +66,22 @@ function buscarSnapshots(usuario, intervalo) {
 
 function buscarColecao(usuario) {
     var instrucaoSql = `
-        SELECT b.url_imagem, b.nome_pokemon, b.set_nome, b.numero_set, c.quantidade, c.preco_compra, c.preco_ligaPkmn FROM base_cards b INNER JOIN colecao c ON c.fk_carta = b.id INNER JOIN usuario u ON c.fk_usuario = u.id WHERE u.id = ? ORDER BY b.set_nome ASC, b.numero_set ASC;
+        SELECT 
+    b.url_imagem, 
+    b.nome_pokemon, 
+    b.set_nome, 
+    b.numero_set, 
+    c.quantidade, 
+    c.preco_compra, 
+    c.preco_ligaPkmn 
+FROM base_cards b 
+INNER JOIN colecao c ON c.fk_carta = b.id 
+INNER JOIN usuario u ON c.fk_usuario = u.id 
+WHERE u.id = ?
+ORDER BY 
+    FIELD(b.set_nome, 'Scarlet & Violet Black Star Promos', 'Scarlet & Violet', 'Paldea Evolved', 'Obsidian Flames', '151', 'Paradox Rift', 'Paldean Fates', 'Temporal Forces', 'Twilight Masquerade', 'Shrouded Fable', 'Stellar Crown', 'Surging Sparks', 'Prismatic Evolutions', 'Journey Together', 'Destined Rivals', 'White Flare', 'Black Bolt', 'Mega Evolution Black Star Promos', 'Mega Evolution', 'Phantasmal Flames', 'Ascended Heroes', 'Perfect Order') = 0,
+    FIELD(b.set_nome, 'Scarlet & Violet Black Star Promos', 'Scarlet & Violet', 'Paldea Evolved', 'Obsidian Flames', '151', 'Paradox Rift', 'Paldean Fates', 'Temporal Forces', 'Twilight Masquerade', 'Shrouded Fable', 'Stellar Crown', 'Surging Sparks', 'Prismatic Evolutions', 'Journey Together', 'Destined Rivals', 'White Flare', 'Black Bolt', 'Mega Evolution Black Star Promos', 'Mega Evolution', 'Phantasmal Flames', 'Ascended Heroes', 'Perfect Order'),
+    b.numero_set ASC;
     `;
     return database.executar(instrucaoSql, [usuario]);
 }
