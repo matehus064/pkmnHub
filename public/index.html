@@ -10,18 +10,18 @@
 </head>
 
 <body>
-    <!-- HEADER -->
     <div class="header">
-        <div class="logoHeader">
+        <div class="logo logo--header">
             <img src="./assets/imgs/main/logo2.png">
+            <a href="index.html">pkmnHub</a>
         </div>
 
         <nav>
             <ul>
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="#">Comece sua Jornada</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Simulação</a></li>
+                <li><a href="#s0_inicio" class="active">Início</a></li>
+                <li><a href="#s1_novoTcg">Novo no Tcg?</a></li>
+                <li><a href="#s2_cartasAlta">Cartas em Alta</a></li>
+                <li><a href="#s3_comoFunciona">Como Funciona?</a></li>
             </ul>
         </nav>
 
@@ -31,32 +31,31 @@
         </div>
     </div>
 
-    <!-- HOME -->
     <div class="principal">
         <div class="principalConteudo">
             <span class="detalhe">SEJA BEM-VINDO AO PORTAL DEFINITIVO!</span>
-            <h1>Domine o jogo, <br> <span class="destaqueTexto">Colecione</span> lendas!</h1>
+            <h1 id="s0_inicio">Domine o jogo, <br> <span class="destaqueTexto">Colecione</span> lendas!</h1>
             <p>Seu guia digital definitivo para o iniciar no mundo de Pokémon Estampas Ilustradas. <br>
                 De coleções simples a inventimentos sólidos, um guia para sua evolução.</p>
             <div class="principalBotoes">
                 <button class="btnPrincipal_home">Comece sua Jornada </button>
-                <button class="btnSecundario_home" onclick="window.location.href = 'cadastro.html'">Acompanhe sua Coleção</button>
+                <button class="btnSecundario_home" onclick="window.location.href = 'cadastro.html'">Acompanhe sua
+                    Coleção</button>
             </div>
         </div>
     </div>
 
-    <!-- Novo no TCG? (sessão 2) -->
     <div class="cardContainer">
         <div>
-            <h2>Novo no Tcg?</h2>
+            <h2 id="s1_novoTcg">Novo no Tcg?</h2>
             <p> Veja por onde começar!</p>
         </div>
-
         <div class="detalheLinha"></div>
 
         <div class="cardsQuebra">
             <div class="card">
-                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/rayquazaAkira.webp);">
+                <div class="cardImagem"
+                    style="background-image: url(./assets/imgs/pkmnOficial/tcg/rayquazaAkira.webp);">
                 </div>
                 <div class="cardConteudo">
                     <span class="categoria categoria--vermelho">Produtos e Cartas</span>
@@ -84,8 +83,7 @@
             </div>
 
             <div class="card">
-                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/umbreonAkira.webp);">
-                </div>
+                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/umbreonAkira.webp);"></div>
                 <div class="cardConteudo">
                     <span class="categoria categoria--amarelo">Mercado</span>
                     <h3>3. Conheça sobre o mercado de TCG</h3>
@@ -99,21 +97,17 @@
         </div>
     </div>
 
-    <!-- Seção: Cartas em alta -->
-
     <!-- ↘ - ↗ -->
 
     <div class="tendencias">
         <div class="cartasTendencias">
-            <h2>Cartas <span class="ballet">em Alta</span></h2>
+            <h2 id="s2_cartasAlta">Cartas <span class="ballet">em Alta</span></h2>
             <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta">Ver Catálogo Completo →</a>
         </div>
         <p class="subtitulo">Acompanhe as cartas mais cobiçadas do mercado atual!</p>
-
-        <div class="detalheLinha detalheLinha--amarelo"></div>
+        <div class="detalheLinha detalheLinha--azul"></div>
 
         <div class="cartaemAlta_container">
-
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">IR</span>
@@ -188,11 +182,81 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
+    <div class="comoFunciona">
+        <div class="cartasTendencias">
+            <h2 id="s3_comoFunciona">Como <span class="ballet">Funciona?</span></h2>
+        </div>
+        <p class="subtitulo">Em três passos simples você já está no controle da sua coleção.</p>
+        <div class="detalheLinha detalheLinha--azul"></div>
+        <div class="comoFunciona_steps">
+            <div class="comoFunciona_step step--azul" data-step="1">
+                <span class="step-icone"></span>
+                <span class="step-numero">PASSO 01</span>
+                <span class="step-titulo">Crie sua conta</span>
+                <p class="step-descricao">Cadastre-se gratuitamente e escolha seu treinador. Em menos de um minuto você
+                    já tem acesso à plataforma completa.</p>
+            </div>
 
+            <div class="comoFunciona_step step--amarelo" data-step="2">
+                <span class="step-icone"></span>
+                <span class="step-numero">PASSO 02</span>
+                <span class="step-titulo">Registre suas cartas</span>
+                <p class="step-descricao">Adicione cada carta da sua coleção com raridade, coleção e estado de
+                    conservação. Seu inventário sempre atualizado.</p>
+            </div>
+
+            <div class="comoFunciona_step step--vermelho" data-step="3">
+                <span class="step-icone"></span>
+                <span class="step-numero">PASSO 03</span>
+                <span class="step-titulo">Acompanhe o mercado</span>
+                <p class="step-descricao">Veja o valor atual da sua coleção, quais cartas estão valorizando e tome
+                    decisões estratégicas de compra e venda.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer_topo">
+            <div class="footer_marca">
+                <div class="logo logo--footer">
+                    <img src="./assets/imgs/main/logo2.png">
+                    <a href="index.html">pkmnHub</a>
+                </div>
+                <p class="footer_tagline">Seu guia definitivo para o mundo do Pokémon TCG. Gerencie sua coleção, acompanhe o mercado e evolua como treinador.</p>
+            </div>
+
+            <div class="footer_links">
+                <div class="footer_coluna">
+                    <h4>Recursos Externos</h4>
+                    <a href="https://www.ligapokemon.com.br" target="_blank">Liga Pokémon BR</a>
+                    <a href="https://limitlesstcg.com" target="_blank">Limitless TCG</a>
+                    <a href="https://www.pokemon.com/br" target="_blank">Pokémon Oficial</a>
+                    <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta" target="_blank">Cartas em Alta</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer_rodape">
+            <span class="footer_copyright">© 2026 pkmnHub. Todos os direitos reservados.</span>
+            <span class="footer_aviso">pkmnHub não é afiliado à Nintendo, Game Freak, Niantic, Wizard's of the Coast, ou The Pokémon Company.</span>
+        </div>
+    </footer>
 </body>
-
 </html>
+
+<script>
+    // ----- DETALHE HEADER: -----
+    const linksMenu = document.querySelectorAll('nav ul li a');
+
+    linksMenu.forEach(link => {
+        link.addEventListener('click', function() {
+            linksMenu.forEach(l => l.classList.remove('active'));
+            
+            this.classList.add('active');
+        });
+    });
+</script>
+

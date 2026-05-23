@@ -52,7 +52,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #121417;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -60,14 +60,26 @@ body {
     border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-gray);
-}
-
-
 /* ==========================================================================
    2. SIDEBAR E NAVEGAÇÃO (global)
    ========================================================================== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--accent-yellow);
+    margin-bottom: 35px;
+
+    img { width: 25px; }
+    a { color: var(--accent-yellow); font-weight: bold; }
+}
+
+.logo--dash {
+    font-size: 20px;
+}
+
 .sidebar {
     width: 250px;
     background-color: #121417b0;
@@ -77,25 +89,6 @@ body {
     flex-direction: column;
     border-right: 1px solid var(--border-dark);
     flex-shrink: 0;
-}
-
-.logo {
-    font-weight: bold;
-    font-size: 24px;
-    color: var(--accent-yellow);
-    margin-bottom: 50px;
-}
-
-.logo a {
-    color: var(--accent-yellow);
-}
-
-.logo img {
-    width: 25px;
-}
-
-.logo span {
-    color: white;
 }
 
 .nav-menu ul {
@@ -121,7 +114,7 @@ body {
     color: white;
 }
 
-.nav-item.active > .nav-link {
+.nav-item.active>.nav-link {
     color: var(--accent-yellow);
     font-weight: 700;
 }
@@ -551,8 +544,8 @@ input[type="url"] {
     border-radius: 5px;
 }
 
-.tipoItem input:checked + img,
-.raridadeItem input:checked + img {
+.tipoItem input:checked+img,
+.raridadeItem input:checked+img {
     filter: grayscale(0%);
     border-color: var(--accent-yellow);
     transform: scale(1.1);
@@ -687,22 +680,34 @@ input[type="url"] {
 
 /* Larguras das colunas */
 .colecao-table th:nth-child(1),
-.colecao-table td:nth-child(1) { width: 30%; }
+.colecao-table td:nth-child(1) {
+    width: 30%;
+}
 
 .colecao-table th:nth-child(2),
-.colecao-table td:nth-child(2) { width: 20%; }
+.colecao-table td:nth-child(2) {
+    width: 20%;
+}
 
 .colecao-table th:nth-child(3),
-.colecao-table td:nth-child(3) { width: 12%; }
+.colecao-table td:nth-child(3) {
+    width: 12%;
+}
 
 .colecao-table th:nth-child(4),
-.colecao-table td:nth-child(4) { width: 12%; }
+.colecao-table td:nth-child(4) {
+    width: 12%;
+}
 
 .colecao-table th:nth-child(5),
-.colecao-table td:nth-child(5) { width: 13%; }
+.colecao-table td:nth-child(5) {
+    width: 13%;
+}
 
 .colecao-table th:nth-child(6),
-.colecao-table td:nth-child(6) { width: 13%; }
+.colecao-table td:nth-child(6) {
+    width: 13%;
+}
 
 .colecao-table td:first-child {
     padding-left: 0;
@@ -951,7 +956,7 @@ input[type="url"] {
     padding: 30px 40px;
 }
 
-.main-container--binders > header {
+.main-container--binders>header {
     flex-shrink: 0;
 }
 
@@ -1204,6 +1209,7 @@ input[type="url"] {
         opacity: 0;
         transform: scale(0.96) translateY(8px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1233,7 +1239,7 @@ input[type="url"] {
     margin-bottom: 4px;
 }
 
-.modal-box > p {
+.modal-box>p {
     color: var(--text-gray);
     font-size: 13px;
     margin-bottom: 22px;
@@ -1337,13 +1343,13 @@ input[type="url"] {
     color: var(--text-gray);
 }
 
-.tipo-option input:checked + .tipo-label {
+.tipo-option input:checked+.tipo-label {
     border-color: var(--accent-yellow);
     color: var(--accent-yellow);
 }
 
-.tipo-option input:checked + .tipo-label .tipo-size,
-.tipo-option input:checked + .tipo-label .tipo-sub {
+.tipo-option input:checked+.tipo-label .tipo-size,
+.tipo-option input:checked+.tipo-label .tipo-sub {
     color: var(--accent-yellow);
 }
 
@@ -1486,7 +1492,7 @@ input[type="url"] {
     padding: 30px 40px;
 }
 
-.main-container--binder-view > header {
+.main-container--binder-view>header {
     flex-shrink: 0;
 }
 
@@ -1811,7 +1817,7 @@ input[type="url"] {
     background: #F9CF30;
     color: #16191d;
     height: 40px;
-        padding: 12px 24px;
+    padding: 12px 24px;
     cursor: pointer;
     font-family: 'Manrope', sans-serif;
     font-weight: 900;
@@ -1828,7 +1834,7 @@ input[type="url"] {
     background: #16191d;
     color: #F9CF30;
     height: 40px;
-        padding: 12px 24px;
+    padding: 12px 24px;
     cursor: pointer;
     font-family: 'Manrope', sans-serif;
     font-weight: 900;

@@ -24,23 +24,51 @@
 }
 
 :root {
-    --cinzaPrimario:    #121417;
-    --cinzaSecundario:  #1a1c1f;
-    --cinzaTerciario:   #16191d;
-    --cinzaDetalhes:    #202226;
-    --tituloBranco:     #ffffff;
-    --subtituloCinza:   #94a3b8;
-    --amarelo:          #F9CF30;
-    --azul:             #31A7D7;
-    --vermelho:         #EE3D2D;
-    --accent-color:     #EE3D2D;
-    --azulzinho:        #31A7D7;
-    --text-primary:     #ffffff;
-    --text-secondary:   #828282;
-    --border-dark:      #202226;
-    --text-gray:        #94a3b8;
+    --cinzaPrimario: #121417;
+    --cinzaSecundario: #1a1c1f;
+    --cinzaTerciario: #16191d;
+    --cinzaDetalhes: #202226;
+    --tituloBranco: #ffffff;
+    --subtituloCinza: #94a3b8;
+    --amarelo: #F9CF30;
+    --azul: #31A7D7;
+    --vermelho: #EE3D2D;
+    --accent-color: #EE3D2D;
+    --azulzinho: #31A7D7;
+    --text-primary: #ffffff;
+    --text-secondary: #828282;
+    --border-dark: #202226;
+    --text-gray: #94a3b8;
 }
 
+h1 { scroll-margin-top: 50vh; }
+h2 { scroll-margin-top: 10vh; }
+html { scroll-behavior: smooth; }
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    font-size: 20px;
+    img { width: 25px; }
+}
+
+.logo--header {
+    font-size: 18px;
+    a { color: var(--amarelo); }
+}
+
+.logo--footer {
+    font-size: 20px;
+    a { color: var(--amarelo); }
+}
+
+.logo--form {
+    font-size: 20px;
+    margin-bottom: 15px;
+    a { color: var(--vermelho); }
+}
 
 /* ==========================================================================
    2. RESET GLOBAL
@@ -72,24 +100,9 @@ button {
     font-family: 'Ballet';
 }
 
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #121417;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-dark);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-gray);
-}
-
-
+::-webkit-scrollbar         { width: 6px; }
+::-webkit-scrollbar-track   { background: #121417; }
+::-webkit-scrollbar-thumb   { background: var(--border-dark); border-radius: 10px; }
 /* ==========================================================================
    3. HEADER
    ========================================================================== */
@@ -98,7 +111,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1px 5%;
+    padding: 10px 5%;
     position: fixed;
     top: 0;
     left: 0;
@@ -130,18 +143,6 @@ button {
     color: var(--amarelo);
     border-bottom: 2px solid var(--amarelo);
     padding-bottom: 3px;
-}
-
-.logoHeader {
-    height: 8vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logoHeader img {
-    height: 80%;
-    width: 100%;
 }
 
 .btnPrincipal_header {
@@ -204,8 +205,8 @@ button {
 }
 
 .detalhe {
-    background: #69000280;
-    color: var(--vermelho);
+    background: color-mix(in srgb, var(--amarelo) 4%, transparent);
+    color: var(--amarelo);
     padding: 5px 25px;
     font-size: 20px;
     font-weight: 400;
@@ -214,15 +215,16 @@ button {
 }
 
 .btnPrincipal_home {
-    background: var(--vermelho);
+    background: var(--amarelo);
     color: var(--cinzaTerciario);
 }
 
 .btnSecundario_home {
-    background: var(--cinzaTerciario);
-    color: var(--vermelho);
+    font-weight: 400;
+    background: color-mix(in srgb, var(--cinzaTerciario) 70%, transparent);
+    color: var(--amarelo);
+    border: 1px solid var(--amarelo);
 }
-
 
 /* ==========================================================================
    5. SEÇÃO 2 — "Novo no TCG?" (cards informativos)
@@ -255,6 +257,10 @@ button {
     margin-bottom: 60px;
 }
 
+.detalheLinha--azul {
+    background-color: var(--azul);
+}
+
 .detalheLinha--amarelo {
     background-color: var(--amarelo);
 }
@@ -270,7 +276,7 @@ button {
 .card {
     display: flex;
     flex-direction: column;
-    background-color: var(--cinzaTerciario);
+    background-color: var(--cinzaPrimario);
     border-radius: 24px;
     overflow: hidden;
     flex: 1 1 300px;
@@ -316,13 +322,29 @@ button {
     font-family: 'Ballet';
 }
 
-.categoria--vermelho { color: var(--vermelho); }
-.categoria--azul     { color: var(--azul); }
-.categoria--amarelo  { color: var(--amarelo); }
+.categoria--vermelho {
+    color: var(--vermelho);
+}
 
-.btn-link--vermelho { color: var(--vermelho); }
-.btn-link--azul     { color: var(--azul); }
-.btn-link--amarelo  { color: var(--amarelo); }
+.categoria--azul {
+    color: var(--azul);
+}
+
+.categoria--amarelo {
+    color: var(--amarelo);
+}
+
+.btn-link--vermelho {
+    color: var(--vermelho);
+}
+
+.btn-link--azul {
+    color: var(--azul);
+}
+
+.btn-link--amarelo {
+    color: var(--amarelo);
+}
 
 
 /* ==========================================================================
@@ -484,26 +506,6 @@ button {
     justify-content: center;
 }
 
-/* Logo */
-.logo {
-    font-weight: bold;
-    font-size: 20px;
-    color: var(--accent-color);
-    margin-bottom: 40px;
-}
-
-.logo a {
-    color: var(--accent-color);
-}
-
-.logo img {
-    width: 25px;
-}
-
-.logo span {
-    color: var(--tituloBranco);
-}
-
 /* Texto de boas-vindas */
 .welcome-text h1 {
     font-size: 2.5rem;
@@ -632,7 +634,7 @@ input:focus {
 }
 
 .detalheCadastro01 {
-    background: #31a8d730;
+    background: color-mix(in srgb, var(--accent-color) 20%, transparent);
     color: var(--accent-color);
     border: 1px solid var(--accent-color);
 }
@@ -706,7 +708,7 @@ input:focus {
     filter: grayscale(0%);
 }
 
-.fotoPerfil-item input:checked + img {
+.fotoPerfil-item input:checked+img {
     filter: grayscale(0%);
     border-color: var(--azul);
     transform: scale(1.1);
@@ -743,7 +745,7 @@ input:focus {
     font-weight: bold;
 }
 
-.comoFunciona > p {
+.comoFunciona>p {
     color: var(--subtituloCinza);
     margin-bottom: 10px;
 }
@@ -758,7 +760,7 @@ input:focus {
 
 .comoFunciona_step {
     flex: 1 1 220px;
-    background-color: var(--cinzaTerciario);
+    background-color: var(--cinzaPrimario);
     border-radius: 24px;
     padding: 32px 28px;
     display: flex;
@@ -806,13 +808,29 @@ input:focus {
     letter-spacing: 1px;
 }
 
-.step--vermelho .step-numero { color: var(--vermelho); }
-.step--azul     .step-numero { color: var(--azul); }
-.step--amarelo  .step-numero { color: var(--amarelo); }
+.step--vermelho .step-numero {
+    color: var(--vermelho);
+}
 
-.step--vermelho { border-top: 3px solid var(--vermelho); }
-.step--azul     { border-top: 3px solid var(--azul); }
-.step--amarelo  { border-top: 3px solid var(--amarelo); }
+.step--azul .step-numero {
+    color: var(--azul);
+}
+
+.step--amarelo .step-numero {
+    color: var(--amarelo);
+}
+
+.step--vermelho {
+    border-left: 3px solid var(--vermelho);
+}
+
+.step--azul {
+    border-left: 3px solid var(--azul);
+}
+
+.step--amarelo {
+    border-left: 3px solid var(--amarelo);
+}
 
 
 /* ==========================================================================
