@@ -71,7 +71,7 @@
 
         // ----- VALIDAÇÃO: -----
         if (email == "" || senha == "") {
-            div_validacao.innerHTML = '<span style="color: #EE3D2D">Preencha todos os campos para começar sua jornada!</span>';
+            div_validacao.innerHTML = '<span class="msg-erro">Preencha todos os campos para começar sua jornada!</span>';
             return false;
         }
 
@@ -108,7 +108,7 @@
                 console.log("Houve um erro ao tentar realizar o login!");
                 resposta.text().then(texto => {
                     console.error(texto);
-                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o login...</span>";;
+                    div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar o login...</span>";
                 });
             }
 

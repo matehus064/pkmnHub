@@ -124,7 +124,7 @@
 
         for (let i = 0; i < condicoesErro.length; i++) {
             if (condicoesErro[i]) {
-                div_validacao.innerHTML = '<span style="color: #EE3D2D">' + mensagensErro[i] + '</span>';
+                div_validacao.innerHTML = '<span class="msg-erro">' + mensagensErro[i] + '</span>';
                 return false;
             }
         }
@@ -147,14 +147,14 @@
                 console.log("resposta: ", resposta);
                 if (resposta.ok) {
 
-                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Usuário cadastrado com sucesso!</span>";
+                    div_validacao.innerHTML = "<span class='msg-sucesso'>Usuário cadastrado com sucesso!</span>";
 
                     setTimeout(() => {
                         window.location = "login.html";
                     }, "2000");
 
                 } else {
-                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>";;
+                    div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar o cadastro...</span>";
                 }
             })
             .catch(function (resposta) {
