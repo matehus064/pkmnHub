@@ -37,7 +37,8 @@
         <header id="header">
             <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
-                <div class="header-search-group">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
+                        Cadastre sua Venda
                 </div>
             </div>
 
@@ -50,11 +51,6 @@
         <div class="cadastroFlex_wrapper">
             <main class="cadastroContainer">
                 <section class="formularioCadastro">
-                    <div class="welcome-text">
-                        <h1>Cadastre sua <span class="ballet" style="color: #F9CF30;">Venda</span></h1>
-                        <p>Preencha os dados técnicos e financeiros.</p>
-                    </div>
-
                     <form>
                         <div class="inputsJuntos">
                             <div class="espaco">
@@ -63,17 +59,10 @@
                                     oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
 
-
-
-
-
                             <div class="espaco">
                                 <label for="ipt_qtd">QNT.</label>
                                 <input type="number" id="ipt_qtd" min="1" value="1">
                             </div>
-
-
-
 
                             <div class="espaco">
                                 <label style="color: transparent;">.</label>
@@ -90,7 +79,7 @@
                                 <label for="ipt_nome">Nome da Carta</label>
                                 <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
                             </div>
-                                                        <div class="espaco">
+                            <div class="espaco">
                                 <label for="ipt_set">SET</label>
                                 <input type="text" id="ipt_set" placeholder="Ex: 054/191"
                                     oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
@@ -116,7 +105,7 @@
                         <label id="div_validacao"></label>
 
                         <button type="button" onclick="cadastrarCartaVenda()"
-                            class="btnPrincipal_sign">FinalizarCadastro</button>
+                            class="btnPrincipal_sign">Cadastrar</button>
                     </form>
                 </section>
                 <section class="direitaContainer_nidoking" style="align-items: center;">
@@ -134,13 +123,11 @@
         </div>
     </div>
 </body>
-
 </html>
 
 <script src="../js/dados.js"></script>
 <script src="../js/dadosCartas.js"></script>
 <script src="../js/functions.js"></script>
-
 
 <script>
     var camposCompra = [

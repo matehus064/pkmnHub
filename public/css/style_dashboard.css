@@ -474,7 +474,11 @@ input[type="url"] {
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
+    transition: 0.3s;
 }
+
+.btnPrincipal_sign:hover { background: color-mix(in srgb, var(--accent-yellow) 75%, var(--bg-card)); }
+
 
 #ipt_set {
     transition: background-color 0.3s;

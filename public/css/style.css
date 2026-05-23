@@ -218,13 +218,21 @@ button {
     background: var(--amarelo);
     color: var(--cinzaTerciario);
 }
-
 .btnSecundario_home {
     font-weight: 400;
     background: color-mix(in srgb, var(--cinzaTerciario) 70%, transparent);
     color: var(--amarelo);
     border: 1px solid var(--amarelo);
 }
+.btnSecundario_home:hover {
+    font-weight: 600;
+    background: var(--amarelo);
+    color: var(--cinzaTerciario);
+    border: 1px solid var(--amarelo);
+}
+
+.btnPrincipal_home:hover, .btnPrincipal_header:hover { background: color-mix(in srgb, var(--amarelo) 75%, var(--cinzaDetalhes)); }
+.btnSecundario_header:hover { background: color-mix(in srgb, var(--cinzaDetalhes) 75%, var(--amarelo)); }
 
 /* ==========================================================================
    5. SEÇÃO 2 — "Novo no TCG?" (cards informativos)
@@ -322,28 +330,21 @@ button {
     font-family: 'Ballet';
 }
 
-.categoria--vermelho {
-    color: var(--vermelho);
+.categoria--vermelho { color: var(--vermelho); }
+.categoria--azul { color: var(--azul); }
+.categoria--amarelo { color: var(--amarelo); }
+
+.btn-link--vermelho { color: var(--vermelho); }
+.btn-link--azul { color: var(--azul); }
+.btn-link--amarelo { color: var(--amarelo); }
+
+.btn-link .seta {
+    display: inline-block;
+    transition: transform 0.3s;
 }
 
-.categoria--azul {
-    color: var(--azul);
-}
-
-.categoria--amarelo {
-    color: var(--amarelo);
-}
-
-.btn-link--vermelho {
-    color: var(--vermelho);
-}
-
-.btn-link--azul {
-    color: var(--azul);
-}
-
-.btn-link--amarelo {
-    color: var(--amarelo);
+.btn-link:hover .seta {
+    transform: translateX(6px);
 }
 
 
@@ -562,7 +563,6 @@ input:focus {
     flex: 1;
 }
 
-/* Botão principal do formulário */
 .btnPrincipal_sign {
     width: 100%;
     background-color: var(--accent-color);
@@ -577,7 +577,8 @@ input:focus {
     transition: 0.3s ease;
 }
 
-/* Link de rodapé do formulário */
+.btnPrincipal_sign:hover { transform: translateY(-4px); background: color-mix(in srgb, var(--accent-color) 85%, var(--cinzaTerciario) 0%); }
+
 .linkCadastro {
     text-align: center;
     margin-top: 20px;
@@ -770,7 +771,10 @@ input:focus {
     box-shadow: 0px 4px 10px #00000040;
     position: relative;
     overflow: hidden;
+    transition: 0.3s;
 }
+
+.comoFunciona_step:hover { transform: translateY(-4px); }
 
 .comoFunciona_step::before {
     content: attr(data-step);
@@ -783,11 +787,10 @@ input:focus {
     line-height: 1;
     pointer-events: none;
     font-family: 'Manrope', sans-serif;
+    transition: color 0.3s ease;
 }
 
-.step-icone {
-    font-size: 2rem;
-}
+.step-icone { font-size: 2rem; }
 
 .step-titulo {
     font-size: 18px;
@@ -808,30 +811,16 @@ input:focus {
     letter-spacing: 1px;
 }
 
-.step--vermelho .step-numero {
-    color: var(--vermelho);
-}
+.step--vermelho .step-numero { color: var(--vermelho); }
+.step--azul .step-numero { color: var(--azul); }
+.step--amarelo .step-numero { color: var(--amarelo); }
+.step--vermelho { border-left: 3px solid var(--vermelho); }
+.step--azul { border-left: 3px solid var(--azul); }
+.step--amarelo { border-left: 3px solid var(--amarelo); }
 
-.step--azul .step-numero {
-    color: var(--azul);
-}
-
-.step--amarelo .step-numero {
-    color: var(--amarelo);
-}
-
-.step--vermelho {
-    border-left: 3px solid var(--vermelho);
-}
-
-.step--azul {
-    border-left: 3px solid var(--azul);
-}
-
-.step--amarelo {
-    border-left: 3px solid var(--amarelo);
-}
-
+.step--vermelho:hover::before { color: var(--vermelho); }
+.step--azul:hover::before     { color: var(--azul); }
+.step--amarelo:hover::before  { color: var(--amarelo); }
 
 /* ==========================================================================
    10. FOOTER

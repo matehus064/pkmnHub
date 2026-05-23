@@ -37,7 +37,8 @@
         <header id="header">
             <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
-                <div class="header-search-group">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
+                    Cadastre sua Aquisição
                 </div>
             </div>
 
@@ -50,11 +51,6 @@
         <div class="cadastroFlex_wrapper">
             <main class="cadastroContainer">
                 <section class="formularioCadastro">
-                    <div class="welcome-text">
-                        <h1>Cadastre sua <span class="ballet" style="color: #F9CF30;">Aquisição</span></h1>
-                        <p>Preencha a numeração da sua carta</p>
-                    </div>
-
                     <form>
                         <div class="inputsJuntos">
                             <div class="espaco">
@@ -167,8 +163,7 @@
 
                         <label id="div_validacao"></label>
 
-                        <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Finalizar
-                            Cadastro</button>
+                        <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Cadastro</button>
 
 
                     </form>
@@ -297,7 +292,6 @@ var camposCompra = [
         
         return false;
     }
-
 
     document.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
