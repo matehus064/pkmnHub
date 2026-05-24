@@ -41,9 +41,17 @@
     --text-gray: #94a3b8;
 }
 
-h1 { scroll-margin-top: 50vh; }
-h2 { scroll-margin-top: 10vh; }
-html { scroll-behavior: smooth; }
+h1 {
+    scroll-margin-top: 50vh;
+}
+
+h2 {
+    scroll-margin-top: 10vh;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 .logo {
     display: flex;
@@ -51,23 +59,51 @@ html { scroll-behavior: smooth; }
     gap: 6px;
     font-weight: bold;
     font-size: 20px;
-    img { width: 25px; }
+
+    img {
+        width: 25px;
+    }
 }
 
 .logo--header {
     font-size: 18px;
-    a { color: var(--amarelo); }
+
+    a {
+        color: var(--amarelo);
+    }
 }
 
 .logo--footer {
     font-size: 20px;
-    a { color: var(--amarelo); }
+
+    a {
+        color: var(--amarelo);
+    }
 }
 
 .logo--form {
     font-size: 20px;
     margin-bottom: 15px;
-    a { color: var(--vermelho); }
+
+    a {
+        color: var(--vermelho);
+    }
+}
+
+.user-welcome {
+    font-weight: 100;
+    color: var(--subtituloCinza);
+}
+
+.user-welcome #username {
+    font-weight: 900;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-dark);
 }
 
 /* ==========================================================================
@@ -100,9 +136,19 @@ button {
     font-family: 'Ballet';
 }
 
-::-webkit-scrollbar         { width: 6px; }
-::-webkit-scrollbar-track   { background: #121417; }
-::-webkit-scrollbar-thumb   { background: var(--border-dark); border-radius: 10px; }
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #121417;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 10px;
+}
+
 /* ==========================================================================
    3. HEADER
    ========================================================================== */
@@ -139,6 +185,8 @@ button {
     transition: color 0.3s ease;
 }
 
+.header nav a:hover { color: #fff; }
+
 .header nav a.active {
     color: var(--amarelo);
     border-bottom: 2px solid var(--amarelo);
@@ -160,8 +208,61 @@ button {
 .principalBotoes {
     display: flex;
     gap: 15px;
+    align-items: center;
+    height: 40px
 }
 
+.avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 50%;
+    transform: translateX(50%);
+    background: #1a1d22;
+    border: 1px solid #2a2d32;
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 120px;
+    z-index: 99;
+}
+
+.avatar-dropdown.open {
+    display: block;
+}
+
+.avatar-dropdown button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 2px 5px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: none;
+    font-size: 13px;
+    box-shadow: none;
+}
+
+.avatar-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 50%;
+    transform: translateX(50%);
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent #2a2d32 transparent;
+}
+
+.avatar-dropdown button:hover {
+    transform: translateX(6px);
+    color: #ffffff;
+}
 
 /* ==========================================================================
    4. HOME — seção principal (hero)
@@ -218,12 +319,14 @@ button {
     background: var(--amarelo);
     color: var(--cinzaTerciario);
 }
+
 .btnSecundario_home {
     font-weight: 400;
     background: color-mix(in srgb, var(--cinzaTerciario) 70%, transparent);
     color: var(--amarelo);
     border: 1px solid var(--amarelo);
 }
+
 .btnSecundario_home:hover {
     font-weight: 600;
     background: var(--amarelo);
@@ -231,8 +334,14 @@ button {
     border: 1px solid var(--amarelo);
 }
 
-.btnPrincipal_home:hover, .btnPrincipal_header:hover { background: color-mix(in srgb, var(--amarelo) 75%, var(--cinzaDetalhes)); }
-.btnSecundario_header:hover { background: color-mix(in srgb, var(--cinzaDetalhes) 75%, var(--amarelo)); }
+.btnPrincipal_home:hover,
+.btnPrincipal_header:hover {
+    background: color-mix(in srgb, var(--amarelo) 75%, var(--cinzaDetalhes));
+}
+
+.btnSecundario_header:hover {
+    background: color-mix(in srgb, var(--cinzaDetalhes) 75%, var(--amarelo));
+}
 
 /* ==========================================================================
    5. SEÇÃO 2 — "Novo no TCG?" (cards informativos)
@@ -330,13 +439,29 @@ button {
     font-family: 'Ballet';
 }
 
-.categoria--vermelho { color: var(--vermelho); }
-.categoria--azul { color: var(--azul); }
-.categoria--amarelo { color: var(--amarelo); }
+.categoria--vermelho {
+    color: var(--vermelho);
+}
 
-.btn-link--vermelho { color: var(--vermelho); }
-.btn-link--azul { color: var(--azul); }
-.btn-link--amarelo { color: var(--amarelo); }
+.categoria--azul {
+    color: var(--azul);
+}
+
+.categoria--amarelo {
+    color: var(--amarelo);
+}
+
+.btn-link--vermelho {
+    color: var(--vermelho);
+}
+
+.btn-link--azul {
+    color: var(--azul);
+}
+
+.btn-link--amarelo {
+    color: var(--amarelo);
+}
 
 .btn-link .seta {
     display: inline-block;
@@ -577,7 +702,10 @@ input:focus {
     transition: 0.3s ease;
 }
 
-.btnPrincipal_sign:hover { transform: translateY(-4px); background: color-mix(in srgb, var(--accent-color) 85%, var(--cinzaTerciario) 0%); }
+.btnPrincipal_sign:hover {
+    transform: translateY(-4px);
+    background: color-mix(in srgb, var(--accent-color) 85%, var(--cinzaTerciario) 0%);
+}
 
 .linkCadastro {
     text-align: center;
@@ -774,7 +902,9 @@ input:focus {
     transition: 0.3s;
 }
 
-.comoFunciona_step:hover { transform: translateY(-4px); }
+.comoFunciona_step:hover {
+    transform: translateY(-4px);
+}
 
 .comoFunciona_step::before {
     content: attr(data-step);
@@ -790,7 +920,9 @@ input:focus {
     transition: color 0.3s ease;
 }
 
-.step-icone { font-size: 2rem; }
+.step-icone {
+    font-size: 2rem;
+}
 
 .step-titulo {
     font-size: 18px;
@@ -811,16 +943,41 @@ input:focus {
     letter-spacing: 1px;
 }
 
-.step--vermelho .step-numero { color: var(--vermelho); }
-.step--azul .step-numero { color: var(--azul); }
-.step--amarelo .step-numero { color: var(--amarelo); }
-.step--vermelho { border-left: 3px solid var(--vermelho); }
-.step--azul { border-left: 3px solid var(--azul); }
-.step--amarelo { border-left: 3px solid var(--amarelo); }
+.step--vermelho .step-numero {
+    color: var(--vermelho);
+}
 
-.step--vermelho:hover::before { color: var(--vermelho); }
-.step--azul:hover::before     { color: var(--azul); }
-.step--amarelo:hover::before  { color: var(--amarelo); }
+.step--azul .step-numero {
+    color: var(--azul);
+}
+
+.step--amarelo .step-numero {
+    color: var(--amarelo);
+}
+
+.step--vermelho {
+    border-left: 3px solid var(--vermelho);
+}
+
+.step--azul {
+    border-left: 3px solid var(--azul);
+}
+
+.step--amarelo {
+    border-left: 3px solid var(--amarelo);
+}
+
+.step--vermelho:hover::before {
+    color: var(--vermelho);
+}
+
+.step--azul:hover::before {
+    color: var(--azul);
+}
+
+.step--amarelo:hover::before {
+    color: var(--amarelo);
+}
 
 /* ==========================================================================
    10. FOOTER

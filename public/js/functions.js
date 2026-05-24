@@ -2,7 +2,32 @@
 let username = sessionStorage.getItem("USERNAME");
 document.getElementById("username").innerHTML = username;
 let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
-header.innerHTML += '<img src="../assets/imgs/profilePics/' + numeroImagem + '.webp" class="user-avatar">';
+header.innerHTML += `
+        <div class="avatar-wrapper">
+            <img src="../assets/imgs/profilePics/${numeroImagem}.webp" class="user-avatar" onclick="toggleDropdown()">
+            <div class="avatar-dropdown" id="avatarDropdown">
+                <button onclick="logout()">Sair</button>
+            </div>
+        </div>`;
+
+function toggleDropdown() {
+    document.getElementById('avatarDropdown').classList.toggle('open');
+}
+
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.avatar-wrapper')) {
+        document.getElementById('avatarDropdown')?.classList.remove('open');
+    }
+});
+
+function logout() {
+    sessionStorage.removeItem('ID_USER');
+    sessionStorage.removeItem('USERNAME');
+    sessionStorage.removeItem('EMAIL_USER');
+    sessionStorage.removeItem('PROFILE_PIC');
+
+    window.location.href = '../index.html';
+}
 
 //======================================================================================
 //======================================================================================
@@ -54,32 +79,32 @@ function toggleLegenda(idGrafico) {
 
 
 // ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
-    function trocarImagem(src) {
-        imagem.style.opacity = 0;
-        setTimeout(() => {
-            imagem.src = src;
-            imagem.style.opacity = 1;
-        }, 200);
-    }
+function trocarImagem(src) {
+    imagem.style.opacity = 0;
+    setTimeout(() => {
+        imagem.src = src;
+        imagem.style.opacity = 1;
+    }, 200);
+}
 
 
-    //======================================================================================
+//======================================================================================
 //======================================================================================
 
 
 // ----- TRANSIÇÃO PRA APARECER A IMAGEM: -----
-    function mensagemTemporizada(div, mensagem) {
-        div.innerHTML = mensagem;
-        setTimeout(() => {
-            div.innerHTML = "";
-        }, 5000);
-    }
+function mensagemTemporizada(div, mensagem) {
+    div.innerHTML = mensagem;
+    setTimeout(() => {
+        div.innerHTML = "";
+    }, 5000);
+}
 
 
 //======================================================================================
 //======================================================================================
 
-    function limparFormulario(campos) {
+function limparFormulario(campos) {
     for (var i = 0; i < campos.length; i++) {
         preencherSeExistir(campos[i].id, campos[i].valor);
     }
@@ -87,8 +112,8 @@ function toggleLegenda(idGrafico) {
     var img = document.getElementById('imagem');
     if (img) img.style.opacity = '0';
 
-    document.querySelectorAll('input[name="n_tipo"]').forEach(function(r) { r.checked = false; });
-    document.querySelectorAll('input[name="n_raridade"]').forEach(function(r) { r.checked = false; });
+    document.querySelectorAll('input[name="n_tipo"]').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll('input[name="n_raridade"]').forEach(function (r) { r.checked = false; });
 }
 
 //======================================================================================
@@ -172,7 +197,7 @@ function validandoImagem(numeroIpt, setIpt) {
     if (cartasEncontradas.length > 1 && numeroIpt.length === 7) {
         ipt_set.style.border = "1px solid #F9CF30";
         mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Múltiplos sets encontrados, insira a expansão!</span>");
-        setTimeout(function() { ipt_set.focus(); }, 50);
+        setTimeout(function () { ipt_set.focus(); }, 50);
 
         if (setIpt) {
             for (let i = 0; i < cartasEncontradas.length; i++) {
@@ -211,7 +236,7 @@ function validandoImagem(numeroIpt, setIpt) {
     if (radioTipo) radioTipo.checked = true;
 
     // ----- RESETA E SETA A RARIDADE: -----
-    document.querySelectorAll('input[name="n_raridade"]').forEach(function(r) { r.checked = false; });
+    document.querySelectorAll('input[name="n_raridade"]').forEach(function (r) { r.checked = false; });
     preencherSeExistir("ipt_raridade_fallback", "");
 
     if (numeroIpt.length >= 3) {

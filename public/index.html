@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
+<style>
+
+</style>
+
 <body>
     <div class="header">
         <div class="logo logo--header">
@@ -25,9 +29,7 @@
             </ul>
         </nav>
 
-        <div class="principalBotoes">
-            <button class="btnSecundario_header" onclick="window.location.href='login.html'">Login</button>
-            <button class="btnPrincipal_header" onclick="window.location.href='cadastro.html'">Cadastrar</button>
+        <div class="principalBotoes" id="header">
         </div>
     </div>
 
@@ -38,8 +40,10 @@
             <p>Seu guia digital definitivo para o iniciar no mundo de Pokémon Estampas Ilustradas. <br>
                 De coleções simples a inventimentos sólidos, um guia para sua evolução.</p>
             <div class="principalBotoes">
-                <button class="btnPrincipal_home" onclick="window.location.href='#s1_novoTcg'">Comece sua Jornada</button>
-                <button class="btnSecundario_home" onclick="window.location.href='cadastro.html'">Acompanhe sua Coleção</button>
+                <button class="btnPrincipal_home" onclick="window.location.href='#s1_novoTcg'">Comece sua
+                    Jornada</button>
+                <button class="btnSecundario_home" onclick="window.location.href='cadastro.html'">Acompanhe sua
+                    Coleção</button>
             </div>
         </div>
     </div>
@@ -69,7 +73,8 @@
             </div>
 
             <div class="card">
-                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/dialgaAkira.webp);"></div>
+                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/dialgaAkira.webp);">
+                </div>
                 <div class="cardConteudo">
                     <span class="categoria categoria--azul">Conservação</span>
                     <h3>2. Como conservar suas cartas</h3>
@@ -82,7 +87,8 @@
             </div>
 
             <div class="card">
-                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/umbreonAkira.webp);"></div>
+                <div class="cardImagem" style="background-image: url(./assets/imgs/pkmnOficial/tcg/umbreonAkira.webp);">
+                </div>
                 <div class="cardConteudo">
                     <span class="categoria categoria--amarelo">Mercado</span>
                     <h3>3. Conheça sobre o mercado de TCG</h3>
@@ -140,7 +146,8 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">IR</span>
-                    <a href="https://lig.ae/c2/1776725"><img src="https://images.scrydex.com/pokemon/me2pt5-226/large"></a>
+                    <a href="https://lig.ae/c2/1776725"><img
+                            src="https://images.scrydex.com/pokemon/me2pt5-226/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Psyduck</h3>
@@ -155,7 +162,8 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">SIR</span>
-                    <a href="https://lig.ae/c2/1799933"><img src="https://images.scrydex.com/pokemon/me2pt5-276/large"></a>
+                    <a href="https://lig.ae/c2/1799933"><img
+                            src="https://images.scrydex.com/pokemon/me2pt5-276/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Pikachu ex</h3>
@@ -170,7 +178,8 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">SIR</span>
-                    <a href="https://lig.ae/c2/1776727"><img src="https://images.scrydex.com/pokemon/me2pt5-284/large"></a>
+                    <a href="https://lig.ae/c2/1776727"><img
+                            src="https://images.scrydex.com/pokemon/me2pt5-284/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Mega Gengar ex</h3>
@@ -224,7 +233,8 @@
                     <img src="./assets/imgs/main/logo2.png">
                     <a href="index.html">pkmnHub</a>
                 </div>
-                <p class="footer_tagline">Seu guia definitivo para o mundo do Pokémon TCG. Gerencie sua coleção, acompanhe o mercado e evolua como treinador.</p>
+                <p class="footer_tagline">Seu guia definitivo para o mundo do Pokémon TCG. Gerencie sua coleção,
+                    acompanhe o mercado e evolua como treinador.</p>
             </div>
 
             <div class="footer_links">
@@ -233,29 +243,68 @@
                     <a href="https://www.ligapokemon.com.br" target="_blank">Liga Pokémon BR</a>
                     <a href="https://limitlesstcg.com" target="_blank">Limitless TCG</a>
                     <a href="https://www.pokemon.com/br" target="_blank">Pokémon Oficial</a>
-                    <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta" target="_blank">Cartas em Alta</a>
+                    <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta" target="_blank">Cartas em
+                        Alta</a>
                 </div>
             </div>
         </div>
 
         <div class="footer_rodape">
             <span class="footer_copyright">© 2026 pkmnHub. Todos os direitos reservados.</span>
-            <span class="footer_aviso">pkmnHub não é afiliado à Nintendo, Game Freak, Niantic, Wizard's of the Coast, ou The Pokémon Company.</span>
+            <span class="footer_aviso">pkmnHub não é afiliado à Nintendo, Game Freak, Niantic, Wizard's of the Coast, ou
+                The Pokémon Company.</span>
         </div>
     </footer>
 </body>
+
 </html>
 
 <script>
+    if (sessionStorage.getItem("USERNAME") !== null) {
+        let username = sessionStorage.getItem("USERNAME");
+        let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
+        header.innerHTML = `<span class="user-welcome">hey! <span id="username">${username}</span></span>`;
+        header.innerHTML += `
+        <div class="avatar-wrapper">
+            <img src="../assets/imgs/profilePics/${numeroImagem}.webp" class="user-avatar" onclick="toggleDropdown()">
+            <div class="avatar-dropdown" id="avatarDropdown">
+                <button onclick="window.location = './dashboard/dashboard_business.html'">Dashboard</button>
+                <button onclick="logout()">Sair</button>
+            </div>
+        </div>`;
+    } else {
+        header.innerHTML = `
+        <button class="btnSecundario_header" onclick="window.location.href='login.html'">Login</button>
+        <button class="btnPrincipal_header" onclick="window.location.href='cadastro.html'">Cadastrar</button>`;
+    }
+
+    function toggleDropdown() {
+        document.getElementById('avatarDropdown').classList.toggle('open');
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.avatar-wrapper')) {
+            document.getElementById('avatarDropdown')?.classList.remove('open');
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('ID_USER');
+        sessionStorage.removeItem('USERNAME');
+        sessionStorage.removeItem('EMAIL_USER');
+        sessionStorage.removeItem('PROFILE_PIC');
+
+        window.location.href = '../index.html';
+    }
+
     // ----- DETALHE HEADER: -----
     const linksMenu = document.querySelectorAll('nav ul li a');
 
     linksMenu.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             linksMenu.forEach(l => l.classList.remove('active'));
-            
+
             this.classList.add('active');
         });
     });
 </script>
-
