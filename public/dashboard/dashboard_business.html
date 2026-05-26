@@ -155,10 +155,22 @@
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
                     document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
-                cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
+                    cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
                     totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
+
+                    // --- LÓGICA DE COR APLICADA EXCLUSIVAMENTE NO ELEMENTO #ROI ---
+                    let texto = roi.innerHTML;
+                    let numero = Number(texto.replace("%", ""));
+
+                    if (numero >= 0) {
+                        roi.style.color = 'var(--green)';
+                    } else if (numero > -20) {
+                        roi.style.color = 'var(--accent-yellow)';
+                    } else {
+                        roi.style.color = 'var(--danger)';
+                    }
 
                 // ----- GRÁFICO DE LINHA -----
                 let labelsLinha = json.evolucaoColecao.map(item =>
@@ -285,7 +297,7 @@
             });
     }
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
         buscarKpis('30 DAY', document.querySelector('.btn-filter'));
     });
 

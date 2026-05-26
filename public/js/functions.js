@@ -38,11 +38,13 @@ function formatarBrl(valor) {
     if (valor == null) return "R$ 0,00";
 
     let v = Number(valor).toFixed(2);
+    let posicaoPonto = v.indexOf('.');
 
-    if (v.length >= 7) {
-        let parte1 = v.substring(0, 1);
-        let parte2 = v.substring(1, v.indexOf('.'));
-        let centavos = v.substring(v.indexOf('.') + 1);
+    // Se a parte inteira tiver mais de 3 dígitos (ex: 1000.00 tem 4 dígitos antes do ponto)
+    if (posicaoPonto > 3) {
+        let parte1 = v.substring(0, posicaoPonto - 3); // Pega tudo antes do milhar
+        let parte2 = v.substring(posicaoPonto - 3, posicaoPonto); // Pega os 3 últimos dígitos dos reais
+        let centavos = v.substring(posicaoPonto + 1);
 
         v = parte1 + "." + parte2 + "," + centavos;
     } else {

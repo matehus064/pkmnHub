@@ -107,10 +107,10 @@
     <div class="tendencias">
         <div class="cartasTendencias">
             <h2 id="s2_cartasAlta">Cartas <span class="ballet">em Alta</span></h2>
-            <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta">Ver Catálogo Completo →</a>
+            <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta">Ver Catálogo Completo <span class="seta">→</span></a>
         </div>
         <p class="subtitulo">Acompanhe as cartas mais cobiçadas do mercado atual!</p>
-        <div class="detalheLinha detalheLinha--azul"></div>
+        <div class="detalheLinha detalheLinha--amarelo"></div>
 
         <div class="cartaemAlta_container">
             <div class="cartaemAlta">
@@ -146,8 +146,7 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">IR</span>
-                    <a href="https://lig.ae/c2/1776725"><img
-                            src="https://images.scrydex.com/pokemon/me2pt5-226/large"></a>
+                    <a href="https://lig.ae/c2/1776725"><img src="https://images.scrydex.com/pokemon/me2pt5-226/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Psyduck</h3>
@@ -162,8 +161,7 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">SIR</span>
-                    <a href="https://lig.ae/c2/1799933"><img
-                            src="https://images.scrydex.com/pokemon/me2pt5-276/large"></a>
+                    <a href="https://lig.ae/c2/1799933"><img src="https://images.scrydex.com/pokemon/me2pt5-276/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Pikachu ex</h3>
@@ -178,8 +176,7 @@
             <div class="cartaemAlta">
                 <div class="cartaemALtaImagem">
                     <span class="raridade">SIR</span>
-                    <a href="https://lig.ae/c2/1776727"><img
-                            src="https://images.scrydex.com/pokemon/me2pt5-284/large"></a>
+                    <a href="https://lig.ae/c2/1776727"><img src="https://images.scrydex.com/pokemon/me2pt5-284/large"></a>
                 </div>
                 <div class="cartaemAltaInfos">
                     <h3>Mega Gengar ex</h3>
@@ -204,24 +201,21 @@
                 <span class="step-icone"></span>
                 <span class="step-numero">PASSO 01</span>
                 <span class="step-titulo">Crie sua conta</span>
-                <p class="step-descricao">Cadastre-se gratuitamente e escolha seu treinador. Em menos de um minuto você
-                    já tem acesso à plataforma completa.</p>
+                <p class="step-descricao">Cadastre-se gratuitamente e escolha seu treinador. Em menos de um minuto você já tem acesso à plataforma completa.</p>
             </div>
 
             <div class="comoFunciona_step step--amarelo" data-step="2">
                 <span class="step-icone"></span>
                 <span class="step-numero">PASSO 02</span>
                 <span class="step-titulo">Registre suas cartas</span>
-                <p class="step-descricao">Adicione cada carta da sua coleção com raridade, coleção e estado de
-                    conservação. Seu inventário sempre atualizado.</p>
+                <p class="step-descricao">Adicione cada carta da sua coleção com raridade, coleção e estado de conservação. Seu inventário sempre atualizado.</p>
             </div>
 
             <div class="comoFunciona_step step--vermelho" data-step="3">
                 <span class="step-icone"></span>
                 <span class="step-numero">PASSO 03</span>
                 <span class="step-titulo">Acompanhe o mercado</span>
-                <p class="step-descricao">Veja o valor atual da sua coleção, quais cartas estão valorizando e tome
-                    decisões estratégicas de compra e venda.</p>
+                <p class="step-descricao">Veja o valor atual da sua coleção, quais cartas estão valorizando e tome decisões estratégicas de compra e venda.</p>
             </div>
         </div>
     </div>
@@ -233,8 +227,7 @@
                     <img src="./assets/imgs/main/logo2.png">
                     <a href="index.html">pkmnHub</a>
                 </div>
-                <p class="footer_tagline">Seu guia definitivo para o mundo do Pokémon TCG. Gerencie sua coleção,
-                    acompanhe o mercado e evolua como treinador.</p>
+                <p class="footer_tagline">Seu guia definitivo para o mundo do Pokémon TCG. Gerencie sua coleção, acompanhe o mercado e evolua como treinador.</p>
             </div>
 
             <div class="footer_links">
@@ -243,16 +236,14 @@
                     <a href="https://www.ligapokemon.com.br" target="_blank">Liga Pokémon BR</a>
                     <a href="https://limitlesstcg.com" target="_blank">Limitless TCG</a>
                     <a href="https://www.pokemon.com/br" target="_blank">Pokémon Oficial</a>
-                    <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta" target="_blank">Cartas em
-                        Alta</a>
+                    <a href="https://www.ligapokemon.com.br/?view=cards/variacao&show=alta" target="_blank">Cartas em Alta</a>
                 </div>
             </div>
         </div>
 
         <div class="footer_rodape">
             <span class="footer_copyright">© 2026 pkmnHub. Todos os direitos reservados.</span>
-            <span class="footer_aviso">pkmnHub não é afiliado à Nintendo, Game Freak, Niantic, Wizard's of the Coast, ou
-                The Pokémon Company.</span>
+            <span class="footer_aviso">pkmnHub não é afiliado à Nintendo, Game Freak, Niantic, Wizard's of the Coast, ou The Pokémon Company.</span>
         </div>
     </footer>
 </body>
@@ -260,6 +251,7 @@
 </html>
 
 <script>
+    // ----- VALIDAÇÃO DE LOGIN: -----
     if (sessionStorage.getItem("USERNAME") !== null) {
         let username = sessionStorage.getItem("USERNAME");
         let numeroImagem = sessionStorage.getItem("PROFILE_PIC");
@@ -278,6 +270,14 @@
         <button class="btnPrincipal_header" onclick="window.location.href='cadastro.html'">Cadastrar</button>`;
     }
 
+    function logout() {
+        sessionStorage.removeItem('ID_USER');
+        sessionStorage.removeItem('USERNAME');
+        sessionStorage.removeItem('EMAIL_USER');
+        sessionStorage.removeItem('PROFILE_PIC');
+        window.location.href = '../index.html';
+    }
+
     function toggleDropdown() {
         document.getElementById('avatarDropdown').classList.toggle('open');
     }
@@ -287,15 +287,6 @@
             document.getElementById('avatarDropdown')?.classList.remove('open');
         }
     });
-
-    function logout() {
-        sessionStorage.removeItem('ID_USER');
-        sessionStorage.removeItem('USERNAME');
-        sessionStorage.removeItem('EMAIL_USER');
-        sessionStorage.removeItem('PROFILE_PIC');
-
-        window.location.href = '../index.html';
-    }
 
     // ----- DETALHE HEADER: -----
     const linksMenu = document.querySelectorAll('nav ul li a');
