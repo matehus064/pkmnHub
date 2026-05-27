@@ -787,29 +787,6 @@ input:focus {
     background: rgba(255, 255, 255, 0.05);
 }
 
-.footerDireita {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
-
-.footerDireita_item strong {
-    font-size: 28px;
-    display: block;
-}
-
-.footerDireita_item p {
-    font-size: 10px;
-    color: var(--text-secondary);
-    letter-spacing: 1px;
-}
-
-.divider {
-    width: 1px;
-    height: 40px;
-    background-color: #333;
-}
-
 
 /* ==========================================================================
    8. SELETOR DE FOTO DE PERFIL (cadastro)
@@ -1018,19 +995,6 @@ input:focus {
     flex-direction: column;
     gap: 10px;
     max-width: 280px;
-}
-
-.footer_logo {
-    font-weight: bold;
-    font-size: 20px;
-    color: var(--amarelo);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.footer_logo img {
-    width: 22px;
 }
 
 .footer_tagline {

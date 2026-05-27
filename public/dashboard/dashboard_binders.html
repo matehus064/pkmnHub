@@ -6,31 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkmnHub | Binders</title>
     <link rel="icon" href="../assets/imgs/main/logo.png">
-    <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="../css/style_binder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body onload="buscarBinders(); verificarSessao()">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo logo--dash">
             <img src="../assets/imgs/main/logo2.png">
-            <a href="../index.html">pkmnHub</a>
+            <a href="../index.html" class="sidebar-logo-text">pkmnHub</a>
         </div>
 
         <nav class="nav-menu">
             <ul>
-                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
-                <li class="nav-item active"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
-                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item"><a href="../index.html" class="nav-link"><i class="fa-solid fa-house"></i><span
+                            class="nav-text">Home</span></a></li>
+                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link"><i
+                            class="fa-solid fa-layer-group"></i><span class="nav-text">Coleção</span></a></li>
+                <li class="nav-item active"><a href="dashboard_binders.html" class="nav-link"><i
+                            class="fa-solid fa-book"></i><span class="nav-text">Binders</span></a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link"><i
+                            class="fa-solid fa-chart-line"></i><span class="nav-text">Business</span></a></li>
                 <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
-                    <a class="nav-link">Cadastro</a>
-                    <ul class="submenu">
+                    <a class="nav-link"><i class="fa-solid fa-plus"></i><span class="nav-text">Cadastroㅤ</span></a>
+                    <ul class="submenu active">
                         <li><a href="dashboard_compra.html" class="submenu-link active">Compra</a></li>
                         <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
                     </ul>
                 </li>
             </ul>
         </nav>
+
+        <button class="btn-colapsar" id="btn-colapsar" onclick="toggleSidebarDesktop()">
+            <i class="fa-solid fa-chevron-left" id="icon-colapsar"></i>
+        </button>
     </aside>
 
     <div class="main-container main-container--binders">
@@ -50,9 +59,6 @@
                 <span class="user-welcome">hey! <span id="username"></span></span>
             </div>
         </header>
-
-
-
 
         <div class="cadastroFlex_wrapper cadastroFlex_wrapper--binders">
             <main class="cadastroContainer cadastroContainer--binders">
@@ -117,28 +123,9 @@
 <script src="../js/dados.js"></script>
 <script src="../js/dadosCartas.js"></script>
 <script src="../js/functions.js"></script>
+<script src="../js/sidebar.js"></script>
 
 <script>
-    function verificarSessao() {
-        let sessionUsername = sessionStorage.getItem("USERNAME");
-        if (!sessionUsername) {
-            document.getElementById("header").innerHTML = `
-            <div class="header-left">
-                <div class="header-search-group">
-                    <input type="text" id="ipt_busca_username" class="modal-search-input header-search-input" placeholder="Buscar por @username" onkeydown="if(event.key === 'Enter') buscarBindersPublicos()">
-                    <button class="btn-salvar-url header-search-btn" onclick="buscarBindersPublicos()">Buscar</button>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="btnSecundario_header" onclick="window.location.href='../login.html'">Login</button>
-                <button class="btnPrincipal_header" onclick="window.location.href='../cadastro.html'">Cadastrar</button>
-            </div>
-        `;
-            document.querySelector(".sidebar").style.display = "none";
-            document.getElementById("lista_binders").innerHTML = '';
-        }
-    }
-
     function abrirBinder(idBinder, nomeBinder, tipoBinder) {
         sessionStorage.setItem('BINDER_ID', idBinder);
         sessionStorage.setItem('BINDER_NOME', nomeBinder);
@@ -173,7 +160,7 @@
                                 </div>
                                 <div class="binder-actions">
                                     <button class="btn-edit" onclick="abrirBinder(${binder.id}, '${binder.nome}', '${binder.tipo}')">Abrir</button>
-                                    <button class="btn-del" onclick="apagarBinder(${binder.id})">🗑</button>
+                                    <button class="btn-del" onclick="apagarBinder(${binder.id})"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         </div>

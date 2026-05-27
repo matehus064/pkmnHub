@@ -16,5 +16,12 @@
     "mysql2": "^3.9.4",
     "nodemon": "^2.0.7",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^8.0.0",
+    "autoprefixer": "^10.5.0",
+    "cssnano": "^8.0.1",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1"
   }
 }
