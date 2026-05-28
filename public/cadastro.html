@@ -14,7 +14,7 @@
         <section class="formularioCadastro">
             <div class="logo logo--form">
                 <img src="./assets/imgs/main/logo.png">
-                <a href="index.html" style="color: var(--azul);">pkmnHub</a>
+                <a href="index.html" style="color: var(--accent-blue);">pkmnHub</a>
             </div>
 
             <div class="welcome-text">
@@ -64,7 +64,7 @@
                     <span class="detalheCadastro01">ACESSO ILIMITADO</span>
                     <span class="detalheCadastro02">GESTÃO PREMIUM</span>
                 </div>
-                <h2>Domine o jogo, <span class="ballet" style="color: var(--azul);">Colecione</span> lendas!</h2>
+                <h2>Domine o jogo, <span class="ballet" style="color: var(--accent-blue);">Colecione</span> lendas!</h2>
             </div>
         </section>
     </main>
@@ -90,7 +90,6 @@
             confirmacao != senha,
             numFotoPerfil == undefined
         ];
-
 
         let mensagensErro = [
             "Preencha todos os campos para começar sua jornada!",
@@ -127,13 +126,10 @@
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
                 if (resposta.ok) {
-
                     div_validacao.innerHTML = "<span class='msg-sucesso'>Usuário cadastrado com sucesso!</span>";
-
                     setTimeout(() => {
                         window.location = "login.html";
                     }, "2000");
-
                 } else {
                     div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar o cadastro...</span>";
                 }

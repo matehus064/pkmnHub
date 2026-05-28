@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
-<body class="bodyCadastro">
+<body class="bodyCadastro" style="--accent-blue: var(--accent-red);">
     <main class="cadastroContainer">
         <section class="esquerdaContainer">
             <div class="direitaConteudo">
@@ -17,7 +17,7 @@
                     <span class="detalheCadastro01">ACESSO ILIMITADO</span>
                     <span class="detalheCadastro02">GESTÃO PREMIUM</span>
                 </div>
-                <h2>Domine o jogo, <span class="destaqueTexto" style="color: var(--vermelho);">Colecione</span> lendas!</h2>
+                <h2>Domine o jogo, <span class="destaqueTexto" style="color: var(--accent-red);">Colecione</span> lendas!</h2>
             </div>
         </section>
 
@@ -53,17 +53,14 @@
 
 <script>
     function login() {
-        // ----- VARIAVEIS INPUTS: -----
         let email = ipt_email.value;
         let senha = ipt_senha.value;
 
-        // ----- VALIDAÇÃO: -----
         if (email == "" || senha == "") {
             div_validacao.innerHTML = '<span class="msg-erro">Preencha todos os campos para começar sua jornada!</span>';
             return false;
         }
 
-        // ----- IMPLEMENTAÇÃO API: -----
         fetch("/usuarios/autenticar", {
             method: "POST",
             headers: {
@@ -90,7 +87,6 @@
                     setTimeout(function () {
                         window.location = "./dashboard/dashboard_business.html";
                     }, 1000);
-
                 });
             } else {
                 console.log("Houve um erro ao tentar realizar o login!");

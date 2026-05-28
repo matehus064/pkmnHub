@@ -252,7 +252,7 @@ function validandoImagem(numeroIpt, setIpt) {
 
     if (document.getElementById("ipt_precoLiga")) ipt_precoLiga.focus();
 
-    console.log("✅ Carta encontrada:", carta);
+    console.log("Carta encontrada:", carta);
     return carta;
 }
 

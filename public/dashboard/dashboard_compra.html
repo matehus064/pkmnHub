@@ -35,14 +35,12 @@
 
     <div class="main-container">
         <header id="header">
-            <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
                 <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
                     Cadastre sua Aquisição
                 </div>
             </div>
 
-            <!-- Bloco da Direita (Fim) -->
             <div class="header-right">
                 <span class="user-welcome">hey! <span id="username"></span></span>
             </div>
@@ -55,8 +53,7 @@
                         <div class="inputsJuntos">
                             <div class="espaco">
                                 <label for="ipt_numero">Número</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
-                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
 
                             <div class="espaco">
@@ -69,56 +66,32 @@
 
                         <label>SELECIONE O TIPO</label>
                         <div class="tipoSelector">
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Grass"><img
-                                    src="../assets/imgs/types/grass.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fire"><img
-                                    src="../assets/imgs/types/fire.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Water"><img
-                                    src="../assets/imgs/types/water.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Lightning"><img
-                                    src="../assets/imgs/types/lightning.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Psychic"><img
-                                    src="../assets/imgs/types/psychic.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fighting"><img
-                                    src="../assets/imgs/types/fightning.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Darkness"><img
-                                    src="../assets/imgs/types/darkness.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Metal"><img
-                                    src="../assets/imgs/types/metal.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Dragon"><img
-                                    src="../assets/imgs/types/dragon.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Colorless"><img
-                                    src="../assets/imgs/types/colorless.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fairy"><img
-                                    src="../assets/imgs/types/fairy.png"></label>
-                            <label class="tipoItem"><input type="radio" name="n_tipo" value=null><img
-                                    src="../assets/imgs/types/none.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Grass"><img src="../assets/imgs/types/grass.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fire"><img src="../assets/imgs/types/fire.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Water"><img src="../assets/imgs/types/water.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Lightning"><img src="../assets/imgs/types/lightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Psychic"><img src="../assets/imgs/types/psychic.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fighting"><img src="../assets/imgs/types/fightning.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Darkness"><img src="../assets/imgs/types/darkness.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Metal"><img src="../assets/imgs/types/metal.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Dragon"><img src="../assets/imgs/types/dragon.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Colorless"><img src="../assets/imgs/types/colorless.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value="Fairy"><img src="../assets/imgs/types/fairy.png"></label>
+                            <label class="tipoItem"><input type="radio" name="n_tipo" value=null><img src="../assets/imgs/types/none.png"></label>
                         </div>
 
                         <label>SELECIONE A RARIDADE</label>
                         <div class="raridadeSelector">
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Common"><img
-                                    src="../assets/imgs/raritys/common.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Uncommon"><img
-                                    src="../assets/imgs/raritys/uncommon.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Rare"><img
-                                    src="../assets/imgs/raritys/rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Double Rare"><img
-                                    src="../assets/imgs/raritys/double-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ultra Rare"><img
-                                    src="../assets/imgs/raritys/ultra-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade"
-                                    value="Illustration Rare"><img
-                                    src="../assets/imgs/raritys/illustration-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade"
-                                    value="Special Illustration Rare"><img
-                                    src="../assets/imgs/raritys/special-illustration-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="ACE SPEC Rare"><img
-                                    src="../assets/imgs/raritys/ace-spec-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade"
-                                    value="Mega Hyper Rare"><img src="../assets/imgs/raritys/hyper-rare.png"></label>
-                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img
-                                    src="../assets/imgs/raritys/promo.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Common"><img src="../assets/imgs/raritys/common.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Uncommon"><img src="../assets/imgs/raritys/uncommon.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Rare"><img src="../assets/imgs/raritys/rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Double Rare"><img src="../assets/imgs/raritys/double-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Ultra Rare"><img src="../assets/imgs/raritys/ultra-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Illustration Rare"><img src="../assets/imgs/raritys/illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Special Illustration Rare"><img src="../assets/imgs/raritys/special-illustration-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="ACE SPEC Rare"><img src="../assets/imgs/raritys/ace-spec-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Mega Hyper Rare"><img src="../assets/imgs/raritys/hyper-rare.png"></label>
+                            <label class="raridadeItem"><input type="radio" name="n_raridade" value="Promo"><img src="../assets/imgs/raritys/promo.png"></label>
                             <input type="hidden" id="ipt_raridade_fallback" value="">
                         </div>
 
@@ -130,8 +103,7 @@
 
                             <div class="espaco">
                                 <label for="ipt_set" id="label_set">Expansão (Set)</label>
-                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos"
-                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                                <input type="text" id="ipt_set" placeholder="Ex: Heróis Excelsos" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
                         </div>
 
@@ -141,50 +113,34 @@
                                 <input type="number" id="ipt_qtd" min="1" value="1">
                             </div>
 
-
                             <div class="espaco">
                                 <label for="ipt_precoLiga">MENOR DA LIGA (R$)</label>
-                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
-                                    placeholder="0.00">
+                                <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
                             </div>
 
                             <div class="espaco">
                                 <label for="ipt_preco">VALOR DE COMPRA (R$)</label>
-                                <input type="number" id="ipt_valorCompra" value="0" min="0" step="1.00"
-                                    placeholder="0.00">
+                                <input type="number" id="ipt_valorCompra" value="0" min="0" step="1.00" placeholder="0.00">
                             </div>
-
-
-                            <!-- <div class="espaco">
-                                <label for="ipt_url">URL IMAGEM</label>
-                                <input type="url" id="ipt_url" placeholder="https://images.pokemontcg.io/...">
-                            </div> -->
                         </div>
 
                         <label id="div_validacao"></label>
 
                         <button type="button" onclick="cadastrarCarta()" class="btnPrincipal_sign">Cadastro</button>
-
-
                     </form>
                 </section>
 
                 <section class="direitaContainer_gyarados" style="align-items: center;">
-                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem"
-                        style="width: 75%; opacity: 0;">
-                    <div class="card"
-                        style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: #F9CF30; background-color: #1214176e; backdrop-filter: blur(10px);;">
-                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!
-                        </div>
-                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será
-                            solicitado outros campos.</div>
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem" style="width: 75%; opacity: 0;">
+                    <div class="card" style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: var(--accent-yellow); background-color: #1214176e; backdrop-filter: blur(10px);">
+                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!</div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será solicitado outros campos.</div>
                     </div>
                 </section>
             </main>
         </div>
     </div>
 </body>
-
 </html>
 
 <script src="../js/dados.js"></script>
@@ -192,20 +148,16 @@
 <script src="../js/functions.js"></script>
 
 <script>
+    var camposCompra = [
+        { id: "ipt_nome", valor: "" },
+        { id: "ipt_set", valor: "" },
+        { id: "ipt_numero", valor: "" },
+        { id: "ipt_qtd", valor: 1 },
+        { id: "ipt_valorCompra", valor: 0 },
+        { id: "ipt_precoLiga", valor: 0 },
+        { id: "ipt_raridade_fallback", valor: "" }
+    ];
 
-var camposCompra = [
-    { id: "ipt_nome", valor: "" },
-    { id: "ipt_set", valor: "" },
-    { id: "ipt_numero", valor: "" },
-    { id: "ipt_qtd", valor: 1 },
-    { id: "ipt_valorCompra", valor: 0 },
-    { id: "ipt_precoLiga", valor: 0 },
-    { id: "ipt_raridade_fallback", valor: "" }
-];
-
-
-
-    // ----- TESTANDO UMA IMPLEMENTAÇÃO MUITO LOKA: -----
     let expansaoFinal = '';
 
     // ----- VARIAVEIS INPUTS: -----
@@ -254,7 +206,7 @@ var camposCompra = [
 
         for (let i = 0; i < condicoesErro.length; i++) {
             if (condicoesErro[i]) {
-                mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>" + mensagensErro[i] + "</span>");
+                mensagemTemporizada(div_validacao, "<span class='msg-erro'>" + mensagensErro[i] + "</span>");
                 return false;
             }
         }
@@ -278,18 +230,17 @@ var camposCompra = [
         })
             .then(function (resposta) {
                 if (resposta.ok) {
-                    mensagemTemporizada(div_validacao, "<span style='color: #2ecc71'>Carta cadastrada com sucesso!</span>");
+                    mensagemTemporizada(div_validacao, "<span class='msg-sucesso'>Carta cadastrada com sucesso!</span>");
                     limparFormulario(camposCompra);
                     ipt_numero.focus();
                 } else {
-                    mensagemTemporizada(div_validacao, "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar o cadastro...</span>");
+                    mensagemTemporizada(div_validacao, "<span class='msg-erro'>Houve um erro ao tentar realizar o cadastro...</span>");
                 }
             })
             .catch(function (resposta) {
                 console.log("#ERRO: " + resposta);
             });
 
-        
         return false;
     }
 
@@ -299,5 +250,4 @@ var camposCompra = [
             return;
         }
     });
-
 </script>

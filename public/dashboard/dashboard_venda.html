@@ -35,14 +35,10 @@
 
     <div class="main-container">
         <header id="header">
-            <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
-                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
-                        Cadastre sua Venda
-                </div>
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">Cadastre sua Venda</div>
             </div>
 
-            <!-- Bloco da Direita (Fim) -->
             <div class="header-right">
                 <span class="user-welcome">hey! <span id="username"></span></span>
             </div>
@@ -55,8 +51,7 @@
                         <div class="inputsJuntos">
                             <div class="espaco">
                                 <label for="ipt_numero">NÚMERO</label>
-                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
-                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
 
                             <div class="espaco">
@@ -66,13 +61,11 @@
 
                             <div class="espaco">
                                 <label style="color: transparent;">.</label>
-                                <button type="button" onclick="limparFormulario(camposCompra)"
-                                    class="btnLimpar">LIMPAR</button>
+                                <button type="button" onclick="limparFormulario(camposCompra)" class="btnLimpar">LIMPAR</button>
                             </div>
                         </div>
 
                         <div class="carta-info-divider" style="margin-bottom: 15px;"></div>
-
 
                         <div class="inputsJuntos">
                             <div class="espaco">
@@ -81,22 +74,19 @@
                             </div>
                             <div class="espaco">
                                 <label for="ipt_set">SET</label>
-                                <input type="text" id="ipt_set" placeholder="Ex: 054/191"
-                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                                <input type="text" id="ipt_set" placeholder="Ex: 054/191" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
                             </div>
 
                             <div class="espaco">
                                 <div class="inputsJuntos">
                                     <div class="espaco">
                                         <label for="ipt_precoLiga">LIGA (R$)</label>
-                                        <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00"
-                                            placeholder="0.00">
+                                        <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
                                     </div>
 
                                     <div class="espaco">
                                         <label for="ipt_preco">VENDA (R$)</label>
-                                        <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00"
-                                            placeholder="0.00">
+                                        <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00" placeholder="0.00">
                                     </div>
                                 </div>
                             </div>
@@ -104,19 +94,14 @@
 
                         <label id="div_validacao"></label>
 
-                        <button type="button" onclick="cadastrarCartaVenda()"
-                            class="btnPrincipal_sign">Cadastrar</button>
+                        <button type="button" onclick="cadastrarCartaVenda()" class="btnPrincipal_sign">Cadastrar</button>
                     </form>
                 </section>
                 <section class="direitaContainer_nidoking" style="align-items: center;">
-                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem"
-                        style="width: 75%; opacity: 0;">
-                    <div class="card"
-                        style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: #F9CF30; background-color: #1214176e; backdrop-filter: blur(10px);;">
-                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!
-                        </div>
-                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será
-                            solicitado outros campos.</div>
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem" style="width: 75%; opacity: 0;">
+                    <div class="card" style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: var(--accent-yellow); background-color: #1214176e; backdrop-filter: blur(10px);">
+                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!</div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será solicitado outros campos.</div>
                     </div>
                 </section>
             </main>
@@ -152,7 +137,6 @@
         let nomeValidado = true;
 
         // ----- VALIDAÇÕES: -----
-
         let condicoesErro = [
             nomeCarta == "" || numeroCarta == "" || qntCarta == "",
             nomeCarta.length < 3 || !nomeValidado,
@@ -167,11 +151,11 @@
 
         for (let i = 0; i < condicoesErro.length; i++) {
             if (condicoesErro[i]) {
-                div_validacao.innerHTML = "<span style='color: #EE3D2D'>" + mensagensErro[i] + "</span>";
+                div_validacao.innerHTML = "<span class='msg-erro'>" + mensagensErro[i] + "</span>";
                 return false;
             }
         }
-        div_validacao.innerHTML = "<span style='color: #2ecc71'>Venda concluída! Carta retirada da coleção</span>";
+        div_validacao.innerHTML = "<span class='msg-sucesso'>Venda concluída! Carta retirada da coleção</span>";
 
         // ----- IMPLEMENTAÇÃO API: -----
         fetch("/transacoes/venda", {
@@ -191,9 +175,9 @@
             .then(function (resposta) {
                 console.log("resposta: ", resposta);
                 if (resposta.ok) {
-                    div_validacao.innerHTML = "<span style='color: #2ecc71'>Carta vendida com sucesso!</span>";
+                    div_validacao.innerHTML = "<span class='msg-sucesso'>Carta vendida com sucesso!</span>";
                 } else {
-                    div_validacao.innerHTML = "<span style='color: #EE3D2D'>Houve um erro ao tentar realizar a venda...</span>";;
+                    div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar a venda...</span>";
                 }
             })
             .catch(function (resposta) {

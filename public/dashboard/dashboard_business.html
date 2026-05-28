@@ -35,14 +35,10 @@
 
     <div class="main-container">
         <header id="header">
-            <!-- Bloco da Esquerda (Início) -->
             <div class="header-left">
-                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">
-                    Hub de Desempenho
-                </div>
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">Hub de Desempenho</div>
             </div>
 
-            <!-- Bloco da Direita (Fim) -->
             <div class="header-right">
                 <span class="user-welcome">hey! <span id="username"></span></span>
             </div>
@@ -165,11 +161,11 @@
                     let numero = Number(texto.replace("%", ""));
 
                     if (numero >= 0) {
-                        roi.style.color = 'var(--green)';
+                        roi.style.color = 'var(--accent-green)';
                     } else if (numero > -20) {
                         roi.style.color = 'var(--accent-yellow)';
                     } else {
-                        roi.style.color = 'var(--danger)';
+                        roi.style.color = 'var(--accent-red)';
                     }
 
                 // ----- GRÁFICO DE LINHA -----
@@ -300,5 +296,4 @@
     document.addEventListener('DOMContentLoaded', function () {
         buscarKpis('30 DAY', document.querySelector('.btn-filter'));
     });
-
 </script>
