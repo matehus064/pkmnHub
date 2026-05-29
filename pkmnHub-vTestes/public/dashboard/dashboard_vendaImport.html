@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Venda</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="logo logo--dash">
+            <img src="../assets/imgs/main/logo2.png">
+            <a href="../index.html">pkmnHub</a>
+        </div>
+
+        <nav class="nav-menu">
+            <ul>
+                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
+                <li class="nav-item"><a href="dashboard_binders.html" class="nav-link">Binders</a></li>
+                <li class="nav-item"><a href="dashboard_business.html" class="nav-link">Business</a></li>
+                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
+                    <a class="nav-link active">Cadastro</a>
+                    <ul class="submenu active">
+                        <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
+                        <li><a href="dashboard_venda.html" class="submenu-link active">Venda</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="main-container">
+        <header id="header">
+            <div class="header-left" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">Cadastre sua Venda</div>
+                <button type="button" onclick="abrirModalImport()" style="
+                    background: transparent;
+                    border: 1px solid #F9CF30;
+                    color: #F9CF30;
+                    padding: 6px 14px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    transition: all 0.2s;
+                " onmouseover="this.style.background='#F9CF30';this.style.color='#121417'"
+                   onmouseout="this.style.background='transparent';this.style.color='#F9CF30'">
+                    IMPORTAR LOTE
+                </button>
+            </div>
+
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div class="cadastroFlex_wrapper">
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+                    <form>
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_numero">NÚMERO</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                            </div>
+
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+
+                            <div class="espaco">
+                                <label style="color: transparent;">.</label>
+                                <button type="button" onclick="limparFormulario(camposCompra)" class="btnLimpar">LIMPAR</button>
+                            </div>
+                        </div>
+
+                        <div class="carta-info-divider" style="margin-bottom: 15px;"></div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_nome">Nome da Carta</label>
+                                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+                            </div>
+                            <div class="espaco">
+                                <label for="ipt_set">SET</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: 054/191" oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                            </div>
+
+                            <div class="espaco">
+                                <div class="inputsJuntos">
+                                    <div class="espaco">
+                                        <label for="ipt_precoLiga">LIGA (R$)</label>
+                                        <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
+                                    </div>
+
+                                    <div class="espaco">
+                                        <label for="ipt_preco">VENDA (R$)</label>
+                                        <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00" placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label id="div_validacao"></label>
+
+                        <button type="button" onclick="cadastrarCartaVenda()" class="btnPrincipal_sign">Cadastrar</button>
+                    </form>
+                </section>
+                <section class="direitaContainer_nidoking" style="align-items: center;">
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem" style="width: 75%; opacity: 0;">
+                    <div class="card" style="margin-top: 10px; flex: 0; min-height: fit-content; border-color: var(--accent-yellow); background-color: #1214176e; backdrop-filter: blur(10px);">
+                        <div class="total-number" style="font-size: 15px; margin-bottom: 10px;" id="roi">INSTRUÇÕES!</div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será solicitado outros campos.</div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
+
+<!-- MODAL IMPORTAR LOTE - VENDA -->
+<div id="modalImport" style="
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #00000099;
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+">
+    <div style="
+        background: #121417;
+        border: 1px solid #2a2d32;
+        border-radius: 12px;
+        padding: 28px;
+        width: 520px;
+        max-width: 90vw;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    ">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700; color: #fff;">
+                Importar <span class="ballet" style="color: #F9CF30;">Lote</span>
+            </h2>
+            <button onclick="fecharModalImport()" style="
+                background: transparent;
+                border: none;
+                color: #888;
+                font-size: 20px;
+                cursor: pointer;
+                line-height: 1;
+            ">✕</button>
+        </div>
+
+        <p style="margin: 0; font-size: 12px; color: #888; line-height: 1.6;">
+            Cole os dados no formato: <span style="color: #F9CF30;">Nome (000/000) &nbsp; R$ 00,00 &nbsp; R$ 00,00</span><br>
+            Promos (∞) são ignoradas automaticamente.
+        </p>
+
+        <textarea id="txtImport" placeholder="Mewtwo ex (058/182)	 R$  24,99 	 R$  16,99&#10;Blastoise ex (030/142)	 R$  17,99 	 R$  12,23" style="
+            background: #1a1d22;
+            border: 1px solid #2a2d32;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 12px;
+            font-family: monospace;
+            padding: 12px;
+            resize: vertical;
+            height: 200px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        "></textarea>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+                <label style="font-size: 11px; color: #888;">Entre cartas (ms)</label>
+                <input type="number" id="ipt_intervalo" value="3000" min="500" step="500" style="
+                    background: #1a1d22;
+                    border: 1px solid #2a2d32;
+                    border-radius: 6px;
+                    color: #fff;
+                    font-size: 12px;
+                    padding: 6px 10px;
+                    width: 140px;
+                    outline: none;
+                ">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+                <label style="font-size: 11px; color: #888;">Antes de cadastrar (ms)</label>
+                <input type="number" id="ipt_intervaloPreCadastro" value="500" min="500" step="500" style="
+                    background: #1a1d22;
+                    border: 1px solid #2a2d32;
+                    border-radius: 6px;
+                    color: #fff;
+                    font-size: 12px;
+                    padding: 6px 10px;
+                    width: 140px;
+                    outline: none;
+                ">
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="fecharModalImport()" style="
+                background: transparent;
+                border: 1px solid #2a2d32;
+                color: #888;
+                padding: 8px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 700;
+            ">CANCELAR</button>
+            <button onclick="executarImport()" style="
+                background: #F9CF30;
+                border: none;
+                color: #121417;
+                padding: 8px 18px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 700;
+            ">EXECUTAR</button>
+        </div>
+
+        <label id="div_validacao_import" style="font-size: 12px; min-height: 16px;"></label>
+    </div>
+</div>
+
+<script>
+function abrirModalImport() {
+    document.getElementById('modalImport').style.display = 'flex';
+}
+
+function fecharModalImport() {
+    document.getElementById('modalImport').style.display = 'none';
+    document.getElementById('txtImport').value = '';
+    document.getElementById('div_validacao_import').innerHTML = '';
+}
+
+function executarImport() {
+    const dadoBruto = document.getElementById('txtImport').value.trim();
+    const intervaloMs = Number(document.getElementById('ipt_intervalo').value);
+    const intervaloPreCadastro = Number(document.getElementById('ipt_intervaloPreCadastro').value);
+    const feedback = document.getElementById('div_validacao_import');
+
+    if (!dadoBruto) {
+        feedback.innerHTML = "<span style='color:#EE3D2D'>Cole os dados antes de executar.</span>";
+        return;
+    }
+
+    fecharModalImport();
+    exportarVendas(dadoBruto, intervaloMs, intervaloPreCadastro);
+}
+
+function exportarVendas(dadoBruto, intervaloMs = 3000, intervaloPreCadastro = 500) {
+
+    function parseValor(v) {
+        if (!v) return 0;
+        const s = v.replace(/\s/g, '');
+        return s === '-' || s === '' ? 0 : parseFloat(s.replace(',', '.'));
+    }
+
+    function extrairValor(str, offset = 0) {
+        const sub = str.slice(offset);
+        const match = sub.match(/R?\$?\s*([\d]+(?:[.,]\d+)?|-)/);
+        if (!match) return null;
+        return {
+            valor: parseValor(match[1]),
+            end: offset + match.index + match[0].length
+        };
+    }
+
+    function parsearCartas(dado) {
+        const linhas = dado.trim().split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        const cartas = [];
+        let i = 0;
+
+        while (i < linhas.length) {
+            const linha = linhas[i];
+            const matchCarta = linha.match(/^(.+?)\s*\(([^)]+)\)/);
+            if (!matchCarta) { i++; continue; }
+
+            const nome = matchCarta[1].trim();
+            const numero = matchCarta[2].trim();
+            const isPromo = numero.includes('∞');
+
+            let linhaDados = linha;
+            if (!linha.match(/R?\$?\s*[\d]+(?:[.,]\d+)?/)) {
+                i++;
+                linhaDados = linhas[i] || '';
+            }
+
+            const offsetInicio = linhaDados.indexOf(')') + 1;
+            const v1 = extrairValor(linhaDados, offsetInicio);
+            if (!v1) { i++; continue; }
+
+            const v2 = extrairValor(linhaDados, v1.end);
+            if (!v2) { i++; continue; }
+
+            cartas.push({ nome, numero, menorLiga: v1.valor, valorVenda: v2.valor, isPromo });
+            i++;
+        }
+
+        return cartas;
+    }
+
+    function preencherECadastrar(carta, idx, total, callback) {
+        document.getElementById('ipt_nome').value        = carta.nome;
+        document.getElementById('ipt_numero').value      = carta.numero;
+        document.getElementById('ipt_precoLiga').value   = carta.menorLiga;
+        document.getElementById('ipt_valorVenda').value  = carta.valorVenda;
+        document.getElementById('ipt_qtd').value         = 1;
+
+        console.log(`[${idx}/${total}] ${carta.nome} (${carta.numero}) | Liga: R$${carta.menorLiga} | Venda: R$${carta.valorVenda}`);
+
+        setTimeout(() => {
+            cadastrarCartaVenda();
+            callback();
+        }, intervaloPreCadastro);
+    }
+
+    const cartas = parsearCartas(dadoBruto)
+        .filter(c => {
+            if (c.isPromo) { console.warn(`⚠️ PROMO ignorada: ${c.nome} (${c.numero})`); return false; }
+            return true;
+        });
+
+    console.log(`🃏 ${cartas.length} cartas para venda:`);
+    console.table(cartas.map(c => ({
+        numero:     c.numero,
+        nome:       c.nome,
+        menorLiga:  c.menorLiga,
+        valorVenda: c.valorVenda
+    })));
+
+    let index = 0;
+
+    function inserirProxima() {
+        if (index >= cartas.length) {
+            console.log("✅ Todas as vendas foram registradas!");
+            mensagemTemporizada(div_validacao, "<span style='color:#2ecc71'>✅ Lote importado com sucesso!</span>");
+            return;
+        }
+        const carta = cartas[index];
+        index++;
+        preencherECadastrar(carta, index, cartas.length, () => {
+            setTimeout(inserirProxima, intervaloMs);
+        });
+    }
+
+    inserirProxima();
+}
+</script>
+
+<script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
+<script src="../js/functions.js"></script>
+
+<script>
+    var camposCompra = [
+        { id: "ipt_nome", valor: "" },
+        { id: "ipt_set", valor: "" },
+        { id: "ipt_numero", valor: "" },
+        { id: "ipt_qtd", valor: 1 },
+        { id: "ipt_valorVenda", valor: 0 },
+        { id: "ipt_precoLiga", valor: 0 },
+    ];
+
+    function cadastrarCartaVenda() {
+        let nomeCarta = ipt_nome.value;
+        let numeroCarta = ipt_numero.value;
+        let qntCarta = Number(ipt_qtd.value);
+        let valorVenda = Number(ipt_valorVenda.value);
+        let menorLiga = Number(ipt_precoLiga.value);
+
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        let nomeValidado = true;
+
+        let condicoesErro = [
+            nomeCarta == "" || numeroCarta == "" || qntCarta == "",
+            nomeCarta.length < 3 || !nomeValidado,
+            numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7
+        ];
+
+        let mensagensErro = [
+            "Preencha todos os campos",
+            "Nome inválido",
+            "Observe a parte inferior da sua carta e preencha corretamente a númeração"
+        ];
+
+        for (let i = 0; i < condicoesErro.length; i++) {
+            if (condicoesErro[i]) {
+                div_validacao.innerHTML = "<span class='msg-erro'>" + mensagensErro[i] + "</span>";
+                return false;
+            }
+        }
+
+        fetch("/transacoes/venda", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeCartaServer: nomeCarta,
+                numeroCartaServer: numeroCarta,
+                qntCartaServer: qntCarta,
+                valorVendaServer: valorVenda,
+                menorLigaServer: menorLiga,
+                usuarioServer: usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+                    mensagemTemporizada(div_validacao, "<span class='msg-sucesso'>Carta vendida com sucesso!</span>");
+                    limparFormulario(camposCompra);
+                    ipt_numero.focus();
+                } else {
+                    mensagemTemporizada(div_validacao, "<span class='msg-erro'>Houve um erro ao tentar realizar a venda...</span>");
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+</script>
