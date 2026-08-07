@@ -1,0 +1,704 @@
+/* ══════════════════════════════════════════════════════
+   LAYOUT BASE
+══════════════════════════════════════════════════════ */
+@import url('../css/root.css');
+
+body { overflow: hidden; }
+
+.main-container-perfil {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 30px 40px 0px 40px;
+}
+
+.perfil-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 40px 60px 40px;
+}
+
+/* ══════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════ */
+.perfil-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 0 28px 0;
+    border-bottom: 1px solid var(--border-dark);
+    margin-bottom: 0;
+    position: relative;
+    background: linear-gradient(
+  color-mix(in srgb, var(--bg-body) 75%, transparent), 
+  color-mix(in srgb, var(--bg-card) 75%, transparent)
+), url(../assets/imgs/pkmnOficial/tcg/rayquazaAkira.webp);
+    background-position: center;
+    background-size: cover;
+}
+
+.perfil-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-yellow);
+    object-fit: cover;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-yellow) 12%, transparent);
+    margin-bottom: 14px;
+}
+
+.perfil-nome {
+    font-size: 26px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.perfil-at {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.perfil-hero-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ══════════════════════════════════════════════════════
+   BOTÕES DE AMIZADE
+══════════════════════════════════════════════════════ */
+.btn-amigo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border-radius: 50px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    border: none;
+}
+
+.btn-amigo--adicionar {
+    background: var(--accent-yellow);
+    color: #000;
+}
+
+.btn-amigo--adicionar:hover {
+    background: color-mix(in srgb, var(--accent-yellow) 80%, #000);
+}
+
+.btn-amigo--pendente {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-dark);
+}
+
+.btn-amigo--amigos {
+    background: color-mix(in srgb, var(--accent-yellow) 15%, transparent);
+    color: var(--accent-yellow);
+    border: 1px solid color-mix(in srgb, var(--accent-yellow) 30%, transparent);
+}
+
+/* ══════════════════════════════════════════════════════
+   ABAS
+══════════════════════════════════════════════════════ */
+.perfil-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-dark);
+    margin-bottom: 32px;
+    position: sticky;
+    top: 0;
+    background: var(--bg-body);
+    z-index: 10;
+}
+
+.perfil-tab {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+}
+
+.perfil-tab:hover { color: white; }
+
+.perfil-tab.active {
+    color: white;
+    border-bottom-color: var(--accent-yellow);
+}
+
+.perfil-tab-content { display: none; }
+.perfil-tab-content.active { display: block; }
+
+/* ══════════════════════════════════════════════════════
+   ABA PERFIL — OVERVIEW
+══════════════════════════════════════════════════════ */
+.perfil-overview {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+.perfil-stats-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: fit-content;
+    flex-shrink: 0;
+}
+
+.perfil-stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.perfil-stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.perfil-stat-valor {
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+}
+
+.perfil-stat-valor--yellow { color: var(--accent-yellow); }
+
+.perfil-stat-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border-dark);
+}
+
+/* ══════════════════════════════════════════════════════
+   ABA PERFIL — SHOWCASE
+══════════════════════════════════════════════════════ */
+.perfil-showcase-card {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.showcase-grid {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.showcase-slot {
+    width: 140px;
+    aspect-ratio: 5/7;
+    border-radius: 10px;
+    border: 2px dashed var(--border-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-body);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.showcase-slot.preenchido {
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--accent-yellow) 30%, transparent);
+}
+
+.showcase-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.showcase-slot-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--border-medium);
+}
+
+.showcase-slot-vazio i { font-size: 20px; }
+.showcase-slot-vazio span { font-size: 10px; font-weight: 700; }
+
+.showcase-slot-dono { cursor: pointer; }
+.showcase-slot-dono:hover { border-color: var(--accent-yellow); }
+
+.showcase-slot-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: color-mix(in srgb, #000 70%, transparent);
+    border: none;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.showcase-slot:hover .showcase-slot-remove { display: flex; }
+
+/* ══════════════════════════════════════════════════════
+   ABA PERFIL — SETS EM DESTAQUE
+══════════════════════════════════════════════════════ */
+.perfil-sets-titulo {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.sets-destaque-grid {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.set-destaque-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 14px;
+    overflow: hidden;
+    width: 200px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.set-destaque-card:hover {
+    border-color: color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+    transform: translateY(-2px);
+}
+
+.set-destaque-bg {
+    height: 70px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.set-destaque-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, var(--bg-card));
+}
+
+.set-destaque-logo {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    z-index: 1;
+    max-height: 32px;
+    max-width: 120px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+}
+
+.set-destaque-info { padding: 10px 12px 12px 12px; }
+
+.set-destaque-nome {
+    font-size: 12px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2px;
+}
+
+.set-destaque-qtd {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════════════
+   ABA COLEÇÃO
+══════════════════════════════════════════════════════ */
+.grid-colecao-perfil {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.carta-card-perfil {
+    width: 150px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.carta-card-perfil:hover { transform: translateY(-3px); }
+
+.carta-card-perfil img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    border: 2px solid color-mix(in srgb, var(--accent-yellow) 20%, transparent);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.carta-hover-info-perfil {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.carta-card-perfil:hover .carta-hover-info-perfil,
+.carta-hover-info-perfil.visivel { opacity: 1; }
+
+.carta-hover-info-perfil .nome {
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+}
+
+.carta-hover-info-perfil .set {
+    color: var(--accent-yellow);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.carta-hover-info-perfil .numero {
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* ══════════════════════════════════════════════════════
+   ABA BINDERS
+══════════════════════════════════════════════════════ */
+.binders-grid-perfil {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.binder-card {
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+}
+
+.binder-card:hover {
+    border-color: color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+    transform: translateY(-2px);
+}
+
+.binder-cover-wrapper {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(to bottom, var(--bg-card), var(--bg-body));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.binder-cover {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.binder-body {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.binder-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.binder-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.binder-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: var(--border-medium);
+    color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════════════════
+   ABA AMIGOS
+══════════════════════════════════════════════════════ */
+.amigos-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.amigos-secao-titulo {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.amigo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    text-decoration: none;
+    transition: border-color 0.2s;
+    margin-bottom: 8px;
+}
+
+.amigo-item:hover { border-color: var(--border-medium); }
+
+.amigo-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--border-dark);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.amigo-info { flex: 1; }
+.amigo-username { font-size: 13px; font-weight: 800; color: white; }
+.amigo-sub { font-size: 11px; color: var(--text-secondary); }
+.amigo-actions { display: flex; gap: 6px; }
+
+.btn-aceitar {
+    background: var(--accent-yellow);
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-recusar {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-dark);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.busca-amigo-input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+}
+
+.busca-amigo-input:focus { border-color: var(--accent-yellow); }
+
+/* ══════════════════════════════════════════════════════
+   PAGINAÇÃO
+══════════════════════════════════════════════════════ */
+.paginacao-perfil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 28px 0 0 0;
+}
+
+.paginacao-perfil button {
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paginacao-perfil button:hover:not(:disabled) {
+    border-color: var(--text-secondary);
+    color: white;
+}
+
+.paginacao-perfil button:disabled { opacity: 0.3; cursor: default; }
+
+.paginacao-perfil button.pagina-ativa {
+    background: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+    font-weight: 700;
+}
+
+.paginacao-perfil .reticencias {
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 0 4px;
+}
+
+/* ══════════════════════════════════════════════════════
+   SKELETON + VAZIO
+══════════════════════════════════════════════════════ */
+.skeleton-perfil {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 12px;
+}
+
+.vazio-texto {
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 20px 0;
+}
+
+/* ══════════════════════════════════════════════════════
+   MODAL SHOWCASE
+══════════════════════════════════════════════════════ */
+.modal-showcase-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 28px;
+    position: relative;
+    animation: modalEntrar 0.2s ease;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-showcase-box h2 { font-size: 18px; font-weight: 900; }
+.modal-showcase-box p { font-size: 13px; color: var(--text-secondary); }
+
+.modal-showcase-busca {
+    width: 100%;
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal-showcase-busca:focus { border-color: var(--accent-yellow); }
+
+.modal-showcase-lista {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.showcase-opcao {
+    width: 80px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: border-color 0.15s;
+}
+
+.showcase-opcao:hover { border-color: var(--accent-yellow); }
+.showcase-opcao img { width: 100%; display: block; border-radius: 6px; }

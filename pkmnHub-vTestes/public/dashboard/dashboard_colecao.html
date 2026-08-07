@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Coleção</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body onload="colecao()">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container main-container-colecao">
+        <header id="header">
+            <div class="header-left">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">Vitrine do Colecionador
+                </div>
+            </div>
+            <div class="header-right">
+                <button onclick="exportarCSV()" class="filtro-button" title="Exportar coleção">
+                    <i class="fa-solid fa-download"></i> 
+                </button>
+                <select id="filtroTipo" onchange="aplicarFiltro()" class="filtro-select">
+                    <option value="data">Por Data</option>
+                    <option value="set">Por Set</option>
+                    <option value="preco">Por Preço</option>
+                    <option value="raridade">Por Raridade</option>
+                </select>
+                <select id="filtroOrdem" onchange="aplicarFiltro()" class="filtro-select">
+                    <option value="desc">Decrescente</option>
+                    <option value="asc">Crescente</option>
+                </select>
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div id="grid_colecao" class="grid-colecao"></div>
+
+        <div id="paginacao" class="paginacao"></div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
+<script src="../js/functions.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth_ui.js"></script>
+<script src="../js/perfil_nav.js"></script>
+
+
+<script>
+    const hierarquiaRaridade = [
+        "Common", "Uncommon", "Rare", "Promo", "Rare Holo", "Rare ACE",
+        "Rare BREAK", "Rare Holo EX", "Rare Holo GX", "Rare Holo LV.X",
+        "Rare Holo Star", "Rare Holo V", "Rare Prime", "Rare Holo VMAX",
+        "Rare Holo VSTAR", "Rare Prism Star", "Rare Shining", "Rare Shiny",
+        "Rare Rainbow", "Rare Secret", "Rare Ultra", "Rare Shiny GX",
+        "Radiant Rare", "Double Rare", "ACE SPEC Rare", "Trainer Gallery Rare Holo",
+        "Amazing Rare", "Black White Rare", "Classic Collection", "LEGEND",
+        "Illustration Rare", "Shiny Rare", "Ultra Rare", "MEGA_ATTACK_RARE",
+        "Mega Hyper Rare", "Shiny Ultra Rare", "Special Illustration Rare", "Hyper Rare"
+    ];
+
+    const ordemSets = [
+        'Scarlet & Violet Black Star Promos', 'Scarlet & Violet', 'Paldea Evolved',
+        'Obsidian Flames', '151', 'Paradox Rift', 'Paldean Fates', 'Temporal Forces',
+        'Twilight Masquerade', 'Shrouded Fable', 'Stellar Crown', 'Surging Sparks',
+        'Prismatic Evolutions', 'Journey Together', 'Destined Rivals', 'White Flare',
+        'Black Bolt', 'Mega Evolution Black Star Promos', 'Mega Evolution',
+        'Phantasmal Flames', 'Ascended Heroes', 'Perfect Order', 'Chaos Rising'
+    ];
+
+    const CARTAS_POR_PAGINA = 40;
+    let colecaoData = [];
+    let dadosFiltrados = [];
+    let paginaAtual = 1;
+
+    function colecao() {
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        let skeletonHtml = '';
+        for (let i = 0; i < 20; i++) {
+            skeletonHtml += `<div class="carta-card skeleton"></div>`;
+        }
+        grid_colecao.innerHTML = skeletonHtml;
+
+        fetch(`/cards/buscarColecao?usuarioServer=${usuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                colecaoData = json;
+                aplicarFiltro();
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            });
+    }
+
+    function aplicarFiltro() {
+        let tipo = document.getElementById('filtroTipo').value;
+        let ordem = document.getElementById('filtroOrdem').value;
+        let dados = [...colecaoData];
+
+        if (tipo === 'data') {
+            dados.sort((a, b) => ordem === 'asc'
+                ? new Date(a.data_adicao) - new Date(b.data_adicao)
+                : new Date(b.data_adicao) - new Date(a.data_adicao)
+            );
+        } else if (tipo === 'set') {
+            dados.sort((a, b) => {
+                let idxA = ordemSets.indexOf(a.set_nome);
+                let idxB = ordemSets.indexOf(b.set_nome);
+                if (idxA === -1) idxA = 999;
+                if (idxB === -1) idxB = 999;
+                if (idxA !== idxB) return ordem === 'asc' ? idxA - idxB : idxB - idxA;
+
+                const numA = parseInt(a.numero_set.substring(0, 3)) || 0;
+                const numB = parseInt(b.numero_set.substring(0, 3)) || 0;
+                return numA - numB;
+            });
+        } else if (tipo === 'preco') {
+            dados.sort((a, b) => ordem === 'asc'
+                ? a.preco_ligaPkmn - b.preco_ligaPkmn
+                : b.preco_ligaPkmn - a.preco_ligaPkmn
+            );
+        } else if (tipo === 'raridade') {
+            dados.sort((a, b) => {
+                let idxA = hierarquiaRaridade.indexOf(a.raridade);
+                let idxB = hierarquiaRaridade.indexOf(b.raridade);
+                if (idxA !== idxB) return ordem === 'asc' ? idxA - idxB : idxB - idxA;
+
+                let setA = ordemSets.indexOf(a.set_nome);
+                let setB = ordemSets.indexOf(b.set_nome);
+                if (setA === -1) setA = 999;
+                if (setB === -1) setB = 999;
+                if (setA !== setB) return setA - setB;
+
+                const numA = parseInt(a.numero_set.substring(0, 3)) || 0;
+                const numB = parseInt(b.numero_set.substring(0, 3)) || 0;
+                return numA - numB;
+            });
+        }
+
+        dadosFiltrados = dados;
+        paginaAtual = 1;
+        renderizarPagina();
+    }
+
+    function renderizarPagina() {
+        const inicio = (paginaAtual - 1) * CARTAS_POR_PAGINA;
+        const fim = inicio + CARTAS_POR_PAGINA;
+        const cartasDaPagina = dadosFiltrados.slice(inicio, fim);
+
+        renderizarColecao(cartasDaPagina);
+        renderizarPaginacao();
+    }
+
+    function renderizarPaginacao() {
+        const total = Math.ceil(dadosFiltrados.length / CARTAS_POR_PAGINA);
+        const paginacao = document.getElementById('paginacao');
+
+        if (total <= 1) {
+            paginacao.innerHTML = '';
+            return;
+        }
+
+        let html = '';
+
+        html += `<button onclick="irParaPagina(${paginaAtual - 1})" ${paginaAtual === 1 ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>`;
+
+        for (let i = 1; i <= total; i++) {
+            if (i === 1 || i === total || (i >= paginaAtual - 1 && i <= paginaAtual + 1)) {
+                html += `<button onclick="irParaPagina(${i})" class="${i === paginaAtual ? 'pagina-ativa' : ''}">${i}</button>`;
+            } else if (i === paginaAtual - 2 || i === paginaAtual + 2) {
+                html += `<span class="paginacao-reticencias">...</span>`;
+            }
+        }
+
+        html += `<button onclick="irParaPagina(${paginaAtual + 1})" ${paginaAtual === total ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>`;
+
+        paginacao.innerHTML = html;
+    }
+
+    function irParaPagina(pagina) {
+        const total = Math.ceil(dadosFiltrados.length / CARTAS_POR_PAGINA);
+        if (pagina < 1 || pagina > total) return;
+        paginaAtual = pagina;
+        renderizarPagina();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderizarColecao(dados) {
+        let html = '';
+        dados.forEach(carta => {
+            html += `
+            <div class="carta-card" onclick="toggleInfo(this)">
+                <img src="${carta.url_imagem}" class="carta-grid-img" loading="lazy">
+                <div class="carta-hover-info">
+                    <span class="carta-info-nome">${carta.nome_pokemon}</span>
+                    <span class="carta-info-set">${carta.set_nome}</span>
+                    <span class="carta-info-numero"># ${carta.numero_set}</span>
+                    <div class="carta-info-divider"></div>
+                    <div class="carta-info-linha">
+                        <span>Quantidade</span>
+                        <strong>${carta.quantidade}</strong>
+                    </div>
+                    <div class="carta-info-linha">
+                        <span>Valor Pago</span>
+                        <strong>${formatarBrl(carta.preco_compra)}</strong>
+                    </div>
+                    <div class="carta-info-linha">
+                        <span>Valor Real</span>
+                        <strong>${formatarBrl(carta.preco_ligaPkmn)}</strong>
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+        grid_colecao.innerHTML = html;
+    }
+
+    function toggleInfo(card) {
+        let info = card.querySelector('.carta-hover-info');
+        let isVisible = info.classList.contains('visivel');
+        document.querySelectorAll('.carta-hover-info').forEach(i => i.classList.remove('visivel'));
+        if (!isVisible) {
+            info.classList.add('visivel');
+        }
+    }
+
+    function exportarCSV() {
+        if (colecaoData.length === 0) return;
+
+        const cabecalho = "Nome,Set,Número,Raridade,Quantidade,Valor Pago,Valor Real";
+        const linhas = colecaoData.map(c =>
+            `"${c.nome_pokemon}","${c.set_nome}","${c.numero_set}","${c.raridade}",${c.quantidade},${c.preco_compra},${c.preco_ligaPkmn}`
+        );
+
+        const csv = cabecalho + "\n" + linhas.join("\n");
+        const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `colecao_${sessionStorage.getItem("USERNAME")}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+</script>
+
+</html>

@@ -1,0 +1,418 @@
+.select-filtro {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+    padding: 0 28px 0 12px;
+    height: 36px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.2s, border-color 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+
+.select-filtro:hover {
+    color: white;
+    border-color: var(--text-secondary);
+}
+
+.select-filtro option {
+    background: var(--bg-card);
+    color: white;
+}
+
+.slot-card-img.invertida {
+    opacity: 0.4;
+    filter: grayscale(80%);
+}
+
+.slot-card-img.nao-obtida.invertida {
+    opacity: 1;
+    filter: none;
+}
+
+.tools-wrapper {
+    position: relative;
+}
+
+.tools-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    padding: 8px;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    z-index: 50;
+    box-shadow: 0 4px 16px #00000066;
+    white-space: nowrap;
+}
+
+.tools-dropdown.open {
+    display: flex;
+}
+
+.modal-box--juntar {
+    width: min(720px, 92vw);
+    max-height: 82vh;
+    overflow-y: auto;
+}
+
+.juntar-colunas {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.juntar-coluna {
+    flex: 1;
+    min-width: 240px;
+}
+
+.juntar-coluna-titulo {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.juntar-grid,
+.juntar-lista-selecionados {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.juntar-item-disponivel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.juntar-item-disponivel:hover {
+    border-color: var(--text-secondary);
+}
+
+.juntar-item-disponivel.selecionado {
+    border-color: var(--accent-yellow);
+    background: #ffffff0d;
+}
+
+.juntar-item-nome {
+    font-size: 13px;
+    font-weight: 700;
+    flex: 1;
+}
+
+.juntar-item-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+.juntar-item-selecionado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    background: var(--bg-card);
+    cursor: grab;
+}
+
+.juntar-item-selecionado.arrastando {
+    opacity: 0.4;
+}
+
+.juntar-item-ordem {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    width: 18px;
+}
+
+.juntar-item-remover {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.juntar-item-remover:hover {
+    color: #ff5c5c;
+}
+
+.slot-origem-badge {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+    background: #00000099;
+    border-radius: 4px;
+    padding: 2px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.binder-badge--join {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--accent-yellow);
+    color: #000;
+    border: none;
+}
+
+.btn-voltar.btn-juntar-ativo {
+    color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+}
+
+.binder-slot[draggable="true"] {
+    cursor: grab;
+}
+
+.binder-slot.slot-arrastando {
+    opacity: 0.35;
+}
+
+/* Modo edição + visualização forçada: remove o efeito "escurecido/grayscale"
+   das cartas faltando, fazendo tudo parecer obtido — útil pra ver o binder
+   "cheio" enquanto reorganiza. !important porque precisa sobrepor tanto o
+   estado nao-obtida quanto o invertida. */
+body.modo-edicao.forcar-obtida .binder-page .slot-card-img.nao-obtida {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Checkmark ao lado do ícone do botão de modo edição, só aparece
+   quando o botão está no estado ativo (.btn-juntar-ativo, reaproveitado) */
+.btn-modo-mover-check {
+    display: none;
+    font-size: 9px;
+    margin-left: 3px;
+}
+
+.btn-juntar-ativo .btn-modo-mover-check {
+    display: inline-block;
+}
+
+/* Botão de alternar visualização só faz sentido dentro do modo edição */
+.btn-visualizacao {
+    display: none;
+}
+
+body.modo-edicao .btn-visualizacao {
+    display: flex;
+}
+
+/* Modal flutuante da carta em movimento */
+.modal-carregando {
+    display: none;
+    position: fixed;
+    z-index: 200;
+    cursor: grab;
+    filter: drop-shadow(0 6px 18px #000000aa);
+}
+
+.modal-carregando.arrastando {
+    cursor: grabbing;
+}
+
+.modal-carregando img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    pointer-events: none;
+    display: block;
+}
+
+/* A carta dentro do modal flutuante segue o grayscale "normal" dela
+   (obtida ou não) — não o grayscale total do modo edição, pra dar pra
+   ver com clareza qual carta está sendo movida */
+.modal-carregando img.nao-obtida {
+    filter: grayscale(80%);
+    opacity: 0.6;
+}
+
+/* ...mas quando a visualização forçada está ligada, ela também "some"
+   com o efeito de faltando, igual às cartas do grid */
+body.modo-edicao.forcar-obtida .modal-carregando img.nao-obtida {
+    filter: none !important;
+    opacity: 1 !important;
+}
+
+        body.modo-edicao .binder-slot:has(.slot-card-img) {
+            transition: transform .15s ease;
+            cursor: grab;
+        }
+
+        body.modo-edicao .binder-slot:has(.slot-card-img):hover {
+            transform: translateX(3px);
+        }
+
+        /* ══════════════════════════════
+   NOVO MODAL DE BUSCA (busca local por nome/número/set)
+   Adicionar ao final de style_binder_view.css
+══════════════════════════════ */
+
+.modal-box--binder-view {
+    width: min(560px, 92vw);
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.busca-principal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-body);
+    border: 1px solid var(--border-medium);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.busca-principal i {
+    color: var(--text-secondary);
+}
+
+.busca-principal-input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+}
+
+.filtros-secundarios {
+    display: flex;
+    gap: 10px;
+}
+
+.filtros-secundarios .modal-search-input {
+    flex: 1;
+    margin: 0;
+}
+
+.resultados-busca-area {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 220px;
+    max-height: 46vh;
+}
+
+.resultados-busca-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.resultado-busca-item {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-body);
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s;
+}
+
+.resultado-busca-item:hover {
+    border-color: var(--border-medium);
+    transform: translateY(-2px);
+}
+
+.resultado-busca-item.selecionado {
+    border-color: var(--accent-yellow);
+}
+
+.resultado-busca-item img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 5 / 7;
+    object-fit: cover;
+}
+
+.resultado-busca-nome {
+    display: block;
+    font-size: 10px;
+    color: var(--text-secondary);
+    padding: 4px 4px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.modal-selecao-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--border-dark);
+    padding-top: 14px;
+}
+
+.modal-preview-img--footer {
+    width: 52px;
+    height: 72px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.modal-selecao-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.selecao-nome {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selecao-set {
+    color: var(--text-secondary);
+    font-size: 12px;
+}

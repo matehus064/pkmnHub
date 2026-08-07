@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Binder View</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_binder.css">
+    <link rel="stylesheet" href="../css/style_binder_view.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container main-container--binder-view">
+        <header id="header">
+            <div class="header-left">
+                <button class="btn-menu-mobile" id="btn-menu-mobile" onclick="toggleSidebar()">☰</button>
+                <span class="binder-view-title binder-title--desktop" id="binder-titulo">Carregando...</span>
+                <span class="binder-badge binder-badge--desktop" id="binder-tipo-badge">--</span>
+                <span class="binder-badge binder-badge--join" id="binder-join-badge" style="display:none;">
+                    <i class="fa-solid fa-plus"></i> <span id="binder-join-count" style="margin-bottom: 2px;">0</span>
+                </span>
+                <span class="binder-owner" id="binder-owner" style="display:none;"></span>
+                <div class="tools-wrapper" id="tools-wrapper-desktop">
+                    <button class="btn-voltar" onclick="toggleTools('desktop')" title="Ferramentas">
+                        <i class="fa-solid fa-sliders"></i>
+                    </button>
+                    <div class="tools-dropdown" id="tools-dropdown-desktop">
+                        <select class="select-filtro" id="select-exibicao-desktop" onchange="setExibicao(this.value)">
+                            <option value="auto">Auto</option>
+                            <option value="2x2">2x2</option>
+                            <option value="3x3">3x3</option>
+                            <option value="4x3">4x3</option>
+                        </select>
+                        <select class="select-filtro" id="select-filtro-desktop" onchange="setFiltro(this.value)">
+                            <option value="todos">Todos</option>
+                            <option value="obtidas">Obtidas</option>
+                            <option value="faltando">Faltando</option>
+                        </select>
+                        <button class="btn-voltar" id="btn-inverter-desktop" onclick="toggleInverter()"
+                            title="Inverter visibilidade">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button class="btn-voltar" id="btn-juntar-desktop" onclick="abrirModalJuntar()"
+                            title="Juntar binder">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button class="btn-voltar" id="btn-limpar-filtro" onclick="limparFiltros()"
+                            title="Limpar Filtros">
+                            <i class="fa-solid fa-eraser"></i>
+                        </button>
+                        <button class="btn-voltar btn-voltar--desktop" id="btn-copiar" onclick="copiarLink()"
+                            title="Copiar link">
+                            <i class="fa-solid fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn-voltar" id="btn-modo-mover-desktop" onclick="toggleModoEdicao()" title="Modo mover cartas">
+                    <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                    <i class="fa-solid fa-check btn-modo-mover-check"></i>
+                </button>
+                <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-desktop" onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
+                    <i class="fa-solid fa-layer-group"></i>
+                </button>
+                <button class="btn-voltar btn-voltar--desktop" id="btn-voltar" title="Voltar">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="header-right" style="gap: 0px;">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div class="binder-view-wrapper">
+            <div class="binder-view-topbar" id="binder-topbar-mobile">
+                <div class="binder-view-meta">
+                    <span class="binder-view-title" id="binder-titulo-mobile"></span>
+                    <span class="binder-badge" id="binder-tipo-badge-mobile"></span>
+                    <span class="binder-badge binder-badge--join" id="binder-join-badge-mobile" style="display:none;">
+                        <i class="fa-solid fa-plus"></i> <span id="binder-join-count-mobile">0</span>
+                    </span>
+                    <span class="binder-owner" id="binder-owner-mobile" style="display:none;"></span>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <div class="tools-wrapper" id="tools-wrapper-mobile">
+                        <button class="btn-voltar" onclick="toggleTools('mobile')" title="Ferramentas">
+                            <i class="fa-solid fa-sliders"></i>
+                        </button>
+                        <div class="tools-dropdown" id="tools-dropdown-mobile">
+                            <select class="select-filtro" id="select-exibicao-mobile"
+                                onchange="setExibicao(this.value)">
+                                <option value="auto">Auto</option>
+                                <option value="2x2">2x2</option>
+                                <option value="3x3">3x3</option>
+                                <option value="4x3">4x3</option>
+                            </select>
+                            <select class="select-filtro" id="select-filtro-mobile" onchange="setFiltro(this.value)">
+                                <option value="todos">Todos</option>
+                                <option value="obtidas">Obtidas</option>
+                                <option value="faltando">Faltando</option>
+                            </select>
+                            <button class="btn-voltar" id="btn-inverter-mobile" onclick="toggleInverter()"
+                                title="Inverter visibilidade">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <button class="btn-voltar" id="btn-juntar-mobile" onclick="abrirModalJuntar()"
+                                title="Juntar binder">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="btn-voltar" id="btn-copiar-mobile" onclick="copiarLink()"
+                                title="Copiar link">
+                                <i class="fa-solid fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn-voltar" id="btn-modo-mover-mobile" onclick="toggleModoEdicao()" title="Modo mover cartas">
+                        <i class="fa-solid fa-arrows-up-down-left-right"></i>
+                        <i class="fa-solid fa-check btn-modo-mover-check"></i>
+                    </button>
+                    <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-mobile" onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </button>
+                    <button class="btn-voltar" id="btn-voltar-mobile"
+                        onclick="window.location.href='dashboard_binders.html'" title="Voltar">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="binder-area" id="binder-area">
+                <button class="btn-nav" id="btn-prev" onclick="navegarPagina(-1)">‹</button>
+                <div class="binder-page" id="lado-esquerdo"></div>
+                <div class="binder-spine" id="binder-spine"></div>
+                <div class="binder-page" id="lado-direito"></div>
+                <button class="btn-nav" id="btn-next" onclick="navegarPagina(1)">›</button>
+                <span class="nav-page-info" id="nav-info">1</span>
+            </div>
+
+            <div class="mobile-nav" id="mobile-nav">
+                <button class="mobile-btn-nav" id="mobile-btn-prev" onclick="navegarPagina(-1)">‹</button>
+                <span class="mobile-page-info" id="mobile-nav-info">1</span>
+                <button class="mobile-btn-nav" id="mobile-btn-next" onclick="navegarPagina(1)">›</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: juntar binders -->
+    <div id="modal_juntar" class="modal-backdrop" style="display:none;">
+        <div class="modal-box modal-box--juntar">
+            <button class="modal-close" onclick="fecharModalJuntar()">✕</button>
+            <h2>Juntar Binders</h2>
+            <p class="modal-slot-info">Escolha binders para exibir junto deste. Arraste para definir a ordem.</p>
+
+            <div class="juntar-colunas">
+                <div class="juntar-coluna">
+                    <span class="juntar-coluna-titulo">Seus binders</span>
+                    <div class="juntar-grid" id="juntar-grid-disponiveis">
+                        <p class="vazio-texto">Carregando...</p>
+                    </div>
+                </div>
+                <div class="juntar-coluna">
+                    <span class="juntar-coluna-titulo">Ordem de exibição</span>
+                    <div class="juntar-lista-selecionados" id="juntar-lista-selecionados">
+                        <p class="vazio-texto">Nenhum binder selecionado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-salvar-url" onclick="aplicarJuntarBinders()">Aplicar</button>
+        </div>
+    </div>
+
+    <!-- Modal: adicionar carta ao slot -->
+    <div id="modal_busca" class="modal-backdrop" style="display:none;">
+        <div class="modal-box modal-box--binder-view">
+            <button class="modal-close" onclick="fecharModalBusca()">✕</button>
+            <h2>Adicionar Carta</h2>
+            <p class="modal-slot-info" id="modal-slot-info">Slot #1</p>
+
+            <div class="busca-principal">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input class="busca-principal-input" type="text" id="ipt_busca_nome"
+                    oninput="buscarCartasModal()" placeholder="Buscar por nome do Pokémon...">
+                <button type="button" class="btnLimpar" onclick="limparFormulario()">LIMPAR</button>
+            </div>
+
+            <div class="filtros-secundarios">
+                <input class="modal-search-input" type="text" id="ipt_busca_numero"
+                    oninput="buscarCartasModal()" placeholder="Número (ex: 4)">
+                <input class="modal-search-input" type="text" id="ipt_busca_set"
+                    oninput="buscarCartasModal()" placeholder="Set (ex: Base Set)">
+            </div>
+
+            <div id="resultados-busca-area" class="resultados-busca-area">
+                <p class="vazio-texto">Digite o nome de uma carta pra buscar.</p>
+            </div>
+
+            <div class="modal-selecao-footer">
+                <img src="" alt="" id="imagem" class="modal-preview-img modal-preview-img--footer" style="display:none;">
+                <div class="modal-selecao-info">
+                    <span id="selecao-nome" class="selecao-nome">Nenhuma carta selecionada</span>
+                    <span id="selecao-set" class="selecao-set"></span>
+                </div>
+                <button class="btn-salvar-url" id="btn-salvar-carta" onclick="salvarCartaLink()" disabled>Salvar Imagem</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: imagem ampliada -->
+    <div id="modal_imagem" class="modal-backdrop" style="display:none;">
+        <div class="modal-image-container">
+            <button class="modal-close modal-close-img" onclick="fecharModalImagem()">✕</button>
+            <img id="img_ampliada" src="" alt="Carta Ampliada">
+        </div>
+    </div>
+
+    <!-- Modal: carta sendo movida (flutuante, arrastável) -->
+    <div id="modal_carregando" class="modal-carregando">
+        <img id="img_carregando" src="" alt="Carta sendo movida">
+    </div>
+
+    <script src="../js/dados.js"></script>
+    <script src="../js/dadosCartas.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/auth_ui.js"></script>
+    <script src="../js/perfil_nav.js"></script>
+
+
+    <script>
+        // Garante que o estado de sessão é aplicado antes do fetch
+        (function () {
+            const session = sessionStorage.getItem("USERNAME");
+            if (!session) {
+                const sidebar = document.getElementById("sidebar");
+                if (sidebar) sidebar.style.display = "none";
+                const header = document.getElementById("header");
+                if (header) {
+                    header.innerHTML = `
+        <div class="header-left">
+            <div class="logo logo--binderShare" style="margin-bottom: 0px;">
+                <a href="../index.html">
+                    <img src="../assets/imgs/main/logo2.png">pkmnHub
+                </a>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="btnSecundario_header" onclick="window.location.href='../login.html'">Login</button>
+            <button class="btnPrincipal_header" onclick="window.location.href='../cadastro.html'">Cadastrar</button>
+        </div>
+    `;
+                }
+            }
+        })();
+
+        /* ══════════════════════════════
+           VARIÁVEIS GLOBAIS
+        ══════════════════════════════ */
+        let CONFIG_TIPO = {
+            '2x2': { cols: 2, rows: 2, totalSlots: 160 },
+            '3x3': { cols: 3, rows: 3, totalSlots: 360 },
+            '4x3': { cols: 4, rows: 3, totalSlots: 480 },
+        };
+
+        let binderAtual = { id: -1, nome: "Carregando...", tipo: "3x3", cartas: {} };
+        let paginaAtual = 0;
+        let filtroAtivo = 'todos';
+        let exibicaoAtiva = 'auto';
+        let modoInvertido = false;
+        let slotSelecionado = -1;
+        let idSlotSelecionadoNoBanco = -1;
+
+        // Estado do modo mover (botão único do cabeçalho) e da carta em movimento
+        // (pega no slot e solta em outro via modal flutuante)
+        let modoEdicaoAtivo = false;
+        let cartaCarregada = null;
+        let modoCarregando = false;
+        // Dentro do modo edição, alterna entre ver tudo "como se fosse obtido"
+        // (padrão ao entrar no modo) e o estado real (obtida/faltando) do binder
+        let modoVisualizacaoForcada = true;
+
+        // Estado da função "Juntar Binders"
+        let bindersJuntados = [];          // binders já mesclados na visualização atual, em ordem
+        let bindersDisponiveis = [];       // cache dos binders do dono do binder atual
+        let bindersSelecionadosTemp = [];  // seleção dentro do modal, antes de "Aplicar"
+        let dragIndexJuntar = -1;
+
+        // Cache de slots filtrados: evita recalcular a mesma varredura várias
+        // vezes dentro do mesmo ciclo de render. Invalidado sempre que algo
+        // que afeta o resultado muda (filtro, join, dados de cartas).
+        let cacheSlotsFiltrados = null;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUsername = urlParams.get('u');
+        const urlBinderId = urlParams.get('b');
+        const sessionUsername = sessionStorage.getItem("USERNAME");
+        const isDono = !!(urlUsername && sessionUsername && urlUsername === sessionUsername);
+        const urlFiltro = urlParams.get('filtro');
+        if (urlFiltro === 'obtidas' || urlFiltro === 'faltando') {
+            filtroAtivo = urlFiltro;
+        }
+        const urlInvertido = urlParams.get('invertido');
+        if (urlInvertido === '1') {
+            modoInvertido = true;
+        }
+        const urlExibicao = urlParams.get('exibicao');
+        if (urlExibicao && CONFIG_TIPO[urlExibicao]) {
+            exibicaoAtiva = urlExibicao;
+        }
+        const urlJoin = urlParams.get('join');
+        let idsJoinIniciais = urlJoin ? urlJoin.split(',').filter(Boolean) : [];
+
+        // Referências de DOM usadas com frequência — resolvidas uma vez aqui
+        // em vez de repetir querySelectorAll/getElementById a cada clique.
+        let dom = {};
+
+        function resolverReferenciasDom() {
+            dom.selectsFiltro = document.querySelectorAll('.select-filtro[id^="select-filtro-"]');
+            dom.selectsExibicao = document.querySelectorAll('#select-exibicao-desktop, #select-exibicao-mobile');
+            dom.iconesInverter = document.querySelectorAll('#btn-inverter-desktop i, #btn-inverter-mobile i');
+            dom.ladoEsquerdo = document.getElementById("lado-esquerdo");
+            dom.ladoDireito = document.getElementById("lado-direito");
+            dom.binderArea = document.getElementById("binder-area");
+            dom.navInfo = document.getElementById("nav-info");
+            dom.btnPrev = document.getElementById("btn-prev");
+            dom.btnNext = document.getElementById("btn-next");
+            dom.mobileNavInfo = document.getElementById("mobile-nav-info");
+            dom.mobileBtnPrev = document.getElementById("mobile-btn-prev");
+            dom.mobileBtnNext = document.getElementById("mobile-btn-next");
+        }
+
+        function invalidarCacheSlots() {
+            cacheSlotsFiltrados = null;
+        }
+
+        function fecharTools() {
+            document.querySelectorAll('.tools-dropdown.open').forEach(function (d) {
+                d.classList.remove('open');
+            });
+        }
+
+        function toggleTools(lado) {
+            let dropdown = document.getElementById('tools-dropdown-' + lado);
+            let vaiAbrir = !dropdown.classList.contains('open');
+            dropdown.classList.toggle('open');
+            // caixa de ferramentas e modo edição são mutuamente exclusivos
+            if (vaiAbrir && modoEdicaoAtivo) desativarModoEdicao();
+        }
+
+        // Fechar ao clicar fora
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.tools-wrapper')) {
+                fecharTools();
+            }
+        });
+
+        /* ══════════════════════════════
+           UTILITÁRIOS
+        ══════════════════════════════ */
+        function copiarLink() {
+            let url = new URL(window.location.href);
+            if (filtroAtivo !== 'todos') {
+                url.searchParams.set('filtro', filtroAtivo);
+            } else {
+                url.searchParams.delete('filtro');
+            }
+            if (modoInvertido) {
+                url.searchParams.set('invertido', '1');
+            } else {
+                url.searchParams.delete('invertido');
+            }
+            if (exibicaoAtiva !== 'auto') {
+                url.searchParams.set('exibicao', exibicaoAtiva);
+            } else {
+                url.searchParams.delete('exibicao');
+            }
+            if (bindersJuntados.length) {
+                url.searchParams.set('join', bindersJuntados.map(function (b) { return b.id; }).join(','));
+            } else {
+                url.searchParams.delete('join');
+            }
+
+            navigator.clipboard.writeText(url.toString()).then(function () {
+                let btns = [
+                    document.getElementById("btn-copiar"),
+                    document.getElementById("btn-copiar-mobile")
+                ];
+                btns.forEach(function (btn) {
+                    if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                });
+                setTimeout(function () {
+                    btns.forEach(function (btn) {
+                        if (btn) btn.innerHTML = '<i class="fa-solid fa-link"></i>';
+                    });
+                }, 2000);
+            });
+        }
+
+        function isMobile() {
+            return window.innerWidth <= 1024;
+        }
+
+        /* ══════════════════════════════
+           1. CARREGAR BINDER
+        ══════════════════════════════ */
+        function carregarBinder() {
+            let idBinder = urlBinderId || sessionStorage.getItem('BINDER_ID');
+            if (!idBinder) { console.error("Erro: ID do binder não encontrado."); return; }
+
+            binderAtual.id = idBinder;
+            binderAtual.cartas = {};
+
+            fetch('/binder/buscarSlots?binderServer=' + idBinder)
+                .then(function (resposta) {
+                    if (!resposta.ok) throw new Error("Erro na resposta da API");
+                    return resposta.json();
+                })
+                .then(function (slotsDoBanco) {
+                    if (slotsDoBanco.meta) {
+                        binderAtual.nome = slotsDoBanco.meta.nome;
+                        binderAtual.tipo = slotsDoBanco.meta.tipo;
+                    } else {
+                        binderAtual.nome = sessionStorage.getItem('BINDER_NOME') || "Binder";
+                        binderAtual.tipo = sessionStorage.getItem('BINDER_TIPO') || "3x3";
+                    }
+                    let slots = slotsDoBanco.slots || slotsDoBanco;
+                    for (let i = 0; i < slots.length; i++) {
+                        let linha = slots[i];
+                        binderAtual.cartas[linha.slot - 1] = {
+                            idSlotBanco: linha.id,
+                            img: linha.url_imagem,
+                            obtida: linha.obtida
+                        };
+                    }
+                    invalidarCacheSlots();
+                    inicializar();
+                })
+                .catch(function (erro) { console.error("Erro ao carregar o binder:", erro); });
+        }
+
+        /* ══════════════════════════════
+           2. INICIALIZAÇÃO
+        ══════════════════════════════ */
+        function inicializar() {
+            resolverReferenciasDom();
+
+            let tituloEl = document.getElementById("binder-titulo");
+            let badgeEl = document.getElementById("binder-tipo-badge");
+            if (tituloEl) tituloEl.textContent = binderAtual.nome;
+            if (badgeEl) badgeEl.textContent = binderAtual.tipo;
+            document.getElementById("binder-titulo-mobile").textContent = binderAtual.nome;
+            document.getElementById("binder-tipo-badge-mobile").textContent = binderAtual.tipo;
+            dom.selectsFiltro.forEach(function (s) { s.value = filtroAtivo; });
+            dom.selectsExibicao.forEach(function (s) { s.value = exibicaoAtiva; });
+            if (modoInvertido) {
+                dom.iconesInverter.forEach(function (i) { i.className = 'fa-solid fa-eye-slash'; });
+            }
+
+            let ownerEl = document.getElementById("binder-owner");
+            let ownerMobileEl = document.getElementById("binder-owner-mobile");
+            let voltarEl = document.getElementById("btn-voltar");
+            let voltarMobileEl = document.getElementById("btn-voltar-mobile");
+            let copiarEl = document.getElementById("btn-copiar");
+            let copiarMobileEl = document.getElementById("btn-copiar-mobile");
+
+            if (!isDono && urlUsername) {
+                if (ownerEl) { ownerEl.textContent = "@" + urlUsername; ownerEl.style.display = "inline"; }
+                if (ownerMobileEl) { ownerMobileEl.textContent = "@" + urlUsername; ownerMobileEl.style.display = "inline"; }
+                if (copiarEl) copiarEl.style.display = "none";
+                if (copiarMobileEl) copiarMobileEl.style.display = "none";
+                if (voltarEl) voltarEl.style.display = sessionUsername ? "flex" : "none";
+                if (voltarMobileEl) voltarMobileEl.style.display = sessionUsername ? "flex" : "none";
+            }
+
+            renderizarPagina();
+
+            // Reage a mudanças reais de tamanho da área do binder (fontes/imagens
+            // carregando, resize de painel) em vez de torcer por um setTimeout fixo.
+            if (window.ResizeObserver) {
+                let observer = new ResizeObserver(function () { renderizarPagina(); });
+                observer.observe(dom.binderArea);
+            } else {
+                setTimeout(renderizarPagina, 500);
+            }
+
+            // Se a URL já veio com binders pra juntar, carrega automaticamente
+            if (idsJoinIniciais.length) {
+                carregarBinderPrincipalMaisJoins(idsJoinIniciais);
+            }
+        }
+
+        /* ══════════════════════════════
+           3. FILTRO
+        ══════════════════════════════ */
+        function setFiltro(filtro) {
+            filtroAtivo = filtro;
+            dom.selectsFiltro.forEach(function (s) { s.value = filtro; });
+            paginaAtual = 0;
+            invalidarCacheSlots();
+            renderizarPagina();
+        }
+
+        // Restaura filtro, exibição, inversão e binders juntados para o padrão.
+        function limparFiltros() {
+            filtroAtivo = 'todos';
+            exibicaoAtiva = 'auto';
+            modoInvertido = false;
+            dom.selectsFiltro.forEach(function (s) { s.value = 'todos'; });
+            dom.selectsExibicao.forEach(function (s) { s.value = 'auto'; });
+            dom.iconesInverter.forEach(function (i) { i.className = 'fa-solid fa-eye'; });
+            paginaAtual = 0;
+            carregarBinderPrincipalMaisJoins([]);
+        }
+
+        // Retorna o total de slots "efetivos": todos os slots do binder atual
+        // (inclusive vazios, pra manter os placeholders "+" de quem é dono) somados
+        // apenas às cartas PREENCHIDAS dos binders juntados — células sem imagem de
+        // um binder juntado não contam, então não reservam espaço/páginas em branco.
+        function getTotalSlotsComJoins() {
+            let total = CONFIG_TIPO[binderAtual.tipo].totalSlots;
+            bindersJuntados.forEach(function (b) { total += b.qtdCartas; });
+            return total;
+        }
+
+        // Retorna lista de índices de slots que passam pelo filtro ativo,
+        // sempre em ordem crescente de slot (índice original).
+        // Quando há binders juntados, slots sem carta (imagem) nunca aparecem,
+        // independente do filtro escolhido — só cartas de fato existentes.
+        // Resultado é cacheado até algo que o afete mudar (ver invalidarCacheSlots).
+        function getSlotsFiltrados() {
+            if (cacheSlotsFiltrados) return cacheSlotsFiltrados;
+
+            let totalSlots = getTotalSlotsComJoins();
+            let joinAtivo = bindersJuntados.length > 0;
+            let slots = [];
+            for (let i = 0; i < totalSlots; i++) {
+                let carta = binderAtual.cartas[i];
+                let temImg = !!(carta && carta.img);
+
+                if (joinAtivo && !temImg) continue;
+
+                if (filtroAtivo === 'obtidas') {
+                    if (temImg && carta.obtida != 0) slots.push(i);
+                } else if (filtroAtivo === 'faltando') {
+                    if (!temImg || carta.obtida == 0) slots.push(i);
+                } else {
+                    slots.push(i); // 'todos'
+                }
+            }
+            cacheSlotsFiltrados = slots;
+            return slots;
+        }
+
+        /* ══════════════════════════════
+           4. PAGINAÇÃO
+        ══════════════════════════════ */
+
+        // No desktop com filtro 'todos', o binder usa a lógica de livro:
+        //   página 0 → capa (blank esq + pág 1 dir)
+        //   página N → pág (2N-1) esq + pág 2N dir
+        //   última   → última pág esq + blank dir
+        //
+        // Com filtros ativos, lista linear de slots distribuída em páginas duplas simples.
+        // No mobile, sempre uma página simples por vez.
+        //
+        // Cartas de binders juntados entram nos índices logo após o total de slots
+        // do binder atual, então participam normalmente dessa paginação.
+
+        function calcularTotalPaginas(slots) {
+            let cfg = CONFIG_TIPO[getTipoExibicao()];
+            let slotsPorPag = cfg.cols * cfg.rows;
+
+            if (isMobile()) {
+                return Math.ceil(slots.length / slotsPorPag) || 1;
+            }
+
+            if (filtroAtivo === 'todos') {
+                // mesma lógica da renderização: contracapa só existe quando
+                // sobra 1 página sozinha depois da capa
+                let totalPagsSimples = Math.ceil(slots.length / slotsPorPag) || 1;
+                return 1 + Math.ceil((totalPagsSimples - 1) / 2);
+            }
+
+            return Math.ceil(slots.length / (slotsPorPag * 2)) || 1;
+        }
+
+        /* ══════════════════════════════
+           5. RENDER
+        ══════════════════════════════ */
+        function calcularTamanhoSlot(cfg) {
+            let area = dom.binderArea;
+            let gap = 8;
+            let alturaArea = area.clientHeight || (window.innerHeight * 0.75);
+            let larguraArea = area.clientWidth || window.innerWidth;
+
+            if (isMobile()) {
+                let larguraDisp = window.innerWidth - 24;
+                let alturaDisp = window.innerHeight * 0.7;
+                let slotH = Math.floor((alturaDisp - (cfg.rows - 1) * gap) / cfg.rows);
+                let slotW = Math.floor(slotH * 5 / 7);
+                let maxSlotW = Math.floor((larguraDisp - (cfg.cols - 1) * gap) / cfg.cols);
+                if (slotW > maxSlotW) { slotW = maxSlotW; slotH = Math.floor(slotW * 7 / 5); }
+                return { w: slotW, h: slotH };
+            }
+
+            let padArea = 40, spine = 28;
+            let alturaDisp = alturaArea - padArea;
+            let larguraDisp = (larguraArea - padArea - spine) / 2;
+            let slotH = Math.floor((alturaDisp - (cfg.rows - 1) * gap) / cfg.rows);
+            let slotW = Math.floor(slotH * 5 / 7);
+            let maxSlotW = Math.floor((larguraDisp - (cfg.cols - 1) * gap) / cfg.cols);
+            if (slotW > maxSlotW) { slotW = maxSlotW; slotH = Math.floor(slotW * 7 / 5); }
+            return { w: slotW, h: slotH };
+        }
+
+        function gerarSlotHTML(slotIndex, w, h) {
+            let carta = binderAtual.cartas[slotIndex];
+            let num = slotIndex + 1;
+            let style = 'width:' + w + 'px;height:' + h + 'px;';
+            // Slots de binders juntados são somente leitura, mesmo para o dono
+            let editavel = isDono && !(carta && carta.externo);
+
+            // Slot de origem de uma carta em movimento: some visualmente, clique cancela e devolve
+            if (modoCarregando && slotIndex === cartaCarregada.slotIndex) {
+                return '<div class="binder-slot" style="' + style + '" onclick="cancelarMovimentoCarta()">' +
+                    '<div class="slot-empty">' +
+                    '<span class="slot-label">Movendo...</span>' +
+                    '<span class="slot-num">#' + num + '</span>' +
+                    '</div></div>';
+            }
+
+            // Qualquer slot editável aceita ser destino de um drop (mesmo vazio).
+            // Só slots com carta podem ser origem do arraste (dragAttrs abaixo).
+            // Continua ativo no modo edição — convive com o clique de pegar/colocar.
+            let dropAttrs = editavel ? ' ondragover="slotDragOver(event)" ondrop="slotDrop(event,' + slotIndex + ')"' : '';
+
+            if (carta && carta.img) {
+                let classeImg = carta.obtida == 0 ? "slot-card-img nao-obtida" : "slot-card-img";
+                let botoesEdicao = '';
+                let cliqueImg;
+                if (editavel && modoEdicaoAtivo) {
+                    // no modo edição, o clique na carta pega ou solta — sem botões extras
+                    cliqueImg = modoCarregando
+                        ? 'colocarCartaNoSlot(' + slotIndex + ')'
+                        : 'iniciarMovimentoCarta(' + slotIndex + ',' + carta.idSlotBanco + ')';
+                } else {
+                    cliqueImg = "abrirModalImagem('" + carta.img + "')";
+                    if (editavel) {
+                        botoesEdicao = '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ',' + carta.idSlotBanco + ',' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
+                            '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ',' + carta.idSlotBanco + ')" title="Remover">✕</button>';
+                    }
+                }
+                let dragAttrs = editavel
+                    ? ' draggable="true" ondragstart="slotDragStart(event,' + slotIndex + ')" ondragend="slotDragEnd(event)"'
+                    : '';
+                return '<div class="binder-slot" style="' + style + '"' + dragAttrs + dropAttrs + '>' +
+                    '<img class="' + classeImg + '" loading="lazy" src="' + carta.img + '" onclick="' + cliqueImg + '" style="cursor:pointer;">' +
+                    botoesEdicao + '</div>';
+            }
+
+            let idBanco = carta ? carta.idSlotBanco : 'null';
+            // Slot vazio pode virar alvo direto de uma carta em movimento — pula o modal de busca
+            let podeReceberCarregada = modoCarregando && editavel && carta && carta.idSlotBanco;
+            let clickAttr = '';
+            if (podeReceberCarregada) {
+                clickAttr = ' onclick="colocarCartaNoSlot(' + slotIndex + ')"';
+            } else if (editavel && !modoCarregando) {
+                clickAttr = ' onclick="abrirModalBusca(' + slotIndex + ',' + idBanco + ')"';
+            }
+            let cursorStyle = (clickAttr === '') ? 'cursor:default;' : '';
+            return '<div class="binder-slot" style="' + style + cursorStyle + '"' + clickAttr + dropAttrs + '>' +
+                '<div class="slot-empty">' +
+                '<span class="slot-label">Slot</span>' +
+                '<span class="slot-num">#' + num + '</span>' +
+                (editavel && !modoCarregando ? '<div class="slot-plus">+</div>' : '') +
+                '</div></div>';
+        }
+
+        // Gera o HTML de uma página a partir de uma fatia de índices de slots.
+        function gerarPaginaHTML(cfg, fatia, tam) {
+            let html = '<div class="binder-page-grid">';
+            for (let r = 0; r < cfg.rows; r++) {
+                html += '<div class="binder-page-row">';
+                for (let c = 0; c < cfg.cols; c++) {
+                    let idx = r * cfg.cols + c;
+                    if (idx >= fatia.length) {
+                        html += '<div class="binder-slot" style="width:' + tam.w + 'px;height:' + tam.h + 'px;visibility:hidden;"></div>';
+                    } else {
+                        html += gerarSlotHTML(fatia[idx], tam.w, tam.h);
+                    }
+                }
+                html += '</div>';
+            }
+            return html + '</div>';
+        }
+
+        function renderizarPagina() {
+            let cfg = CONFIG_TIPO[getTipoExibicao()];
+            let tam = calcularTamanhoSlot(cfg);
+            let ladoEsq = dom.ladoEsquerdo;
+            let ladoDir = dom.ladoDireito;
+            let slotsPorPag = cfg.cols * cfg.rows;
+
+            let slots = getSlotsFiltrados();
+            let totalPaginas = calcularTotalPaginas(slots);
+
+            // garante que paginaAtual está dentro dos limites
+            if (paginaAtual >= totalPaginas) paginaAtual = totalPaginas - 1;
+            if (paginaAtual < 0) paginaAtual = 0;
+
+            if (isMobile()) {
+                let fatia = slots.slice(paginaAtual * slotsPorPag, (paginaAtual + 1) * slotsPorPag);
+                ladoEsq.className = 'binder-page';
+                ladoEsq.innerHTML = gerarPaginaHTML(cfg, fatia, tam);
+                ladoDir.className = 'binder-page';
+                ladoDir.innerHTML = '';
+            } else if (filtroAtivo === 'todos') {
+                // lógica de livro: capa (blank + pág 1), depois pares de páginas.
+                // A contracapa (última pág + blank) só existe quando sobra 1
+                // página sozinha depois da capa — daí o -1 antes de dividir por 2.
+                // Antes isso era sempre "+1", o que reservava contracapa mesmo
+                // quando a última página já fechava um par certinho.
+                let totalPagsSimples = Math.ceil(slots.length / slotsPorPag) || 1;
+                let totalPaginasDesk = 1 + Math.ceil((totalPagsSimples - 1) / 2);
+
+                if (paginaAtual === 0) {
+                    // capa: blank + primeira página
+                    ladoEsq.className = 'binder-page-blank';
+                    ladoEsq.innerHTML = '';
+                    ladoDir.className = 'binder-page';
+                    ladoDir.innerHTML = gerarPaginaHTML(cfg, slots.slice(0, slotsPorPag), tam);
+                } else {
+                    let offEsq = (paginaAtual * 2 - 1) * slotsPorPag;
+                    let offDir = paginaAtual * 2 * slotsPorPag;
+                    let fatiaEsq = slots.slice(offEsq, offEsq + slotsPorPag);
+                    let fatiaDir = slots.slice(offDir, offDir + slotsPorPag);
+                    ladoEsq.className = 'binder-page';
+                    ladoEsq.innerHTML = gerarPaginaHTML(cfg, fatiaEsq, tam);
+                    // lado direito só vira "binder-page-blank" quando não sobrou
+                    // página pra ele de fato — decidido pelos dados, não por índice
+                    ladoDir.className = fatiaDir.length ? 'binder-page' : 'binder-page-blank';
+                    ladoDir.innerHTML = fatiaDir.length ? gerarPaginaHTML(cfg, fatiaDir, tam) : '';
+                }
+                atualizarNav(totalPaginasDesk);
+                if (modoInvertido) aplicarInversao();
+                return;
+            } else {
+                // filtro ativo: distribui slots filtrados em páginas duplas lineares
+
+                let offEsq = paginaAtual * 2 * slotsPorPag;
+                let offDir = offEsq + slotsPorPag;
+                let fatiaEsq = slots.slice(offEsq, offEsq + slotsPorPag);
+                let fatiaDir = slots.slice(offDir, offDir + slotsPorPag);
+
+                ladoEsq.className = fatiaEsq.length ? 'binder-page' : 'binder-page-blank';
+                ladoEsq.innerHTML = fatiaEsq.length ? gerarPaginaHTML(cfg, fatiaEsq, tam) : '';
+                ladoDir.className = fatiaDir.length ? 'binder-page' : 'binder-page-blank';
+                ladoDir.innerHTML = fatiaDir.length ? gerarPaginaHTML(cfg, fatiaDir, tam) : '';
+            }
+
+            if (modoInvertido) aplicarInversao();
+            atualizarNav(totalPaginas);
+        }
+
+        function atualizarNav(totalPaginas) {
+            if (dom.navInfo) dom.navInfo.textContent = paginaAtual + 1;
+            if (dom.btnPrev) dom.btnPrev.disabled = (paginaAtual === 0);
+            if (dom.btnNext) dom.btnNext.disabled = (paginaAtual >= totalPaginas - 1);
+
+            if (dom.mobileNavInfo) dom.mobileNavInfo.textContent = (paginaAtual + 1) + " / " + totalPaginas;
+            if (dom.mobileBtnPrev) dom.mobileBtnPrev.disabled = (paginaAtual === 0);
+            if (dom.mobileBtnNext) dom.mobileBtnNext.disabled = (paginaAtual >= totalPaginas - 1);
+        }
+
+        function navegarPagina(direcao) {
+            fecharTools();
+            let slots = getSlotsFiltrados();
+            let totalPaginas = calcularTotalPaginas(slots);
+            paginaAtual = Math.min(Math.max(paginaAtual + direcao, 0), totalPaginas - 1);
+            renderizarPagina();
+        }
+
+        /* ══════════════════════════════
+           6. MODAL DE BUSCA (somente dono)
+           Busca 100% local em cima do bancoDados/sets já carregados
+           (dadosCartas.js / dados.js) — sem chamada de rede.
+        ══════════════════════════════ */
+        let resultadosBuscaAtual = [];
+        let cartaSelecionadaBusca = null;
+
+        function abrirModalBusca(slotIndex, idBanco) {
+            if (!isDono) return;
+            slotSelecionado = slotIndex;
+            idSlotSelecionadoNoBanco = idBanco;
+            document.getElementById("modal-slot-info").textContent = "Slot #" + (slotIndex + 1);
+            limparFormulario();
+            document.getElementById("modal_busca").style.display = "flex";
+            document.getElementById("ipt_busca_nome").focus();
+        }
+
+        function fecharModalBusca() {
+            document.getElementById("modal_busca").style.display = "none";
+            slotSelecionado = -1;
+        }
+
+        function limparFormulario() {
+            document.getElementById("ipt_busca_nome").value = '';
+            document.getElementById("ipt_busca_numero").value = '';
+            document.getElementById("ipt_busca_set").value = '';
+            document.getElementById("resultados-busca-area").innerHTML =
+                '<p class="vazio-texto">Digite o nome de uma carta pra buscar.</p>';
+            resultadosBuscaAtual = [];
+            desmarcarSelecao();
+        }
+
+        // Monta a URL da imagem: usa a imageLarge já cadastrada em dadosCartas.js
+        // (padrão pokemontcg.io) quando existe; senão cai pro padrão scrydex
+        // antigo (setId-numero), mantendo compatibilidade com cartas mais velhas.
+        function montarUrlImagem(carta, tamanho) {
+            if (carta.imageLarge) {
+                return tamanho === 'large' ? carta.imageLarge : carta.imageLarge.replace('_hires', '');
+            }
+            return 'https://images.scrydex.com/pokemon/' + carta.setId + '-' + carta.number + '/' + tamanho;
+        }
+
+        // Varre bancoDados (todas as expansões) filtrando por nome/número/set.
+        // formatarTexto (de functions.js) normaliza acento/caixa pra comparação.
+        function buscarCartasLocal(nomeTermo, numeroTermo, setTermo) {
+            let nomeNorm = formatarTexto(nomeTermo);
+            let setNorm = formatarTexto(setTermo);
+            let numeroNum = numeroTermo ? Number(numeroTermo) : null;
+            let resultados = [];
+
+            for (let setId in bancoDados) {
+                if (setNorm) {
+                    let setInfo = sets.find(function (s) { return s.apiId === setId; });
+                    let bateSet = setInfo && (
+                        formatarTexto(setInfo.nomePt).includes(setNorm) ||
+                        formatarTexto(setInfo.nomeEn).includes(setNorm) ||
+                        formatarTexto(setInfo.sigla).includes(setNorm)
+                    );
+                    if (!bateSet) continue;
+                }
+
+                let cartas = bancoDados[setId];
+                for (let i = 0; i < cartas.length; i++) {
+                    let carta = cartas[i];
+                    if (nomeNorm && !formatarTexto(carta.name).includes(nomeNorm)) continue;
+                    if (numeroNum && Number(carta.number) !== numeroNum) continue;
+                    resultados.push(Object.assign({ setId: setId }, carta));
+                }
+            }
+            return resultados;
+        }
+
+        function buscarCartasModal() {
+            let nome = document.getElementById('ipt_busca_nome').value.trim();
+            let numero = document.getElementById('ipt_busca_numero').value.trim();
+            let setTexto = document.getElementById('ipt_busca_set').value.trim();
+            let area = document.getElementById('resultados-busca-area');
+
+            if (!nome && !numero) {
+                area.innerHTML = '<p class="vazio-texto">Digite o nome ou número de uma carta pra buscar.</p>';
+                resultadosBuscaAtual = [];
+                return;
+            }
+
+            resultadosBuscaAtual = buscarCartasLocal(nome, numero, setTexto).slice(0, 60);
+
+            if (!resultadosBuscaAtual.length) {
+                area.innerHTML = '<p class="vazio-texto">Nenhuma carta encontrada.</p>';
+                return;
+            }
+
+            area.innerHTML = '<div class="resultados-busca-grid">' +
+                resultadosBuscaAtual.map(function (carta, idx) {
+                    let img = montarUrlImagem(carta, 'small');
+                    return '<div class="resultado-busca-item" data-idx="' + idx + '" onclick="selecionarCartaBusca(' + idx + ')">' +
+                        '<img src="' + img + '" loading="lazy">' +
+                        '<span class="resultado-busca-nome">' + carta.name + ' · #' + carta.number + '</span>' +
+                        '</div>';
+                }).join('') + '</div>';
+        }
+
+        function selecionarCartaBusca(idx) {
+            let carta = resultadosBuscaAtual[idx];
+            if (!carta) return;
+            cartaSelecionadaBusca = carta;
+
+            document.querySelectorAll('.resultado-busca-item').forEach(function (el) {
+                el.classList.remove('selecionado');
+            });
+            let el = document.querySelector('.resultado-busca-item[data-idx="' + idx + '"]');
+            if (el) el.classList.add('selecionado');
+
+            let preview = document.getElementById('imagem');
+            preview.src = montarUrlImagem(carta, 'large');
+            preview.style.display = 'block';
+
+            let setInfo = sets.find(function (s) { return s.apiId === carta.setId; });
+            document.getElementById('selecao-nome').textContent = carta.name + ' · #' + carta.number;
+            document.getElementById('selecao-set').textContent = setInfo ? setInfo.nomePt : (carta.setNameEn || '');
+
+            document.getElementById('btn-salvar-carta').disabled = false;
+        }
+
+        function desmarcarSelecao() {
+            cartaSelecionadaBusca = null;
+            document.getElementById('imagem').style.display = 'none';
+            document.getElementById('selecao-nome').textContent = 'Nenhuma carta selecionada';
+            document.getElementById('selecao-set').textContent = '';
+            document.getElementById('btn-salvar-carta').disabled = true;
+        }
+
+        /* ══════════════════════════════
+           7. MODAL DE IMAGEM AMPLIADA
+        ══════════════════════════════ */
+        function abrirModalImagem(urlImagem) {
+            document.getElementById("img_ampliada").src = urlImagem.replace('small', 'large');
+            document.getElementById("modal_imagem").style.display = "flex";
+        }
+
+        function fecharModalImagem() {
+            document.getElementById("modal_imagem").style.display = "none";
+            setTimeout(function () { document.getElementById("img_ampliada").src = ""; }, 200);
+        }
+
+        document.getElementById("modal_imagem").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalImagem();
+        });
+
+        /* ══════════════════════════════
+           8. AÇÕES DE BANCO (somente dono)
+        ══════════════════════════════ */
+        function salvarCartaLink() {
+            if (!isDono) return;
+            if (!cartaSelecionadaBusca) return;
+            if (slotSelecionado < 0 || idSlotSelecionadoNoBanco < 0) return;
+
+            let urlImagem = montarUrlImagem(cartaSelecionadaBusca, 'small');
+
+            fetch("/binder/atualizarSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idSlotSelecionadoNoBanco, imagemCartaServer: urlImagem })
+            })
+                .then(function (r) {
+                    if (r.ok) {
+                        binderAtual.cartas[slotSelecionado] = binderAtual.cartas[slotSelecionado] || {};
+                        binderAtual.cartas[slotSelecionado].img = urlImagem;
+                        invalidarCacheSlots();
+                        fecharModalBusca();
+                        renderizarPagina();
+                    } else {
+                        alert("Erro ao salvar a imagem. Tente novamente.");
+                    }
+                })
+                .catch(function (e) { console.error(e); alert("Erro de conexão."); });
+        }
+
+        function removerCarta(slotIndex, idBanco) {
+            if (!isDono) return;
+            fetch("/binder/limparSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idBanco })
+            })
+                .then(function (r) {
+                    if (r.ok) {
+                        binderAtual.cartas[slotIndex].img = null;
+                        invalidarCacheSlots();
+                        renderizarPagina();
+                    }
+                })
+                .catch(function (e) { console.error(e); });
+        }
+
+        function alternarCarta(slotIndex, idBanco, estadoAtual) {
+            if (!isDono) return;
+            let estado = (estadoAtual == null) ? 1 : estadoAtual;
+            fetch("/binder/alternarPosseCarta", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ slotServer: idBanco, estadoAtual: estado })
+            })
+                .then(function (r) {
+                    if (r.ok) {
+                        binderAtual.cartas[slotIndex].obtida = estado == 1 ? 0 : 1;
+                        invalidarCacheSlots();
+                        renderizarPagina();
+                    }
+                })
+                .catch(function (e) { console.error(e); });
+        }
+
+        /* ══════════════════════════════
+           8b. REORDENAR CARTAS (drag-and-drop entre slots)
+           Troca o conteúdo (imagem + obtida) entre dois slots do MESMO binder.
+           O número do slot nunca muda — só o que está dentro dele.
+        ══════════════════════════════ */
+        let dragSlotOrigem = -1;
+
+        function slotDragStart(e, slotIndex) {
+            dragSlotOrigem = slotIndex;
+            e.currentTarget.classList.add('slot-arrastando');
+            if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function slotDragEnd(e) {
+            e.currentTarget.classList.remove('slot-arrastando');
+            dragSlotOrigem = -1;
+        }
+
+        function slotDragOver(e) {
+            e.preventDefault();
+        }
+
+        function slotDrop(e, slotDestino) {
+            e.preventDefault();
+            let origem = dragSlotOrigem;
+            dragSlotOrigem = -1;
+            if (origem < 0 || origem === slotDestino) return;
+            trocarCartasDeSlot(origem, slotDestino);
+        }
+
+        function trocarCartasDeSlot(origemIndex, destinoIndex) {
+            if (!isDono) return;
+            let origem = binderAtual.cartas[origemIndex];
+            let destino = binderAtual.cartas[destinoIndex];
+
+            // só troca slots do próprio binder — cartas de binders juntados são
+            // somente leitura, e só faz sentido arrastar um slot que tem carta
+            if (!origem || !origem.img || origem.externo || (destino && destino.externo)) return;
+            if (!origem.idSlotBanco || (destino && !destino.idSlotBanco)) return;
+
+            let imgOrigem = origem.img;
+            let obtidaOrigem = origem.obtida;
+            let idBancoOrigem = origem.idSlotBanco;
+
+            let imgDestino = destino ? destino.img || null : null;
+            let obtidaDestino = destino ? destino.obtida : null;
+            let idBancoDestino = destino ? destino.idSlotBanco : null;
+            if (!idBancoDestino) return; // slot de destino sem linha correspondente no banco
+
+            // troca local otimista — os índices (e portanto os números #) ficam
+            // parados, só o conteúdo de cada um muda de lugar
+            binderAtual.cartas[origemIndex] = Object.assign({}, origem, { img: imgDestino, obtida: obtidaDestino });
+            binderAtual.cartas[destinoIndex] = Object.assign({}, destino, { idSlotBanco: idBancoDestino, img: imgOrigem, obtida: obtidaOrigem });
+            invalidarCacheSlots();
+            renderizarPagina();
+
+            persistirSlot(idBancoOrigem, imgDestino, obtidaOrigem, obtidaDestino);
+            persistirSlot(idBancoDestino, imgOrigem, obtidaDestino, obtidaOrigem);
+        }
+
+        // Salva um lado da troca: atualiza (ou limpa) a imagem do slot e, se o
+        // estado "obtida" mudou, ajusta via alternarPosseCarta — essa rota só
+        // funciona como toggle, por isso só é chamada quando o valor realmente
+        // precisa mudar. OBS: isso assume que /binder/atualizarSlot não mexe no
+        // campo "obtida" por conta própria — se o backend fizer isso, ajustar aqui.
+        function persistirSlot(idSlotBanco, novaImg, estadoAtual, estadoDesejado) {
+            let requisicaoImagem = novaImg
+                ? fetch("/binder/atualizarSlot", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ slotServer: idSlotBanco, imagemCartaServer: novaImg })
+                })
+                : fetch("/binder/limparSlot", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ slotServer: idSlotBanco })
+                });
+
+            requisicaoImagem
+                .then(function () {
+                    if (estadoDesejado !== estadoAtual && estadoAtual != null) {
+                        return fetch("/binder/alternarPosseCarta", {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ slotServer: idSlotBanco, estadoAtual: estadoAtual })
+                        });
+                    }
+                })
+                .catch(function (e) { console.error("Erro ao salvar troca de slot:", e); });
+        }
+
+        /* ══════════════════════════════
+           8c. MOVER CARTA (modo edição + modal flutuante)
+           Com o modo edição ligado (botão único no cabeçalho), clicar numa
+           carta a pega — ela some do slot de origem e aparece num modal
+           arrastável. Clicar em outro slot solta: se tiver carta, troca as
+           duas de posição; se estiver vazio, só a carregada se move. Nada é
+           salvo até soltar em algum lugar, então cancelar (ou dar refresh)
+           simplesmente desfaz.
+        ══════════════════════════════ */
+        function toggleModoEdicao() {
+            if (modoEdicaoAtivo) {
+                desativarModoEdicao();
+            } else {
+                fecharTools(); // caixa de ferramentas e modo edição são mutuamente exclusivos
+                ativarModoEdicao();
+            }
+        }
+
+        function ativarModoEdicao() {
+            modoEdicaoAtivo = true;
+            modoVisualizacaoForcada = true; // ao entrar, mostra tudo como se fosse obtido
+            document.body.classList.add('modo-edicao', 'forcar-obtida');
+            atualizarBotoesModoEdicao();
+            invalidarCacheSlots();
+            renderizarPagina();
+        }
+
+        function desativarModoEdicao() {
+            modoEdicaoAtivo = false;
+            cartaCarregada = null;
+            modoCarregando = false;
+            fecharModalCarregando();
+            document.body.classList.remove('modo-edicao', 'forcar-obtida');
+            atualizarBotoesModoEdicao();
+            invalidarCacheSlots();
+            renderizarPagina();
+        }
+
+        // Dentro do modo edição, alterna entre a visualização forçada (tudo
+        // como obtido) e o estado real do binder (obtida/faltando)
+        function toggleVisualizacaoEdicao() {
+            if (!modoEdicaoAtivo) return;
+            modoVisualizacaoForcada = !modoVisualizacaoForcada;
+            document.body.classList.toggle('forcar-obtida', modoVisualizacaoForcada);
+            atualizarBotoesModoEdicao();
+        }
+
+        function atualizarBotoesModoEdicao() {
+            ['btn-modo-mover-desktop', 'btn-modo-mover-mobile'].forEach(function (id) {
+                let btn = document.getElementById(id);
+                if (btn) btn.classList.toggle('btn-juntar-ativo', modoEdicaoAtivo);
+            });
+            ['btn-visualizacao-desktop', 'btn-visualizacao-mobile'].forEach(function (id) {
+                let btn = document.getElementById(id);
+                if (btn) btn.classList.toggle('btn-juntar-ativo', modoVisualizacaoForcada);
+            });
+        }
+
+        function iniciarMovimentoCarta(slotIndex, idBanco) {
+            if (!isDono || !modoEdicaoAtivo) return;
+            let carta = binderAtual.cartas[slotIndex];
+            if (!carta || !carta.img || carta.externo) return;
+            cartaCarregada = { slotIndex: slotIndex, idSlotBanco: idBanco, img: carta.img, obtida: carta.obtida };
+            modoCarregando = true;
+            invalidarCacheSlots();
+            renderizarPagina();
+            abrirModalCarregando(carta.img, carta.obtida);
+        }
+
+        function cancelarMovimentoCarta() {
+            cartaCarregada = null;
+            modoCarregando = false;
+            invalidarCacheSlots();
+            renderizarPagina();
+            fecharModalCarregando();
+        }
+
+        function colocarCartaNoSlot(destinoIndex) {
+            if (!modoCarregando || !cartaCarregada) return;
+            if (destinoIndex === cartaCarregada.slotIndex) { cancelarMovimentoCarta(); return; }
+            // os dados de origem nunca foram alterados localmente, então a troca
+            // padrão já resolve tanto o caso de swap quanto o de slot vazio
+            trocarCartasDeSlot(cartaCarregada.slotIndex, destinoIndex);
+            cartaCarregada = null;
+            modoCarregando = false;
+            fecharModalCarregando();
+            // trocarCartasDeSlot já renderizou, mas ainda com modoCarregando=true —
+            // por isso o slot de origem aparecia preso em "Movendo..." até a
+            // próxima renderização. Renderiza de novo agora que o estado já mudou.
+            invalidarCacheSlots();
+            renderizarPagina();
+        }
+
+        function abrirModalCarregando(img, obtida) {
+            let modal = document.getElementById("modal_carregando");
+            let imgEl = document.getElementById("img_carregando");
+            imgEl.src = img;
+            imgEl.className = obtida == 0 ? 'nao-obtida' : '';
+            let w = 160, h = 224;
+            modal.style.width = w + 'px';
+            modal.style.left = ((window.innerWidth - w) / 2) + 'px';
+            modal.style.top = ((window.innerHeight - h) / 2) + 'px';
+            modal.style.display = "block";
+        }
+
+        function fecharModalCarregando() {
+            document.getElementById("modal_carregando").style.display = "none";
+        }
+
+        // Drag do modal flutuante — movido pelo próprio corpo (a imagem da carta)
+        (function configurarDragModalCarregando() {
+            let modal = document.getElementById("modal_carregando");
+            if (!modal) return;
+            let arrastando = false;
+            let offsetX = 0, offsetY = 0;
+
+            function iniciar(x, y) {
+                arrastando = true;
+                let rect = modal.getBoundingClientRect();
+                offsetX = x - rect.left;
+                offsetY = y - rect.top;
+                modal.classList.add("arrastando");
+            }
+            function mover(x, y) {
+                if (!arrastando) return;
+                let w = modal.offsetWidth, h = modal.offsetHeight;
+                let left = Math.max(0, Math.min(window.innerWidth - w, x - offsetX));
+                let top = Math.max(0, Math.min(window.innerHeight - h, y - offsetY));
+                modal.style.left = left + "px";
+                modal.style.top = top + "px";
+            }
+            function parar() {
+                arrastando = false;
+                modal.classList.remove("arrastando");
+            }
+
+            modal.addEventListener("mousedown", function (e) { iniciar(e.clientX, e.clientY); e.preventDefault(); });
+            document.addEventListener("mousemove", function (e) { mover(e.clientX, e.clientY); });
+            document.addEventListener("mouseup", parar);
+
+            modal.addEventListener("touchstart", function (e) { let t = e.touches[0]; iniciar(t.clientX, t.clientY); }, { passive: true });
+            document.addEventListener("touchmove", function (e) { if (!arrastando) return; let t = e.touches[0]; mover(t.clientX, t.clientY); }, { passive: true });
+            document.addEventListener("touchend", parar);
+        })();
+
+        /* ══════════════════════════════
+           9. INVERTER
+        ══════════════════════════════ */
+
+        function toggleInverter() {
+            modoInvertido = !modoInvertido;
+            dom.iconesInverter.forEach(function (i) {
+                i.className = modoInvertido ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+            });
+            aplicarInversao();
+        }
+
+        function aplicarInversao() {
+            document.querySelectorAll('.slot-card-img').forEach(function (img) {
+                img.classList.toggle('invertida', modoInvertido);
+            });
+        }
+
+        /* ══════════════════════════════
+           10. TIPO EXIBIÇÃO
+        ══════════════════════════════ */
+        function setExibicao(valor) {
+            exibicaoAtiva = valor;
+            dom.selectsExibicao.forEach(function (s) { s.value = valor; });
+            paginaAtual = 0;
+            renderizarPagina();
+        }
+
+        function getTipoExibicao() {
+            return (exibicaoAtiva === 'auto') ? binderAtual.tipo : exibicaoAtiva;
+        }
+
+        /* ══════════════════════════════
+           11. JUNTAR BINDERS
+        ══════════════════════════════ */
+        function abrirModalJuntar() {
+            document.getElementById("modal_juntar").style.display = "flex";
+            bindersSelecionadosTemp = bindersJuntados.slice();
+            if (bindersDisponiveis.length) {
+                renderizarGridDisponiveis();
+                renderizarListaSelecionados();
+            } else {
+                carregarBindersDisponiveis();
+            }
+        }
+
+        function fecharModalJuntar() {
+            document.getElementById("modal_juntar").style.display = "none";
+        }
+
+        function carregarBindersDisponiveis() {
+            let dono = urlUsername || sessionUsername;
+            if (!dono) return;
+            fetch('/binder/buscarBindersPorUsername?usernameServer=' + dono)
+                .then(function (r) { return r.json(); })
+                .then(function (binders) {
+                    bindersDisponiveis = (binders || []).filter(function (b) {
+                        return String(b.id) !== String(binderAtual.id);
+                    });
+                    renderizarGridDisponiveis();
+                    renderizarListaSelecionados();
+                })
+                .catch(function (e) { console.error("Erro ao listar binders:", e); });
+        }
+
+        function renderizarGridDisponiveis() {
+            let grid = document.getElementById("juntar-grid-disponiveis");
+            if (!bindersDisponiveis.length) {
+                grid.innerHTML = '<p class="vazio-texto">Nenhum outro binder encontrado.</p>';
+                return;
+            }
+            grid.innerHTML = bindersDisponiveis.map(function (b) {
+                let ativo = bindersSelecionadosTemp.some(function (s) { return String(s.id) === String(b.id); });
+                return '<div class="juntar-item-disponivel' + (ativo ? ' selecionado' : '') + '" onclick="toggleSelecaoBinder(\'' + b.id + '\')">' +
+                    '<span class="juntar-item-nome">' + b.nome + '</span>' +
+                    '<span class="juntar-item-badge">' + b.tipo + '</span>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function toggleSelecaoBinder(id) {
+            let idx = bindersSelecionadosTemp.findIndex(function (s) { return String(s.id) === String(id); });
+            if (idx >= 0) {
+                bindersSelecionadosTemp.splice(idx, 1);
+            } else {
+                let binder = bindersDisponiveis.find(function (b) { return String(b.id) === String(id); });
+                if (binder) bindersSelecionadosTemp.push({ id: binder.id, nome: binder.nome, tipo: binder.tipo });
+            }
+            renderizarGridDisponiveis();
+            renderizarListaSelecionados();
+        }
+
+        function removerSelecaoBinder(id) {
+            bindersSelecionadosTemp = bindersSelecionadosTemp.filter(function (s) { return String(s.id) !== String(id); });
+            renderizarGridDisponiveis();
+            renderizarListaSelecionados();
+        }
+
+        function renderizarListaSelecionados() {
+            let lista = document.getElementById("juntar-lista-selecionados");
+            if (!bindersSelecionadosTemp.length) {
+                lista.innerHTML = '<p class="vazio-texto">Nenhum binder selecionado.</p>';
+                return;
+            }
+            lista.innerHTML = bindersSelecionadosTemp.map(function (b, i) {
+                return '<div class="juntar-item-selecionado" draggable="true" data-index="' + i + '"' +
+                    ' ondragstart="juntarDragStart(event)" ondragover="juntarDragOver(event)" ondrop="juntarDrop(event)" ondragend="juntarDragEnd(event)">' +
+                    '<span class="juntar-item-ordem">#' + (i + 1) + '</span>' +
+                    '<span class="juntar-item-nome">' + b.nome + '</span>' +
+                    '<span class="juntar-item-badge">' + b.tipo + '</span>' +
+                    '<button class="juntar-item-remover" onclick="event.stopPropagation();removerSelecaoBinder(\'' + b.id + '\')">✕</button>' +
+                    '</div>';
+            }).join('');
+        }
+
+        function juntarDragStart(e) {
+            dragIndexJuntar = Number(e.currentTarget.dataset.index);
+            e.currentTarget.classList.add('arrastando');
+        }
+
+        function juntarDragOver(e) {
+            e.preventDefault();
+        }
+
+        function juntarDrop(e) {
+            e.preventDefault();
+            let alvoIndex = Number(e.currentTarget.dataset.index);
+            if (dragIndexJuntar < 0 || dragIndexJuntar === alvoIndex) return;
+            let item = bindersSelecionadosTemp.splice(dragIndexJuntar, 1)[0];
+            bindersSelecionadosTemp.splice(alvoIndex, 0, item);
+            dragIndexJuntar = -1;
+            renderizarListaSelecionados();
+        }
+
+        function juntarDragEnd(e) {
+            e.currentTarget.classList.remove('arrastando');
+        }
+
+        function aplicarJuntarBinders() {
+            fecharModalJuntar();
+            let ids = bindersSelecionadosTemp.map(function (b) { return b.id; });
+            carregarBinderPrincipalMaisJoins(ids);
+        }
+
+        function carregarBinderPrincipalMaisJoins(ids) {
+            // limpa cartas externas de uma junção anterior antes de recarregar
+            Object.keys(binderAtual.cartas).forEach(function (k) {
+                if (binderAtual.cartas[k] && binderAtual.cartas[k].externo) delete binderAtual.cartas[k];
+            });
+            bindersJuntados = [];
+            invalidarCacheSlots();
+
+            if (!ids.length) {
+                paginaAtual = 0;
+                renderizarPagina();
+                atualizarIndicadorJoin();
+                return;
+            }
+
+            let promessas = ids.map(function (id) {
+                return fetch('/binder/buscarSlots?binderServer=' + id).then(function (r) { return r.json(); });
+            });
+
+            Promise.all(promessas).then(function (resultados) {
+                let offset = CONFIG_TIPO[binderAtual.tipo].totalSlots;
+                resultados.forEach(function (dado, i) {
+                    let meta = dado.meta || {};
+                    let slots = dado.slots || dado;
+
+                    // Ignora células sem imagem: só entram cartas de fato preenchidas,
+                    // compactadas em sequência — não reserva o binder juntado inteiro.
+                    let cartasPreenchidas = slots.filter(function (linha) { return !!linha.url_imagem; });
+
+                    cartasPreenchidas.forEach(function (linha, idx) {
+                        binderAtual.cartas[offset + idx] = {
+                            idSlotBanco: linha.id,
+                            img: linha.url_imagem,
+                            obtida: linha.obtida,
+                            externo: true,
+                            binderOrigemId: ids[i],
+                            binderOrigemNome: meta.nome || 'Binder'
+                        };
+                    });
+
+                    bindersJuntados.push({
+                        id: ids[i],
+                        nome: meta.nome || 'Binder',
+                        tipo: meta.tipo || '3x3',
+                        qtdCartas: cartasPreenchidas.length
+                    });
+                    offset += cartasPreenchidas.length;
+                });
+                invalidarCacheSlots();
+                paginaAtual = 0;
+                renderizarPagina();
+                atualizarIndicadorJoin();
+            }).catch(function (e) { console.error("Erro ao juntar binders:", e); });
+        }
+
+        // Liga/desliga o badge de "modo join" no cabeçalho e o destaque no botão de ferramentas
+        function atualizarIndicadorJoin() {
+            let ativo = bindersJuntados.length > 0;
+
+            let badges = [
+                { badge: document.getElementById('binder-join-badge'), count: document.getElementById('binder-join-count') },
+                { badge: document.getElementById('binder-join-badge-mobile'), count: document.getElementById('binder-join-count-mobile') }
+            ];
+            badges.forEach(function (b) {
+                if (!b.badge) return;
+                b.badge.style.display = ativo ? 'inline-flex' : 'none';
+                if (b.count) b.count.textContent = bindersJuntados.length;
+            });
+
+            ['btn-juntar-desktop', 'btn-juntar-mobile'].forEach(function (id) {
+                let btn = document.getElementById(id);
+                if (btn) btn.classList.toggle('btn-juntar-ativo', ativo);
+            });
+        }
+
+        document.getElementById("modal_juntar").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalJuntar();
+        });
+
+        /* ══════════════════════════════
+           12. SWIPE MOBILE
+        ══════════════════════════════ */
+        let touchStartX = 0;
+
+        document.getElementById("binder-area").addEventListener("touchstart", function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.getElementById("binder-area").addEventListener("touchend", function (e) {
+            let diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) navegarPagina(1);
+                else navegarPagina(-1);
+            }
+        }, { passive: true });
+
+        /* ══════════════════════════════
+           13. EVENT LISTENERS
+        ══════════════════════════════ */
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") { fecharModalBusca(); fecharModalImagem(); fecharModalJuntar(); return; }
+            let buscaAberto = document.getElementById("modal_busca").style.display === "flex";
+            let imgAberto = document.getElementById("modal_imagem").style.display === "flex";
+            if (!buscaAberto && !imgAberto) {
+                if (e.key === "ArrowLeft" && !document.getElementById("btn-prev").disabled) navegarPagina(-1);
+                if (e.key === "ArrowRight" && !document.getElementById("btn-next").disabled) navegarPagina(1);
+            }
+            if (buscaAberto && isDono && e.key === "Enter" && cartaSelecionadaBusca) salvarCartaLink();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                paginaAtual = 0;
+                renderizarPagina();
+            }, 150);
+        });
+
+        /* ══════════════════════════════
+           START
+        ══════════════════════════════ */
+        if (sessionStorage.getItem("USERNAME")) {
+            carregarBinder();
+        } else {
+            setTimeout(carregarBinder, 30);
+        }
+
+    </script>
+</body>
+
+</html>

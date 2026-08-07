@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Binders</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_binder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body onload="buscarBinders()">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container main-container--binders">
+        <header id="header">
+            <!-- Bloco da Esquerda (Início) -->
+            <div class="header-left">
+                <div class="header-search-group">
+                    <input type="text" id="ipt_busca_username" class="modal-search-input header-search-input"
+                        placeholder="Buscar por @username"
+                        onkeydown="if(event.key === 'Enter') buscarBindersPublicos()">
+                    <button class="btn-salvar-url header-search-btn" onclick="buscarBindersPublicos()">Buscar</button>
+                </div>
+            </div>
+
+            <!-- Bloco da Direita (Fim) -->
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div class="cadastroFlex_wrapper cadastroFlex_wrapper--binders">
+            <main class="cadastroContainer cadastroContainer--binders">
+                <div id="area-titulo" class="binder-area-titulo" style="display:none;">
+                    <span id="resultados_titulo" class="label"></span>
+                    <button class="modal-btn-cancel" onclick="fecharBusca()">✕ Voltar aos meus binders</button>
+                </div>
+                <div id="lista_binders" class="binder-grid"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal_criar" class="modal-backdrop" style="display: none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModal()">✕</button>
+            <h2>Criar novo binder</h2>
+            <p>Organize sua coleção em um binder personalizado</p>
+
+            <div class="modal-field">
+                <label>Nome do binder</label>
+                <input type="text" id="ipt_nomeBinder" placeholder="Ex: Meus Lendários">
+            </div>
+
+            <div class="modal-field">
+                <label>Tipo</label>
+                <div class="tipo-grid">
+                    <div class="tipo-option">
+                        <input type="radio" name="n_tipoBinder" id="t22" value="2x2" checked>
+                        <label class="tipo-label" for="t22">
+                            <span class="tipo-size">2×2</span>
+                            <span class="tipo-sub">160 cartas</span>
+                        </label>
+                    </div>
+                    <div class="tipo-option">
+                        <input type="radio" name="n_tipoBinder" id="t33" value="3x3">
+                        <label class="tipo-label" for="t33">
+                            <span class="tipo-size">3×3</span>
+                            <span class="tipo-sub">360 cartas</span>
+                        </label>
+                    </div>
+                    <div class="tipo-option">
+                        <input type="radio" name="n_tipoBinder" id="t43" value="4x3">
+                        <label class="tipo-label" for="t43">
+                            <span class="tipo-size">4×3</span>
+                            <span class="tipo-sub">480 cartas</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="fecharModal()">Cancelar</button>
+                <button class="btnPrincipal_sign btnPrincipal_sign--flex" onclick="criarBinder()">Criar binder</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
+<script src="../js/functions.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth_ui.js"></script>
+<script src="../js/perfil_nav.js"></script>
+
+
+<script>
+    function abrirBinder(idBinder, nomeBinder, tipoBinder) {
+        sessionStorage.setItem('BINDER_ID', idBinder);
+        sessionStorage.setItem('BINDER_NOME', nomeBinder);
+        sessionStorage.setItem('BINDER_TIPO', tipoBinder);
+        let username = sessionStorage.getItem("USERNAME");
+        window.location.href = `dashboard_binder_view.html?u=${encodeURIComponent(username)}&b=${idBinder}`;
+    }
+
+    function buscarBinders() {
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        fetch(`/binder/buscarBinders?usuarioServer=${usuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                let grid = document.getElementById("lista_binders");
+                grid.innerHTML = '';
+
+                json.forEach(function (binder) {
+                    grid.innerHTML += `
+    <div class="binder-card" onclick="abrirBinder(${binder.id}, '${binder.nome}', '${binder.tipo}')">
+        <div class="binder-cover-wrapper">
+            <img class="binder-cover" src="../assets/imgs/binders/binder_${binder.tipo}.png" alt="${binder.nome}">
+        </div>
+        <div class="binder-body">
+            <div class="binder-name">${binder.nome}</div>
+            <div class="binder-meta">
+                <span class="binder-badge">${binder.tipo}</span>
+                <button class="btn-del" onclick="event.stopPropagation();apagarBinder(${binder.id})">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+                });
+
+                grid.innerHTML += `
+                    <div class="binder-card-add" onclick="abrirModal()">
+                        <div class="add-icon">+</div>
+                        <span class="add-label">Novo binder</span>
+                    </div>
+                `;
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            });
+    }
+
+    function buscarBindersPublicos() {
+        let username = document.getElementById("ipt_busca_username").value.trim();
+        if (!username) return;
+
+        fetch(`/binder/buscarBindersPorUsername?usernameServer=${encodeURIComponent(username)}`)
+            .then(function (resposta) { return resposta.json(); })
+            .then(function (json) {
+                let grid = document.getElementById("lista_binders");
+                let titulo = document.getElementById("resultados_titulo");
+                let areaTitulo = document.getElementById("area-titulo");
+
+                grid.innerHTML = '';
+                areaTitulo.style.display = 'flex';
+
+                if (json.length === 0) {
+                    titulo.textContent = 'Nenhum binder encontrado para @' + username;
+                    return;
+                }
+
+                titulo.textContent = json.length + ' binder(s) de @' + username;
+                json.forEach(function (binder) {
+                    grid.innerHTML += `
+                        <div class="binder-card">
+                            <div class="binder-cover-wrapper">
+                                <img class="binder-cover" src="../assets/imgs/binders/binder_${binder.tipo}.png" alt="${binder.nome}">
+                            </div>
+                            <div class="binder-body">
+                                <div>
+                                    <div class="binder-name">${binder.nome}</div>
+                                    <div class="binder-meta">
+                                        <span class="binder-badge">${binder.tipo}</span>
+                                    </div>
+                                </div>
+                                <div class="binder-actions">
+                                    <button class="btn-edit" onclick="window.location.href='dashboard_binder_view.html?u=${encodeURIComponent(username)}&b=${binder.id}'">Abrir</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            })
+            .catch(function (erro) { console.error(erro); });
+    }
+
+    function fecharBusca() {
+        document.getElementById("ipt_busca_username").value = "";
+        document.getElementById("area-titulo").style.display = "none";
+        buscarBinders();
+    }
+
+    function abrirModal() {
+        document.getElementById("ipt_nomeBinder").value = '';
+        document.getElementById("t22").checked = true;
+        document.getElementById("modal_criar").style.display = "flex";
+    }
+
+    function fecharModal() {
+        document.getElementById("modal_criar").style.display = "none";
+    }
+
+    document.getElementById("modal_criar").addEventListener("click", function (e) {
+        if (e.target === this) fecharModal();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") fecharModal();
+    });
+
+    function criarBinder() {
+        let nomeBinder = ipt_nomeBinder.value;
+        let tipoBinder = document.querySelector('input[name="n_tipoBinder"]:checked')?.value;
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        fetch("/binder/criarBinder", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nomeBinderServer: nomeBinder,
+                tipoBinderServer: tipoBinder,
+                usuarioServer: usuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+                    fecharModal();
+                    buscarBinders();
+                } else {
+                    console.log("Erro ao criar binder!");
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+    }
+
+    function apagarBinder(idBinder) {
+        let confirmacao = confirm("Tem certeza que deseja apagar este binder? Essa ação não pode ser desfeita.");
+        if (!confirmacao) return;
+
+        fetch("/binder/deletarBinder", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idBinderServer: idBinder })
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    window.location.reload();
+                } else {
+                    console.error("Erro na API ao deletar o binder.");
+                    alert("Houve um erro ao tentar apagar o binder. Tente novamente.");
+                }
+            })
+            .catch(function (erro) {
+                console.error("Erro no fetch apagarBinder:", erro);
+                alert("Erro de conexão com o servidor.");
+            });
+    }
+</script>

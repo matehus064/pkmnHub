@@ -1,0 +1,23 @@
+:root {
+  --bg-body:            #121417;
+  --bg-card:            #1a1c1f;
+  --bg-sidebar:         #1a1c1f;
+  --bg-tertiary:        #16191d;
+  --text-primary:       #ffffff;
+  --text-secondary:     #94a3b8;
+  --text-muted:         #828282;
+  --border-dark:        #202226;
+  --border-medium:      #2a2d32;
+  --accent-yellow:      #F9CF30;
+  --accent-blue:        #31A7D7;
+  --accent-red:         #EE3D2D;
+  --accent-green:       #2ecc71;
+  --danger:             var(--accent-red);
+  --success:            var(--accent-green);
+  --info:               var(--accent-blue);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #121417; }
+::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 10px; }
+.ballet { font-family: 'Ballet'; }

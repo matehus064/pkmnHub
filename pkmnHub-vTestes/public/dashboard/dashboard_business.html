@@ -7,31 +7,11 @@
     <title>pkmnHub | Dashboard</title>
     <link rel="icon" href="../assets/imgs/main/logo.png">
     <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div class="logo logo--dash">
-            <img src="../assets/imgs/main/logo2.png">
-            <a href="../index.html">pkmnHub</a>
-        </div>
-
-        <nav class="nav-menu">
-            <ul>
-                <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="dashboard_colecao.html" class="nav-link">Coleção</a></li>
-                <li class="nav-item active"><a href="dashboard_business.html" class="nav-link">Business</a></li>
-                <li class="nav-item nav-item-has-submenu" id="cadastroMenu">
-                    <a class="nav-link">Cadastro</a>
-                    <ul class="submenu">
-                        <li><a href="dashboard_compra.html" class="submenu-link">Compra</a></li>
-                        <li><a href="dashboard_venda.html" class="submenu-link">Venda</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
+    <aside class="sidebar" id="sidebar"></aside>
     <div class="main-container">
         <header id="header">
             <div class="header-left">
@@ -128,7 +108,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
 <script src="../js/functions.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth_ui.js"></script>
+<script src="../js/perfil_nav.js"></script>
+
 
 <script>
     let meuGraficoLinhas = null;
@@ -146,34 +131,33 @@
                 return resposta.json();
             })
             .then(function (json) {
+                console.log(json);
                 valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
                     totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
                     cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
                     document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
-                    cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
+                cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
                     totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
                     totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
                     roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
 
-                    // --- LÓGICA DE COR APLICADA EXCLUSIVAMENTE NO ELEMENTO #ROI ---
-                    let texto = roi.innerHTML;
-                    let numero = Number(texto.replace("%", ""));
+                // --- LÓGICA DE COR APLICADA EXCLUSIVAMENTE NO ELEMENTO #ROI ---
+                let texto = roi.innerHTML;
+                let numero = Number(texto.replace("%", ""));
 
-                    if (numero >= 0) {
-                        roi.style.color = 'var(--accent-green)';
-                    } else if (numero > -20) {
-                        roi.style.color = 'var(--accent-yellow)';
-                    } else {
-                        roi.style.color = 'var(--accent-red)';
-                    }
+                if (numero >= 0) {
+                    roi.style.color = 'var(--accent-green)';
+                } else if (numero > -20) {
+                    roi.style.color = 'var(--accent-yellow)';
+                } else {
+                    roi.style.color = 'var(--accent-red)';
+                }
 
                 // ----- GRÁFICO DE LINHA -----
                 let labelsLinha = json.evolucaoColecao.map(item =>
                     new Date(item.data_snapshot).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
                 );
-                console.log(labelsLinha);
                 let dadoslinha = json.evolucaoColecao.map(item => item.valor_total);
-                console.log(dadoslinha);
 
                 if (meuGraficoLinhas) meuGraficoLinhas.destroy();
 

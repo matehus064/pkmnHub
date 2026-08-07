@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Perfil</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="../css/style_perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container main-container-perfil">
+        <header id="header">
+            <div class="header-left">
+                <div class="header-search-group" style="font-size:150%;font-weight:900;">Perfil</div>
+            </div>
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div class="perfil-scroll" id="perfil-scroll">
+
+            <!-- HERO -->
+            <div class="perfil-hero" id="perfil-hero">
+                <div class="skeleton-perfil" style="width:90px;height:90px;border-radius:50%;margin-bottom:14px;"></div>
+                <div class="skeleton-perfil" style="width:160px;height:26px;border-radius:8px;margin-bottom:8px;"></div>
+                <div class="skeleton-perfil" style="width:100px;height:14px;border-radius:6px;margin-bottom:20px;">
+                </div>
+            </div>
+
+            <!-- ABAS -->
+            <div class="perfil-tabs">
+                <button class="perfil-tab active" onclick="trocarAba('perfil')">Perfil</button>
+                <button class="perfil-tab" onclick="trocarAba('colecao')">Coleção</button>
+                <button class="perfil-tab" onclick="trocarAba('binders')">Binders</button>
+                <button class="perfil-tab" onclick="trocarAba('amigos')">Amigos</button>
+            </div>
+
+            <!-- ABA: PERFIL -->
+            <div class="perfil-tab-content active" id="tab-perfil">
+                <div class="perfil-overview">
+                    <!-- Stats -->
+                    <div class="perfil-stats-card" id="stats-card">
+                        <div class="skeleton-perfil"></div>
+                        <div class="skeleton-perfil"></div>
+                        <div class="skeleton-perfil"></div>
+                    </div>
+                    <!-- Showcase -->
+                    <!-- Showcase sem o título -->
+                    <div class="perfil-showcase-card">
+                        <div class="showcase-grid" id="showcase-grid">
+                            <!-- preenchido via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sets em destaque -->
+                <div class="perfil-sets-titulo">Sets na Coleção</div>
+                <div class="sets-destaque-grid" id="sets-destaque-grid">
+                    <!-- preenchido via JS -->
+                </div>
+            </div>
+
+            <!-- ABA: COLEÇÃO -->
+            <div class="perfil-tab-content" id="tab-colecao">
+                <div class="grid-colecao-perfil" id="grid-colecao-perfil"></div>
+                <div class="paginacao-perfil" id="paginacao-perfil"></div>
+            </div>
+
+            <!-- ABA: BINDERS -->
+            <div class="perfil-tab-content" id="tab-binders">
+                <div class="binders-grid-perfil" id="binders-grid"></div>
+            </div>
+
+            <!-- ABA: AMIGOS -->
+            <div class="perfil-tab-content" id="tab-amigos">
+                <div class="amigos-layout">
+                    <div>
+                        <div class="amigos-secao-titulo">Amigos</div>
+                        <div id="lista-amigos">
+                            <p class="vazio-texto">Nenhum amigo ainda.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="amigos-secao-titulo" id="titulo-amigos-direita">Buscar</div>
+                        <input class="busca-amigo-input" type="text" id="ipt-busca" placeholder="Buscar por username..."
+                            oninput="buscarUsuario(this.value)">
+                        <div id="lista-busca">
+                            <p class="vazio-texto">Digite um username para buscar.</p>
+                        </div>
+                        <!-- Pendentes só aparece para o dono -->
+                        <div id="secao-pendentes" style="display:none;margin-top:24px;">
+                            <div class="amigos-secao-titulo">Pendentes <span id="badge-pendentes"></span></div>
+                            <div id="lista-pendentes">
+                                <p class="vazio-texto">Nenhuma solicitação.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Showcase -->
+    <div id="modal-showcase" class="modal-backdrop" style="display:none;">
+        <div class="modal-showcase-box">
+            <button class="modal-close" onclick="fecharModalShowcase()"
+                style="position:absolute;top:16px;right:18px;background:none;border:none;color:var(--text-secondary);font-size:18px;cursor:pointer;">✕</button>
+            <h2>Escolher carta para o Showcase</h2>
+            <p>Slot #<span id="showcase-slot-num">1</span></p>
+            <input class="modal-showcase-busca" type="text" placeholder="Filtrar por nome..."
+                oninput="filtrarShowcase(this.value)">
+            <div class="modal-showcase-lista" id="modal-showcase-lista"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dados.js"></script>
+    <script src="../js/dadosCartas.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/auth_ui.js"></script>
+    <script src="../js/perfil_nav.js"></script>
+
+    <script>
+        let perfilUserId = null;
+
+        const params = new URLSearchParams(window.location.search);
+        const perfilUsername = params.get('u') || '';
+        const sessionUsername = sessionStorage.getItem('USERNAME') || '';
+        const sessionUserId = sessionStorage.getItem('ID_USER') || '';
+        const ehDono = !!(perfilUsername && sessionUsername && perfilUsername === sessionUsername);
+
+        const CARTAS_POR_PAGINA = 42;
+        let colecaoData = [];
+        let paginaAtual = 1;
+        let statusAmizade = 'none'; // 'none' | 'pendente' | 'amigos'
+        let slotShowcaseAtual = -1;
+        let showcaseData = [null, null, null, null, null]; // 5 slots
+
+        /* ══════════════════════════════
+           INICIALIZAR
+        ══════════════════════════════ */
+        function carregarPerfil() {
+            // Aponta o link de Perfil na sidebar para o usuário logado
+            const linkNavPerfil = document.getElementById('link-nav-perfil');
+            if (linkNavPerfil && sessionUsername) {
+                linkNavPerfil.href = `perfil.html?u=${sessionUsername}`;
+            }
+
+            const usernameEl = document.getElementById('username');
+            if (usernameEl && sessionUsername) usernameEl.textContent = sessionUsername;
+
+            if (!perfilUsername) {
+                document.getElementById('perfil-hero').innerHTML = `
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:40px;color:var(--text-secondary);">
+                        <i class="fa-solid fa-user-slash" style="font-size:40px;opacity:0.3;"></i>
+                        <p style="font-size:14px;font-weight:600;">Nenhum usuário especificado.</p>
+                    </div>`;
+                return;
+            }
+
+            // Se é dono mostra pendentes
+            if (ehDono) {
+                document.getElementById('secao-pendentes').style.display = 'block';
+            }
+
+            if (!ehDono && sessionUserId) {
+                fetch(`/amizades/verificarStatus?usuarioAId=${sessionUserId}&usuarioBUsername=${perfilUsername}`)
+                    .then(r => r.json())
+                    .then(d => {
+                        statusAmizade = d.status;
+                        carregarHero(); // único lugar que chama
+                    });
+            } else {
+                carregarHero(); // dono ou visitante não logado
+            }
+
+            fetch(`/showcase/buscar?username=${perfilUsername}`)
+                .then(r => r.json())
+                .then(dados => {
+                    dados.forEach(d => { showcaseData[d.slot] = d; });
+                    renderizarShowcase();
+                });
+
+
+
+            carregarColecao();
+            carregarBinders();
+        }
+
+        /* ══════════════════════════════
+           ABAS
+        ══════════════════════════════ */
+        function trocarAba(aba) {
+            document.querySelectorAll('.perfil-tab').forEach((t, i) => {
+                const abas = ['perfil', 'colecao', 'binders', 'amigos'];
+                t.classList.toggle('active', abas[i] === aba);
+            });
+            document.querySelectorAll('.perfil-tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(`tab-${aba}`).classList.add('active');
+            if (aba === 'amigos') carregarAmigos();
+        }
+        /* ══════════════════════════════
+           HERO
+        ══════════════════════════════ */
+        function carregarHero() {
+            fetch(`/perfil/buscarPerfil?username=${perfilUsername}`)
+                .then(r => r.json())
+                .then(dados => renderizarHero(dados))
+                .catch(() => renderizarHero({}));
+        }
+
+        function renderizarHero(dados) {
+            perfilUserId = dados.id;
+            const foto = dados.foto || '1';
+            const totalCartas = dados.total_cartas || 0;
+            const valorColecao = dados.valor_colecao ? formatarBrl(dados.valor_colecao) : 'R$ 0,00';
+            const totalAmigos = dados.total_amigos || 0;
+
+            // Hero
+            let acaoHtml = '';
+            if (ehDono) {
+                acaoHtml = ''; // dono não vê botão de amizade no próprio perfil
+            } else if (sessionUsername) {
+                if (statusAmizade === 'none') {
+                    acaoHtml = `<button class="btn-amigo btn-amigo--adicionar" onclick="adicionarAmigo()">
+                        <i class="fa-solid fa-user-plus"></i> Adicionar amigo</button>`;
+                } else if (statusAmizade === 'pendente') {
+                    acaoHtml = `<button class="btn-amigo btn-amigo--pendente" onclick="cancelarAmigo()">
+                        <i class="fa-solid fa-clock"></i> Pendente</button>`;
+                } else if (statusAmizade === 'amigos') {
+                    acaoHtml = `<button class="btn-amigo btn-amigo--amigos">
+                        <i class="fa-solid fa-check"></i> Amigos</button>`;
+                }
+            }
+
+            document.getElementById('perfil-hero').innerHTML = `
+                <img class="perfil-avatar"
+                    src="../assets/imgs/profilePics/${foto}.webp"
+                    onerror="this.src='../assets/imgs/profilePics/1.webp'"
+                    alt="${perfilUsername}">
+                <div class="perfil-nome">${perfilUsername}</div>
+                <div class="perfil-at">@${perfilUsername}</div>
+                ${acaoHtml ? `<div class="perfil-hero-actions">${acaoHtml}</div>` : ''}
+            `;
+
+            // Stats card
+            document.getElementById('stats-card').innerHTML = `
+                <div class="perfil-stat-item">
+                    <span class="perfil-stat-label">Valor da Coleção</span>
+                    <span class="perfil-stat-valor perfil-stat-valor--yellow">${valorColecao}</span>
+                </div>
+                <div class="perfil-stat-divider"></div>
+                <div class="perfil-stat-item">
+                    <span class="perfil-stat-label">Total de Cartas</span>
+                    <span class="perfil-stat-valor">${totalCartas}</span>
+                </div>
+                <div class="perfil-stat-divider"></div>
+                <div class="perfil-stat-item">
+                    <span class="perfil-stat-label">Amigos</span>
+                    <span class="perfil-stat-valor">${totalAmigos}</span>
+                </div>
+            `;
+        }
+
+        /* ══════════════════════════════
+           SHOWCASE
+        ══════════════════════════════ */
+        // FORA e ANTES de renderizarShowcase
+        function getSetLogoUrl(setNome) {
+            const info = (sets || []).find(s => s.nomeEn === setNome || s.nomePt === setNome);
+            return info?.apiId
+                ? `https://images.scrydex.com/pokemon/${info.apiId}-logo/logo`
+                : '';
+        }
+
+        function renderizarShowcase() {
+            const grid = document.getElementById('showcase-grid');
+            let html = '';
+
+            for (let i = 0; i < 5; i++) {
+                const carta = showcaseData[i];
+
+                if (carta) {
+                    const logoUrl = getSetLogoUrl(carta.set_nome);
+
+                    html += `
+            <!-- Largura atualizada para 140px para acompanhar o novo tamanho da carta -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 140px;">
+                
+                <div class="showcase-slot preenchido ${ehDono ? 'showcase-slot-dono' : ''}"
+                    ${ehDono ? `onclick="abrirModalShowcase(${i})"` : ''}
+                    style="border-style: solid; transform: scale(1.2); margin-bottom: 25px;">
+                    
+                    <img src="${carta.url_imagem}" alt="${carta.nome_pokemon}">
+                    
+                    ${ehDono ? `<button class="showcase-slot-remove" onclick="event.stopPropagation();removerShowcase(${i})">✕</button>` : ''}
+                </div>
+                
+                <div style="height: 40px; width: 100%; display: flex; align-items: center; justify-content: center;">
+                    ${logoUrl ? `
+                        <img src="${logoUrl}" alt="${carta.set_nome}"
+                             style="max-height: 40px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));"
+                             onerror="this.style.display='none'">
+                    ` : ''}
+                </div>
+            </div>`;
+
+                } else {
+                    html += `
+            <div style="display: flex; flex-direction: column; width: 140px;">
+                <div class="showcase-slot ${ehDono ? 'showcase-slot-dono' : ''}"
+                    ${ehDono ? `onclick="abrirModalShowcase(${i})"` : ''}>
+                    <div class="showcase-slot-vazio">
+                        <i class="fa-solid fa-plus"></i>
+                        ${ehDono ? '<span>Adicionar</span>' : ''}
+                    </div>
+                </div>
+                <div style="height: 40px;"></div>
+            </div>`;
+                }
+            }
+            grid.innerHTML = html;
+        }
+
+        function abrirModalShowcase(slot) {
+            slotShowcaseAtual = slot;
+            document.getElementById('showcase-slot-num').textContent = slot + 1;
+            document.getElementById('modal-showcase').style.display = 'flex';
+            filtrarShowcase('');
+        }
+
+        function fecharModalShowcase() {
+            document.getElementById('modal-showcase').style.display = 'none';
+        }
+
+        function filtrarShowcase(query) {
+            const lista = document.getElementById('modal-showcase-lista');
+            const dados = query
+                ? colecaoData.filter(c => c.nome_pokemon.toLowerCase().includes(query.toLowerCase()))
+                : colecaoData;
+
+            if (!dados.length) {
+                lista.innerHTML = `<p style="color:var(--text-secondary);font-size:13px;">Nenhuma carta encontrada.</p>`;
+                return;
+            }
+
+            lista.innerHTML = dados.slice(0, 60).map(c => `
+                <div class="showcase-opcao" onclick="selecionarShowcase(${JSON.stringify(c).replace(/"/g, '&quot;')})">
+                    <img src="${c.url_imagem}" alt="${c.nome_pokemon}" loading="lazy">
+                </div>`).join('');
+        }
+
+        function selecionarShowcase(carta) {
+            showcaseData[slotShowcaseAtual] = carta;
+            renderizarShowcase();
+            fecharModalShowcase();
+            fetch('/showcase/salvarSlot', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuarioId: sessionUserId, slot: slotShowcaseAtual, cartaId: carta.id })
+            })
+        }
+
+        function removerShowcase(slot) {
+            showcaseData[slot] = null;
+            renderizarShowcase();
+            fetch('/showcase/limparSlot', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuarioId: sessionUserId, slot })
+            })
+        }
+
+        document.getElementById('modal-showcase').addEventListener('click', function (e) {
+            if (e.target === this) fecharModalShowcase();
+        });
+
+        /* ══════════════════════════════
+           COLEÇÃO
+        ══════════════════════════════ */
+        function carregarColecao() {
+            const grid = document.getElementById('grid-colecao-perfil');
+            let sk = '';
+            for (let i = 0; i < 12; i++) sk += `<div class="skeleton-perfil" style="width:150px;height:210px;"></div>`;
+            grid.innerHTML = sk;
+
+            fetch(`/perfil/buscarColecao?username=${perfilUsername}`)
+                .then(r => r.json())
+                .then(json => {
+                    colecaoData = json;
+                    paginaAtual = 1;
+                    renderizarPaginaColecao();
+                    renderizarSetsDestaque(json);
+                })
+                .catch(() => {
+                    grid.innerHTML = `<p class="vazio-texto">Não foi possível carregar a coleção.</p>`;
+                });
+        }
+
+        function renderizarPaginaColecao() {
+            const inicio = (paginaAtual - 1) * CARTAS_POR_PAGINA;
+            const pagina = colecaoData.slice(inicio, inicio + CARTAS_POR_PAGINA);
+            const grid = document.getElementById('grid-colecao-perfil');
+
+            if (!pagina.length) {
+                grid.innerHTML = `<p class="vazio-texto">Nenhuma carta na coleção.</p>`;
+                return;
+            }
+
+            grid.innerHTML = pagina.map(c => `
+                <div class="carta-card-perfil" onclick="toggleInfoPerfil(this)">
+                    <img src="${c.url_imagem}" loading="lazy" onerror="this.style.opacity='0.3'">
+                    <div class="carta-hover-info-perfil">
+                        <span class="nome">${c.nome_pokemon}</span>
+                        <span class="set">${c.set_nome}</span>
+                        <span class="numero"># ${c.numero_set}</span>
+                    </div>
+                </div>`).join('');
+
+            renderizarPaginacao();
+        }
+
+        function toggleInfoPerfil(card) {
+            const info = card.querySelector('.carta-hover-info-perfil');
+            const isVisible = info.classList.contains('visivel');
+            document.querySelectorAll('.carta-hover-info-perfil').forEach(i => i.classList.remove('visivel'));
+            if (!isVisible) info.classList.add('visivel');
+        }
+
+        function renderizarPaginacao() {
+            const total = Math.ceil(colecaoData.length / CARTAS_POR_PAGINA);
+            const el = document.getElementById('paginacao-perfil');
+            if (total <= 1) { el.innerHTML = ''; return; }
+
+            let html = `<button onclick="irParaPagina(${paginaAtual - 1})" ${paginaAtual === 1 ? 'disabled' : ''}>
+                <i class="fa-solid fa-chevron-left"></i></button>`;
+
+            for (let i = 1; i <= total; i++) {
+                if (i === 1 || i === total || (i >= paginaAtual - 1 && i <= paginaAtual + 1)) {
+                    html += `<button onclick="irParaPagina(${i})" class="${i === paginaAtual ? 'pagina-ativa' : ''}">${i}</button>`;
+                } else if (i === paginaAtual - 2 || i === paginaAtual + 2) {
+                    html += `<span class="reticencias">...</span>`;
+                }
+            }
+
+            html += `<button onclick="irParaPagina(${paginaAtual + 1})" ${paginaAtual === total ? 'disabled' : ''}>
+                <i class="fa-solid fa-chevron-right"></i></button>`;
+
+            el.innerHTML = html;
+        }
+
+        function irParaPagina(pagina) {
+            const total = Math.ceil(colecaoData.length / CARTAS_POR_PAGINA);
+            if (pagina < 1 || pagina > total) return;
+            paginaAtual = pagina;
+            renderizarPaginaColecao();
+            document.getElementById('perfil-scroll').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ══════════════════════════════
+           SETS EM DESTAQUE
+        ══════════════════════════════ */
+        function renderizarSetsDestaque(colecao) {
+            const contagem = {};
+            colecao.forEach(c => {
+                contagem[c.set_nome] = (contagem[c.set_nome] || 0) + 1;
+            });
+
+            const setInfo = sets || [];
+            const grid = document.getElementById('sets-destaque-grid');
+
+            // Filtra só sets que o usuário tem cartas, enriquece com info e ordena por data
+            const itens = Object.entries(contagem)
+                .map(([nomeSet, qtd]) => {
+                    const info = setInfo.find(s => s.nomeEn === nomeSet || s.nomePt === nomeSet);
+                    return { nomeSet, qtd, info };
+                })
+                .filter(i => i.info)
+                .sort((a, b) => (b.info.dataLancamento || '').localeCompare(a.info.dataLancamento || ''));
+
+            if (!itens.length) {
+                grid.innerHTML = `<p class="vazio-texto">Nenhum set encontrado.</p>`;
+                return;
+            }
+
+            // Séries disponíveis na coleção do usuário
+            const series = [...new Set(itens.map(i => i.info.serie).filter(Boolean))];
+            const ordemSeries = ['Scarlet & Violet', 'Mega Evolution', 'Sword & Shield', 'Sun & Moon'];
+            series.sort((a, b) => {
+                const ia = ordemSeries.indexOf(a);
+                const ib = ordemSeries.indexOf(b);
+                if (ia === -1 && ib === -1) return a.localeCompare(b);
+                if (ia === -1) return 1;
+                if (ib === -1) return -1;
+                return ia - ib;
+            });
+
+            // Filtro ativo (começa na primeira série disponível)
+            let filtroAtivo = series[0] || '';
+
+            function renderFiltrado() {
+                const filtrados = filtroAtivo
+                    ? itens.filter(i => i.info.serie === filtroAtivo)
+                    : itens;
+
+                const botoesHtml = series.map(s => `
+            <button onclick="window._filtroSetDestaque('${s}')"
+                style="background:${s === filtroAtivo ? 'var(--accent-yellow)' : 'transparent'};
+                       color:${s === filtroAtivo ? '#000' : 'var(--text-secondary)'};
+                       border:1px solid ${s === filtroAtivo ? 'var(--accent-yellow)' : 'var(--border-dark)'};
+                       border-radius:20px; padding:5px 14px; font-size:11px; font-weight:700;
+                       cursor:pointer; font-family:'Manrope',sans-serif; transition:0.2s;">
+                ${s}
+            </button>`).join('');
+
+                const setsHtml = filtrados.map(({ nomeSet, qtd, info }) => {
+                    const apiId = info?.apiId || '';
+                    const logoUrl = apiId ? `https://images.scrydex.com/pokemon/${apiId}-logo/logo` : '';
+                    return `
+                <a class="set-destaque-card" href="dashboard_sets_view.html?set=${apiId}">
+                    <div class="set-destaque-bg" style="background-image:url('../assets/imgs/sets/${apiId}.webp')">
+                        ${logoUrl ? `<img class="set-destaque-logo" src="${logoUrl}" alt="${nomeSet}" onerror="this.style.display='none'">` : ''}
+                    </div>
+                    <div class="set-destaque-info">
+                        <div class="set-destaque-nome">${nomeSet}</div>
+                        <div class="set-destaque-qtd">${qtd} carta${qtd > 1 ? 's' : ''}</div>
+                    </div>
+                </a>`;
+                }).join('');
+
+                grid.innerHTML = `
+            <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+                ${botoesHtml}
+            </div>
+            <div class="sets-destaque-grid-inner" style="display:flex; gap:14px; flex-wrap:wrap;">
+                ${setsHtml || '<p class="vazio-texto">Nenhum set nessa série.</p>'}
+            </div>`;
+            }
+
+            window._filtroSetDestaque = function (serie) {
+                filtroAtivo = serie;
+                renderFiltrado();
+            };
+
+            renderFiltrado();
+        }
+
+        /* ══════════════════════════════
+           BINDERS
+        ══════════════════════════════ */
+        function carregarBinders() {
+            const grid = document.getElementById('binders-grid');
+
+            // Gera os skeletons enquanto carrega (removido estilo inline fixo para melhor adaptação)
+            grid.innerHTML = [1, 2, 3].map(() =>
+                `<div class="skeleton-perfil"></div>`
+            ).join('');
+
+            fetch(`/binder/buscarBindersPorUsername?usernameServer=${perfilUsername}`)
+                .then(r => r.json())
+                .then(binders => {
+                    if (!binders || !binders.length) {
+                        grid.innerHTML = `<p class="vazio-texto">Nenhum binder por aqui ainda.</p>`;
+                        return;
+                    }
+
+                    grid.innerHTML = binders.map(b => {
+                        const cls = b.tipo || '3x3';
+                        const slots = b.slots || [];
+                        const maxPreview = cls === '2x2' ? 4 : cls === '4x3' ? 8 : 6;
+
+                        const slotsHtml = Array.from({ length: maxPreview }, (_, i) =>
+                            `<div class="binder-preview-slot">
+                        ${slots[i]?.url_imagem ? `<img src="${slots[i].url_imagem}" loading="lazy">` : ''}
+                    </div>`).join('');
+
+                        return `
+    <div class="binder-card" onclick="window.location.href='dashboard_binder_view.html?u=${perfilUsername}&b=${b.id}'">
+        <div class="binder-cover-wrapper">
+            <img class="binder-cover" src="../assets/imgs/binders/binder_${b.tipo}.png" alt="${b.nome}">
+        </div>
+        <div class="binder-body">
+            <div class="binder-name">${b.nome}</div>
+            <div class="binder-meta">
+                <span class="binder-badge">${b.tipo}</span>
+            </div>
+        </div>
+    </div>`;
+                    }).join('');
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar binders:", error);
+                    grid.innerHTML = `<p class="vazio-texto">Não foi possível carregar os binders.</p>`;
+                });
+        }
+
+
+        /* ══════════════════════════════
+           AMIZADE
+        ══════════════════════════════ */
+        function adicionarAmigo() {
+            fetch('/amizades/solicitar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ solicitanteId: sessionUserId, receptorUsername: perfilUsername })
+            }).then(() => {
+                statusAmizade = 'pendente';
+                carregarHero();
+            });
+        }
+
+        function cancelarAmigo() {
+            fetch('/amizades/cancelar', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ solicitanteId: sessionUserId, receptorUsername: perfilUsername })
+            }).then(() => {
+                statusAmizade = 'none';
+                carregarHero();
+            });
+        }
+
+        function removerAmigo(username) {
+            fetch('/amizades/remover', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuarioAId: sessionUserId, usuarioBUsername: username })
+            }).then(() => carregarAmigos());
+        }
+
+        function carregarAmigos() {
+            fetch(`/amizades/listarAmigos?usuarioId=${perfilUserId}`)
+                .then(r => r.json())
+                .then(amigos => {
+                    const lista = document.getElementById('lista-amigos');
+                    if (!amigos.length) {
+                        lista.innerHTML = `<p class="vazio-texto">Nenhum amigo ainda.</p>`;
+                        return;
+                    }
+                    lista.innerHTML = amigos.map(a => `
+    <div class="amigo-item">
+        <a href="perfil.html?u=${a.username}" style="display:flex;align-items:center;gap:12px;flex:1;text-decoration:none;">
+            <img class="amigo-avatar" src="../assets/imgs/profilePics/${a.foto}.webp"
+                onerror="this.src='../assets/imgs/profilePics/1.webp'">
+            <div class="amigo-info">
+                <div class="amigo-username">${a.username}</div>
+            </div>
+        </a>
+        ${ehDono ? `
+        <div class="amigo-actions">
+            <button class="btn-recusar" onclick="removerAmigo('${a.username}')">Remover</button>
+        </div>` : ''}
+    </div>`).join('');
+                });
+
+            if (ehDono) {
+                fetch(`/amizades/listarPendentes?receptorId=${sessionUserId}`)
+                    .then(r => r.json())
+                    .then(pendentes => {
+                        const lista = document.getElementById('lista-pendentes');
+                        const badge = document.getElementById('badge-pendentes');
+                        if (badge) badge.textContent = pendentes.length ? `(${pendentes.length})` : '';
+                        if (!pendentes.length) {
+                            lista.innerHTML = `<p class="vazio-texto">Nenhuma solicitação.</p>`;
+                            return;
+                        }
+                        lista.innerHTML = pendentes.map(p => `
+    <div class="amigo-item">
+        <a href="perfil.html?u=${p.username}" style="display:flex;align-items:center;gap:12px;flex:1;text-decoration:none;">
+            <img class="amigo-avatar" src="../assets/imgs/profilePics/${p.foto}.webp"
+                onerror="this.src='../assets/imgs/profilePics/1.webp'">
+            <div class="amigo-info">
+                <div class="amigo-username">${p.username}</div>
+            </div>
+        </a>
+        <div class="amigo-actions">
+            <button class="btn-aceitar" onclick="responderAmizade(${p.id}, 'aceito')">Aceitar</button>
+            <button class="btn-recusar" onclick="responderAmizade(${p.id}, 'recusado')">Recusar</button>
+        </div>
+    </div>`).join('');
+                    });
+            }
+        }
+
+        function responderAmizade(amizadeId, status) {
+            fetch('/amizades/responder', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amizadeId, status })
+            }).then(() => carregarAmigos());
+        }
+
+        function buscarUsuario(query) {
+            const lista = document.getElementById('lista-busca');
+            if (!query || query.length < 2) {
+                lista.innerHTML = `<p class="vazio-texto">Digite ao menos 2 caracteres.</p>`;
+                return;
+            }
+            fetch(`/perfil/buscarUsuarios?q=${query}`)
+                .then(r => r.json())
+                .then(usuarios => {
+                    if (!usuarios.length) {
+                        lista.innerHTML = `<p class="vazio-texto">Nenhum usuário encontrado.</p>`;
+                        return;
+                    }
+                    lista.innerHTML = usuarios.map(u => `
+                <a class="amigo-item" href="perfil.html?u=${u.username}">
+                    <img class="amigo-avatar" src="../assets/imgs/profilePics/${u.foto}.webp"
+                        onerror="this.src='../assets/imgs/profilePics/1.webp'">
+                    <div class="amigo-info">
+                        <div class="amigo-username">${u.username}</div>
+                    </div>
+                </a>`).join('');
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!sessionStorage.getItem('USERNAME')) {
+                console.warn("Usuário não logado, redirecionando...");
+                //window.location.href = "../login.html";
+            }
+
+            // Relê aqui para garantir que o sessionStorage já está disponível
+            const linkNavPerfil = document.getElementById('link-nav-perfil');
+            const username = sessionStorage.getItem('USERNAME') || '';
+            if (linkNavPerfil && username) {
+                linkNavPerfil.href = `perfil.html?u=${username}`;
+            }
+
+            carregarPerfil();
+        });
+    </script>
+</body>
+
+</html>
