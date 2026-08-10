@@ -797,6 +797,13 @@ input[type="url"] {
     right: 14px;
 }
 
+.btn-link-colecao {
+    position: absolute;
+    top: 35px;
+    right: 14px;
+    font-size: 13px;
+}
+
 .carta-info-nome {
     font-size: 22px;
     font-weight: 800;

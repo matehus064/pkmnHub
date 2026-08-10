@@ -268,13 +268,14 @@
         dados.forEach(carta => {
             let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
             let linkLiga = cartaBase
-                ? `<a class="carta-info-liga" style="text-decoration: none; color: inherit;" href="${gerarLinkLigaPokemon(cartaBase)}" target="_blank" rel="noopener" onclick="event.stopPropagation()"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
+                ? `<a class="btn-config btn-link-colecao" style="text-decoration: none; color: inherit;" href="${gerarLinkLigaPokemon(cartaBase)}" target="_blank" rel="noopener" onclick="event.stopPropagation()"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
                 : '';
 
             html += `
             <div class="carta-card" data-fk-carta="${carta.fk_carta}" onclick="toggleInfo(this)">
                 <img src="${carta.url_imagem}" class="carta-grid-img" loading="lazy">
                 <div class="carta-hover-info">
+                    ${linkLiga}
                     <button class="btn-config btn-gear-colecao" onclick="event.stopPropagation();abrirModalEdicao(${carta.fk_carta})">
                         <i class="fa-solid fa-gear"></i>
                     </button>
@@ -294,7 +295,6 @@
                         <span>Valor Real</span>
                         <strong>${formatarBrl(carta.preco_ligaPkmn)}</strong>
                     </div>
-                    ${linkLiga}
                 </div>
             </div>
         `;
