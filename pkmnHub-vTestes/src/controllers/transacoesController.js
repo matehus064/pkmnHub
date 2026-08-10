@@ -1,5 +1,6 @@
 var transacoesModel = require("../models/transacoesModel");
 var cardsModel = require("../models/cardsModel");
+var precoLigaLogModel = require("../models/precoLigaLogModel");
 
 function venda(req, res) {
     var nomeCartaServer = req.body.nomeCartaServer;
@@ -35,6 +36,7 @@ function venda(req, res) {
                                     });
                                 res.json(resultado);
                                 transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
+                                precoLigaLogModel.atualizarPreco(carta, usuarioServer, menorLigaServer);
                             }).catch(function (erro) {
                                 console.log(erro);
                                 res.status(500).json(erro.sqlMessage);
@@ -49,6 +51,7 @@ function venda(req, res) {
                                     });
                                 res.json(resultado);
                                 transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
+                                precoLigaLogModel.atualizarPreco(carta, usuarioServer, menorLigaServer);
                             }).catch(function (erro) {
                                 console.log(erro);
                                 res.status(500).json(erro.sqlMessage);

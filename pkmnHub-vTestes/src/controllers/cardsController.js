@@ -1,5 +1,6 @@
 var cardsModel = require("../models/cardsModel");
 var transacoesModel = require("../models/transacoesModel");
+var precoLigaLogModel = require("../models/precoLigaLogModel");
 
 function salvarOuAtualizarSnapshot(usuario) {
     cardsModel.buscarValorTotalColecao(usuario)
@@ -65,14 +66,15 @@ function cadastrar(req, res) {
                     cardsModel.verificarCartaNaColecaoPorId(usuarioServer, idCarta)
                         .then(function(resultadoColecao) {
                             if (resultadoColecao.length > 0) {
-                                return cardsModel.somarQuantidadeCompra(usuarioServer, idCarta, qntCartaServer, valorCompraServer, menorLigaServer);
+                                return cardsModel.somarQuantidadeCompra(usuarioServer, idCarta, qntCartaServer, valorCompraServer);
                             } else {
-                                return cardsModel.adicionarNaColecao(usuarioServer, idCarta, qntCartaServer, valorCompraServer, menorLigaServer);
+                                return cardsModel.adicionarNaColecao(usuarioServer, idCarta, qntCartaServer, valorCompraServer);
                             }
                         })
                         .then(function(resultadoAcao) {
                             res.json(resultadoAcao);
                             transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer);
+                            precoLigaLogModel.atualizarPreco(idCarta, usuarioServer, menorLigaServer);
                             salvarOuAtualizarSnapshot(usuarioServer);
                             sincronizarColecaoSet(usuarioServer, setIdServer, numeroCartaServer);
                         })
@@ -88,11 +90,12 @@ function cadastrar(req, res) {
                     cardsModel.cadastrar(nomeCartaServer, tipoCartaServer, setCartaServer, raridadeCartaServer, numeroCartaServer, imagemCartaServer)
                         .then(function(resultadoCadastro) {
                             idCartaNova = resultadoCadastro.insertId;
-                            return cardsModel.adicionarNaColecao(usuarioServer, idCartaNova, qntCartaServer, valorCompraServer, menorLigaServer);
+                            return cardsModel.adicionarNaColecao(usuarioServer, idCartaNova, qntCartaServer, valorCompraServer);
                         })
                         .then(function(resultadoAcao) {
                             res.json(resultadoAcao);
                             transacoesModel.registrarTransacao(usuarioServer, idCartaNova, 'compra', valorCompraServer, menorLigaServer);
+                            precoLigaLogModel.atualizarPreco(idCartaNova, usuarioServer, menorLigaServer);
                             salvarOuAtualizarSnapshot(usuarioServer);
                             sincronizarColecaoSet(usuarioServer, setIdServer, numeroCartaServer);
                         })
@@ -155,9 +158,39 @@ function salvarColecaoSet(req, res) {
     }
 }
 
+function atualizarItem(req, res) {
+    var usuarioServer = req.body.usuarioServer;
+    var cartaServer = req.body.cartaServer;
+    var quantidadeServer = req.body.quantidadeServer;
+    var precoCompraServer = req.body.precoCompraServer;
+    var precoLigaServer = req.body.precoLigaServer;
+
+    if (usuarioServer == undefined || cartaServer == undefined) {
+        res.status(400).send("Usuário ou carta não definidos!");
+    } else if (quantidadeServer == undefined || precoCompraServer == undefined || precoLigaServer == undefined) {
+        res.status(400).send("Quantidade, valor pago ou valor real não definidos!");
+    } else {
+        cardsModel.atualizarItemColecao(usuarioServer, cartaServer, quantidadeServer, precoCompraServer)
+            .then(function(resultado) {
+                res.json(resultado);
+                return precoLigaLogModel.atualizarPreco(cartaServer, usuarioServer, precoLigaServer);
+            })
+            .then(function() {
+                salvarOuAtualizarSnapshot(usuarioServer);
+            })
+            .catch(function(erro) {
+                console.log("Erro ao atualizar item:", erro);
+                if (!res.headersSent) {
+                    res.status(500).json(erro.sqlMessage);
+                }
+            });
+    }
+}
+
 module.exports = {
     cadastrar,
     buscarColecao,
     buscarColecaoSet,
-    salvarColecaoSet
+    salvarColecaoSet,
+    atualizarItem
 };

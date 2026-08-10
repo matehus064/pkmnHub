@@ -19,4 +19,8 @@ router.post("/salvarColecaoSet", function (req, res) {
     cardsController.salvarColecaoSet(req, res);
 });
 
+router.post("/atualizarItem", function (req, res) {
+    cardsController.atualizarItem(req, res);
+});
+
 module.exports = router;

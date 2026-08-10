@@ -788,6 +788,13 @@ input[type="url"] {
 
 .carta-hover-info.visivel {
     opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-gear-colecao {
+    position: absolute;
+    top: 14px;
+    right: 14px;
 }
 
 .carta-info-nome {

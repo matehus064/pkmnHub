@@ -14,16 +14,16 @@ function cadastrar(nomePokemon, tipoPokemon, nomeSet, raridadePokemon, numeroSet
     return database.executar(instrucaoSql, [nomePokemon, tipoPokemon, nomeSet, raridadePokemon, numeroSet, urlCarta]);
 }
 
-function adicionarNaColecao(usuario, carta, quantidade, precoCompra, precoLigaPkmn) {
+function adicionarNaColecao(usuario, carta, quantidade, precoCompra) {
     var instrucaoSql = `
-        INSERT INTO colecao (fk_usuario, fk_carta, quantidade, preco_compra, preco_ligaPkmn) VALUES (?, ?, ?, ?, ?);
+        INSERT INTO colecao (fk_usuario, fk_carta, quantidade, preco_compra) VALUES (?, ?, ?, ?);
     `;
-    return database.executar(instrucaoSql, [usuario, carta, quantidade, precoCompra, precoLigaPkmn]);
+    return database.executar(instrucaoSql, [usuario, carta, quantidade, precoCompra]);
 }
 
 function buscarValorTotalColecao(usuario) {
     var instrucaoSql = `
-        SELECT SUM(c.preco_ligaPkmn * c.quantidade) AS valor_total_colecao FROM colecao c JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = ?;
+        SELECT SUM(b.preco_ligaPkmn * c.quantidade) AS valor_total_colecao FROM colecao c JOIN base_cards b ON b.id = c.fk_carta JOIN usuario u ON u.id = c.fk_usuario WHERE c.fk_usuario = ?;
     `;
     return database.executar(instrucaoSql, [usuario]);
 }
@@ -44,7 +44,7 @@ function buscarTotalCartas(usuario) {
 
 function buscarCartaMaisCara(usuario) {
     var instrucaoSql = `
-        SELECT b.nome_pokemon, b.set_nome, b.url_imagem, c.preco_ligaPkmn FROM colecao AS c JOIN base_cards AS b ON c.fk_carta = b.id WHERE c.fk_usuario = ? ORDER BY c.preco_ligaPkmn DESC LIMIT 1;
+        SELECT b.nome_pokemon, b.set_nome, b.url_imagem, b.preco_ligaPkmn FROM colecao AS c JOIN base_cards AS b ON c.fk_carta = b.id WHERE c.fk_usuario = ? ORDER BY b.preco_ligaPkmn DESC LIMIT 1;
     `;
     return database.executar(instrucaoSql, [usuario]);
 }
@@ -81,6 +81,7 @@ function buscarSnapshots(usuario, intervalo) {
 function buscarColecao(usuario) {
     var instrucaoSql = `
 SELECT 
+    b.id AS fk_carta,
     b.url_imagem, 
     b.nome_pokemon, 
     b.set_nome, 
@@ -88,7 +89,7 @@ SELECT
     b.raridade,
     c.quantidade, 
     c.preco_compra, 
-    c.preco_ligaPkmn,
+    b.preco_ligaPkmn,
     c.data_adicao
 FROM base_cards b 
 INNER JOIN colecao c ON c.fk_carta = b.id 
@@ -101,7 +102,7 @@ ORDER BY c.data_adicao DESC;
 
 function buscarValorPorSet(usuario) {
     var instrucaoSql = `
-        SELECT bc.set_nome, SUM(c.preco_ligaPkmn * c.quantidade) AS total_valor FROM base_cards AS bc INNER JOIN colecao AS c ON c.fk_carta = bc.id WHERE c.fk_usuario = ? GROUP BY bc.set_nome;
+        SELECT bc.set_nome, SUM(bc.preco_ligaPkmn * c.quantidade) AS total_valor FROM base_cards AS bc INNER JOIN colecao AS c ON c.fk_carta = bc.id WHERE c.fk_usuario = ? GROUP BY bc.set_nome;
     `;
     return database.executar(instrucaoSql, [usuario]);
 }
@@ -113,15 +114,14 @@ function verificarCartaNaColecaoPorId(usuario, carta) {
     return database.executar(instrucaoSql, [usuario, carta]);
 }
 
-function somarQuantidadeCompra(usuario, carta, quantidade, precoCompra, precoLigaPkmn) {
+function somarQuantidadeCompra(usuario, carta, quantidade, precoCompra) {
     var instrucaoSql = `
         UPDATE colecao 
         SET quantidade = quantidade + ?, 
-            preco_compra = ?, 
-            preco_ligaPkmn = ?
+            preco_compra = ?
         WHERE fk_usuario = ? AND fk_carta = ?;
     `;
-    return database.executar(instrucaoSql, [quantidade, precoCompra, precoLigaPkmn, usuario, carta]);
+    return database.executar(instrucaoSql, [quantidade, precoCompra, usuario, carta]);
 }
 
 function buscarColecaoSet(usuario, setId) {
@@ -149,6 +149,13 @@ function deletarColecaoSet(usuario, setId, numeroCarta) {
     return database.executar(instrucaoSql, [usuario, setId, numeroCarta]);
 }
 
+function atualizarItemColecao(usuario, carta, quantidade, precoCompra) {
+    var instrucaoSql = `
+        UPDATE colecao SET quantidade = ?, preco_compra = ? WHERE fk_usuario = ? AND fk_carta = ?;
+    `;
+    return database.executar(instrucaoSql, [quantidade, precoCompra, usuario, carta]);
+}
+
 module.exports = {
     existeCarta,
     cadastrar,
@@ -167,5 +174,6 @@ module.exports = {
     buscarValorPorSet,
     buscarColecaoSet,
     salvarColecaoSet,
-    deletarColecaoSet
+    deletarColecaoSet,
+    atualizarItemColecao
 };

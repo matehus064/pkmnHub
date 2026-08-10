@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function buscarCartaNaColecao(usuario, nomePokemon, numeroSet) {
     var instrucaoSql = `
-        SELECT fk_usuario, fk_carta, quantidade, preco_compra, preco_ligaPkmn, data_adicao FROM colecao c INNER JOIN base_cards bc ON c.fk_carta = bc.id WHERE fk_usuario = ? AND bc.nome_pokemon = ? AND bc.numero_set = ?;
+        SELECT c.fk_usuario, c.fk_carta, c.quantidade, c.preco_compra, bc.preco_ligaPkmn, c.data_adicao FROM colecao c INNER JOIN base_cards bc ON c.fk_carta = bc.id WHERE c.fk_usuario = ? AND bc.nome_pokemon = ? AND bc.numero_set = ?;
     `;
     return database.executar(instrucaoSql, [usuario, nomePokemon, numeroSet]);
 }
@@ -45,7 +45,7 @@ function buscarTotalRetorno(usuario) {
 function buscarEvolucaoColecao(usuario, intervalo) {
     // intervalo não pode ser prepared statement pois é parte da sintaxe SQL (INTERVAL 7 DAY)
     var instrucaoSql = `
-        SELECT data_adicao, SUM(preco_ligaPkmn * quantidade) AS valor_total FROM colecao WHERE fk_usuario = ? AND data_adicao >= DATE_SUB(NOW(), INTERVAL ${intervalo}) GROUP BY data_adicao ORDER BY data_adicao;
+        SELECT c.data_adicao, SUM(bc.preco_ligaPkmn * c.quantidade) AS valor_total FROM colecao c INNER JOIN base_cards bc ON c.fk_carta = bc.id WHERE c.fk_usuario = ? AND c.data_adicao >= DATE_SUB(NOW(), INTERVAL ${intervalo}) GROUP BY c.data_adicao ORDER BY c.data_adicao;
     `;
     return database.executar(instrucaoSql, [usuario]);
 }

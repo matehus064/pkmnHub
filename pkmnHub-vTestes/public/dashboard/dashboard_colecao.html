@@ -7,7 +7,11 @@
     <title>pkmnHub | Coleção</title>
     <link rel="icon" href="../assets/imgs/main/logo.png">
     <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="../css/style_modais.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .modal-sucesso-texto { color: var(--accent-green, #2ecc71); font-size: 0.85rem; margin-top: -8px; }
+    </style>
 </head>
 
 <body onload="colecao()">
@@ -40,6 +44,45 @@
         <div id="grid_colecao" class="grid-colecao"></div>
 
         <div id="paginacao" class="paginacao"></div>
+    </div>
+
+    <div class="modal-backdrop" id="modalEdicao" style="display:none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModalEdicao()">&times;</button>
+            <h2>Editar item</h2>
+            <p id="edit_cartaInfo">Ajuste a quantidade e os valores dessa carta na sua coleção.</p>
+
+            <div class="modal-field">
+                <label for="edit_qtd">Quantidade</label>
+                <input type="number" id="edit_qtd" min="0">
+            </div>
+            <div class="modal-field">
+                <label for="edit_valorPago">Valor Pago (R$)</label>
+                <input type="number" id="edit_valorPago" min="0" step="1.00">
+            </div>
+            <div class="modal-field">
+                <label for="edit_valorReal">Valor Real — Liga (R$)</label>
+                <input type="number" id="edit_valorReal" min="0" step="1.00">
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="fecharModalEdicao()">Cancelar</button>
+                <button class="btn-salvar-url" onclick="solicitarConfirmacaoEdicao()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalConfirmarEdicao" style="display:none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModalConfirmarEdicao()">&times;</button>
+            <h2>Confirmar alteração</h2>
+            <p>Confirma a alteração de <strong id="confirmar-edicao-nome">--</strong>? O valor real também atualiza o preço de referência para todos os usuários.</p>
+            <p id="confirmar-edicao-sucesso" class="modal-sucesso-texto" style="display:none;">Item alterado com sucesso!</p>
+            <div class="modal-actions" id="confirmar-edicao-actions">
+                <button class="modal-btn-cancel" onclick="fecharModalConfirmarEdicao()">Cancelar</button>
+                <button class="btnPrincipal_sign btnPrincipal_sign--flex" onclick="salvarEdicao()">Confirmar</button>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -78,6 +121,7 @@
     let colecaoData = [];
     let dadosFiltrados = [];
     let paginaAtual = 1;
+    let cartaEmEdicao = null;
 
     function colecao() {
         let usuario = sessionStorage.getItem("ID_USER");
@@ -198,13 +242,42 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // Acha a carta correspondente em bancoDados a partir dos dados que a
+    // coleção já tem (nome + "numero/numSet"), pra conseguir montar o link
+    // da Liga Pokémon — mesma lógica de encontrarCartaPorUrlSmall do binder.
+    function encontrarCartaBase(nomePokemon, numeroSet) {
+        let partes = (numeroSet || '').split('/');
+        let numero = parseInt(partes[0], 10);
+        let numSet = parseInt(partes[1], 10);
+        if (!numero || !numSet) return null;
+
+        for (let setId in bancoDados) {
+            let cartas = bancoDados[setId];
+            for (let i = 0; i < cartas.length; i++) {
+                let c = cartas[i];
+                if (c.name === nomePokemon && Number(c.number) === numero && Number(c.numSet) === numSet) {
+                    return Object.assign({ setId: setId }, c);
+                }
+            }
+        }
+        return null;
+    }
+
     function renderizarColecao(dados) {
         let html = '';
         dados.forEach(carta => {
+            let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
+            let linkLiga = cartaBase
+                ? `<a class="carta-info-liga" style="text-decoration: none; color: inherit;" href="${gerarLinkLigaPokemon(cartaBase)}" target="_blank" rel="noopener" onclick="event.stopPropagation()"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
+                : '';
+
             html += `
-            <div class="carta-card" onclick="toggleInfo(this)">
+            <div class="carta-card" data-fk-carta="${carta.fk_carta}" onclick="toggleInfo(this)">
                 <img src="${carta.url_imagem}" class="carta-grid-img" loading="lazy">
                 <div class="carta-hover-info">
+                    <button class="btn-config btn-gear-colecao" onclick="event.stopPropagation();abrirModalEdicao(${carta.fk_carta})">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
                     <span class="carta-info-nome">${carta.nome_pokemon}</span>
                     <span class="carta-info-set">${carta.set_nome}</span>
                     <span class="carta-info-numero"># ${carta.numero_set}</span>
@@ -221,12 +294,29 @@
                         <span>Valor Real</span>
                         <strong>${formatarBrl(carta.preco_ligaPkmn)}</strong>
                     </div>
+                    ${linkLiga}
                 </div>
             </div>
         `;
         });
         grid_colecao.innerHTML = html;
     }
+
+
+    document.getElementById("modalEdicao").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalEdicao();
+    });
+
+    document.getElementById("modalConfirmarEdicao").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalConfirmarEdicao();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            fecharModalEdicao();
+            fecharModalConfirmarEdicao();
+        }
+    });
 
     function toggleInfo(card) {
         let info = card.querySelector('.carta-hover-info');
@@ -235,6 +325,74 @@
         if (!isVisible) {
             info.classList.add('visivel');
         }
+    }
+
+    function abrirModalEdicao(fkCarta) {
+        let carta = colecaoData.find(c => c.fk_carta === fkCarta);
+        if (!carta) return;
+
+        cartaEmEdicao = carta;
+        edit_cartaInfo.innerHTML = `<strong>${carta.nome_pokemon}</strong> — ${carta.set_nome} #${carta.numero_set}`;
+        edit_qtd.value = carta.quantidade;
+        edit_valorPago.value = carta.preco_compra;
+        edit_valorReal.value = carta.preco_ligaPkmn;
+        modalEdicao.style.display = "flex";
+    }
+
+    function fecharModalEdicao() {
+        modalEdicao.style.display = "none";
+        cartaEmEdicao = null;
+    }
+
+    function solicitarConfirmacaoEdicao() {
+        if (!cartaEmEdicao) return;
+        document.getElementById('confirmar-edicao-nome').textContent = cartaEmEdicao.nome_pokemon;
+        modalEdicao.style.display = "none";
+        modalConfirmarEdicao.style.display = "flex";
+    }
+
+    function fecharModalConfirmarEdicao() {
+        modalConfirmarEdicao.style.display = "none";
+    }
+
+    function salvarEdicao() {
+        let usuario = sessionStorage.getItem("ID_USER");
+        let quantidade = Number(edit_qtd.value);
+        let precoCompra = Number(edit_valorPago.value);
+        let precoLiga = Number(edit_valorReal.value);
+
+        fetch("/cards/atualizarItem", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                usuarioServer: usuario,
+                cartaServer: cartaEmEdicao.fk_carta,
+                quantidadeServer: quantidade,
+                precoCompraServer: precoCompra,
+                precoLigaServer: precoLiga
+            })
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    cartaEmEdicao.quantidade = quantidade;
+                    cartaEmEdicao.preco_compra = precoCompra;
+                    cartaEmEdicao.preco_ligaPkmn = precoLiga;
+                    aplicarFiltro();
+
+                    document.getElementById('confirmar-edicao-actions').style.display = 'none';
+                    document.getElementById('confirmar-edicao-sucesso').style.display = 'block';
+
+                    setTimeout(function () {
+                        fecharModalConfirmarEdicao();
+                        document.getElementById('confirmar-edicao-actions').style.display = 'flex';
+                        document.getElementById('confirmar-edicao-sucesso').style.display = 'none';
+                        cartaEmEdicao = null;
+                    }, 2000);
+                } else {
+                    console.log("Erro ao salvar edição");
+                }
+            })
+            .catch(function (erro) { console.log(erro); });
     }
 
     function exportarCSV() {
