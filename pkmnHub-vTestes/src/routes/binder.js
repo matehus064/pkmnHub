@@ -35,4 +35,12 @@ router.get("/buscarBindersPorUsername", function (req, res) {
     binderController.buscarBindersPorUsername(req, res);
 });
 
+router.put("/atualizarBinder", function (req, res) {
+    binderController.atualizarBinder(req, res);
+})
+
+router.put("/reordenarBinders", function (req, res) {
+    binderController.reordenarBinders(req, res);
+})
+
 module.exports = router;

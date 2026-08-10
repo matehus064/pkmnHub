@@ -7,21 +7,16 @@ function criarBinder(req, res) {
     var nomeBinderServer = req.body.nomeBinderServer;
     var tipoBinderServer = req.body.tipoBinderServer;
 
-    if (nomeBinderServer == undefined) {
-        return res.status(400).send("O nome do binder não foi definido!");
-    }
-    if (!TIPOS_VALIDOS.includes(tipoBinderServer)) {
-        return res.status(400).send("Tipo de binder inválido!");
-    }
+    if (nomeBinderServer == undefined) return res.status(400).send("O nome do binder não foi definido!");
+    if (!TIPOS_VALIDOS.includes(tipoBinderServer)) return res.status(400).send("Tipo de binder inválido!");
 
-    // Sem criação de slots aqui — eles nascem sob demanda quando uma carta é salva
-    binderModel.criarBinder(usuarioServer, nomeBinderServer, tipoBinderServer)
+    binderModel.buscarProximaOrdem(usuarioServer)
         .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+            var proximaOrdem = resultado[0].proximaOrdem;
+            return binderModel.criarBinder(usuarioServer, nomeBinderServer, tipoBinderServer, proximaOrdem);
+        })
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function buscarBinders(req, res) {
@@ -98,6 +93,46 @@ function alternarPosseCarta(req, res) {
         .catch(function (erro) { res.status(500).json(erro.sqlMessage); });
 }
 
+var TOTAL_SLOTS_POR_TIPO = { "2x2": 160, "3x3": 360, "4x3": 480, "4x4": 1024 };
+
+function atualizarBinder(req, res) {
+    var idBinderServer = req.body.idBinderServer;
+    var nomeBinderServer = req.body.nomeBinderServer;
+    var tipoBinderServer = req.body.tipoBinderServer;
+
+    if (idBinderServer == undefined) return res.status(400).send("O ID do binder não foi definido!");
+    if (nomeBinderServer == undefined || !nomeBinderServer.trim()) return res.status(400).send("O nome do binder não foi definido!");
+    if (!TIPOS_VALIDOS.includes(tipoBinderServer)) return res.status(400).send("Tipo de binder inválido!");
+
+    var novoLimite = TOTAL_SLOTS_POR_TIPO[tipoBinderServer];
+
+    binderModel.buscarPrimeiroSlotForaDoLimite(idBinderServer, novoLimite)
+        .then(function (resultado) {
+            var primeiroSlot = resultado[0] ? resultado[0].primeiroSlot : null;
+            if (primeiroSlot) {
+                return res.status(409).json({
+                    erro: "slots_fora_do_limite",
+                    mensagem: "A partir do slot #" + primeiroSlot + " existem cartas que ficariam fora do novo tipo. Mova ou remova antes de trocar."
+                });
+            }
+            binderModel.atualizarBinder(idBinderServer, nomeBinderServer.trim(), tipoBinderServer)
+                .then(function (resultado) { res.json(resultado); })
+                .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
+        }).catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
+}
+
+function reordenarBinders(req, res) {
+    var usuarioServer = req.body.usuarioServer;
+    var idsOrdenadosServer = req.body.idsOrdenadosServer;
+
+    if (usuarioServer == undefined) return res.status(400).send("O usuário não foi definido!");
+    if (!Array.isArray(idsOrdenadosServer) || !idsOrdenadosServer.length) return res.status(400).send("A lista de ids não foi definida!");
+
+    binderModel.reordenarBinders(usuarioServer, idsOrdenadosServer)
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
+}
+
 module.exports = {
     criarBinder,
     buscarBinders,
@@ -106,5 +141,7 @@ module.exports = {
     limparSlot,
     deletarBinder,
     alternarPosseCarta,
-    buscarBindersPorUsername
+    buscarBindersPorUsername,
+    atualizarBinder,
+    reordenarBinders
 };

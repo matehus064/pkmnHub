@@ -852,7 +852,7 @@ header {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    width: 180px;
+    width: 175px;
     cursor: pointer;
     transition: border-color 0.2s, transform 0.2s;
     text-decoration: none;
@@ -1056,3 +1056,7 @@ header {
     font-family: 'Manrope', sans-serif;
 }
 .btn-del:hover { color: var(--accent-red); }
+
+.binder-card.arrastando {
+    opacity: 0.5;
+}

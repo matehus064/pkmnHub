@@ -1,8 +1,8 @@
 var database = require("../database/config")
 
-function criarBinder(usuario, nomeBinder, tipoBinder) {
+function criarBinder(usuario, nomeBinder, tipoBinder, ordem) {
     var instrucaoSql = `
-        INSERT INTO binder (fk_usuario, nome, tipo) VALUES ('${usuario}', '${nomeBinder}', '${tipoBinder}');
+        INSERT INTO binder (fk_usuario, nome, tipo, ordem) VALUES ('${usuario}', '${nomeBinder}', '${tipoBinder}', ${ordem});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -37,8 +37,9 @@ function limparSlot(idBinder, numeroSlot) {
 
 function buscarBinders(usuario) {
     var instrucaoSql = `
-        SELECT id, fk_usuario, nome, tipo FROM binder WHERE fk_usuario = '${usuario}';
+        SELECT id, fk_usuario, nome, tipo, ordem FROM binder WHERE fk_usuario = '${usuario}' ORDER BY ordem ASC, id ASC;
     `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
@@ -47,8 +48,10 @@ function buscarBindersPorUsername(username) {
         SELECT b.id, b.nome, b.tipo 
         FROM binder b
         JOIN usuario u ON u.id = b.fk_usuario
-        WHERE u.username = '${username}';
+        WHERE u.username = '${username}'
+        ORDER BY b.ordem ASC, b.id ASC;
     `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
@@ -81,6 +84,50 @@ function alternarPosseCarta(idBinder, numeroSlot, estadoAtual) {
     return database.executar(instrucaoSql);
 }
 
+// Retorna os números de slot ocupados além de um limite — usado para
+// bloquear a troca de tipo quando o novo tamanho não comporta as cartas atuais
+function buscarPrimeiroSlotForaDoLimite(idBinder, limite) {
+    var instrucaoSql = `
+        SELECT MIN(slot) AS primeiroSlot FROM binder_slots WHERE fk_binder = ${idBinder} AND slot > ${limite};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarBinder(idBinder, nome, tipo) {
+    var instrucaoSql = `
+        UPDATE binder SET nome = '${nome}', tipo = '${tipo}' WHERE id = ${idBinder};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarProximaOrdem(usuario) {
+    var instrucaoSql = `
+        SELECT COALESCE(MAX(ordem), -1) + 1 AS proximaOrdem FROM binder WHERE fk_usuario = '${usuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+// Recebe os ids na ordem final desejada e reescreve o campo "ordem" de
+// todos numa única query, usando CASE em vez de um UPDATE por item
+function reordenarBinders(usuario, idsOrdenados) {
+    if (!idsOrdenados.length) return Promise.resolve();
+
+    var casos = idsOrdenados.map(function (id, index) {
+        return `WHEN ${id} THEN ${index}`;
+    }).join(' ');
+    var listaIds = idsOrdenados.join(',');
+
+    var instrucaoSql = `
+        UPDATE binder SET ordem = CASE id ${casos} END
+        WHERE fk_usuario = '${usuario}' AND id IN (${listaIds});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     criarBinder,
     buscarBinders,
@@ -89,5 +136,9 @@ module.exports = {
     limparSlot,
     deletarBinder,
     alternarPosseCarta,
-    buscarBindersPorUsername
+    buscarBindersPorUsername,
+    buscarPrimeiroSlotForaDoLimite,
+    atualizarBinder,
+    buscarProximaOrdem,
+    reordenarBinders
 };
