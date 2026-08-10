@@ -6,7 +6,7 @@ function buscarDadosPerfil(username) {
             u.id,
             u.username,
             u.fk_fotoPerfil AS foto,
-            COALESCE(SUM(c.preco_ligaPkmn * c.quantidade), 0) AS valor_colecao,
+            COALESCE(SUM(bc.preco_ligaPkmn * c.quantidade), 0) AS valor_colecao,
             COALESCE(SUM(c.quantidade), 0) AS total_cartas,
             (
                 SELECT COUNT(*) FROM amizades a
@@ -15,6 +15,7 @@ function buscarDadosPerfil(username) {
             ) AS total_amigos
         FROM usuario u
         LEFT JOIN colecao c ON c.fk_usuario = u.id
+        LEFT JOIN base_cards bc ON bc.id = c.fk_carta
         WHERE u.username = ?
         GROUP BY u.id;
     `;

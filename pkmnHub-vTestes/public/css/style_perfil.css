@@ -435,7 +435,7 @@ body { overflow: hidden; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    width: 180px;
+    width: 170px;
     cursor: pointer;
     transition: border-color 0.2s, transform 0.2s;
     text-decoration: none;
