@@ -641,32 +641,12 @@ body { overflow: hidden; }
     border-radius: 12px;
 }
 
-.vazio-texto {
-    color: var(--text-secondary);
-    font-size: 13px;
-    padding: 20px 0;
-}
-
 /* ══════════════════════════════════════════════════════
-   MODAL SHOWCASE
+   MODAL SHOWCASE — moldura vem de .modal-box.modal-box--lista
+   (style_modais.css); aqui só o que é específico de conteúdo
 ══════════════════════════════════════════════════════ */
-.modal-showcase-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-dark);
-    border-radius: 20px;
-    width: 100%;
-    max-width: 500px;
-    padding: 28px;
-    position: relative;
-    animation: modalEntrar 0.2s ease;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.modal-showcase-box h2 { font-size: 18px; font-weight: 900; }
-.modal-showcase-box p { font-size: 13px; color: var(--text-secondary); }
+.modal-box--lista h2 { font-size: 18px; font-weight: 900; }
+.modal-box--lista > p { font-size: 13px; color: var(--text-secondary); }
 
 .modal-showcase-busca {
     width: 100%;

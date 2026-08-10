@@ -552,121 +552,11 @@ header {
 
 
 /* ==========================================================================
-   9. MODAL — base
+   9-10. MODAL — migrado para style_modais.css (fonte única)
+   .inputsJuntos/.espaco continuam aqui: são específicos de conteúdo, não moldura.
    ========================================================================== */
-@keyframes modalEntrar {
-    from { opacity: 0; transform: scale(0.96) translateY(8px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: color-mix(in srgb, black 60%, transparent);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-dark);
-    border-radius: 20px;
-    padding: 36px;
-    width: 100%;
-    max-width: 420px;
-    position: relative;
-    animation: modalEntrar 0.2s ease;
-}
-
-.modal-close {
-    position: absolute;
-    top: 18px; right: 20px;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.2s;
-    font-family: 'Manrope', sans-serif;
-}
-.modal-close:hover { color: white; }
-
-.modal-box h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-.modal-box > p { color: var(--text-secondary); font-size: 13px; margin-bottom: 22px; }
-
-.modal-box input {
-    width: 100%;
-    background: var(--bg-body);
-    border: 1px solid var(--border-medium);
-    padding: 10px 14px;
-    border-radius: 8px;
-    color: white;
-    outline: none;
-    font-family: 'Manrope', sans-serif;
-    font-size: 14px;
-    transition: border-color 0.2s;
-}
-.modal-box input:focus { border-color: var(--accent-yellow); }
-
-.modal-box label {
-    display: block;
-    font-size: 10px;
-    font-weight: 800;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.modal-actions { display: flex; gap: 10px; margin-top: 24px; align-items: center; }
-
-
-/* ==========================================================================
-   10. MODAL DE BUSCA DE CARTA
-   ========================================================================== */
-.modal-box--binder-view {
-    border-color: var(--accent-yellow);
-    max-width: 480px;
-    padding: 32px;
-}
-
-.modal-slot-info { color: var(--text-secondary); font-size: 13px; margin-bottom: 18px; }
-.modal-input-group { display: flex; flex-direction: column; gap: 10px; }
-
 .inputsJuntos { display: flex; gap: 15px; }
 .espaco { flex: 1; }
-
-.modal-search-input {
-    width: 100%;
-    background: var(--bg-body);
-    border: 1px solid var(--border-medium);
-    padding: 10px 14px;
-    border-radius: 8px;
-    color: white;
-    outline: none;
-    font-family: 'Manrope', sans-serif;
-    font-size: 14px;
-    transition: border-color 0.2s;
-}
-.modal-search-input:focus { border-color: var(--accent-yellow); }
-
-.btn-salvar-url {
-    background: var(--accent-yellow);
-    color: var(--bg-body);
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: 'Manrope', sans-serif;
-    transition: background 0.2s, transform 0.1s;
-}
-.btn-salvar-url:hover { background: color-mix(in srgb, var(--accent-yellow) 85%, black); }
-.btn-salvar-url:active { transform: scale(0.98); }
 
 .btnLimpar {
     width: 100%;
@@ -887,16 +777,6 @@ header {
         padding: 16px;
     }
 
-    .modal-box--binder-view {
-        max-width: 100%;
-        width: 100%;
-        border-radius: 20px 20px 0 0;
-        padding: 24px 20px;
-        max-height: 90dvh;
-        overflow-y: auto;
-        order: 2;
-    }
-
     #imagem {
         order: 1;
         width: 290px;
@@ -1113,22 +993,6 @@ header {
     transition: background 0.2s;
 }
 .header-search-btn:hover { background: color-mix(in srgb, var(--accent-yellow) 85%, black); }
-
-.modal-field { margin-bottom: 16px; }
-
-.modal-btn-cancel {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-dark);
-    border-radius: 50px;
-    padding: 13px 20px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-    font-family: 'Manrope', sans-serif;
-}
-.modal-btn-cancel:hover { color: white; border-color: var(--text-secondary); }
 
 .tipo-grid { display: flex; gap: 8px; }
 .tipo-option { flex: 1; }

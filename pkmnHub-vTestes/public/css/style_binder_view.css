@@ -63,12 +63,6 @@
     display: flex;
 }
 
-.modal-box--juntar {
-    width: min(720px, 92vw);
-    max-height: 82vh;
-    overflow-y: auto;
-}
-
 .juntar-colunas {
     display: flex;
     gap: 16px;
@@ -290,14 +284,6 @@ body.modo-edicao.forcar-obtida .modal-carregando img.nao-obtida {
    Adicionar ao final de style_binder_view.css
 ══════════════════════════════ */
 
-.modal-box--binder-view {
-    width: min(560px, 92vw);
-    max-height: 88vh;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
 .busca-principal {
     display: flex;
     align-items: center;
@@ -415,4 +401,52 @@ body.modo-edicao.forcar-obtida .modal-carregando img.nao-obtida {
 .selecao-set {
     color: var(--text-secondary);
     font-size: 12px;
+}
+
+
+@keyframes slotEntrada { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slotSaida   { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(24px)} }
+@keyframes slotSwap    { 50%{transform:scale(1.06)} }
+
+.binder-slot.anim-entrada { animation: slotEntrada .25s ease; }
+.binder-slot.anim-saida   { animation: slotSaida .2s ease forwards; }
+.binder-slot.anim-swap    { animation: slotSwap .22s ease; }
+
+.modal-imagem-flex {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.modal-imagem-info {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 14px;
+    padding: 20px;
+    width: 220px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-imagem-nome { font-size: 16px; font-weight: 800; }
+.modal-imagem-set  { font-size: 13px; color: var(--text-secondary); }
+.modal-imagem-numero { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+
+#btn-liga { text-align: center; text-decoration: none; }
+
+@media (max-width: 1024px) {
+    .modal-imagem-flex { flex-direction: column; max-height: 85dvh; overflow-y: auto; }
+    .modal-imagem-info { width: 100%; box-sizing: border-box; }
+}
+
+@media (max-width: 1024px) {
+    .resultados-busca-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .filtros-secundarios {
+        flex-direction: column;
+    }
 }

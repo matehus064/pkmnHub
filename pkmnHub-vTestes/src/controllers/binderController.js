@@ -12,6 +12,8 @@ function criarBinder(req, res) {
         totalSlots = 360;
     } else if (tipoBinderServer == "4x3") {
         totalSlots = 480;
+    } else if (tipoBinderServer == "4x4") {
+        totalSlots = 1024;
     } else {
         console.log("Erro do tipo")
         return;
