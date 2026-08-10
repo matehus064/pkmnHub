@@ -1,71 +1,43 @@
 var binderModel = require("../models/binderModel");
 
+var TIPOS_VALIDOS = ["2x2", "3x3", "4x3", "4x4"];
+
 function criarBinder(req, res) {
     var usuarioServer = req.body.usuarioServer;
     var nomeBinderServer = req.body.nomeBinderServer;
     var tipoBinderServer = req.body.tipoBinderServer;
-    let totalSlots = 0;
-
-    if (tipoBinderServer == "2x2") {
-        totalSlots = 160;
-    } else if (tipoBinderServer == "3x3") {
-        totalSlots = 360;
-    } else if (tipoBinderServer == "4x3") {
-        totalSlots = 480;
-    } else if (tipoBinderServer == "4x4") {
-        totalSlots = 1024;
-    } else {
-        console.log("Erro do tipo")
-        return;
-    }
 
     if (nomeBinderServer == undefined) {
-        res.status(400).send("O nome do binder não foi definido!");
-    } else if (tipoBinderServer == undefined) {
-        res.status(400).send("O tipo do binder não foi definido!");
-    } else {
-        binderModel.criarBinder(usuarioServer, nomeBinderServer, tipoBinderServer)
-            .then(function (resultadoBinder) {
-                binderModel.criarSlots(resultadoBinder.insertId, totalSlots)
-                    .then(function (resultado) {
-                        res.json(resultado);
-                    }).catch(function (erro) {
-                        console.log(erro);
-                        res.status(500).json(erro.sqlMessage);
-                    });
-            }).catch(function (erro) {
-                console.log(erro);
-                res.status(500).json(erro.sqlMessage);
-            });
+        return res.status(400).send("O nome do binder não foi definido!");
     }
+    if (!TIPOS_VALIDOS.includes(tipoBinderServer)) {
+        return res.status(400).send("Tipo de binder inválido!");
+    }
+
+    // Sem criação de slots aqui — eles nascem sob demanda quando uma carta é salva
+    binderModel.criarBinder(usuarioServer, nomeBinderServer, tipoBinderServer)
+        .then(function (resultado) {
+            res.json(resultado);
+        }).catch(function (erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
 }
 
 function buscarBinders(req, res) {
     var usuarioServer = req.query.usuarioServer;
-
     binderModel.buscarBinders(usuarioServer)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function buscarBindersPorUsername(req, res) {
     var usernameServer = req.query.usernameServer;
-
-    if (!usernameServer) {
-        return res.status(400).send("Username não informado.");
-    }
+    if (!usernameServer) return res.status(400).send("Username não informado.");
 
     binderModel.buscarBindersPorUsername(usernameServer)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function buscarSlots(req, res) {
@@ -76,68 +48,54 @@ function buscarSlots(req, res) {
             if (resultado.length === 0) {
                 return res.json({ meta: null, slots: [] });
             }
+            // Com LEFT JOIN, binder sem nenhuma carta ainda vem com uma linha
+            // "fantasma" (bs.id null) — filtra isso fora da lista de slots
+            var slotsPreenchidos = resultado.filter(function (linha) { return linha.id !== null; });
             res.json({
                 meta: { nome: resultado[0].nome, tipo: resultado[0].tipo },
-                slots: resultado
+                slots: slotsPreenchidos
             });
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+        }).catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function atualizarSlot(req, res) {
-    var slotServer = req.body.slotServer;
+    var binderServer = req.body.binderServer;
+    var slotNumeroServer = req.body.slotNumeroServer;
     var imagemCartaServer = req.body.imagemCartaServer;
+    var obtidaServer = req.body.obtidaServer;
 
-    binderModel.atualizarSlot(slotServer, imagemCartaServer)
+    binderModel.atualizarSlot(binderServer, slotNumeroServer, imagemCartaServer, obtidaServer)
         .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+            res.json({ id: resultado.insertId });
+        }).catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function limparSlot(req, res) {
-    var slotServer = req.body.slotServer;
+    var binderServer = req.body.binderServer;
+    var slotNumeroServer = req.body.slotNumeroServer;
 
-    binderModel.limparSlot(slotServer)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+    binderModel.limparSlot(binderServer, slotNumeroServer)
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function deletarBinder(req, res) {
     var idBinderServer = req.body.idBinderServer;
-
-    if (idBinderServer == undefined) {
-        res.status(400).send("O ID do binder está undefined!");
-        return;
-    }
+    if (idBinderServer == undefined) return res.status(400).send("O ID do binder está undefined!");
 
     binderModel.deletarBinder(idBinderServer)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
 function alternarPosseCarta(req, res) {
-    var slotServer = req.body.slotServer;
-    var estadoAtual = req.body.estadoAtual; // Recebe se atualmente a carta está opaca ou não
+    var binderServer = req.body.binderServer;
+    var slotNumeroServer = req.body.slotNumeroServer;
+    var estadoAtual = req.body.estadoAtual;
 
-    binderModel.alternarPosseCarta(slotServer, estadoAtual)
-        .then(function (resultado) {
-            res.json(resultado);
-        }).catch(function (erro) {
-            res.status(500).json(erro.sqlMessage);
-        });
+    binderModel.alternarPosseCarta(binderServer, slotNumeroServer, estadoAtual)
+        .then(function (resultado) { res.json(resultado); })
+        .catch(function (erro) { res.status(500).json(erro.sqlMessage); });
 }
 
 module.exports = {

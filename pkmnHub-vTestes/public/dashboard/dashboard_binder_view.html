@@ -31,12 +31,12 @@
                     </button>
                     <div class="tools-dropdown" id="tools-dropdown-desktop">
                         <select class="select-filtro" id="select-exibicao-desktop" onchange="setExibicao(this.value)">
-    <option value="auto">Auto</option>
-    <option value="2x2">2x2</option>
-    <option value="3x3">3x3</option>
-    <option value="4x3">4x3</option>
-    <option value="4x4">4x4</option>
-</select>
+                            <option value="auto">Auto</option>
+                            <option value="2x2">2x2</option>
+                            <option value="3x3">3x3</option>
+                            <option value="4x3">4x3</option>
+                            <option value="4x4">4x4</option>
+                        </select>
                         <select class="select-filtro" id="select-filtro-desktop" onchange="setFiltro(this.value)">
                             <option value="todos">Todos</option>
                             <option value="obtidas">Obtidas</option>
@@ -60,10 +60,12 @@
                         </button>
                     </div>
                 </div>
-                <button class="btn-voltar" id="btn-modo-mover-desktop" onclick="toggleModoEdicao()" title="Modo mover cartas">
+                <button class="btn-voltar" id="btn-modo-mover-desktop" onclick="toggleModoEdicao()"
+                    title="Modo mover cartas">
                     <i class="fa-solid fa-arrows-up-down-left-right"></i>
                 </button>
-                <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-desktop" onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
+                <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-desktop"
+                    onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
                     <i class="fa-solid fa-layer-group"></i>
                 </button>
                 <button class="btn-voltar btn-voltar--desktop" id="btn-voltar" title="Voltar">
@@ -91,13 +93,14 @@
                             <i class="fa-solid fa-sliders"></i>
                         </button>
                         <div class="tools-dropdown" id="tools-dropdown-mobile">
-                           <select class="select-filtro" id="select-exibicao-mobile" onchange="setExibicao(this.value)">
-    <option value="auto">Auto</option>
-    <option value="2x2">2x2</option>
-    <option value="3x3">3x3</option>
-    <option value="4x3">4x3</option>
-    <option value="4x4">4x4</option>
-</select>
+                            <select class="select-filtro" id="select-exibicao-mobile"
+                                onchange="setExibicao(this.value)">
+                                <option value="auto">Auto</option>
+                                <option value="2x2">2x2</option>
+                                <option value="3x3">3x3</option>
+                                <option value="4x3">4x3</option>
+                                <option value="4x4">4x4</option>
+                            </select>
                             <select class="select-filtro" id="select-filtro-mobile" onchange="setFiltro(this.value)">
                                 <option value="todos">Todos</option>
                                 <option value="obtidas">Obtidas</option>
@@ -117,11 +120,13 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn-voltar" id="btn-modo-mover-mobile" onclick="toggleModoEdicao()" title="Modo mover cartas">
+                    <button class="btn-voltar" id="btn-modo-mover-mobile" onclick="toggleModoEdicao()"
+                        title="Modo mover cartas">
                         <i class="fa-solid fa-arrows-up-down-left-right"></i>
                         <i class="fa-solid fa-check btn-modo-mover-check"></i>
                     </button>
-                    <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-mobile" onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
+                    <button class="btn-voltar btn-visualizacao" id="btn-visualizacao-mobile"
+                        onclick="toggleVisualizacaoEdicao()" title="Alternar: tudo como obtido / estado real">
                         <i class="fa-solid fa-layer-group"></i>
                     </button>
                     <button class="btn-voltar" id="btn-voltar-mobile"
@@ -183,16 +188,16 @@
 
             <div class="busca-principal">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input class="busca-principal-input" type="text" id="ipt_busca_nome"
-                    oninput="buscarCartasModal()" placeholder="Buscar por nome do Pokémon...">
+                <input class="busca-principal-input" type="text" id="ipt_busca_nome" oninput="buscarCartasModal()"
+                    placeholder="Buscar por nome do Pokémon...">
                 <button type="button" class="btnLimpar" onclick="limparFormulario()">LIMPAR</button>
             </div>
 
             <div class="filtros-secundarios">
-                <input class="modal-search-input" type="text" id="ipt_busca_numero"
-                    oninput="buscarCartasModal()" placeholder="Número (ex: 4)">
-                <input class="modal-search-input" type="text" id="ipt_busca_set"
-                    oninput="buscarCartasModal()" placeholder="Set (ex: Base Set)">
+                <input class="modal-search-input" type="text" id="ipt_busca_numero" oninput="buscarCartasModal()"
+                    placeholder="Número (ex: 4)">
+                <input class="modal-search-input" type="text" id="ipt_busca_set" oninput="buscarCartasModal()"
+                    placeholder="Set (ex: Base Set)">
             </div>
 
             <div id="resultados-busca-area" class="resultados-busca-area">
@@ -211,43 +216,45 @@
             </div>
 
             <div class="modal-footer">
-                <img src="" alt="" id="imagem" class="modal-preview-img modal-preview-img--footer" style="display:none;">
+                <img src="" alt="" id="imagem" class="modal-preview-img modal-preview-img--footer"
+                    style="display:none;">
                 <div class="modal-selecao-info">
                     <span id="selecao-nome" class="selecao-nome">Nenhuma carta selecionada</span>
                     <span id="selecao-set" class="selecao-set"></span>
                 </div>
-                <button class="btn-salvar-url" id="btn-salvar-carta" onclick="salvarCartaLink()" disabled>Salvar Imagem</button>
+                <button class="btn-salvar-url" id="btn-salvar-carta" onclick="salvarCartaLink()" disabled>Salvar
+                    Imagem</button>
             </div>
         </div>
     </div>
 
     <!-- Modal: imagem ampliada -->
-<div id="modal_imagem" class="modal-backdrop" style="display:none;">
-    <div class="modal-imagem-flex">
-        <div class="modal-image-container">
-            <img id="img_ampliada" src="" alt="Carta Ampliada">
-        </div>
-        <div class="modal-imagem-info">
-<div class="modal-imagem-header">
-    <span class="modal-imagem-nome" id="info-nome">—</span>
-    <button class="modal-imagem-fechar" onclick="fecharModalImagem()">✕</button>
-</div>
-            <span class="modal-imagem-set" id="info-set">—</span>
-            <span class="modal-imagem-numero" id="info-numero">—</span>
-            <div class="switch-tamanho">
-    <span class="switch-tamanho-label" id="lbl-tamanho-medio">Médio</span>
-    <label class="switch-toggle">
-        <input type="checkbox" id="chk-tamanho" onchange="alternarTamanhoImagem()">
-        <span class="switch-toggle-track">
-            <span class="switch-toggle-bolinha"></span>
-        </span>
-    </label>
-    <span class="switch-tamanho-label" id="lbl-tamanho-grande">Grande</span>
-</div>
-            <a class="btn-salvar-url" id="btn-liga" href="#" target="_blank" rel="noopener">Ver na Liga Pokémon</a>
+    <div id="modal_imagem" class="modal-backdrop" style="display:none;">
+        <div class="modal-imagem-flex">
+            <div class="modal-image-container">
+                <img id="img_ampliada" src="" alt="Carta Ampliada">
+            </div>
+            <div class="modal-imagem-info">
+                <div class="modal-imagem-header">
+                    <span class="modal-imagem-nome" id="info-nome">—</span>
+                    <button class="modal-imagem-fechar" onclick="fecharModalImagem()">✕</button>
+                </div>
+                <span class="modal-imagem-set" id="info-set">—</span>
+                <span class="modal-imagem-numero" id="info-numero">—</span>
+                <div class="switch-tamanho">
+                    <span class="switch-tamanho-label" id="lbl-tamanho-medio">Médio</span>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="chk-tamanho" onchange="alternarTamanhoImagem()">
+                        <span class="switch-toggle-track">
+                            <span class="switch-toggle-bolinha"></span>
+                        </span>
+                    </label>
+                    <span class="switch-tamanho-label" id="lbl-tamanho-grande">Grande</span>
+                </div>
+                <a class="btn-salvar-url" id="btn-liga" href="#" target="_blank" rel="noopener">Ver na Liga Pokémon</a>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Modal: carta sendo movida (flutuante, arrastável) -->
     <div id="modal_carregando" class="modal-carregando">
@@ -292,11 +299,11 @@
            VARIÁVEIS GLOBAIS
         ══════════════════════════════ */
         let CONFIG_TIPO = {
-    '2x2': { cols: 2, rows: 2, totalSlots: 160 },
-    '3x3': { cols: 3, rows: 3, totalSlots: 360 },
-    '4x3': { cols: 4, rows: 3, totalSlots: 480 },
-    '4x4': { cols: 4, rows: 4, totalSlots: 1024 },
-};
+            '2x2': { cols: 2, rows: 2, totalSlots: 160 },
+            '3x3': { cols: 3, rows: 3, totalSlots: 360 },
+            '4x3': { cols: 4, rows: 3, totalSlots: 480 },
+            '4x4': { cols: 4, rows: 4, totalSlots: 1024 },
+        };
 
         let binderAtual = { id: -1, nome: "Carregando...", tipo: "3x3", cartas: {} };
         let paginaAtual = 0;
@@ -391,11 +398,11 @@
         });
 
         let animPendente = {}; // slotIndex -> 'entrada'|'saida'|'swap', consumido 1x no render
-function claAnim(slotIndex) {
-    let a = animPendente[slotIndex];
-    if (a) { delete animPendente[slotIndex]; return ' anim-' + a; }
-    return '';
-}
+        function claAnim(slotIndex) {
+            let a = animPendente[slotIndex];
+            if (a) { delete animPendente[slotIndex]; return ' anim-' + a; }
+            return '';
+        }
 
         /* ══════════════════════════════
            UTILITÁRIOS
@@ -689,8 +696,8 @@ function claAnim(slotIndex) {
                 } else {
                     cliqueImg = "abrirModalImagem('" + carta.img + "')";
                     if (editavel) {
-                        botoesEdicao = '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ',' + carta.idSlotBanco + ',' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
-                            '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ',' + carta.idSlotBanco + ')" title="Remover">✕</button>';
+                        botoesEdicao = '<button class="slot-toggle" onclick="alternarCarta(' + slotIndex + ',' + carta.obtida + ')" title="Tenho/Não Tenho">✔</button>' +
+                            '<button class="slot-remove" onclick="removerCarta(' + slotIndex + ')" title="Remover">✕</button>';
                     }
                 }
                 let dragAttrs = editavel
@@ -703,7 +710,7 @@ function claAnim(slotIndex) {
 
             let idBanco = carta ? carta.idSlotBanco : 'null';
             // Slot vazio pode virar alvo direto de uma carta em movimento — pula o modal de busca
-            let podeReceberCarregada = modoCarregando && editavel && carta && carta.idSlotBanco;
+            let podeReceberCarregada = modoCarregando && editavel;
             let clickAttr = '';
             if (podeReceberCarregada) {
                 clickAttr = ' onclick="colocarCartaNoSlot(' + slotIndex + ')"';
@@ -971,116 +978,116 @@ function claAnim(slotIndex) {
         // outro CDN qualquer, sem esse sufixo — usa a URL exatamente como foi
         // colada pros dois tamanhos, sem tentar forçar um padrão que ela não segue.
         function usarImagemManual() {
-    let url = document.getElementById('ipt_url_manual').value.trim();
-    if (!url) return;
+            let url = document.getElementById('ipt_url_manual').value.trim();
+            if (!url) return;
 
-    // Se o link terminar em /small, /medium ou /large (com ou sem barra no fim),
-    // substitui o sufixo por /small antes de guardar
-    let match = url.match(/^(.*)\/(small|medium|large)\/?$/i);
-    let urlFinal = match ? (match[1] + '/small') : url;
+            // Se o link terminar em /small, /medium ou /large (com ou sem barra no fim),
+            // substitui o sufixo por /small antes de guardar
+            let match = url.match(/^(.*)\/(small|medium|large)\/?$/i);
+            let urlFinal = match ? (match[1] + '/small') : url;
 
-    cartaSelecionadaBusca = { manual: true, urlSmall: urlFinal, urlLarge: urlFinal };
+            cartaSelecionadaBusca = { manual: true, urlSmall: urlFinal, urlLarge: urlFinal };
 
-    document.querySelectorAll('.resultado-busca-item').forEach(function (el) {
-        el.classList.remove('selecionado');
-    });
+            document.querySelectorAll('.resultado-busca-item').forEach(function (el) {
+                el.classList.remove('selecionado');
+            });
 
-    let preview = document.getElementById('imagem');
-    preview.src = urlFinal;
-    preview.style.display = 'block';
+            let preview = document.getElementById('imagem');
+            preview.src = urlFinal;
+            preview.style.display = 'block';
 
-    document.getElementById('selecao-nome').textContent = 'Imagem colada manualmente';
-    document.getElementById('selecao-set').textContent = urlFinal;
+            document.getElementById('selecao-nome').textContent = 'Imagem colada manualmente';
+            document.getElementById('selecao-set').textContent = urlFinal;
 
-    document.getElementById('btn-salvar-carta').disabled = false;
-}
+            document.getElementById('btn-salvar-carta').disabled = false;
+        }
 
         /* ══════════════════════════════
            7. MODAL DE IMAGEM AMPLIADA
         ══════════════════════════════ */
-let cartaModalAtual = null;
-let urlImagemModalAtual = null; // fallback pra cartas fora do banco (ex: inseridas manualmente)
-let tamanhoAtual = 'medium';
+        let cartaModalAtual = null;
+        let urlImagemModalAtual = null; // fallback pra cartas fora do banco (ex: inseridas manualmente)
+        let tamanhoAtual = 'medium';
 
-function abrirModalImagem(urlImagem) {
-    document.getElementById("modal_imagem").style.display = "flex";
+        function abrirModalImagem(urlImagem) {
+            document.getElementById("modal_imagem").style.display = "flex";
 
-    let carta = encontrarCartaPorUrlSmall(urlImagem);
-    cartaModalAtual = carta;
-    urlImagemModalAtual = urlImagem;
-    tamanhoAtual = 'medium';
+            let carta = encontrarCartaPorUrlSmall(urlImagem);
+            cartaModalAtual = carta;
+            urlImagemModalAtual = urlImagem;
+            tamanhoAtual = 'medium';
 
-    let elNome = document.getElementById('info-nome');
-    let elSet = document.getElementById('info-set');
-    let elNumero = document.getElementById('info-numero');
-    let elLiga = document.getElementById('btn-liga');
+            let elNome = document.getElementById('info-nome');
+            let elSet = document.getElementById('info-set');
+            let elNumero = document.getElementById('info-numero');
+            let elLiga = document.getElementById('btn-liga');
 
-    if (carta) {
-        let setInfo = sets.find(function (s) { return s.apiId === carta.setId; });
-        let numeroFormatado = String(carta.number).padStart(3, '0');
-        elNome.textContent = carta.name;
-        elSet.textContent = setInfo ? setInfo.nomePt : (carta.setNameEn || '');
-        elNumero.textContent = numeroFormatado + '/' + carta.numSet;
-        elLiga.href = gerarLinkLigaPokemon(carta);
-        elLiga.style.display = '';
-        document.getElementById('img_ampliada').src = montarUrlImagem(carta, tamanhoAtual);
-    } else {
-        elNome.textContent = 'Carta não encontrada na base';
-        elSet.textContent = '';
-        elNumero.textContent = '';
-        elLiga.style.display = 'none';
-        document.getElementById('img_ampliada').src = montarUrlImagemGenerica(urlImagem, tamanhoAtual);
-    }
-
-    atualizarLabelTamanho();
-}
-
-function encontrarCartaPorUrlSmall(url) {
-    for (let setId in bancoDados) {
-        let cartas = bancoDados[setId];
-        for (let i = 0; i < cartas.length; i++) {
-            let carta = cartas[i];
-            if (montarUrlImagem(carta, 'small') === url) {
-                return Object.assign({ setId: setId }, carta);
+            if (carta) {
+                let setInfo = sets.find(function (s) { return s.apiId === carta.setId; });
+                let numeroFormatado = String(carta.number).padStart(3, '0');
+                elNome.textContent = carta.name;
+                elSet.textContent = setInfo ? setInfo.nomePt : (carta.setNameEn || '');
+                elNumero.textContent = numeroFormatado + '/' + carta.numSet;
+                elLiga.href = gerarLinkLigaPokemon(carta);
+                elLiga.style.display = '';
+                document.getElementById('img_ampliada').src = montarUrlImagem(carta, tamanhoAtual);
+            } else {
+                elNome.textContent = 'Carta não encontrada na base';
+                elSet.textContent = '';
+                elNumero.textContent = '';
+                elLiga.style.display = 'none';
+                document.getElementById('img_ampliada').src = montarUrlImagemGenerica(urlImagem, tamanhoAtual);
             }
+
+            atualizarLabelTamanho();
         }
-    }
-    return null;
-}
 
-// Troca o sufixo /small, /medium ou /large de uma URL qualquer pelo tamanho
-// pedido. Se a URL não seguir esse padrão, retorna ela mesma sem alteração —
-// usado como fallback pra imagens que não estão no bancoDados (ex: link colado manualmente).
-function montarUrlImagemGenerica(url, tamanho) {
-    let match = url.match(/^(.*)\/(small|medium|large)\/?$/i);
-    return match ? (match[1] + '/' + tamanho) : url;
-}
+        function encontrarCartaPorUrlSmall(url) {
+            for (let setId in bancoDados) {
+                let cartas = bancoDados[setId];
+                for (let i = 0; i < cartas.length; i++) {
+                    let carta = cartas[i];
+                    if (montarUrlImagem(carta, 'small') === url) {
+                        return Object.assign({ setId: setId }, carta);
+                    }
+                }
+            }
+            return null;
+        }
 
-function alternarTamanhoImagem() {
-    let chk = document.getElementById('chk-tamanho');
-    tamanhoAtual = chk.checked ? 'large' : 'medium';
-    let novaUrl = cartaModalAtual
-        ? montarUrlImagem(cartaModalAtual, tamanhoAtual)
-        : montarUrlImagemGenerica(urlImagemModalAtual, tamanhoAtual);
-    document.getElementById('img_ampliada').src = novaUrl;
-    atualizarLabelTamanho();
-}
+        // Troca o sufixo /small, /medium ou /large de uma URL qualquer pelo tamanho
+        // pedido. Se a URL não seguir esse padrão, retorna ela mesma sem alteração —
+        // usado como fallback pra imagens que não estão no bancoDados (ex: link colado manualmente).
+        function montarUrlImagemGenerica(url, tamanho) {
+            let match = url.match(/^(.*)\/(small|medium|large)\/?$/i);
+            return match ? (match[1] + '/' + tamanho) : url;
+        }
 
-function atualizarLabelTamanho() {
-    let chk = document.getElementById('chk-tamanho');
-    if (chk) chk.checked = (tamanhoAtual === 'large');
-    document.getElementById('lbl-tamanho-medio').classList.toggle('ativo', tamanhoAtual !== 'large');
-    document.getElementById('lbl-tamanho-grande').classList.toggle('ativo', tamanhoAtual === 'large');
-}
+        function alternarTamanhoImagem() {
+            let chk = document.getElementById('chk-tamanho');
+            tamanhoAtual = chk.checked ? 'large' : 'medium';
+            let novaUrl = cartaModalAtual
+                ? montarUrlImagem(cartaModalAtual, tamanhoAtual)
+                : montarUrlImagemGenerica(urlImagemModalAtual, tamanhoAtual);
+            document.getElementById('img_ampliada').src = novaUrl;
+            atualizarLabelTamanho();
+        }
 
-function fecharModalImagem() {
-    document.getElementById("modal_imagem").style.display = "none";
-    setTimeout(function () { document.getElementById("img_ampliada").src = ""; }, 200);
-}
+        function atualizarLabelTamanho() {
+            let chk = document.getElementById('chk-tamanho');
+            if (chk) chk.checked = (tamanhoAtual === 'large');
+            document.getElementById('lbl-tamanho-medio').classList.toggle('ativo', tamanhoAtual !== 'large');
+            document.getElementById('lbl-tamanho-grande').classList.toggle('ativo', tamanhoAtual === 'large');
+        }
 
-document.getElementById("modal_imagem").addEventListener("click", function (e) {
-    if (e.target === this) fecharModalImagem();
-});
+        function fecharModalImagem() {
+            document.getElementById("modal_imagem").style.display = "none";
+            setTimeout(function () { document.getElementById("img_ampliada").src = ""; }, 200);
+        }
+
+        document.getElementById("modal_imagem").addEventListener("click", function (e) {
+            if (e.target === this) fecharModalImagem();
+        });
 
         /* ══════════════════════════════
            8. AÇÕES DE BANCO (somente dono)
@@ -1088,19 +1095,26 @@ document.getElementById("modal_imagem").addEventListener("click", function (e) {
         function salvarCartaLink() {
             if (!isDono) return;
             if (!cartaSelecionadaBusca) return;
-            if (slotSelecionado < 0 || idSlotSelecionadoNoBanco < 0) return;
+            if (slotSelecionado < 0) return;
 
             let urlImagem = montarUrlImagem(cartaSelecionadaBusca, 'small');
 
             fetch("/binder/atualizarSlot", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ slotServer: idSlotSelecionadoNoBanco, imagemCartaServer: urlImagem })
+                body: JSON.stringify({
+                    binderServer: binderAtual.id,
+                    slotNumeroServer: slotSelecionado + 1,
+                    imagemCartaServer: urlImagem
+                })
             })
-                .then(function (r) {
-                    if (r.ok) {
+                .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+                .then(function (res) {
+                    if (res.ok) {
                         binderAtual.cartas[slotSelecionado] = binderAtual.cartas[slotSelecionado] || {};
                         binderAtual.cartas[slotSelecionado].img = urlImagem;
+                        binderAtual.cartas[slotSelecionado].idSlotBanco = res.data.id;
+                        binderAtual.cartas[slotSelecionado].obtida = 1;
                         invalidarCacheSlots();
                         fecharModalBusca();
                         animPendente[slotSelecionado] = 'entrada';
@@ -1112,35 +1126,35 @@ document.getElementById("modal_imagem").addEventListener("click", function (e) {
                 .catch(function (e) { console.error(e); alert("Erro de conexão."); });
         }
 
-function removerCarta(slotIndex, idBanco) {
-    if (!isDono) return;
-    animPendente[slotIndex] = 'saida';
-    invalidarCacheSlots();
-    renderizarPagina();
-    fetch("/binder/limparSlot", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slotServer: idBanco })
-    })
-        .then(function (r) {
-            if (r.ok) {
-                setTimeout(function () {
-                    binderAtual.cartas[slotIndex].img = null;
-                    invalidarCacheSlots();
-                    renderizarPagina();
-                }, 180);
-            }
-        })
-        .catch(function (e) { console.error(e); });
-}
+        function removerCarta(slotIndex) {
+            if (!isDono) return;
+            animPendente[slotIndex] = 'saida';
+            invalidarCacheSlots();
+            renderizarPagina();
+            fetch("/binder/limparSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ binderServer: binderAtual.id, slotNumeroServer: slotIndex + 1 })
+            })
+                .then(function (r) {
+                    if (r.ok) {
+                        setTimeout(function () {
+                            delete binderAtual.cartas[slotIndex]; // some de vez, não fica "linha vazia" nem no front
+                            invalidarCacheSlots();
+                            renderizarPagina();
+                        }, 180);
+                    }
+                })
+                .catch(function (e) { console.error(e); });
+        }
 
-        function alternarCarta(slotIndex, idBanco, estadoAtual) {
+        function alternarCarta(slotIndex, estadoAtual) {
             if (!isDono) return;
             let estado = (estadoAtual == null) ? 1 : estadoAtual;
             fetch("/binder/alternarPosseCarta", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ slotServer: idBanco, estadoAtual: estado })
+                body: JSON.stringify({ binderServer: binderAtual.id, slotNumeroServer: slotIndex + 1, estadoAtual: estado })
             })
                 .then(function (r) {
                     if (r.ok) {
@@ -1182,118 +1196,110 @@ function removerCarta(slotIndex, idBanco) {
             trocarCartasDeSlot(origem, slotDestino);
         }
 
-function trocarCartasDeSlot(origemIndex, destinoIndex, usarRoque) {
-    if (usarRoque === undefined) usarRoque = true;
-    if (!isDono) return;
-    let origem = binderAtual.cartas[origemIndex];
-    let destino = binderAtual.cartas[destinoIndex];
+        function trocarCartasDeSlot(origemIndex, destinoIndex, usarRoque) {
+            if (usarRoque === undefined) usarRoque = true;
+            if (!isDono) return;
+            let origem = binderAtual.cartas[origemIndex];
+            let destino = binderAtual.cartas[destinoIndex];
 
-    if (!origem || !origem.img || origem.externo || (destino && destino.externo)) return;
-    if (!origem.idSlotBanco || (destino && !destino.idSlotBanco)) return;
+            if (!origem || !origem.img || origem.externo || (destino && destino.externo)) return;
 
-    // captura a posição na tela dos dois slots ANTES de trocar os dados
-    let elOrigemSlot = document.querySelector('.binder-slot[data-slot="' + origemIndex + '"]');
-    let elDestinoSlot = document.querySelector('.binder-slot[data-slot="' + destinoIndex + '"]');
-    let rectOrigem = elOrigemSlot ? elOrigemSlot.getBoundingClientRect() : null;
-    let rectDestino = elDestinoSlot ? elDestinoSlot.getBoundingClientRect() : null;
+            let elOrigemSlot = document.querySelector('.binder-slot[data-slot="' + origemIndex + '"]');
+            let elDestinoSlot = document.querySelector('.binder-slot[data-slot="' + destinoIndex + '"]');
+            let rectOrigem = elOrigemSlot ? elOrigemSlot.getBoundingClientRect() : null;
+            let rectDestino = elDestinoSlot ? elDestinoSlot.getBoundingClientRect() : null;
 
-    let imgOrigem = origem.img;
-    let obtidaOrigem = origem.obtida;
-    let idBancoOrigem = origem.idSlotBanco;
+            let imgOrigem = origem.img;
+            let obtidaOrigem = origem.obtida;
+            let imgDestino = destino ? destino.img || null : null;
+            let obtidaDestino = destino ? destino.obtida : null;
 
-    let imgDestino = destino ? destino.img || null : null;
-    let obtidaDestino = destino ? destino.obtida : null;
-    let idBancoDestino = destino ? destino.idSlotBanco : null;
-    if (!idBancoDestino) return;
+            // Se o destino ficou sem imagem (slot que tinha carta virou vazio), a
+            // origem também some do objeto local — não sobra "carta fantasma" sem imagem
+            binderAtual.cartas[origemIndex] = imgDestino
+                ? Object.assign({}, origem, { img: imgDestino, obtida: obtidaDestino })
+                : undefined;
+            binderAtual.cartas[destinoIndex] = Object.assign({}, destino || {}, { img: imgOrigem, obtida: obtidaOrigem });
+            invalidarCacheSlots();
 
-    binderAtual.cartas[origemIndex] = Object.assign({}, origem, { img: imgDestino, obtida: obtidaDestino });
-    binderAtual.cartas[destinoIndex] = Object.assign({}, destino, { idSlotBanco: idBancoDestino, img: imgOrigem, obtida: obtidaOrigem });
-    invalidarCacheSlots();
+            if (usarRoque && imgDestino && rectOrigem && rectDestino) {
+                renderizarPagina();
+                animarRoque(origemIndex, rectDestino, rectOrigem);
+                animarRoque(destinoIndex, rectOrigem, rectDestino);
+            } else {
+                if (imgDestino) animPendente[origemIndex] = 'entrada';
+                animPendente[destinoIndex] = 'entrada';
+                renderizarPagina();
+            }
 
-    if (usarRoque && imgDestino && rectOrigem && rectDestino) {
-        // roque de verdade (só no drag-and-drop): as duas cartas cruzam na tela
-        renderizarPagina();
-        animarRoque(origemIndex, rectDestino, rectOrigem);
-        animarRoque(destinoIndex, rectOrigem, rectDestino);
-    } else {
-        // clique no modo edição (pick & place): entrada/saída simples
-        if (imgDestino) animPendente[origemIndex] = 'entrada';
-        animPendente[destinoIndex] = 'entrada';
-        renderizarPagina();
-    }
+            persistirSlot(origemIndex + 1, imgDestino, obtidaDestino);
+            persistirSlot(destinoIndex + 1, imgOrigem, obtidaOrigem);
+        }
 
-    persistirSlot(idBancoOrigem, imgDestino, obtidaOrigem, obtidaDestino);
-    persistirSlot(idBancoDestino, imgOrigem, obtidaDestino, obtidaOrigem);
-}
 
-// FLIP: a imagem nasce deslocada na posição antiga (via transform) e anima até 0,
-// dando a sensação de ter viajado fisicamente até o novo slot.
-function animarRoque(slotIndex, rectAntiga, rectNova) {
-    let elReal = document.querySelector('.binder-slot[data-slot="' + slotIndex + '"] img');
-    if (!elReal || !rectAntiga || !rectNova) return;
 
-    let dx = rectAntiga.left - rectNova.left;
-    let dy = rectAntiga.top - rectNova.top;
+        // FLIP: a imagem nasce deslocada na posição antiga (via transform) e anima até 0,
+        // dando a sensação de ter viajado fisicamente até o novo slot.
+        function animarRoque(slotIndex, rectAntiga, rectNova) {
+            let elReal = document.querySelector('.binder-slot[data-slot="' + slotIndex + '"] img');
+            if (!elReal || !rectAntiga || !rectNova) return;
 
-    let clone = elReal.cloneNode(true);
-    clone.style.position = 'fixed';
-    clone.style.left = rectNova.left + 'px';
-    clone.style.top = rectNova.top + 'px';
-    clone.style.width = rectNova.width + 'px';
-    clone.style.height = rectNova.height + 'px';
-    clone.style.margin = '0';
-    clone.style.zIndex = '9999';
-    clone.style.pointerEvents = 'none';
-    clone.style.willChange = 'transform';
-    clone.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
-    clone.style.transition = 'none';
-    document.body.appendChild(clone);
-    elReal.style.visibility = 'hidden';
+            let dx = rectAntiga.left - rectNova.left;
+            let dy = rectAntiga.top - rectNova.top;
 
-    // duplo rAF: garante que o navegador já pintou a posição inicial
-    // antes de disparar a transição — senão o browser "funde" os dois
-    // estados num único frame e a carta parece teleportar.
-    requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-            clone.style.transition = 'transform .32s cubic-bezier(.22,.9,.32,1)';
-            clone.style.transform = 'translate3d(0,0,0)';
-        });
-    });
+            let clone = elReal.cloneNode(true);
+            clone.style.position = 'fixed';
+            clone.style.left = rectNova.left + 'px';
+            clone.style.top = rectNova.top + 'px';
+            clone.style.width = rectNova.width + 'px';
+            clone.style.height = rectNova.height + 'px';
+            clone.style.margin = '0';
+            clone.style.zIndex = '9999';
+            clone.style.pointerEvents = 'none';
+            clone.style.willChange = 'transform';
+            clone.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+            clone.style.transition = 'none';
+            document.body.appendChild(clone);
+            elReal.style.visibility = 'hidden';
 
-    setTimeout(function () {
-        clone.remove();
-        elReal.style.visibility = '';
-    }, 340);
-}
+            // duplo rAF: garante que o navegador já pintou a posição inicial
+            // antes de disparar a transição — senão o browser "funde" os dois
+            // estados num único frame e a carta parece teleportar.
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    clone.style.transition = 'transform .32s cubic-bezier(.22,.9,.32,1)';
+                    clone.style.transform = 'translate3d(0,0,0)';
+                });
+            });
+
+            setTimeout(function () {
+                clone.remove();
+                elReal.style.visibility = '';
+            }, 340);
+        }
         // Salva um lado da troca: atualiza (ou limpa) a imagem do slot e, se o
         // estado "obtida" mudou, ajusta via alternarPosseCarta — essa rota só
         // funciona como toggle, por isso só é chamada quando o valor realmente
         // precisa mudar. OBS: isso assume que /binder/atualizarSlot não mexe no
         // campo "obtida" por conta própria — se o backend fizer isso, ajustar aqui.
-        function persistirSlot(idSlotBanco, novaImg, estadoAtual, estadoDesejado) {
-            let requisicaoImagem = novaImg
-                ? fetch("/binder/atualizarSlot", {
+        function persistirSlot(numeroSlot, novaImg, obtida) {
+            if (novaImg) {
+                return fetch("/binder/atualizarSlot", {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ slotServer: idSlotBanco, imagemCartaServer: novaImg })
-                })
-                : fetch("/binder/limparSlot", {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ slotServer: idSlotBanco })
-                });
-
-            requisicaoImagem
-                .then(function () {
-                    if (estadoDesejado !== estadoAtual && estadoAtual != null) {
-                        return fetch("/binder/alternarPosseCarta", {
-                            method: "PUT",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ slotServer: idSlotBanco, estadoAtual: estadoAtual })
-                        });
-                    }
-                })
-                .catch(function (e) { console.error("Erro ao salvar troca de slot:", e); });
+                    body: JSON.stringify({
+                        binderServer: binderAtual.id,
+                        slotNumeroServer: numeroSlot,
+                        imagemCartaServer: novaImg,
+                        obtidaServer: obtida
+                    })
+                }).catch(function (e) { console.error("Erro ao salvar troca de slot:", e); });
+            }
+            return fetch("/binder/limparSlot", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ binderServer: binderAtual.id, slotNumeroServer: numeroSlot })
+            }).catch(function (e) { console.error("Erro ao limpar slot:", e); });
         }
 
         /* ══════════════════════════════
@@ -1354,21 +1360,21 @@ function animarRoque(slotIndex, rectAntiga, rectNova) {
             });
         }
 
-function iniciarMovimentoCarta(slotIndex, idBanco) {
-    if (!isDono || !modoEdicaoAtivo) return;
-    let carta = binderAtual.cartas[slotIndex];
-    if (!carta || !carta.img || carta.externo) return;
-    animPendente[slotIndex] = 'saida';
-    invalidarCacheSlots();
-    renderizarPagina();
-    setTimeout(function () {
-        cartaCarregada = { slotIndex: slotIndex, idSlotBanco: idBanco, img: carta.img, obtida: carta.obtida };
-        modoCarregando = true;
-        invalidarCacheSlots();
-        renderizarPagina();
-        abrirModalCarregando(carta.img, carta.obtida);
-    }, 180);
-}
+        function iniciarMovimentoCarta(slotIndex, idBanco) {
+            if (!isDono || !modoEdicaoAtivo) return;
+            let carta = binderAtual.cartas[slotIndex];
+            if (!carta || !carta.img || carta.externo) return;
+            animPendente[slotIndex] = 'saida';
+            invalidarCacheSlots();
+            renderizarPagina();
+            setTimeout(function () {
+                cartaCarregada = { slotIndex: slotIndex, idSlotBanco: idBanco, img: carta.img, obtida: carta.obtida };
+                modoCarregando = true;
+                invalidarCacheSlots();
+                renderizarPagina();
+                abrirModalCarregando(carta.img, carta.obtida);
+            }, 180);
+        }
 
         function cancelarMovimentoCarta() {
             cartaCarregada = null;
