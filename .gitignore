@@ -7,3 +7,4 @@ package-lock.json
 .testes/
 postcss.confiDg.js
 ngrok.exe
+pids.txt
