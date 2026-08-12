@@ -1,0 +1,34 @@
+<div id="modalImport" class="modal-import-backdrop">
+    <div class="modal-import-box">
+        <div class="modal-import-header">
+            <h2 class="modal-import-titulo">Importar <span style="color: var(--accent-yellow);">Lote</span></h2>
+            <button onclick="fecharModalImport()" class="modal-import-fechar">✕</button>
+        </div>
+
+        <p class="modal-import-desc">
+            Cole os dados no formato: <span style="color: var(--accent-yellow);">Nome (000/000) &nbsp; R$ 00,00 &nbsp; R$ 00,00</span><br>
+            Promos (∞) são ignoradas automaticamente.
+        </p>
+
+        <textarea id="txtImport" class="modal-import-textarea"
+            placeholder="Mewtwo ex (058/182)	 R$  24,99 	 R$  16,99&#10;Blastoise ex (030/142)	 R$  17,99 	 R$  12,23"></textarea>
+
+        <div class="modal-import-intervalos">
+            <div class="modal-import-intervalo-grupo">
+                <label>Entre cartas (ms)</label>
+                <input type="number" id="ipt_intervalo" min="500" step="500">
+            </div>
+            <div class="modal-import-intervalo-grupo">
+                <label>Antes de cadastrar (ms)</label>
+                <input type="number" id="ipt_intervaloPreCadastro" min="500" step="500">
+            </div>
+        </div>
+
+        <div class="modal-import-actions">
+            <button onclick="fecharModalImport()" class="modal-import-btn-cancelar">CANCELAR</button>
+            <button id="btn-executar-import" class="modal-import-btn-executar">EXECUTAR</button>
+        </div>
+
+        <label id="div_validacao_import" class="modal-import-feedback"></label>
+    </div>
+</div>

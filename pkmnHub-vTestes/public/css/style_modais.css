@@ -1,0 +1,521 @@
+/* ══════════════════════════════════════════════
+   MODAIS — componente reutilizável único do projeto
+   Fonte única de verdade: antes duplicado em
+   style_binder.css e style_dashboard.css, e
+   reinventado em style_perfil.css (.modal-showcase-box)
+══════════════════════════════════════════════ */
+
+@keyframes modalEntrar {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: color-mix(in srgb, black 60%, transparent);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 20px;
+    padding: 36px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    animation: modalEntrar 0.2s ease;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.modal-close:hover {
+    color: white;
+}
+
+.modal-box h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.modal-box>p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+.modal-field {
+    margin-bottom: 16px;
+}
+
+.modal-box input {
+    width: 100%;
+    background: var(--bg-body);
+    border: 1px solid var(--border-medium);
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.modal-box input:focus {
+    border-color: var(--accent-yellow);
+}
+
+.modal-box label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    align-items: center;
+}
+
+.modal-btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-dark);
+    border-radius: 50px;
+    padding: 13px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.modal-btn-cancel:hover {
+    color: white;
+    border-color: var(--text-secondary);
+}
+
+/* ── Variante: modal de busca/seleção (binder view, showcase, etc) ──
+   Mais largo, borda destacada em amarelo, padding um pouco menor */
+.modal-box--busca {
+    border-color: var(--accent-yellow);
+    max-width: 480px;
+    padding: 32px;
+}
+
+.modal-slot-info {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.modal-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-search-input {
+    width: 100%;
+    background: var(--bg-body);
+    border: 1px solid var(--border-medium);
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.modal-search-input:focus {
+    border-color: var(--accent-yellow);
+}
+
+.btn-salvar-url {
+    background: var(--accent-yellow);
+    color: var(--bg-body);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-salvar-url:hover {
+    background: color-mix(in srgb, var(--accent-yellow) 85%, black);
+}
+
+.btn-salvar-url:active {
+    transform: scale(0.98);
+}
+
+.btn-salvar-url:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+/* ── Variante: modal com lista rolável (showcase, juntar binders) ──
+   Layout em coluna com altura máxima, pra listas dentro do modal */
+.modal-box--lista {
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.vazio-texto {
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* ── Modal de imagem ampliada ── */
+.modal-image-container {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: modalEntrar 0.2s ease;
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    object-fit: contain;
+}
+
+.modal-close-img {
+    top: -40px;
+    right: 0;
+    font-size: 26px;
+    color: white;
+}
+
+/* Mobile: modal de busca vira folha inferior full-width */
+@media (max-width: 1024px) {
+    .modal-box--busca {
+        max-width: 100%;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        padding: 24px 20px;
+        max-height: 90dvh;
+        overflow-y: auto;
+    }
+}
+
+/* ══════════════════════════════
+   OPÇÃO DE COLAR LINK MANUALMENTE (modal de busca de carta)
+   Adicionar em style_modais.css
+══════════════════════════════ */
+
+.busca-manual-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.link-manual {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    align-self: flex-start;
+    transition: color 0.2s;
+}
+
+.link-manual:hover {
+    color: var(--accent-yellow);
+}
+
+.busca-manual-input {
+    display: flex;
+    gap: 8px;
+}
+
+.busca-manual-input .modal-search-input {
+    flex: 1;
+    margin: 0;
+}
+
+.btn-usar-link {
+    background: var(--bg-body);
+    border: 1px solid var(--border-medium);
+    color: white;
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.btn-usar-link:hover {
+    border-color: var(--accent-yellow);
+}
+
+
+
+
+.switch-tamanho {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.switch-tamanho-label {
+    font-size: 13px;
+    color: #999;
+    transition: color .2s ease, font-weight .2s ease;
+}
+
+.switch-tamanho-label.ativo {
+    color: #fff;
+    font-weight: 600;
+}
+
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.switch-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-toggle-track {
+    position: absolute;
+    inset: 0;
+    background: #555;
+    border-radius: 999px;
+    transition: background .2s ease;
+}
+
+.switch-toggle-bolinha {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s ease;
+}
+
+.switch-toggle input:checked+.switch-toggle-track {
+    background: var(--cor-principal, #e63946);
+}
+
+.switch-toggle input:checked+.switch-toggle-track .switch-toggle-bolinha {
+    transform: translateX(18px);
+}
+
+.modal-imagem-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.modal-imagem-fechar {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.modal-imagem-fechar:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+}
+
+.modal-imagem-fechar:active {
+    transform: scale(0.92);
+}
+
+@media (max-width: 1024px) {
+    .tools-dropdown {
+        left: auto;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        min-width: 180px;
+    }
+
+    .tools-dropdown .select-filtro {
+        width: 100%;
+    }
+
+    .modal-box--busca,
+    .modal-box--md,
+    .modal-box--historico {
+        max-width: 100%;
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+        padding: 24px 20px;
+        max-height: 90dvh;
+        overflow-y: auto;
+    }
+}
+
+.btn-config {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+}
+
+.btn-config:hover {
+    opacity: 1;
+}
+
+.modal-erro-texto {
+    color: #e05555;
+    font-size: 0.85rem;
+    margin-top: -8px;
+}
+
+.modal-btn-danger {
+    color: #e05555;
+    border-color: #e05555;
+}
+
+.modal-btn-danger-solid {
+    background: #e05555;
+    border-color: #e05555;
+}
+
+/* ===== MODAL HISTÓRICO DE PREÇO ===== */
+
+.modal-box--historico {
+    width: 100%;
+    max-width: 720px;
+}
+
+.historico-header {
+    margin-bottom: 16px;
+}
+
+.historico-header h2 {
+    margin: 0 0 4px 0;
+}
+
+.historico-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.historico-link-liga {
+    color: var(--accent-yellow);
+    text-decoration: none;
+    margin-left: auto;
+}
+
+.historico-filtros {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.historico-conteudo {
+    display: flex;
+    gap: 20px;
+}
+
+.historico-chart-wrapper {
+    flex: 1 1 65%;
+    height: 260px;
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.historico-carta-wrapper {
+    flex: 0 0 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.historico-carta-img {
+    width: 280px;
+    height: auto;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .historico-conteudo {
+        flex-direction: column;
+    }
+}

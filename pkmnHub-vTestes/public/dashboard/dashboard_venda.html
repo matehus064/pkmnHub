@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Venda</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="../css/style_modais.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container">
+        <header id="header">
+            <div class="header-left" style="display:flex; align-items:center; width:100%;">
+                <div class="header-search-group" style="font-size:150%; font-weight:900;">Cadastre sua Venda</div>
+                <button type="button" onclick="abrirModalImport()" class="btn-importar-lote">IMPORTAR LOTE</button>
+            </div>
+            <div class="header-right">
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div class="cadastroFlex_wrapper">
+            <main class="cadastroContainer">
+                <section class="formularioCadastro">
+                    <form>
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_numero">NÚMERO</label>
+                                <input type="text" id="ipt_numero" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                            </div>
+                            <div class="espaco">
+                                <label for="ipt_qtd">QNT.</label>
+                                <input type="number" id="ipt_qtd" min="1" value="1">
+                            </div>
+                            <div class="espaco">
+                                <label style="color:transparent;">.</label>
+                                <button type="button" onclick="limparFormulario(camposCompra)" class="btnLimpar">LIMPAR</button>
+                            </div>
+                        </div>
+
+                        <div class="carta-info-divider" style="margin-bottom:15px;"></div>
+
+                        <div class="inputsJuntos">
+                            <div class="espaco">
+                                <label for="ipt_nome">Nome da Carta</label>
+                                <input type="text" id="ipt_nome" placeholder="Ex: Charizard ex">
+                            </div>
+                            <div class="espaco">
+                                <label for="ipt_set">SET</label>
+                                <input type="text" id="ipt_set" placeholder="Ex: 054/191"
+                                    oninput="validandoImagem(ipt_numero.value, ipt_set.value)">
+                            </div>
+                            <div class="espaco">
+                                <div class="inputsJuntos">
+                                    <div class="espaco">
+                                        <label for="ipt_precoLiga">LIGA (R$)</label>
+                                        <input type="number" id="ipt_precoLiga" value="0" min="0" step="1.00" placeholder="0.00">
+                                    </div>
+                                    <div class="espaco">
+                                        <label for="ipt_valorVenda">VENDA (R$)</label>
+                                        <input type="number" id="ipt_valorVenda" value="0" min="1" step="1.00" placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label id="div_validacao"></label>
+                        <button type="button" id="btn-venda" class="btnPrincipal_sign">Cadastrar</button>
+                    </form>
+                </section>
+
+                <section class="direitaContainer_nidoking" style="align-items:center;">
+                    <img src="https://images.scrydex.com/pokemon/1-1/large" alt="" id="imagem" class="card-preview-img">
+                    <div class="card card--instrucoes">
+                        <div class="total-number" style="font-size:15px; margin-bottom:10px;" id="roi">INSTRUÇÕES!</div>
+                        <div class="label">Preencha somente o campo de numeração e valores, caso seja necessário será solicitado outros campos.</div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/dados.js"></script>
+    <script src="../js/dadosCartas.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/auth_ui.js"></script>
+    <script src="../js/perfil_nav.js"></script>
+
+    <script>
+        carregarModalImport('venda');
+
+        var camposCompra = [
+            { id: "ipt_nome", valor: "" },
+            { id: "ipt_set", valor: "" },
+            { id: "ipt_numero", valor: "" },
+            { id: "ipt_qtd", valor: 1 },
+            { id: "ipt_valorVenda", valor: 0 },
+            { id: "ipt_precoLiga", valor: 0 },
+        ];
+
+        function cadastrarCartaVenda() {
+            let nomeCarta = ipt_nome.value;
+            let numeroCarta = ipt_numero.value;
+            let qntCarta = Number(ipt_qtd.value);
+            let valorVenda = Number(ipt_valorVenda.value);
+            let menorLiga = Number(ipt_precoLiga.value);
+            let usuario = sessionStorage.getItem("ID_USER");
+
+            let condicoesErro = [
+                nomeCarta == "" || numeroCarta == "" || qntCarta == "",
+                nomeCarta.length < 3,
+                numeroCarta.indexOf('/') != 3 || numeroCarta.length != 7
+            ];
+
+            let mensagensErro = [
+                "Preencha todos os campos",
+                "Nome inválido",
+                "Observe a parte inferior da sua carta e preencha corretamente a numeração"
+            ];
+
+            for (let i = 0; i < condicoesErro.length; i++) {
+                if (condicoesErro[i]) {
+                    div_validacao.innerHTML = "<span class='msg-erro'>" + mensagensErro[i] + "</span>";
+                    return false;
+                }
+            }
+
+            fetch("/transacoes/venda", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    nomeCartaServer: nomeCarta,
+                    numeroCartaServer: numeroCarta,
+                    qntCartaServer: qntCarta,
+                    valorVendaServer: valorVenda,
+                    menorLigaServer: menorLiga,
+                    usuarioServer: usuario
+                }),
+            })
+                .then(function(resposta) {
+                    if (resposta.ok) {
+                        mensagemTemporizada(div_validacao, "<span class='msg-sucesso'>Carta vendida com sucesso!</span>");
+                        limparFormulario(camposCompra);
+                        ipt_numero.focus();
+                    } else {
+                        mensagemTemporizada(div_validacao, "<span class='msg-erro'>Houve um erro ao tentar realizar a venda...</span>");
+                    }
+                })
+                .catch(function(resposta) { console.log(`#ERRO: ${resposta}`); });
+
+            return false;
+        }
+
+        document.getElementById("btn-venda").addEventListener("click", cadastrarCartaVenda);
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                if (e.target.tagName !== "BUTTON") cadastrarCartaVenda();
+            }
+        });
+    </script>
+</body>
+</html>

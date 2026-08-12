@@ -1,0 +1,1662 @@
+/* ==========================================================================
+   1. VARIÁVEIS E RESET GLOBAL
+   ========================================================================== */
+@import url('../css/root.css');
+
+@font-face {
+    font-family: 'Manrope';
+    src: url(../assets/fonts/Manrope/Manrope-VariableFont_wght.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ballet';
+    src: url(../assets/fonts/Ballet/Ballet-Regular-VariableFont_opsz.ttf);
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: normal;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: white;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   2. SIDEBAR
+   ========================================================================== */
+.sidebar {
+    width: 250px;
+    background-color: color-mix(in srgb, var(--bg-body) 69%, transparent);
+    backdrop-filter: blur(10px);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-dark);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    transition: width 0.3s ease, padding 0.3s ease;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--accent-yellow);
+    margin-bottom: 35px;
+}
+
+.logo img {
+    width: 25px;
+}
+
+.logo a {
+    color: var(--accent-yellow);
+    font-weight: bold;
+}
+
+/* Nav */
+.nav-menu ul {
+    list-style: none;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: white;
+}
+
+.nav-item.active>.nav-link {
+    color: var(--accent-yellow);
+    font-weight: 700;
+}
+
+.nav-link i {
+    font-size: 16px;
+    width: 20px;
+    min-width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.nav-link .nav-text {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    opacity: 1;
+    transition: opacity 0.2s ease, max-width 0.3s ease, margin-left 0.3s ease;
+}
+
+/* Submenu */
+.nav-item-has-submenu .nav-link::after {
+    content: '›';
+    font-size: 1.4rem;
+    transition: transform 0.3s;
+    margin-left: auto;
+}
+
+.nav-item-has-submenu.open .nav-link::after {
+    transform: rotate(90deg);
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.nav-item-has-submenu.open .submenu {
+    max-height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.submenu-link {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    display: block;
+    padding: 8px 0;
+    transition: color 0.2s;
+}
+
+.submenu-link:hover {
+    color: white;
+}
+
+.submenu-link.active {
+    color: var(--accent-yellow);
+    font-weight: 700;
+}
+
+/* Sidebar colapsada */
+.sidebar--collapsed {
+    width: 70px;
+    padding: 30px 20px;
+    align-items: flex-start;
+}
+
+.sidebar--collapsed .logo {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar--collapsed .nav-text,
+.sidebar--collapsed .sidebar-logo-text,
+.sidebar--collapsed .submenu {
+    display: none;
+}
+
+.sidebar--collapsed .nav-item-has-submenu .nav-link::after {
+    display: none;
+}
+
+.sidebar--collapsed .nav-link {
+    justify-content: flex-start;
+    padding: 8px 0;
+}
+
+.sidebar--collapsed .nav-link .nav-text {
+    opacity: 0;
+    max-width: 0;
+    margin-left: 0;
+}
+
+/* Botão colapsar */
+.btn-colapsar {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--border-dark);
+    border: none;
+    color: var(--text-secondary);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-colapsar:hover {
+    background: var(--accent-yellow);
+    color: #000;
+}
+
+/* ==========================================================================
+   3. HEADER E ESTRUTURA PRINCIPAL (global)
+   ========================================================================== */
+.main-container {
+    flex: 1;
+    padding: 30px 40px;
+        overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.user-welcome {
+    font-weight: 100;
+}
+
+.user-welcome #username {
+    font-weight: 900;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border-dark);
+    transition: 0.3s;
+}
+
+.user-avatar:hover {
+    border: 2px solid var(--accent-yellow);
+}
+
+.avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 50%;
+    transform: translateX(50%);
+    background: #1a1d22;
+    border: 1px solid #2a2d32;
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 100px;
+    z-index: 99;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.avatar-dropdown.open {
+    display: block;
+}
+
+.avatar-dropdown button {
+    font-weight: 900;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 35px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 2px 5px;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.avatar-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 50%;
+    transform: translateX(50%);
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent #2a2d32 transparent;
+}
+
+.avatar-dropdown button:hover {
+    transform: translateX(6px);
+    color: #ffffff;
+}
+
+
+/* ==========================================================================
+   4. CARDS (global)
+   ========================================================================== */
+.card {
+    background-color: var(--bg-card);
+    border-radius: 18px;
+    padding: 22px;
+    border: 1px solid var(--border-dark);
+}
+
+
+/* ==========================================================================
+   5. DASHBOARD — tela de análise financeira
+   ========================================================================== */
+.dashboard-flex-wrapper {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.col-right {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.col-left {
+    flex: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.chart-main-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.chart-wrapper {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+.total-cards {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.total-group-right {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.total-number {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.label {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.main-value {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 5px 0 15px 0;
+}
+
+.chart-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-filter {
+    background: var(--border-medium);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-filter:hover {
+    background: color-mix(in srgb, var(--border-medium) 75%, var(--text-primary));
+}
+
+.btn-filter.active {
+    background: var(--accent-yellow);
+    color: black;
+}
+
+.btn-filter.active:hover {
+    background: color-mix(in srgb, var(--accent-yellow) 75%, var(--border-dark));
+}
+
+.row-inner {
+    display: flex;
+    gap: 20px;
+    min-width: 0;
+}
+
+.most-expensive {
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    min-height: 180px;
+}
+
+.most-expensive-content {
+    flex: 0.8;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gasto-card {
+    border: 2px solid var(--danger);
+    flex: 1;
+}
+
+.retorno-card {
+    border: 2px solid var(--accent-blue);
+    flex: 1;
+}
+
+.roi-value {
+    color: var(--danger);
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.card-img-wrapper {
+    position: relative;
+    flex: 2;
+    height: 100%;
+    max-width: 140px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 0 9px 9px 0;
+    background-size: cover;
+    background-position: -10px 25px;
+    background-repeat: no-repeat;
+    transform: scale(2.2);
+}
+
+.card-img-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(to right, var(--bg-card), transparent);
+}
+
+
+/* ==========================================================================
+   6. CADASTRO — layout base
+   ========================================================================== */
+.cadastroFlex_wrapper {
+    flex: 1;
+    display: flex;
+    height: 85%;
+}
+
+.cadastroContainer {
+    flex: 1;
+    display: flex;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   7. CADASTRO — formulário
+   ========================================================================== */
+.formularioCadastro {
+    flex: 1.3;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.welcome-text h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.welcome-text p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+form input {
+    width: 100%;
+    background: #121417;
+    border: 1px solid #2a2d32;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: white;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+form input:focus {
+    border-color: var(--accent-yellow);
+}
+
+input[type="url"] {
+    color: var(--accent-yellow);
+}
+
+.inputsJuntos {
+    display: flex;
+    gap: 15px;
+}
+
+.espaco {
+    flex: 1;
+}
+
+.btnPrincipal_sign {
+    width: 100%;
+    background-color: var(--accent-yellow);
+    color: #000;
+    padding: 16px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btnPrincipal_sign:hover {
+    background: color-mix(in srgb, var(--accent-yellow) 75%, var(--bg-card));
+}
+
+#ipt_set {
+    transition: background-color 0.3s;
+    border: none;
+}
+
+.btn-legend {
+    background-color: transparent;
+    color: var(--accent-yellow);
+    border: 1px solid var(--accent-yellow);
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-legend:hover {
+    background-color: var(--accent-yellow);
+    color: #000;
+}
+
+/* Botão limpar formulário */
+.btnLimpar {
+    width: 100%;
+    background-color: transparent;
+    color: var(--accent-yellow);
+    border: 1px solid var(--accent-yellow);
+    padding: 10px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+}
+
+.btnLimpar:hover {
+    background-color: var(--accent-yellow);
+    color: #000;
+}
+
+
+/* ==========================================================================
+   8. CADASTRO — seletores de tipo e raridade
+   ========================================================================== */
+.tipoSelector,
+.raridadeSelector {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.tipoItem,
+.raridadeItem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tipoItem input,
+.raridadeItem input {
+    display: none;
+}
+
+.tipoItem img,
+.raridadeItem img {
+    width: 100%;
+    max-width: 45px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    border: 2px solid transparent;
+    filter: grayscale(100%);
+    transition: 0.2s;
+}
+
+.tipoItem img {
+    border-radius: 50%;
+}
+
+.raridadeItem img {
+    border-radius: 5px;
+}
+
+.tipoItem input:checked+img,
+.raridadeItem input:checked+img {
+    filter: grayscale(0%);
+    border-color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+
+/* ==========================================================================
+   9. CADASTRO — banners laterais (personagens)
+   ========================================================================== */
+.direitaContainer_gyarados,
+.direitaContainer_nidoking {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid var(--border-dark);
+    background-size: cover;
+}
+
+.direitaContainer_gyarados {
+    background-image: linear-gradient(to right, var(--bg-card), color-mix(in srgb, var(--bg-body) 1%, transparent)),
+        url('../assets/imgs/pkmnOficial/pocket/gyaradosPocket.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.direitaContainer_nidoking {
+    background-image: linear-gradient(to right, var(--bg-card), color-mix(in srgb, var(--bg-body) 1%, transparent)),
+        url('../assets/imgs/pkmnOficial/pocket/nidokingPocket.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+
+/* ==========================================================================
+   10. COLEÇÃO — tabela de cartas
+   ========================================================================== */
+
+
+/* ==========================================================================
+   11. COLEÇÃO — grid de cartas
+   ========================================================================== */
+.main-container-colecao {
+    overflow-y: auto;
+}
+
+.grid-colecao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 20px;
+    align-content: flex-start;
+    justify-content: center;
+}
+
+.carta-card {
+    width: 247px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+    transform: translateZ(0);
+    transition: scale 0.2s ease;
+    border-radius: 15px;
+}
+
+.carta-card:hover {
+    scale: 1.02;
+}
+
+.carta-grid-img {
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 2px solid color-mix(in srgb, var(--accent-yellow) 24%, transparent);
+    display: block;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.carta-hover-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+    border-radius: 15px;
+    backdrop-filter: blur(4px);
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.carta-hover-info.visivel {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-gear-colecao {
+    position: absolute;
+    top: 15px;
+    right: 14px;
+}
+
+.btn-link-colecao {
+    position: absolute;
+    top: 55px;
+    right: 14px;
+    font-size: 13px;
+}
+
+.btn-chart-colecao {
+    position: absolute;
+    top: 35px;
+    right: 14px;
+    font-size: 13px;
+}
+
+.carta-info-nome {
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+}
+
+.carta-info-set {
+    color: var(--accent-yellow);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.carta-info-numero {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.carta-info-divider {
+    width: 100%;
+    height: 2px;
+    background: var(--accent-yellow);
+}
+
+.carta-info-linha {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.carta-info-linha strong {
+    color: white;
+    font-weight: 700;
+}
+
+#imagem {
+    transition: opacity 0.2s ease;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+
+.filtro-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+    padding: 8px 30px 8px 14px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.filtro-select:hover {
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1px solid var(--text-secondary);
+    color: white;
+}
+
+.filtro-button {
+    background-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+    padding: 8px 14px 8px 14px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.filtro-button:hover {
+    background-color: transparent;
+    border: 1px solid var(--text-secondary);
+    color: white;
+}
+
+.filtro-select option {
+    background: var(--bg-card);
+    color: white;
+    border: none;
+}
+
+.filtro-select:focus {
+    border-color: var(--accent-yellow);
+    box-shadow: none;
+}
+
+
+/* ==========================================================================
+   12. HEADER — saudação do usuário
+   ========================================================================== */
+
+
+/* ==========================================================================
+   13. DASHBOARD — variações de card (business)
+   ========================================================================== */
+.chart-main-card--compact {
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.chart-main-card--compact-wide {
+    min-height: fit-content;
+    min-width: 0;
+    flex: 1;
+}   
+
+.card--canvas {
+    height: 160px;
+    padding: 0;
+}
+
+.card--kpi-small {
+    flex: 0;
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+}
+
+.card--action-center {
+    flex: 0;
+    min-height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-inner--column {
+    flex-direction: column;
+}
+
+.carta-mais-cara-nome {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.carta-mais-cara-valor {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.kpi-valor {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.btnPrincipal_sign--flex {
+    flex: 1;
+    margin-top: 0;
+}
+
+/* ==========================================================================
+   14. MODAL — migrado para style_modais.css (fonte única)
+   ========================================================================== */
+
+.header-search-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btnPrincipal_header {
+    background: #F9CF30;
+    color: #16191d;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 50px;
+    padding: 0 25px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+.btnSecundario_header {
+    background: #16191d;
+    color: #F9CF30;
+    cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    transition: 0.3s;
+    font-size: 15px;
+    height: 50px;
+    padding: 0 25px;
+    box-shadow: 0px 4px 10px #00000040;
+}
+
+/* ==========================================================================
+   15. COLEÇÃO — paginação
+   ========================================================================== */
+.paginacao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 20px 0;
+}
+
+.paginacao button {
+    background: transparent;
+    border: 1px solid var(--border-medium);
+    color: var(--text-secondary);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paginacao button:hover:not(:disabled) {
+    border-color: var(--text-secondary);
+    color: white;
+}
+
+.paginacao button:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.paginacao button.pagina-ativa {
+    background: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+    font-weight: 700;
+}
+
+.paginacao button.pagina-ativa:hover {
+    background: color-mix(in srgb, var(--accent-yellow) 75%, var(--bg-card));
+    border-color: transparent;
+}
+
+.paginacao-reticencias {
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 0 4px;
+}
+
+/* ══════════════════════════════════════════════════════
+   MODAL IMPORTAR LOTE
+══════════════════════════════════════════════════════ */
+.card-preview-img { width: 65%; opacity: 0; }
+
+.card--instrucoes {
+    margin-top: 10px;
+    flex: 0;
+    min-height: fit-content;
+    border-color: var(--accent-yellow);
+    background-color: #1214176e;
+    backdrop-filter: blur(10px);
+}
+
+.modal-import-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #00000099;
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-import-box {
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 12px;
+    padding: 28px;
+    width: 520px;
+    max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-import-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-import-titulo {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+}
+
+.modal-import-fechar {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-import-fechar:hover { color: white; }
+
+.modal-import-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.modal-import-textarea {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 12px;
+    resize: vertical;
+    height: 200px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.modal-import-textarea:focus { border-color: var(--accent-yellow); }
+
+.modal-import-intervalos {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.modal-import-intervalo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-import-intervalo-grupo label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.modal-import-intervalo-grupo input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    padding: 6px 10px;
+    width: 140px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal-import-intervalo-grupo input:focus { border-color: var(--accent-yellow); }
+
+.modal-import-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.modal-import-btn-cancelar {
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    transition: color 0.2s, border-color 0.2s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.modal-import-btn-cancelar:hover {
+    color: white;
+    border-color: var(--text-secondary);
+}
+
+.modal-import-btn-executar {
+    background: var(--accent-yellow);
+    border: none;
+    color: #121417;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+    transition: opacity 0.2s;
+}
+
+.modal-import-btn-executar:hover { opacity: 0.85; }
+
+.modal-import-feedback {
+    font-size: 12px;
+    min-height: 16px;
+}
+
+/* Botão IMPORTAR LOTE no header */
+.btn-importar-lote {
+    background: transparent;
+    border: 1px solid var(--accent-yellow);
+    color: var(--accent-yellow);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: background 0.2s, color 0.2s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.btn-importar-lote:hover {
+    background: var(--accent-yellow);
+    color: #121417;
+}
+
+/* ══════════════════════════════════════════════════════
+   TELA DE SETS
+══════════════════════════════════════════════════════ */
+
+/* ----- BASE ----- */
+
+.main-container-sets {
+    overflow-y: auto;
+    flex: 1;
+    padding: 30px 40px;
+}
+
+.sets-scroll-area {
+    overflow-y: visible;
+}
+
+.sets-serie-titulo {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 32px 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.sets-serie-titulo:first-of-type { margin-top: 0; }
+
+.sets-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 32px;
+    align-items: center;
+}
+
+.set-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 200px;
+}
+
+.set-item-logo {
+    max-width: 200px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 8px #00000099);
+    transition: transform 0.25s ease, filter 0.25s ease;
+    display: block;
+}
+
+.set-item-logo-fallback {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-align: center;
+    display: none;
+    transition: color 0.25s;
+}
+
+.set-item-nome {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.3;
+    transition: color 0.25s ease;
+}
+
+.set-item:hover .set-item-logo {
+    transform: translateY(-6px);
+    filter: drop-shadow(0 8px 16px #000000b3);
+}
+
+.set-item:hover .set-item-nome,
+.set-item:hover .set-item-logo-fallback {
+    color: var(--accent-yellow);
+}
+
+/* ----- VIEW ----- */
+
+.main-container-set-detalhe {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#header { flex-shrink: 0; }
+
+.set-banner {
+    position: relative;
+    padding: 28px 40px 24px 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-dark);
+    flex-shrink: 0;
+}
+
+.set-banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.18;
+    filter: blur(2px);
+}
+
+.set-banner-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+        var(--bg-body) 20%,
+        color-mix(in srgb, var(--bg-body) 50%, transparent) 55%,
+        color-mix(in srgb, var(--bg-body) 70%, transparent) 100%);
+}
+
+.set-banner-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.set-banner-logo {
+    max-width: 200px;
+    max-height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 10px #000000cc);
+    flex-shrink: 0;
+}
+
+.set-banner-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.set-banner-nome {
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.set-sigla-badge {
+    background: color-mix(in srgb, var(--accent-yellow) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+    color: var(--accent-yellow);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+.set-banner-meta {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    flex-wrap: wrap;
+}
+
+.set-banner-meta .dot {
+    margin: 0 10px;
+    opacity: 0.4;
+}
+
+.btn-voltar {
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.btn-voltar:hover {
+    border-color: var(--text-secondary);
+    color: white;
+}
+
+.set-detalhe-scroll {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.progresso-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.progresso-texto {
+    display: flex;
+    flex-direction: column;
+    min-width: 130px;
+}
+
+.progresso-numero {
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+}
+
+.progresso-numero span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progresso-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 3px;
+}
+
+.progresso-bar-wrapper {
+    flex: 1;
+    background: var(--border-dark);
+    border-radius: 8px;
+    height: 7px;
+    overflow: hidden;
+}
+
+.progresso-bar {
+    height: 100%;
+    background: var(--accent-yellow);
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.progresso-pct {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent-yellow);
+    min-width: 46px;
+    text-align: right;
+}
+
+.grid-set-cartas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.carta-set-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.carta-set-img-wrapper { width: 100%; }
+
+.carta-set-img {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid color-mix(in srgb, var(--accent-yellow) 20%, transparent);
+    display: block;
+    box-shadow: 0 4px 12px #00000066;
+    transition: border-color 0.2s, transform 0.2s;
+    aspect-ratio: 2.5 / 3.5;
+    object-fit: cover;
+    background: var(--bg-card);
+}
+
+.carta-set-card:hover .carta-set-img {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent-yellow) 55%, transparent);
+}
+
+.carta-set-img-wrapper.coletada .carta-set-img {
+    border-color: color-mix(in srgb, var(--accent-yellow) 65%, transparent);
+}
+
+.carta-set-numero {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.carta-set-checks {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background: var(--bg-card);
+    transition: border-color 0.15s, background-color 0.15s;
+    flex: 1;
+    justify-content: center;
+}
+
+.check-label:hover { border-color: var(--text-secondary); }
+
+.check-label input[type="checkbox"] { display: none; }
+
+.check-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 9px;
+    color: transparent;
+}
+
+.check-label input:checked + .check-box {
+    background: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+}
+
+.check-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: color 0.15s;
+    white-space: nowrap;
+}
+
+.check-label:has(input:checked) {
+    background: color-mix(in srgb, var(--accent-yellow) 12%, var(--bg-card));
+    border-color: color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+}
+
+.check-label:has(input:checked) .check-text { color: var(--accent-yellow); }
+
+.check-label--full {
+    flex: unset;
+    width: 100%;
+}
+
+.sets-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}

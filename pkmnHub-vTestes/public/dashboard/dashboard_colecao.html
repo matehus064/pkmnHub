@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pkmnHub | Coleção</title>
+    <link rel="icon" href="../assets/imgs/main/logo.png">
+    <link rel="stylesheet" href="../css/style_dashboard.css">
+    <link rel="stylesheet" href="../css/style_modais.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .modal-sucesso-texto {
+            color: var(--accent-green, #2ecc71);
+            font-size: 0.85rem;
+            margin-top: -8px;
+        }
+    </style>
+</head>
+
+<body onload="colecao()">
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-container main-container-colecao">
+        <header id="header">
+            <div class="header-left">
+                <div class="header-search-group" style="font-size: 150%; font-weight: 900;">Vitrine do Colecionador
+                </div>
+            </div>
+            <div class="header-right">
+                <button onclick="exportarCSV()" class="filtro-button" title="Exportar coleção">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+                <select id="filtroTipo" onchange="aplicarFiltro()" class="filtro-select">
+                    <option value="data">Por Data</option>
+                    <option value="set">Por Set</option>
+                    <option value="preco">Por Preço</option>
+                    <option value="raridade">Por Raridade</option>
+                </select>
+                <select id="filtroOrdem" onchange="aplicarFiltro()" class="filtro-select">
+                    <option value="desc">Decrescente</option>
+                    <option value="asc">Crescente</option>
+                </select>
+                <span class="user-welcome">hey! <span id="username"></span></span>
+            </div>
+        </header>
+
+        <div id="grid_colecao" class="grid-colecao"></div>
+
+        <div id="paginacao" class="paginacao"></div>
+    </div>
+
+    <div class="modal-backdrop" id="modalEdicao" style="display:none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModalEdicao()">&times;</button>
+            <h2>Editar item</h2>
+            <p id="edit_cartaInfo">Ajuste a quantidade e os valores dessa carta na sua coleção.</p>
+
+            <div class="modal-field">
+                <label for="edit_qtd">Quantidade</label>
+                <input type="number" id="edit_qtd" min="0">
+            </div>
+            <div class="modal-field">
+                <label for="edit_valorPago">Valor Pago (R$)</label>
+                <input type="number" id="edit_valorPago" min="0" step="1.00">
+            </div>
+            <div class="modal-field">
+                <label for="edit_valorReal">Valor Real — Liga (R$)</label>
+                <input type="number" id="edit_valorReal" min="0" step="1.00">
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="fecharModalEdicao()">Cancelar</button>
+                <button class="btn-salvar-url" onclick="solicitarConfirmacaoEdicao()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalConfirmarEdicao" style="display:none;">
+        <div class="modal-box">
+            <button class="modal-close" onclick="fecharModalConfirmarEdicao()">&times;</button>
+            <h2>Confirmar alteração</h2>
+            <p>Confirma a alteração de <strong id="confirmar-edicao-nome">--</strong>? O valor real também atualiza o
+                preço de referência para todos os usuários.</p>
+            <p id="confirmar-edicao-sucesso" class="modal-sucesso-texto" style="display:none;">Item alterado com
+                sucesso!</p>
+            <div class="modal-actions" id="confirmar-edicao-actions">
+                <button class="modal-btn-cancel" onclick="fecharModalConfirmarEdicao()">Cancelar</button>
+                <button class="btnPrincipal_sign btnPrincipal_sign--flex" onclick="salvarEdicao()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalHistorico" style="display:none;">
+        <div class="modal-box modal-box--historico" style="max-width: 1024px;">
+            <button class="modal-close" onclick="fecharModalHistorico()">&times;</button>
+
+            <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; gap: 20px;">
+                <div style="width: 100%;">
+                    <div class="header-search-group" style="font-size: 150%; font-weight: 900; margin-bottom: 10px;">Histórico de Preços</div>
+                    <div class="historico-header">
+                        <h2 id="historico-nome" style="color: var(--accent-yellow);">--</h2>
+                        <div class="historico-meta">
+                            <span id="historico-set">--</span>
+                            <span id="historico-numero">--</span>
+                            <a id="historico-linkLiga" href="#" target="_blank" rel="noopener" class="historico-link-liga" style="font-size: 10px;">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span style="font-weight: 900; margin-left: 5px;">VER NA LIGA POKÉMON</span> 
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="carta-info-divider" style="margin-bottom:15px;"></div>
+
+                    <div class="historico-filtros">
+                        <button class="btn-filter active" onclick="buscarHistoricoPreco('30 DAY', this)">30 Dias</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('3 MONTH', this)">3 Meses</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('6 MONTH', this)">6 Meses</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('1 YEAR', this)">1 Ano</button>
+                    </div>
+
+                    <div class="historico-chart-wrapper">
+                        <canvas id="chartHistorico"></canvas>
+                    </div>
+                </div>
+                <img id="historico-cartaImg" src="" class="historico-carta-img">
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/dados.js"></script>
+<script src="../js/dadosCartas.js"></script>
+<script src="../js/functions.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/auth_ui.js"></script>
+<script src="../js/perfil_nav.js"></script>
+
+
+<script>
+    const hierarquiaRaridade = [
+        "Common", "Uncommon", "Rare", "Promo", "Rare Holo", "Rare ACE",
+        "Rare BREAK", "Rare Holo EX", "Rare Holo GX", "Rare Holo LV.X",
+        "Rare Holo Star", "Rare Holo V", "Rare Prime", "Rare Holo VMAX",
+        "Rare Holo VSTAR", "Rare Prism Star", "Rare Shining", "Rare Shiny",
+        "Rare Rainbow", "Rare Secret", "Rare Ultra", "Rare Shiny GX",
+        "Radiant Rare", "Double Rare", "ACE SPEC Rare", "Trainer Gallery Rare Holo",
+        "Amazing Rare", "Black White Rare", "Classic Collection", "LEGEND",
+        "Illustration Rare", "Shiny Rare", "Ultra Rare", "MEGA_ATTACK_RARE",
+        "Mega Hyper Rare", "Shiny Ultra Rare", "Special Illustration Rare", "Hyper Rare"
+    ];
+
+    const ordemSets = [
+        'Scarlet & Violet Black Star Promos', 'Scarlet & Violet', 'Paldea Evolved',
+        'Obsidian Flames', '151', 'Paradox Rift', 'Paldean Fates', 'Temporal Forces',
+        'Twilight Masquerade', 'Shrouded Fable', 'Stellar Crown', 'Surging Sparks',
+        'Prismatic Evolutions', 'Journey Together', 'Destined Rivals', 'White Flare',
+        'Black Bolt', 'Mega Evolution Black Star Promos', 'Mega Evolution',
+        'Phantasmal Flames', 'Ascended Heroes', 'Perfect Order', 'Chaos Rising'
+    ];
+
+    const CARTAS_POR_PAGINA = 40;
+    let colecaoData = [];
+    let dadosFiltrados = [];
+    let paginaAtual = 1;
+    let cartaEmEdicao = null;
+
+    function colecao() {
+        let usuario = sessionStorage.getItem("ID_USER");
+
+        let skeletonHtml = '';
+        for (let i = 0; i < 20; i++) {
+            skeletonHtml += `<div class="carta-card skeleton"></div>`;
+        }
+        grid_colecao.innerHTML = skeletonHtml;
+
+        fetch(`/cards/buscarColecao?usuarioServer=${usuario}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                colecaoData = json;
+                aplicarFiltro();
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            });
+    }
+
+    function aplicarFiltro() {
+        let tipo = document.getElementById('filtroTipo').value;
+        let ordem = document.getElementById('filtroOrdem').value;
+        let dados = [...colecaoData];
+
+        if (tipo === 'data') {
+            dados.sort((a, b) => ordem === 'asc'
+                ? new Date(a.data_adicao) - new Date(b.data_adicao)
+                : new Date(b.data_adicao) - new Date(a.data_adicao)
+            );
+        } else if (tipo === 'set') {
+            dados.sort((a, b) => {
+                let idxA = ordemSets.indexOf(a.set_nome);
+                let idxB = ordemSets.indexOf(b.set_nome);
+                if (idxA === -1) idxA = 999;
+                if (idxB === -1) idxB = 999;
+                if (idxA !== idxB) return ordem === 'asc' ? idxA - idxB : idxB - idxA;
+
+                const numA = parseInt(a.numero_set.substring(0, 3)) || 0;
+                const numB = parseInt(b.numero_set.substring(0, 3)) || 0;
+                return numA - numB;
+            });
+        } else if (tipo === 'preco') {
+            dados.sort((a, b) => ordem === 'asc'
+                ? a.preco_ligaPkmn - b.preco_ligaPkmn
+                : b.preco_ligaPkmn - a.preco_ligaPkmn
+            );
+        } else if (tipo === 'raridade') {
+            dados.sort((a, b) => {
+                let idxA = hierarquiaRaridade.indexOf(a.raridade);
+                let idxB = hierarquiaRaridade.indexOf(b.raridade);
+                if (idxA !== idxB) return ordem === 'asc' ? idxA - idxB : idxB - idxA;
+
+                let setA = ordemSets.indexOf(a.set_nome);
+                let setB = ordemSets.indexOf(b.set_nome);
+                if (setA === -1) setA = 999;
+                if (setB === -1) setB = 999;
+                if (setA !== setB) return setA - setB;
+
+                const numA = parseInt(a.numero_set.substring(0, 3)) || 0;
+                const numB = parseInt(b.numero_set.substring(0, 3)) || 0;
+                return numA - numB;
+            });
+        }
+
+        dadosFiltrados = dados;
+        paginaAtual = 1;
+        renderizarPagina();
+    }
+
+    function renderizarPagina() {
+        const inicio = (paginaAtual - 1) * CARTAS_POR_PAGINA;
+        const fim = inicio + CARTAS_POR_PAGINA;
+        const cartasDaPagina = dadosFiltrados.slice(inicio, fim);
+
+        renderizarColecao(cartasDaPagina);
+        renderizarPaginacao();
+    }
+
+    function renderizarPaginacao() {
+        const total = Math.ceil(dadosFiltrados.length / CARTAS_POR_PAGINA);
+        const paginacao = document.getElementById('paginacao');
+
+        if (total <= 1) {
+            paginacao.innerHTML = '';
+            return;
+        }
+
+        let html = '';
+
+        html += `<button onclick="irParaPagina(${paginaAtual - 1})" ${paginaAtual === 1 ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>`;
+
+        for (let i = 1; i <= total; i++) {
+            if (i === 1 || i === total || (i >= paginaAtual - 1 && i <= paginaAtual + 1)) {
+                html += `<button onclick="irParaPagina(${i})" class="${i === paginaAtual ? 'pagina-ativa' : ''}">${i}</button>`;
+            } else if (i === paginaAtual - 2 || i === paginaAtual + 2) {
+                html += `<span class="paginacao-reticencias">...</span>`;
+            }
+        }
+
+        html += `<button onclick="irParaPagina(${paginaAtual + 1})" ${paginaAtual === total ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>`;
+
+        paginacao.innerHTML = html;
+    }
+
+    function irParaPagina(pagina) {
+        const total = Math.ceil(dadosFiltrados.length / CARTAS_POR_PAGINA);
+        if (pagina < 1 || pagina > total) return;
+        paginaAtual = pagina;
+        renderizarPagina();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Acha a carta correspondente em bancoDados a partir dos dados que a
+    // coleção já tem (nome + "numero/numSet"), pra conseguir montar o link
+    // da Liga Pokémon — mesma lógica de encontrarCartaPorUrlSmall do binder.
+    function encontrarCartaBase(nomePokemon, numeroSet) {
+        let partes = (numeroSet || '').split('/');
+        let numero = parseInt(partes[0], 10);
+        let numSet = parseInt(partes[1], 10);
+        if (!numero || !numSet) return null;
+
+        for (let setId in bancoDados) {
+            let cartas = bancoDados[setId];
+            for (let i = 0; i < cartas.length; i++) {
+                let c = cartas[i];
+                if (c.name === nomePokemon && Number(c.number) === numero && Number(c.numSet) === numSet) {
+                    return Object.assign({ setId: setId }, c);
+                }
+            }
+        }
+        return null;
+    }
+
+    function renderizarColecao(dados) {
+        let html = '';
+        dados.forEach(carta => {
+            let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
+            let linkLiga = cartaBase
+                ? `<a class="btn-config btn-link-colecao" style="text-decoration: none; color: inherit;" href="${gerarLinkLigaPokemon(cartaBase)}" target="_blank" rel="noopener" onclick="event.stopPropagation()"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>`
+                : '';
+
+            html += `
+            <div class="carta-card" data-fk-carta="${carta.fk_carta}" onclick="toggleInfo(this)">
+                <img src="${carta.url_imagem}" class="carta-grid-img" loading="lazy">
+                <div class="carta-hover-info">
+                    ${linkLiga}
+                    <button class="btn-config btn-chart-colecao" onclick="event.stopPropagation();abrirModalHistorico(${carta.fk_carta})">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </button>
+                    <button class="btn-config btn-gear-colecao" onclick="event.stopPropagation();abrirModalEdicao(${carta.fk_carta})">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                    <span class="carta-info-nome">${carta.nome_pokemon}</span>
+                    <span class="carta-info-set">${carta.set_nome}</span>
+                    <span class="carta-info-numero"># ${carta.numero_set}</span>
+                    <div class="carta-info-divider"></div>
+                    <div class="carta-info-linha">
+                        <span>Quantidade</span>
+                        <strong>${carta.quantidade}</strong>
+                    </div>
+                    <div class="carta-info-linha">
+                        <span>Valor Pago</span>
+                        <strong>${formatarBrl(carta.preco_compra)}</strong>
+                    </div>
+                    <div class="carta-info-linha">
+                        <span>Valor Real</span>
+                        <strong>${formatarBrl(carta.preco_ligaPkmn)}</strong>
+                    </div>
+                </div>
+            </div>
+        `;
+        });
+        grid_colecao.innerHTML = html;
+    }
+
+
+    document.getElementById("modalEdicao").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalEdicao();
+    });
+
+    document.getElementById("modalConfirmarEdicao").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalConfirmarEdicao();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+            fecharModalEdicao();
+            fecharModalConfirmarEdicao();
+            fecharModalHistorico();
+        }
+    });
+
+    function toggleInfo(card) {
+        let info = card.querySelector('.carta-hover-info');
+        let isVisible = info.classList.contains('visivel');
+        document.querySelectorAll('.carta-hover-info').forEach(i => i.classList.remove('visivel'));
+        if (!isVisible) {
+            info.classList.add('visivel');
+        }
+    }
+
+    function abrirModalEdicao(fkCarta) {
+        let carta = colecaoData.find(c => c.fk_carta === fkCarta);
+        if (!carta) return;
+
+        cartaEmEdicao = carta;
+        edit_cartaInfo.innerHTML = `<strong>${carta.nome_pokemon}</strong> — ${carta.set_nome} #${carta.numero_set}`;
+        edit_qtd.value = carta.quantidade;
+        edit_valorPago.value = carta.preco_compra;
+        edit_valorReal.value = carta.preco_ligaPkmn;
+        modalEdicao.style.display = "flex";
+    }
+
+    function fecharModalEdicao() {
+        modalEdicao.style.display = "none";
+        cartaEmEdicao = null;
+    }
+
+    function solicitarConfirmacaoEdicao() {
+        if (!cartaEmEdicao) return;
+        document.getElementById('confirmar-edicao-nome').textContent = cartaEmEdicao.nome_pokemon;
+        modalEdicao.style.display = "none";
+        modalConfirmarEdicao.style.display = "flex";
+    }
+
+    function fecharModalConfirmarEdicao() {
+        modalConfirmarEdicao.style.display = "none";
+    }
+
+    function salvarEdicao() {
+        let usuario = sessionStorage.getItem("ID_USER");
+        let quantidade = Number(edit_qtd.value);
+        let precoCompra = Number(edit_valorPago.value);
+        let precoLiga = Number(edit_valorReal.value);
+
+        fetch("/cards/atualizarItem", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                usuarioServer: usuario,
+                cartaServer: cartaEmEdicao.fk_carta,
+                quantidadeServer: quantidade,
+                precoCompraServer: precoCompra,
+                precoLigaServer: precoLiga
+            })
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    cartaEmEdicao.quantidade = quantidade;
+                    cartaEmEdicao.preco_compra = precoCompra;
+                    cartaEmEdicao.preco_ligaPkmn = precoLiga;
+                    aplicarFiltro();
+
+                    document.getElementById('confirmar-edicao-actions').style.display = 'none';
+                    document.getElementById('confirmar-edicao-sucesso').style.display = 'block';
+
+                    setTimeout(function () {
+                        fecharModalConfirmarEdicao();
+                        document.getElementById('confirmar-edicao-actions').style.display = 'flex';
+                        document.getElementById('confirmar-edicao-sucesso').style.display = 'none';
+                        cartaEmEdicao = null;
+                    }, 2000);
+                } else {
+                    console.log("Erro ao salvar edição");
+                }
+            })
+            .catch(function (erro) { console.log(erro); });
+    }
+
+    function exportarCSV() {
+        if (colecaoData.length === 0) return;
+
+        const cabecalho = "Nome,Set,Número,Raridade,Quantidade,Valor Pago,Valor Real";
+        const linhas = colecaoData.map(c =>
+            `"${c.nome_pokemon}","${c.set_nome}","${c.numero_set}","${c.raridade}",${c.quantidade},${c.preco_compra},${c.preco_ligaPkmn}`
+        );
+
+        const csv = cabecalho + "\n" + linhas.join("\n");
+        const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `colecao_${sessionStorage.getItem("USERNAME")}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    let meuGraficoHistorico = null;
+    let cartaEmHistorico = null;
+
+    function abrirModalHistorico(fkCarta) {
+        let carta = colecaoData.find(c => c.fk_carta === fkCarta);
+        if (!carta) return;
+
+        cartaEmHistorico = carta;
+
+        document.getElementById('historico-nome').textContent = carta.nome_pokemon;
+        document.getElementById('historico-set').textContent = carta.set_nome;
+        document.getElementById('historico-numero').textContent = '#' + carta.numero_set;
+        document.getElementById('historico-cartaImg').src = carta.url_imagem.replace('small', 'medium');
+
+        let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
+        let linkLiga = document.getElementById('historico-linkLiga');
+        if (cartaBase) {
+            linkLiga.href = gerarLinkLigaPokemon(cartaBase);
+            linkLiga.style.display = 'inline-flex';
+        } else {
+            linkLiga.style.display = 'none';
+        }
+
+        document.querySelectorAll('#modalHistorico .btn-filter').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('#modalHistorico .btn-filter').classList.add('active');
+
+        modalHistorico.style.display = "flex";
+        buscarHistoricoPreco('30 DAY', document.querySelector('#modalHistorico .btn-filter'));
+    }
+
+    function fecharModalHistorico() {
+        modalHistorico.style.display = "none";
+        cartaEmHistorico = null;
+        if (meuGraficoHistorico) {
+            meuGraficoHistorico.destroy();
+            meuGraficoHistorico = null;
+        }
+    }
+
+    function buscarHistoricoPreco(intervalo, botao) {
+        if (!cartaEmHistorico) return;
+
+        document.querySelectorAll('#modalHistorico .btn-filter').forEach(btn => btn.classList.remove('active'));
+        if (botao) botao.classList.add('active');
+
+        fetch(`/cards/buscarHistoricoPreco?cartaServer=${cartaEmHistorico.fk_carta}&intervaloServer=${intervalo}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                let labels = json.map(item =>
+                    new Date(item.data_hora).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+                );
+                let dados = json.map(item => item.preco);
+
+                if (meuGraficoHistorico) meuGraficoHistorico.destroy();
+
+                const ctx = document.getElementById('chartHistorico').getContext('2d');
+                meuGraficoHistorico = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Valor Real (Liga)',
+                            data: dados,
+                            borderColor: '#F9CF30',
+                            tension: 0.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                align: 'end',
+                                labels: { color: '#808fa5', usePointStyle: false, boxWidth: 4, boxHeight: 4 }
+                            }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#808fa5' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                            y: {
+                                ticks: {
+                                    color: '#808fa5',
+                                    callback: function (value) { return 'R$ ' + value.toLocaleString('pt-BR'); }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.08)' }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            });
+    }
+
+    document.getElementById("modalHistorico").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalHistorico();
+    });
+</script>
+
+</html>
