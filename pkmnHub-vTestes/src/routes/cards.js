@@ -23,4 +23,8 @@ router.post("/atualizarItem", function (req, res) {
     cardsController.atualizarItem(req, res);
 });
 
+router.get("/buscarHistoricoPreco", function (req, res) {
+    cardsController.buscarHistoricoPreco(req, res);
+});
+
 module.exports = router;

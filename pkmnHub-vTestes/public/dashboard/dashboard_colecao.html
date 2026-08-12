@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="../css/style_modais.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        .modal-sucesso-texto { color: var(--accent-green, #2ecc71); font-size: 0.85rem; margin-top: -8px; }
+        .modal-sucesso-texto {
+            color: var(--accent-green, #2ecc71);
+            font-size: 0.85rem;
+            margin-top: -8px;
+        }
     </style>
 </head>
 
@@ -25,7 +29,7 @@
             </div>
             <div class="header-right">
                 <button onclick="exportarCSV()" class="filtro-button" title="Exportar coleção">
-                    <i class="fa-solid fa-download"></i> 
+                    <i class="fa-solid fa-download"></i>
                 </button>
                 <select id="filtroTipo" onchange="aplicarFiltro()" class="filtro-select">
                     <option value="data">Por Data</option>
@@ -76,11 +80,49 @@
         <div class="modal-box">
             <button class="modal-close" onclick="fecharModalConfirmarEdicao()">&times;</button>
             <h2>Confirmar alteração</h2>
-            <p>Confirma a alteração de <strong id="confirmar-edicao-nome">--</strong>? O valor real também atualiza o preço de referência para todos os usuários.</p>
-            <p id="confirmar-edicao-sucesso" class="modal-sucesso-texto" style="display:none;">Item alterado com sucesso!</p>
+            <p>Confirma a alteração de <strong id="confirmar-edicao-nome">--</strong>? O valor real também atualiza o
+                preço de referência para todos os usuários.</p>
+            <p id="confirmar-edicao-sucesso" class="modal-sucesso-texto" style="display:none;">Item alterado com
+                sucesso!</p>
             <div class="modal-actions" id="confirmar-edicao-actions">
                 <button class="modal-btn-cancel" onclick="fecharModalConfirmarEdicao()">Cancelar</button>
                 <button class="btnPrincipal_sign btnPrincipal_sign--flex" onclick="salvarEdicao()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop" id="modalHistorico" style="display:none;">
+        <div class="modal-box modal-box--historico" style="max-width: 1024px;">
+            <button class="modal-close" onclick="fecharModalHistorico()">&times;</button>
+
+            <div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; gap: 20px;">
+                <div style="width: 100%;">
+                    <div class="header-search-group" style="font-size: 150%; font-weight: 900; margin-bottom: 10px;">Histórico de Preços</div>
+                    <div class="historico-header">
+                        <h2 id="historico-nome" style="color: var(--accent-yellow);">--</h2>
+                        <div class="historico-meta">
+                            <span id="historico-set">--</span>
+                            <span id="historico-numero">--</span>
+                            <a id="historico-linkLiga" href="#" target="_blank" rel="noopener" class="historico-link-liga" style="font-size: 10px;">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> <span style="font-weight: 900; margin-left: 5px;">VER NA LIGA POKÉMON</span> 
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="carta-info-divider" style="margin-bottom:15px;"></div>
+
+                    <div class="historico-filtros">
+                        <button class="btn-filter active" onclick="buscarHistoricoPreco('30 DAY', this)">30 Dias</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('3 MONTH', this)">3 Meses</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('6 MONTH', this)">6 Meses</button>
+                        <button class="btn-filter" onclick="buscarHistoricoPreco('1 YEAR', this)">1 Ano</button>
+                    </div>
+
+                    <div class="historico-chart-wrapper">
+                        <canvas id="chartHistorico"></canvas>
+                    </div>
+                </div>
+                <img id="historico-cartaImg" src="" class="historico-carta-img">
             </div>
         </div>
     </div>
@@ -276,6 +318,9 @@
                 <img src="${carta.url_imagem}" class="carta-grid-img" loading="lazy">
                 <div class="carta-hover-info">
                     ${linkLiga}
+                    <button class="btn-config btn-chart-colecao" onclick="event.stopPropagation();abrirModalHistorico(${carta.fk_carta})">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </button>
                     <button class="btn-config btn-gear-colecao" onclick="event.stopPropagation();abrirModalEdicao(${carta.fk_carta})">
                         <i class="fa-solid fa-gear"></i>
                     </button>
@@ -315,6 +360,7 @@
         if (e.key === "Escape") {
             fecharModalEdicao();
             fecharModalConfirmarEdicao();
+            fecharModalHistorico();
         }
     });
 
@@ -412,6 +458,112 @@
         a.click();
         URL.revokeObjectURL(url);
     }
+
+    let meuGraficoHistorico = null;
+    let cartaEmHistorico = null;
+
+    function abrirModalHistorico(fkCarta) {
+        let carta = colecaoData.find(c => c.fk_carta === fkCarta);
+        if (!carta) return;
+
+        cartaEmHistorico = carta;
+
+        document.getElementById('historico-nome').textContent = carta.nome_pokemon;
+        document.getElementById('historico-set').textContent = carta.set_nome;
+        document.getElementById('historico-numero').textContent = '#' + carta.numero_set;
+        document.getElementById('historico-cartaImg').src = carta.url_imagem;
+
+        let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
+        let linkLiga = document.getElementById('historico-linkLiga');
+        if (cartaBase) {
+            linkLiga.href = gerarLinkLigaPokemon(cartaBase);
+            linkLiga.style.display = 'inline-flex';
+        } else {
+            linkLiga.style.display = 'none';
+        }
+
+        document.querySelectorAll('#modalHistorico .btn-filter').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('#modalHistorico .btn-filter').classList.add('active');
+
+        modalHistorico.style.display = "flex";
+        buscarHistoricoPreco('30 DAY', document.querySelector('#modalHistorico .btn-filter'));
+    }
+
+    function fecharModalHistorico() {
+        modalHistorico.style.display = "none";
+        cartaEmHistorico = null;
+        if (meuGraficoHistorico) {
+            meuGraficoHistorico.destroy();
+            meuGraficoHistorico = null;
+        }
+    }
+
+    function buscarHistoricoPreco(intervalo, botao) {
+        if (!cartaEmHistorico) return;
+
+        document.querySelectorAll('#modalHistorico .btn-filter').forEach(btn => btn.classList.remove('active'));
+        if (botao) botao.classList.add('active');
+
+        fetch(`/cards/buscarHistoricoPreco?cartaServer=${cartaEmHistorico.fk_carta}&intervaloServer=${intervalo}`)
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (json) {
+                let labels = json.map(item =>
+                    new Date(item.data_hora).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
+                );
+                let dados = json.map(item => item.preco);
+
+                if (meuGraficoHistorico) meuGraficoHistorico.destroy();
+
+                const ctx = document.getElementById('chartHistorico').getContext('2d');
+                meuGraficoHistorico = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Valor Real (Liga)',
+                            data: dados,
+                            borderColor: '#F9CF30',
+                            tension: 0.5,
+                            pointRadius: 0,
+                            pointHoverRadius: 5,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                align: 'end',
+                                labels: { color: '#808fa5', usePointStyle: false, boxWidth: 4, boxHeight: 4 }
+                            }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#808fa5' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                            y: {
+                                ticks: {
+                                    color: '#808fa5',
+                                    callback: function (value) { return 'R$ ' + value.toLocaleString('pt-BR'); }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.08)' }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(function (erro) {
+                console.log(erro);
+            });
+    }
+
+    document.getElementById("modalHistorico").addEventListener("click", function (e) {
+        if (e.target === this) fecharModalHistorico();
+    });
 </script>
 
 </html>

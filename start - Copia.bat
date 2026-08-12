@@ -1,7 +1,6 @@
 @echo off
-timeout /t 15 /nobreak > nul
 start /min cmd /c "cd /d %~dp0pkmnHub-vTestes && npm start"
-start /min cmd /c "C:\Users\mathe\OneDrive\Desktop\projeto_pessoal\ngrok.exe http 3333"
+start /min cmd /c "ngrok http 3333"
 
 timeout /t 5 /nobreak > nul
 

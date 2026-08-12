@@ -7,6 +7,7 @@ var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 
 require("dotenv").config({ path: caminho_env });
 require('./src/jobs/snapshotJob');
+require('./src/jobs/precoLigaLogJob');
 
 var express = require("express");
 var cors = require("cors");

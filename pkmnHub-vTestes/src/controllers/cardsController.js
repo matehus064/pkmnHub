@@ -187,10 +187,25 @@ function atualizarItem(req, res) {
     }
 }
 
+function buscarHistoricoPreco(req, res) {
+    var cartaServer = req.query.cartaServer;
+    var intervaloServer = req.query.intervaloServer;
+
+    precoLigaLogModel.buscarHistorico(cartaServer, intervaloServer)
+        .then(function(resultado) {
+            res.json(resultado);
+        })
+        .catch(function(erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrar,
     buscarColecao,
     buscarColecaoSet,
     salvarColecaoSet,
-    atualizarItem
+    atualizarItem,
+    buscarHistoricoPreco
 };
