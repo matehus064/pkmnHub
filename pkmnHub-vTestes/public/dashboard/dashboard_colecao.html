@@ -471,7 +471,7 @@
         document.getElementById('historico-nome').textContent = carta.nome_pokemon;
         document.getElementById('historico-set').textContent = carta.set_nome;
         document.getElementById('historico-numero').textContent = '#' + carta.numero_set;
-        document.getElementById('historico-cartaImg').src = carta.url_imagem;
+        document.getElementById('historico-cartaImg').src = carta.url_imagem.replace('small', 'medium');
 
         let cartaBase = encontrarCartaBase(carta.nome_pokemon, carta.numero_set);
         let linkLiga = document.getElementById('historico-linkLiga');

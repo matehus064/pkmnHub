@@ -793,11 +793,18 @@ input[type="url"] {
 
 .btn-gear-colecao {
     position: absolute;
-    top: 14px;
+    top: 15px;
     right: 14px;
 }
 
 .btn-link-colecao {
+    position: absolute;
+    top: 55px;
+    right: 14px;
+    font-size: 13px;
+}
+
+.btn-chart-colecao {
     position: absolute;
     top: 35px;
     right: 14px;

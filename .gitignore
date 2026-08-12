@@ -2,6 +2,8 @@
 node_modules
 package-lock.json
 
+projeto_pessoal/pkmnHub-vTestes/public/js/dadosCartas.js
+
 .github
 .vscode/
 .testes/
