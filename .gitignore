@@ -2,8 +2,8 @@
 node_modules/
 package-lock.json
 
-./pkmnHub-vTestes/public/js/dados.js
-./pkmnHub-vTestes/public/js/dadosCartas.js
+pkmnHub-vTestes/public/js/dados.js
+pkmnHub-vTestes/public/js/dadosCartas.js
 start - Copia.bat
 
 .github/
