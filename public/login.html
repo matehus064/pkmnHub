@@ -17,7 +17,8 @@
                     <span class="detalheCadastro01">ACESSO ILIMITADO</span>
                     <span class="detalheCadastro02">GESTÃO PREMIUM</span>
                 </div>
-                <h2>Domine o jogo, <span class="destaqueTexto" style="color: var(--accent-red);">Colecione</span> lendas!</h2>
+                <h2>Domine o jogo, <span class="destaqueTexto" style="color: var(--accent-red);">Colecione</span>
+                    lendas!</h2>
             </div>
         </section>
 
@@ -53,13 +54,26 @@
 
 <script>
     function login() {
-        let email = ipt_email.value;
+        let email = ipt_email.value.trim();
         let senha = ipt_senha.value;
+
+        let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
         if (email == "" || senha == "") {
             div_validacao.innerHTML = '<span class="msg-erro">Preencha todos os campos para começar sua jornada!</span>';
             return false;
         }
+
+        if (!regexEmail.test(email)) {
+            div_validacao.innerHTML = '<span class="msg-erro">Insira um e-mail válido (ex: treinador@pkmn.com).</span>';
+            return false;
+        }
+
+        div_validacao.innerHTML = "";
+
+        let btnLogin = document.querySelector(".btnPrincipal_sign");
+        btnLogin.disabled = true;
+        btnLogin.textContent = "Entrando...";
 
         fetch("/usuarios/autenticar", {
             method: "POST",
@@ -71,14 +85,8 @@
                 senhaServer: senha
             })
         }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
             if (resposta.ok) {
-                console.log(resposta);
-
                 resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USER = json.usernameServer;
                     sessionStorage.USERNAME = json.usernameServer;
                     sessionStorage.ID_USER = json.id;
@@ -89,16 +97,19 @@
                     }, 1000);
                 });
             } else {
-                console.log("Houve um erro ao tentar realizar o login!");
                 resposta.text().then(texto => {
                     console.error(texto);
-                    div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar o login...</span>";
+                    div_validacao.innerHTML = "<span class='msg-erro'>E-mail ou senha incorretos.</span>";
+                    btnLogin.disabled = false;
+                    btnLogin.textContent = "Entrar";
                 });
             }
-
         }).catch(function (erro) {
-            console.log(erro);
-        })
+            console.error(erro);
+            div_validacao.innerHTML = "<span class='msg-erro'>Falha de conexão. Tente novamente.</span>";
+            btnLogin.disabled = false;
+            btnLogin.textContent = "Entrar";
+        });
 
         return false;
     }

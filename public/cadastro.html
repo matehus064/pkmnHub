@@ -43,12 +43,18 @@
 
                 <label class="labelRadio">ESCOLHA SUA FOTO DE PERFIL</label>
                 <div class="fotoPerfil-selector">
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="1"><img src="./assets/imgs/profilePics/1.webp"></label>
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="2"><img src="./assets/imgs/profilePics/2.webp"></label>
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="3"><img src="./assets/imgs/profilePics/3.webp"></label>
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="4"><img src="./assets/imgs/profilePics/4.webp"></label>
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="5"><img src="./assets/imgs/profilePics/5.webp"></label>
-                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="6"><img src="./assets/imgs/profilePics/6.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="1"><img
+                            src="./assets/imgs/profilePics/1.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="2"><img
+                            src="./assets/imgs/profilePics/2.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="3"><img
+                            src="./assets/imgs/profilePics/3.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="4"><img
+                            src="./assets/imgs/profilePics/4.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="5"><img
+                            src="./assets/imgs/profilePics/5.webp"></label>
+                    <label class="fotoPerfil-item"><input type="radio" name="n_fotoPerfil" value="6"><img
+                            src="./assets/imgs/profilePics/6.webp"></label>
                 </div>
 
                 <label id="div_validacao"></label>
@@ -69,33 +75,39 @@
         </section>
     </main>
 </body>
+
 </html>
 
 <script>
     function cadastrar() {
         // ----- VARIAVEIS INPUTS: -----
-        let username = ipt_username.value;
-        let email = ipt_email.value;
+        let username = ipt_username.value.trim();
+        let email = ipt_email.value.trim();
         let senha = ipt_senha.value;
         let confirmacao = ipt_confirmacaoSenha.value;
 
         let numFotoPerfil = document.querySelector('input[name="n_fotoPerfil"]:checked')?.value;
 
+        // ----- REGEX: -----
+        let regexUsername = /^[a-zA-Z0-9_]{4,20}$/;
+        let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        let regexSenha = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
         // ----- VALIDAÇÕES: -----
         let condicoesErro = [
             username == "" || email == "" || senha == "" || confirmacao == "",
-            username.length <= 3,
-            !email.includes("@") || !email.includes("."),
-            senha.length < 6,
+            !regexUsername.test(username),
+            !regexEmail.test(email),
+            !regexSenha.test(senha),
             confirmacao != senha,
             numFotoPerfil == undefined
         ];
 
         let mensagensErro = [
             "Preencha todos os campos para começar sua jornada!",
-            "Seu nome de treinador deve ter mais de 3 caracteres.",
+            "Seu nome de treinador deve ter de 4 a 20 caracteres (letras, números e _).",
             "Insira um e-mail válido (ex: treinador@pkmn.com).",
-            "Sua senha deve ter no mínimo 6 caracteres.",
+            "Sua senha deve ter no mínimo 6 caracteres, com letras e números.",
             "As senhas digitadas não coincidem.",
             "Escolha uma personagem para sua foto de perfil!"
         ];
@@ -110,6 +122,10 @@
         }
 
         // ----- IMPLEMENTAÇÃO API: -----
+        let btnCadastro = document.querySelector(".btnPrincipal_sign");
+        btnCadastro.disabled = true;
+        btnCadastro.textContent = "Cadastrando...";
+
         fetch("/usuarios/cadastrar", {
             method: "POST",
             headers: {
@@ -124,18 +140,24 @@
             }),
         })
             .then(function (resposta) {
-                console.log("resposta: ", resposta);
                 if (resposta.ok) {
                     div_validacao.innerHTML = "<span class='msg-sucesso'>Usuário cadastrado com sucesso!</span>";
                     setTimeout(() => {
                         window.location = "login.html";
-                    }, "2000");
+                    }, 2000);
                 } else {
-                    div_validacao.innerHTML = "<span class='msg-erro'>Houve um erro ao tentar realizar o cadastro...</span>";
+                    return resposta.json().then(function (erro) {
+                        div_validacao.innerHTML = "<span class='msg-erro'>" + (erro.mensagem || "Houve um erro ao tentar realizar o cadastro...") + "</span>";
+                        btnCadastro.disabled = false;
+                        btnCadastro.textContent = "Cadastrar";
+                    });
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+                div_validacao.innerHTML = "<span class='msg-erro'>Falha de conexão. Tente novamente.</span>";
+                btnCadastro.disabled = false;
+                btnCadastro.textContent = "Cadastrar";
             });
 
         return false;
