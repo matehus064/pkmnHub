@@ -3,7 +3,7 @@ const path = require('path');
 const vm = require('vm');
 
 // aponta pra public/js dentro da pasta copiada do projeto
-const PASTA_DADOS = path.join(__dirname, 'public', 'js');
+const PASTA_DADOS = path.join(__dirname, '..', '..', 'public', 'js');
 const CAMINHO_SETS = path.join(PASTA_DADOS, 'dados.js');
 const CAMINHO_CARTAS = path.join(PASTA_DADOS, 'dadosCartas.js');
 

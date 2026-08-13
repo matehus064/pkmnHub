@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-const PASTA_DADOS = path.join(__dirname, 'public', 'js');
+const PASTA_DADOS = path.join(__dirname, '..', '..', 'public', 'js');
 const CAMINHO_SETS = path.join(PASTA_DADOS, 'dados.js');
 
 const API_BASE = 'https://pokeapi.co/api/v2';
