@@ -114,11 +114,16 @@
 <script src="../js/auth_ui.js"></script>
 <script src="../js/perfil_nav.js"></script>
 
-
 <script>
     let meuGraficoLinhas = null;
     let meuGraficoBarras = null;
     let meuGraficoRosca = null;
+
+    function mostrarErroDashboard(mensagem) {
+        document.querySelectorAll('.dashboard-flex-wrapper .main-value, .dashboard-flex-wrapper .total-number, .dashboard-flex-wrapper .kpi-valor, .dashboard-flex-wrapper .roi-value')
+            .forEach(function (el) { el.innerHTML = '--'; });
+        console.log(mensagem);
+    }
 
     function buscarKpis(intervalo = '30 DAY', botao) {
         document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
@@ -126,38 +131,68 @@
 
         let usuario = sessionStorage.getItem("ID_USER");
 
+        if (!usuario) {
+            mostrarErroDashboard("Usuário não identificado (sessão expirada). Redirecionando para login...");
+            window.location.href = "../pages/login.html";
+            return;
+        }
+
         fetch(`/kpis/buscarKpis?usuarioServer=${usuario}&intervaloServer=${intervalo}`)
             .then(function (resposta) {
+                if (!resposta.ok) {
+                    throw new Error("Falha ao buscar KPIs: HTTP " + resposta.status);
+                }
                 return resposta.json();
             })
             .then(function (json) {
                 console.log(json);
-                valorTotalColecao.innerHTML = formatarBrl(json.valorTotalColecao[0].valor_total_colecao),
-                    totalCartas.innerHTML = json.totalCartas[0].total_cartas_fisicas,
-                    cartaMaisCara.innerHTML = json.cartaMaisCara[0].nome_pokemon + " - " + json.cartaMaisCara[0].set_nome,
-                    document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${json.cartaMaisCara[0].url_imagem})`;
-                cartaMaisCaraValor.innerHTML = formatarBrl(json.cartaMaisCara[0].preco_ligaPkmn),
-                    totalGasto.innerHTML = formatarBrl(json.totalGasto[0].total_investido),
-                    totalRetorno.innerHTML = formatarBrl(json.totalRetorno[0].total_retorno),
-                    roi.innerHTML = ((json.totalRetorno[0].total_retorno - json.totalGasto[0].total_investido) / json.totalGasto[0].total_investido * 100).toFixed(0) + "%";
+
+                // ----- VALORES SEGUROS (fallback quando não há dados/coleção vazia) -----
+                let valorTotalColecaoNum = (json.valorTotalColecao && json.valorTotalColecao[0] && json.valorTotalColecao[0].valor_total_colecao) || 0;
+                let totalCartasNum = (json.totalCartas && json.totalCartas[0] && json.totalCartas[0].total_cartas_fisicas) || 0;
+                let totalGastoNum = (json.totalGasto && json.totalGasto[0] && json.totalGasto[0].total_investido) || 0;
+                let totalRetornoNum = (json.totalRetorno && json.totalRetorno[0] && json.totalRetorno[0].total_retorno) || 0;
+                let valorCompraNum = (json.valorTotalCompra && json.valorTotalCompra[0] && json.valorTotalCompra[0].valor_total_compra) || 0;
+                let cartaMaisCara = (json.cartaMaisCara && json.cartaMaisCara[0]) || null;
+
+                valorTotalColecao.innerHTML = formatarBrl(valorTotalColecaoNum);
+                totalCartas.innerHTML = totalCartasNum;
+
+                if (cartaMaisCara) {
+                    cartaMaisCara_span = cartaMaisCara; // não sobrescreve a variável do card, só clareza
+                    document.getElementById("cartaMaisCara").innerHTML = cartaMaisCara.nome_pokemon + " - " + cartaMaisCara.set_nome;
+                    document.getElementById("cartaMaisCaraImg").style.backgroundImage = `url(${cartaMaisCara.url_imagem})`;
+                    cartaMaisCaraValor.innerHTML = formatarBrl(cartaMaisCara.preco_ligaPkmn);
+                } else {
+                    document.getElementById("cartaMaisCara").innerHTML = "Nenhuma carta ainda";
+                    document.getElementById("cartaMaisCaraImg").style.backgroundImage = "";
+                    cartaMaisCaraValor.innerHTML = formatarBrl(0);
+                }
+
+                totalGasto.innerHTML = formatarBrl(totalGastoNum);
+                totalRetorno.innerHTML = formatarBrl(totalRetornoNum);
+
+                // ----- ROI (protegido contra divisão por zero) -----
+                let roiCalculado = totalGastoNum > 0
+                    ? ((totalRetornoNum - totalGastoNum) / totalGastoNum * 100)
+                    : 0;
+                roi.innerHTML = roiCalculado.toFixed(0) + "%";
 
                 // --- LÓGICA DE COR APLICADA EXCLUSIVAMENTE NO ELEMENTO #ROI ---
-                let texto = roi.innerHTML;
-                let numero = Number(texto.replace("%", ""));
-
-                if (numero >= 0) {
+                if (roiCalculado >= 0) {
                     roi.style.color = 'var(--accent-green)';
-                } else if (numero > -20) {
+                } else if (roiCalculado > -20) {
                     roi.style.color = 'var(--accent-yellow)';
                 } else {
                     roi.style.color = 'var(--accent-red)';
                 }
 
                 // ----- GRÁFICO DE LINHA -----
-                let labelsLinha = json.evolucaoColecao.map(item =>
+                let evolucaoColecao = json.evolucaoColecao || [];
+                let labelsLinha = evolucaoColecao.map(item =>
                     new Date(item.data_snapshot).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })
                 );
-                let dadoslinha = json.evolucaoColecao.map(item => item.valor_total);
+                let dadoslinha = evolucaoColecao.map(item => item.valor_total);
 
                 if (meuGraficoLinhas) meuGraficoLinhas.destroy();
 
@@ -202,9 +237,6 @@
                 });
 
                 // ----- GRÁFICO DE BARRAS -----
-                let valorLiga = json.valorTotalColecao[0].valor_total_colecao;
-                let valorCompra = json.valorTotalCompra[0].valor_total_compra;
-
                 if (meuGraficoBarras) meuGraficoBarras.destroy();
 
                 const ctxBar = document.getElementById('barChart').getContext('2d');
@@ -212,7 +244,7 @@
                     type: 'bar',
                     data: {
                         labels: ['VALOR REAL', 'VALOR DE COMPRA'],
-                        datasets: [{ data: [valorLiga, valorCompra], backgroundColor: '#F9CF30', barThickness: 20 }]
+                        datasets: [{ data: [valorTotalColecaoNum, valorCompraNum], backgroundColor: '#F9CF30', barThickness: 20 }]
                     },
                     options: {
                         indexAxis: 'y',
@@ -227,12 +259,13 @@
                 });
 
                 // ----- GRÁFICO DE ROSCA -----
-                let labelsRosca = json.valorPorSet.map(item => {
+                let valorPorSet = json.valorPorSet || [];
+                let labelsRosca = valorPorSet.map(item => {
                     let set = sets.find(s => s.nomePt === item.set_nome || s.nomeEn === item.set_nome);
                     return set ? set.sigla : item.set_nome;
                 });
-                let dadosRosca = json.valorPorSet.map(item => item.total_valor);
-                let coresRosca = json.valorPorSet.map(item => {
+                let dadosRosca = valorPorSet.map(item => item.total_valor);
+                let coresRosca = valorPorSet.map(item => {
                     let set = sets.find(s => s.nomePt === item.set_nome || s.nomeEn === item.set_nome);
                     return set ? set.cor : '#808fa5';
                 });
@@ -274,7 +307,7 @@
                 });
             })
             .catch(function (erro) {
-                console.log(erro);
+                mostrarErroDashboard(erro);
             });
     }
 
