@@ -6,6 +6,8 @@ package-lock.json
 **/public/js/dados.js
 
 start - Copia.bat
+.env.dev
+.env
 
 .github/
 .vscode/

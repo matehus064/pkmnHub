@@ -1,5 +1,5 @@
 {
-  "name": "pkmnhub",
+  "name": "pkmnHub",
   "version": "1.0.0",
   "description": "Pokémon card binder web app",
   "main": "app.js",
