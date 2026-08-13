@@ -1,22 +1,7 @@
 var cardsModel = require("../models/cardsModel");
 var transacoesModel = require("../models/transacoesModel");
 var precoLigaLogModel = require("../models/precoLigaLogModel");
-
-function salvarOuAtualizarSnapshot(usuario) {
-    cardsModel.buscarValorTotalColecao(usuario)
-        .then(function(resultadoValor) {
-            let valorTotal = resultadoValor[0].valor_total_colecao;
-
-            cardsModel.buscarSnapshotHoje(usuario)
-                .then(function(snapshotHoje) {
-                    if (snapshotHoje.length > 0) {
-                        cardsModel.atualizarSnapshot(snapshotHoje[0].id, valorTotal);
-                    } else {
-                        cardsModel.salvarSnapshot(usuario, valorTotal);
-                    }
-                });
-        });
-}
+var snapshotService = require("../models/snapshotService");
 
 function sincronizarColecaoSet(usuario, setId, numeroCartaServer) {
     if (!setId) return;
@@ -73,14 +58,20 @@ function cadastrar(req, res) {
                         })
                         .then(function(resultadoAcao) {
                             res.json(resultadoAcao);
-                            transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer);
-                            precoLigaLogModel.atualizarPreco(idCarta, usuarioServer, menorLigaServer);
-                            salvarOuAtualizarSnapshot(usuarioServer);
+                            return transacoesModel.registrarTransacao(usuarioServer, idCarta, 'compra', valorCompraServer, menorLigaServer)
+                                .then(function () {
+                                    return precoLigaLogModel.atualizarPreco(idCarta, usuarioServer, menorLigaServer);
+                                });
+                        })
+                        .then(function() {
                             sincronizarColecaoSet(usuarioServer, setIdServer, numeroCartaServer);
+                            return snapshotService.salvarOuAtualizarSnapshot(usuarioServer);
                         })
                         .catch(function(erro) {
                             console.log("Erro na coleção:", erro);
-                            res.status(500).json(erro.sqlMessage);
+                            if (!res.headersSent) {
+                                res.status(500).json(erro.sqlMessage);
+                            }
                         });
 
                 // ----- CARTA NÃO EXISTE NA BASE, CADASTRA E ADICIONA: -----
@@ -94,14 +85,20 @@ function cadastrar(req, res) {
                         })
                         .then(function(resultadoAcao) {
                             res.json(resultadoAcao);
-                            transacoesModel.registrarTransacao(usuarioServer, idCartaNova, 'compra', valorCompraServer, menorLigaServer);
-                            precoLigaLogModel.atualizarPreco(idCartaNova, usuarioServer, menorLigaServer);
-                            salvarOuAtualizarSnapshot(usuarioServer);
+                            return transacoesModel.registrarTransacao(usuarioServer, idCartaNova, 'compra', valorCompraServer, menorLigaServer)
+                                .then(function () {
+                                    return precoLigaLogModel.atualizarPreco(idCartaNova, usuarioServer, menorLigaServer);
+                                });
+                        })
+                        .then(function() {
                             sincronizarColecaoSet(usuarioServer, setIdServer, numeroCartaServer);
+                            return snapshotService.salvarOuAtualizarSnapshot(usuarioServer);
                         })
                         .catch(function(erro) {
                             console.log("Erro no cadastro:", erro);
-                            res.status(500).json(erro.sqlMessage);
+                            if (!res.headersSent) {
+                                res.status(500).json(erro.sqlMessage);
+                            }
                         });
                 }
             })
@@ -146,7 +143,6 @@ function salvarColecaoSet(req, res) {
     var temNormal = req.body.temNormal;
     var temReverse = req.body.temReverse;
 
-    // Se os dois estão desmarcados, deleta a linha
     if (!temNormal && !temReverse) {
         cardsModel.deletarColecaoSet(usuarioServer, setId, numeroCarta)
             .then(function(resultado) { res.json(resultado); })
@@ -176,7 +172,7 @@ function atualizarItem(req, res) {
                 return precoLigaLogModel.atualizarPreco(cartaServer, usuarioServer, precoLigaServer);
             })
             .then(function() {
-                salvarOuAtualizarSnapshot(usuarioServer);
+                return snapshotService.salvarOuAtualizarSnapshot(usuarioServer);
             })
             .catch(function(erro) {
                 console.log("Erro ao atualizar item:", erro);

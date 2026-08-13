@@ -1,6 +1,7 @@
 var transacoesModel = require("../models/transacoesModel");
 var cardsModel = require("../models/cardsModel");
 var precoLigaLogModel = require("../models/precoLigaLogModel");
+var snapshotService = require("../models/snapshotService");
 
 function venda(req, res) {
     var nomeCartaServer = req.body.nomeCartaServer;
@@ -26,37 +27,27 @@ function venda(req, res) {
             .then(function (resultado) {
                 let carta = resultado[0].fk_carta;
                 if (resultado.length == 1) { // carta está na coleção do usuário
-                    if (resultado[0].quantidade - qntCartaServer > 0) {
-                        transacoesModel.atualizarQuantidade(usuarioServer, resultado[0].fk_carta, qntCartaServer)
-                            .then(function (resultado) {
-                                cardsModel.buscarValorTotalColecao(usuarioServer)
-                                    .then(function (resultadoValor) {
-                                        let valorTotal = resultadoValor[0].valor_total_colecao;
-                                        cardsModel.salvarSnapshot(usuarioServer, valorTotal);
-                                    });
-                                res.json(resultado);
-                                transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
-                                precoLigaLogModel.atualizarPreco(carta, usuarioServer, menorLigaServer);
-                            }).catch(function (erro) {
-                                console.log(erro);
+                    var acaoColecao = (resultado[0].quantidade - qntCartaServer > 0)
+                        ? transacoesModel.atualizarQuantidade(usuarioServer, resultado[0].fk_carta, qntCartaServer)
+                        : transacoesModel.removerDaColecao(usuarioServer, carta);
+
+                    acaoColecao
+                        .then(function (resultadoAcao) {
+                            res.json(resultadoAcao);
+                            return transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
+                                .then(function () {
+                                    return precoLigaLogModel.atualizarPreco(carta, usuarioServer, menorLigaServer);
+                                });
+                        })
+                        .then(function () {
+                            return snapshotService.salvarOuAtualizarSnapshot(usuarioServer);
+                        })
+                        .catch(function (erro) {
+                            console.log(erro);
+                            if (!res.headersSent) {
                                 res.status(500).json(erro.sqlMessage);
-                            });
-                    } else {
-                        transacoesModel.removerDaColecao(usuarioServer, carta)
-                            .then(function (resultado) {
-                                cardsModel.buscarValorTotalColecao(usuarioServer)
-                                    .then(function (resultadoValor) {
-                                        let valorTotal = resultadoValor[0].valor_total_colecao;
-                                        cardsModel.salvarSnapshot(usuarioServer, valorTotal);
-                                    });
-                                res.json(resultado);
-                                transacoesModel.registrarTransacao(usuarioServer, carta, 'venda', valorVendaServer, menorLigaServer)
-                                precoLigaLogModel.atualizarPreco(carta, usuarioServer, menorLigaServer);
-                            }).catch(function (erro) {
-                                console.log(erro);
-                                res.status(500).json(erro.sqlMessage);
-                            });
-                    }
+                            }
+                        });
                 } else if (resultado.length == 0) { // carta não está na coleção do usuário
                     res.status(404).send("Carta não encontrada na sua coleção!");
                 }
