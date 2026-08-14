@@ -1,0 +1,300 @@
+/* ==========================================================================
+   dashboard_sets_view.css — tela de detalhe de um set (progresso, grid de cartas)
+   Usado só por dashboard_sets_view.html (depende de shell.css + style_binder.css)
+   ========================================================================== */
+
+/* ----- VIEW ----- */
+
+.main-container-set-detalhe {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#header { flex-shrink: 0; }
+
+.set-banner {
+    position: relative;
+    padding: 28px 40px 24px 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-dark);
+    flex-shrink: 0;
+}
+
+.set-banner-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.18;
+    filter: blur(2px);
+}
+
+.set-banner-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right,
+        var(--bg-body) 20%,
+        color-mix(in srgb, var(--bg-body) 50%, transparent) 55%,
+        color-mix(in srgb, var(--bg-body) 70%, transparent) 100%);
+}
+
+.set-banner-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.set-banner-logo {
+    max-width: 200px;
+    max-height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 10px #000000cc);
+    flex-shrink: 0;
+}
+
+.set-banner-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.set-banner-nome {
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.set-sigla-badge {
+    background: color-mix(in srgb, var(--accent-yellow) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+    color: var(--accent-yellow);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+.set-banner-meta {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    flex-wrap: wrap;
+}
+
+.set-banner-meta .dot {
+    margin: 0 10px;
+    opacity: 0.4;
+}
+
+.btn-voltar {
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: border-color 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.btn-voltar:hover {
+    border-color: var(--text-secondary);
+    color: white;
+}
+
+.set-detalhe-scroll {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.progresso-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.progresso-texto {
+    display: flex;
+    flex-direction: column;
+    min-width: 130px;
+}
+
+.progresso-numero {
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+}
+
+.progresso-numero span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progresso-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 3px;
+}
+
+.progresso-bar-wrapper {
+    flex: 1;
+    background: var(--border-dark);
+    border-radius: 8px;
+    height: 7px;
+    overflow: hidden;
+}
+
+.progresso-bar {
+    height: 100%;
+    background: var(--accent-yellow);
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+.progresso-pct {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent-yellow);
+    min-width: 46px;
+    text-align: right;
+}
+
+.grid-set-cartas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.carta-set-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.carta-set-img-wrapper { width: 100%; }
+
+.carta-set-img {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid color-mix(in srgb, var(--accent-yellow) 20%, transparent);
+    display: block;
+    box-shadow: 0 4px 12px #00000066;
+    transition: border-color 0.2s, transform 0.2s;
+    aspect-ratio: 2.5 / 3.5;
+    object-fit: cover;
+    background: var(--bg-card);
+}
+
+.carta-set-card:hover .carta-set-img {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent-yellow) 55%, transparent);
+}
+
+.carta-set-img-wrapper.coletada .carta-set-img {
+    border-color: color-mix(in srgb, var(--accent-yellow) 65%, transparent);
+}
+
+.carta-set-numero {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.carta-set-checks {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-dark);
+    background: var(--bg-card);
+    transition: border-color 0.15s, background-color 0.15s;
+    flex: 1;
+    justify-content: center;
+}
+
+.check-label:hover { border-color: var(--text-secondary); }
+
+.check-label input[type="checkbox"] { display: none; }
+
+.check-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 9px;
+    color: transparent;
+}
+
+.check-label input:checked + .check-box {
+    background: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+}
+
+.check-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: color 0.15s;
+    white-space: nowrap;
+}
+
+.check-label:has(input:checked) {
+    background: color-mix(in srgb, var(--accent-yellow) 12%, var(--bg-card));
+    border-color: color-mix(in srgb, var(--accent-yellow) 40%, transparent);
+}
+
+.check-label:has(input:checked) .check-text { color: var(--accent-yellow); }
+
+.check-label--full {
+    flex: unset;
+    width: 100%;
+}

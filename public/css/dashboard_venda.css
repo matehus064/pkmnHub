@@ -1,0 +1,12 @@
+/* ==========================================================================
+   dashboard_venda.css — específico de dashboard_venda.html
+   (depende de shell.css + transacao_form.css)
+   ========================================================================== */
+
+/* ----- Banner lateral (Nidoking) ----- */
+.direitaContainer_nidoking {
+    background-image: linear-gradient(to right, var(--bg-card), color-mix(in srgb, var(--bg-body) 1%, transparent)),
+        url('../assets/imgs/pkmnOficial/pocket/nidokingPocket.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}

@@ -519,3 +519,173 @@
         flex-direction: column;
     }
 }
+/* ══════════════════════════════════════════════════════
+   MODAL IMPORTAR LOTE
+   (migrado de style_dashboard.css — antes havia um comentário lá dizendo
+   "migrado para style_modais.css", mas esse bloco tinha ficado pra trás)
+══════════════════════════════════════════════════════ */
+.modal-import-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #00000099;
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-import-box {
+    background: var(--bg-body);
+    border: 1px solid var(--border-dark);
+    border-radius: 12px;
+    padding: 28px;
+    width: 520px;
+    max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-import-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-import-titulo {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+}
+
+.modal-import-fechar {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-import-fechar:hover { color: white; }
+
+.modal-import-desc {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.modal-import-textarea {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-family: monospace;
+    padding: 12px;
+    resize: vertical;
+    height: 200px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.modal-import-textarea:focus { border-color: var(--accent-yellow); }
+
+.modal-import-intervalos {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.modal-import-intervalo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-import-intervalo-grupo label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.modal-import-intervalo-grupo input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-dark);
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    padding: 6px 10px;
+    width: 140px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal-import-intervalo-grupo input:focus { border-color: var(--accent-yellow); }
+
+.modal-import-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.modal-import-btn-cancelar {
+    background: transparent;
+    border: 1px solid var(--border-dark);
+    color: var(--text-secondary);
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    transition: color 0.2s, border-color 0.2s;
+    font-family: 'Manrope', sans-serif;
+}
+
+.modal-import-btn-cancelar:hover {
+    color: white;
+    border-color: var(--text-secondary);
+}
+
+.modal-import-btn-executar {
+    background: var(--accent-yellow);
+    border: none;
+    color: #121417;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+    transition: opacity 0.2s;
+}
+
+.modal-import-btn-executar:hover { opacity: 0.85; }
+
+.modal-import-feedback {
+    font-size: 12px;
+    min-height: 16px;
+}
+
+/* ══════════════════════════════════════════════════════
+   PREVIEW DE IMAGEM (usado no modal de mover/editar carta do binder)
+   (mesmo caso do bloco acima: estava em style_binder.css apesar do
+   comentário de lá já dizer "migrado para style_modais.css")
+══════════════════════════════════════════════════════ */
+.modal-preview-img {
+    width: 20%;
+    opacity: 0;
+    margin-left: 25px;
+    box-shadow: 0 4px 10px #00000040;
+    transition: opacity 0.2s ease;
+}
+
+#imagem {
+    transition: opacity 0.2s ease;
+    box-shadow: 0 4px 10px #00000040;
+}

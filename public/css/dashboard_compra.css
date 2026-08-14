@@ -1,0 +1,62 @@
+/* ==========================================================================
+   dashboard_compra.css — específico de dashboard_compra.html
+   (depende de shell.css + transacao_form.css)
+   ========================================================================== */
+
+/* ----- Seletores de tipo e raridade da carta ----- */
+.tipoSelector,
+.raridadeSelector {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.tipoItem,
+.raridadeItem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tipoItem input,
+.raridadeItem input {
+    display: none;
+}
+
+.tipoItem img,
+.raridadeItem img {
+    width: 100%;
+    max-width: 45px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    border: 2px solid transparent;
+    filter: grayscale(100%);
+    transition: 0.2s;
+}
+
+.tipoItem img {
+    border-radius: 50%;
+}
+
+.raridadeItem img {
+    border-radius: 5px;
+}
+
+.tipoItem input:checked+img,
+.raridadeItem input:checked+img {
+    filter: grayscale(0%);
+    border-color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+/* ----- Banner lateral (Gyarados) ----- */
+.direitaContainer_gyarados {
+    background-image: linear-gradient(to right, var(--bg-card), color-mix(in srgb, var(--bg-body) 1%, transparent)),
+        url('../assets/imgs/pkmnOficial/pocket/gyaradosPocket.webp');
+    background-position: center center;
+    background-repeat: no-repeat;
+}

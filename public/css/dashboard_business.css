@@ -1,0 +1,204 @@
+/* ==========================================================================
+   dashboard_business.css — específico de dashboard_business.html
+   (depende de shell.css)
+   ========================================================================== */
+
+/* 5. DASHBOARD — tela de análise financeira */
+.dashboard-flex-wrapper {
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.col-right {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.col-left {
+    flex: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+}
+
+.chart-main-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.chart-wrapper {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+.total-cards {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.total-group-right {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.main-value {
+    font-size: 42px;
+    font-weight: 700;
+    margin: 5px 0 15px 0;
+}
+
+.chart-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.row-inner {
+    display: flex;
+    gap: 20px;
+    min-width: 0;
+}
+
+.most-expensive {
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    min-height: 180px;
+}
+
+.most-expensive-content {
+    flex: 0.8;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gasto-card {
+    border: 2px solid var(--danger);
+    flex: 1;
+}
+
+.retorno-card {
+    border: 2px solid var(--accent-blue);
+    flex: 1;
+}
+
+.roi-value {
+    color: var(--danger);
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.card-img-wrapper {
+    position: relative;
+    flex: 2;
+    height: 100%;
+    max-width: 140px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 0 9px 9px 0;
+    background-size: cover;
+    background-position: -10px 25px;
+    background-repeat: no-repeat;
+    transform: scale(2.2);
+}
+
+.card-img-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(to right, var(--bg-card), transparent);
+}
+
+
+
+/* Toggle de legenda do gráfico de rosca (comparativo por coleção) */
+.btn-legend {
+    background-color: transparent;
+    color: var(--accent-yellow);
+    border: 1px solid var(--accent-yellow);
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.btn-legend:hover {
+    background-color: var(--accent-yellow);
+    color: #000;
+}
+
+/* 13. DASHBOARD — variações de card (business) */
+.chart-main-card--compact {
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.chart-main-card--compact-wide {
+    min-height: fit-content;
+    min-width: 0;
+    flex: 1;
+}   
+
+.card--canvas {
+    height: 160px;
+    padding: 0;
+}
+
+.card--kpi-small {
+    flex: 0;
+    min-height: -moz-fit-content;
+    min-height: fit-content;
+}
+
+.card--action-center {
+    flex: 0;
+    min-height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-inner--column {
+    flex-direction: column;
+}
+
+.carta-mais-cara-nome {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.carta-mais-cara-valor {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.kpi-valor {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+/* .btnPrincipal_sign--flex agora vive em shell.css (era duplicado aqui) */
+
