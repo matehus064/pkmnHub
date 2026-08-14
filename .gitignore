@@ -5,7 +5,7 @@ package-lock.json
 **/public/js/dadosCartas.js
 **/public/js/dados.js
 
-start - Copia.bat
+setup.bat
 .env.dev
 .env
 

@@ -124,4 +124,4 @@ pkmnHub/
 
 ## Licença
 
-Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) para mais detalhes.
+Distribuído sob a licença GNU GENERAL PUBLIC LICENSE. Veja [LICENSE](LICENSE) para mais detalhes.
