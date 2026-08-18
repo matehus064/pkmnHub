@@ -19,21 +19,39 @@ const templates = {
   windows: {
     start: `@echo off
 cd /d "%~dp0"
+
+where ngrok >nul 2>&1
+if errorlevel 1 (
+  echo ERRO: ngrok nao encontrado no PATH. Instale com: winget install ngrok.ngrok
+  pause
+  exit /b 1
+)
+
 ping -n 16 127.0.0.1 > nul
-start /min cmd /c "npm start"
-start /min cmd /c ""%~dp0ngrok.exe" http 3333"
+
+if exist "%~dp0pids.txt" del "%~dp0pids.txt"
+
+start "AppServer" /min cmd /c "npm start"
+start "AppNgrok" /min cmd /c "ngrok http 3333"
 
 ping -n 6 127.0.0.1 > nul
 
-for /f "tokens=1" %%a in ('wmic process where "name='node.exe'" get processid ^| findstr /r "[0-9]"') do echo %%a >> "%~dp0pids.txt"
-for /f "tokens=1" %%a in ('wmic process where "name='ngrok.exe'" get processid ^| findstr /r "[0-9]"') do echo %%a >> "%~dp0pids.txt"
+for /f "tokens=2" %%a in ('tasklist /v /fi "windowtitle eq AppServer*" /fo list ^| findstr /i "^PID:"') do echo %%a >> "%~dp0pids.txt"
+for /f "tokens=2" %%a in ('tasklist /v /fi "windowtitle eq AppNgrok*" /fo list ^| findstr /i "^PID:"') do echo %%a >> "%~dp0pids.txt"
 
 echo Servidor inicializado!
 `,
     stop: `@echo off
-for /f "usebackq tokens=*" %%a in ("%~dp0pids.txt") do taskkill /f /pid %%a
+if not exist "%~dp0pids.txt" (
+  echo Nenhum processo registrado ^(pids.txt nao encontrado^).
+  goto fim
+)
+for /f "usebackq tokens=*" %%a in ("%~dp0pids.txt") do (
+  taskkill /f /pid %%a >nul 2>&1
+)
 del "%~dp0pids.txt"
 echo Servidor finalizado!
+:fim
 `,
     startName: 'start.bat',
     stopName: 'stop.bat'
@@ -43,6 +61,8 @@ echo Servidor finalizado!
     start: `#!/bin/bash
 cd "$(dirname "$0")"
 sleep 16
+
+: > "$(dirname "$0")/pids.txt"
 
 nohup npm start > /dev/null 2>&1 &
 echo $! >> "$(dirname "$0")/pids.txt"
@@ -56,6 +76,10 @@ echo "Servidor inicializado!"
 `,
     stop: `#!/bin/bash
 cd "$(dirname "$0")"
+if [ ! -f "pids.txt" ]; then
+  echo "Nenhum processo registrado (pids.txt nao encontrado)."
+  exit 0
+fi
 while read -r pid; do
   kill -9 "$pid" 2>/dev/null
 done < "pids.txt"
