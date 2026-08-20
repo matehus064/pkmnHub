@@ -43,4 +43,8 @@ router.put("/reordenarBinders", function (req, res) {
     binderController.reordenarBinders(req, res);
 })
 
+router.post("/gerarBinder", function (req, res) {
+    binderController.gerarBinder(req, res);
+})
+
 module.exports = router;

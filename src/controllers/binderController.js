@@ -133,6 +133,32 @@ function reordenarBinders(req, res) {
         .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
 }
 
+function gerarBinder(req, res) {
+    var usuarioServer = req.body.usuarioServer;
+    var nomeBinderServer = req.body.nomeBinderServer;
+    var tipoBinderServer = req.body.tipoBinderServer;
+    var slotsServer = req.body.slotsServer;
+
+    if (nomeBinderServer == undefined || !nomeBinderServer.trim()) return res.status(400).send("O nome do binder não foi definido!");
+    if (!TIPOS_VALIDOS.includes(tipoBinderServer)) return res.status(400).send("Tipo de binder inválido!");
+    if (!Array.isArray(slotsServer) || !slotsServer.length) return res.status(400).send("Nenhuma carta para gerar o binder!");
+
+    var limite = TOTAL_SLOTS_POR_TIPO[tipoBinderServer];
+    var slotsValidos = slotsServer.filter(function (slot) { return slot.slot >= 1 && slot.slot <= limite; });
+
+    binderModel.buscarProximaOrdem(usuarioServer)
+        .then(function (resultado) {
+            var proximaOrdem = resultado[0].proximaOrdem;
+            return binderModel.criarBinder(usuarioServer, nomeBinderServer.trim(), tipoBinderServer, proximaOrdem);
+        })
+        .then(function (resultadoBinder) {
+            var idBinder = resultadoBinder.insertId;
+            return binderModel.inserirSlotsEmLote(idBinder, slotsValidos)
+                .then(function () { res.json({ id: idBinder, totalSlots: slotsValidos.length }); });
+        })
+        .catch(function (erro) { console.log(erro); res.status(500).json(erro.sqlMessage); });
+}
+
 module.exports = {
     criarBinder,
     buscarBinders,
@@ -143,5 +169,6 @@ module.exports = {
     alternarPosseCarta,
     buscarBindersPorUsername,
     atualizarBinder,
-    reordenarBinders
+    reordenarBinders,
+    gerarBinder
 };

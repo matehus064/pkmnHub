@@ -6,6 +6,8 @@ package-lock.json
 **/public/js/dados.js
 
 setup.bat
+start.bat
+stop.bat
 .env.dev
 .env
 

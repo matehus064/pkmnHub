@@ -128,6 +128,26 @@ function reordenarBinders(usuario, idsOrdenados) {
     return database.executar(instrucaoSql);
 }
 
+function inserirSlotsEmLote(idBinder, slots) {
+    if (!slots.length) return Promise.resolve();
+
+    var valores = slots.map(function (slot) {
+        var obtida = slot.obtida ? 1 : 0;
+        var urlEscapada = slot.urlImagem.replace(/'/g, "\\'");
+        return `(${idBinder}, ${slot.slot}, '${urlEscapada}', ${obtida})`;
+    }).join(',');
+
+    var instrucaoSql = `
+        INSERT INTO binder_slots (fk_binder, slot, url_imagem, obtida)
+        VALUES ${valores}
+        ON DUPLICATE KEY UPDATE
+            url_imagem = VALUES(url_imagem),
+            obtida = VALUES(obtida);
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     criarBinder,
     buscarBinders,
@@ -140,5 +160,6 @@ module.exports = {
     buscarPrimeiroSlotForaDoLimite,
     atualizarBinder,
     buscarProximaOrdem,
-    reordenarBinders
+    reordenarBinders,
+    inserirSlotsEmLote
 };

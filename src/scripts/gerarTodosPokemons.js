@@ -133,6 +133,74 @@ function inserirNovosPokemons(conteudo, novosNomes) {
   return `${antes}, ${novasEntradas}${depois}`;
 }
 
+const REGIOES_POR_GERACAO = {
+  'generation-i': 'Kanto',
+  'generation-ii': 'Johto',
+  'generation-iii': 'Hoenn',
+  'generation-iv': 'Sinnoh',
+  'generation-v': 'Unova',
+  'generation-vi': 'Kalos',
+  'generation-vii': 'Alola',
+  'generation-viii': 'Galar/Hisui',
+  'generation-ix': 'Paldea'
+};
+
+function extrairIdDaUrl(url) {
+  const partes = url.replace(/\/$/, '').split('/');
+  return parseInt(partes[partes.length - 1], 10);
+}
+
+// Consulta a PokeAPI pra descobrir, pra cada geração, o menor e o maior
+// número de Pokédex nacional que ela cobre. Não guarda nomes — só as faixas.
+async function buscarFaixasGeracoes() {
+  const listaGeracoes = await fetchComRetry(`${API_BASE}/generation?limit=100`);
+  const geracoesOrdenadas = listaGeracoes.results
+    .map(g => ({ nome: g.name, id: extrairIdDaUrl(g.url) }))
+    .sort((a, b) => a.id - b.id);
+
+  const resultado = [];
+
+  for (const gerMeta of geracoesOrdenadas) {
+    console.log(`  Geração ${gerMeta.id}...`);
+    const detalhe = await fetchComRetry(`${API_BASE}/generation/${gerMeta.id}`);
+
+    const idsEspecies = detalhe.pokemon_species.map(s => extrairIdDaUrl(s.url));
+    const inicio = Math.min(...idsEspecies);
+    const fim = Math.max(...idsEspecies);
+
+    const regiao = REGIOES_POR_GERACAO[gerMeta.nome] || '';
+    const nomeExibicao = `Geração ${gerMeta.id}${regiao ? ' — ' + regiao : ''}`;
+
+    resultado.push({ id: gerMeta.id, nome: nomeExibicao, inicio, fim });
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  return resultado;
+}
+
+// Substitui por completo (ou cria) "let <nomeVar> = ...;" no conteúdo.
+// Diferente de inserirNovosPokemons (que só ANEXA): geracoes é recalculada
+// inteira a cada execução, então é sobrescrita.
+function substituirArray(conteudo, nomeVar, valorLiteral) {
+  const idxDecl = conteudo.indexOf(`let ${nomeVar}`);
+
+  if (idxDecl === -1) {
+    const conteudoBase = conteudo.replace(/\s*$/, '');
+    const separador = conteudoBase ? `${conteudoBase}\n\n` : '';
+    return `${separador}let ${nomeVar} = ${valorLiteral};\n`;
+  }
+
+  const idxFechamento = encontrarFimArray(conteudo, nomeVar);
+  if (idxFechamento === -1) return conteudo;
+
+  let idxFim = idxFechamento + 1;
+  if (conteudo[idxFim] === ';') idxFim++;
+
+  const antes = conteudo.slice(0, idxDecl);
+  const depois = conteudo.slice(idxFim);
+  return `${antes}let ${nomeVar} = ${valorLiteral};${depois}`;
+}
+
 async function main() {
   console.log('Buscando lista completa de espécies na PokeAPI...');
   const especiesApi = await buscarTodasEspecies();
@@ -181,17 +249,23 @@ async function main() {
     console.log(`ℹ️  Ignorados (já cobertos por entrada existente): ${pulados.join(', ')}`);
   }
 
-  if (!novosNomes.length) {
-    console.log('\n✅ Nenhum Pokémon novo pra adicionar.');
-    return;
+  let conteudoAtual = conteudoOriginal;
+
+  if (novosNomes.length) {
+    conteudoAtual = inserirNovosPokemons(conteudoAtual, novosNomes);
+    console.log(`\n✏️  ${novosNomes.length} Pokémon novo(s) adicionado(s) em dados.js:`);
+    novosNomes.forEach(n => console.log(`  - "${n}"`));
+    console.log('\n⚠️  Confira a grafia contra as cartas TCG reais — a conversão é uma aproximação (hífen -> espaço), pode não bater 100% em casos raros.');
+  } else {
+    console.log('\n✅ Nenhum Pokémon novo pra adicionar em todosPokemons.');
   }
 
-  const novoConteudo = inserirNovosPokemons(conteudoOriginal, novosNomes);
+  console.log('\nBuscando faixas de geração na PokeAPI...');
+  const geracoesData = await buscarFaixasGeracoes();
+  conteudoAtual = substituirArray(conteudoAtual, 'geracoes', JSON.stringify(geracoesData, null, 2));
 
-  fs.writeFileSync(CAMINHO_SETS, novoConteudo, 'utf-8');
-  console.log(`\n✏️  ${novosNomes.length} Pokémon novo(s) adicionado(s) em dados.js:`);
-  novosNomes.forEach(n => console.log(`  - "${n}"`));
-  console.log('\n⚠️  Confira a grafia contra as cartas TCG reais — a conversão é uma aproximação (hífen -> espaço), pode não bater 100% em casos raros.');
+  fs.writeFileSync(CAMINHO_SETS, conteudoAtual, 'utf-8');
+  console.log(`✏️  "geracoes" atualizado em dados.js (${geracoesData.length} gerações).`);
 }
 
 main();
